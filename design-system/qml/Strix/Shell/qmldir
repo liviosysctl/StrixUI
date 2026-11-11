@@ -1,0 +1,3 @@
+module Strix.Shell
+ThemeFile 1.0 ThemeFile.qml
+Backend 1.0 Backend.qml

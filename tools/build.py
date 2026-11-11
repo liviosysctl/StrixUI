@@ -289,7 +289,7 @@ def main():
     ap.add_argument('--artifact', metavar='DIR', help='write the artifact layout (DIR/project/...) instead of design-system/')
     args = ap.parse_args()
     artifact = bool(args.artifact)
-    import components, docs
+    import components, docs, usage
     if artifact:
         OUT = os.path.join(os.path.abspath(args.artifact), 'project')
     if os.path.exists(OUT):
@@ -330,7 +330,7 @@ def main():
                 % (attrs, c['name'], ('<style>\n%s\n</style>' % c['css'].strip()) if c.get('css') else '', c['html'].strip(), c.get('js', '').strip()))
         assert len(html) < 256000
         w('components/%s/preview.html' % c['name'], fix(html))
-        w('components/%s/README.md' % c['name'], '# %s\n\n%s\n' % (c['name'], c['doc'].strip()))
+        w('components/%s/README.md' % c['name'], '# %s\n\n%s\n%s' % (c['name'], c['doc'].strip(), usage.section(c['name'], c in components.SCREENS)))
     w('components/Cover/preview.html', docs.COVER)
     w('README.md', docs.README)
     for path, text in docs.SECTIONS.items():
@@ -343,6 +343,10 @@ def main():
         # the artifact page compiles tokens.css itself; everywhere else it is part of the system
         w('tokens.css', tc)
         write_preview(allc)
+        import targets
+        gods = [dict(id=g[0], name=g[1], description=g[3]) for g in themes.GODS]
+        plates = {g['id']: components._CAP[g['id']][1] for g in gods}
+        targets.write_all(OUT, t, gods, plates, components.HOTKEYS, icons())
     print('%s: %d components, %d screens' % (os.path.relpath(OUT, os.getcwd()), len(components.COMPONENTS), len(components.SCREENS)))
 
 def write_index():

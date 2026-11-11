@@ -1,0 +1,46 @@
+module Strix
+singleton Theme 1.0 Theme.qml
+singleton Icons 1.0 Icons.qml
+Label 1.0 Label.qml
+Icon 1.0 Icon.qml
+FocusRing 1.0 FocusRing.qml
+Surface 1.0 Surface.qml
+Button 1.0 Button.qml
+IconButton 1.0 IconButton.qml
+TextField 1.0 TextField.qml
+SearchField 1.0 SearchField.qml
+Switch 1.0 Switch.qml
+CheckBox 1.0 CheckBox.qml
+RadioButton 1.0 RadioButton.qml
+Segmented 1.0 Segmented.qml
+Slider 1.0 Slider.qml
+ProgressBar 1.0 ProgressBar.qml
+Ring 1.0 Ring.qml
+Badge 1.0 Badge.qml
+Dot 1.0 Dot.qml
+ToolTip 1.0 ToolTip.qml
+KeyCaps 1.0 KeyCaps.qml
+ListRow 1.0 ListRow.qml
+Card 1.0 Card.qml
+Menu 1.0 Menu.qml
+MenuItem 1.0 MenuItem.qml
+MenuSeparator 1.0 MenuSeparator.qml
+Dialog 1.0 Dialog.qml
+SettingRow 1.0 SettingRow.qml
+InfoBlock 1.0 InfoBlock.qml
+Notification 1.0 Notification.qml
+Osd 1.0 Osd.qml
+MediaPlayer 1.0 MediaPlayer.qml
+Visualizer 1.0 Visualizer.qml
+Calendar 1.0 Calendar.qml
+Rule 1.0 Rule.qml
+Plate 1.0 Plate.qml
+Wordmark 1.0 Wordmark.qml
+WindowFrame 1.0 WindowFrame.qml
+Wallpaper 1.0 Wallpaper.qml
+Workspaces 1.0 Workspaces.qml
+Meter 1.0 Meter.qml
+EdgeDock 1.0 EdgeDock.qml
+SlantCard 1.0 SlantCard.qml
+SearchHit 1.0 SearchHit.qml
+HotkeyRow 1.0 HotkeyRow.qml
