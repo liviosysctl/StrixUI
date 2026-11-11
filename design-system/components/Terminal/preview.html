@@ -1,38 +1,75 @@
-<!-- @dsCard group="Screens" height=500 width=960 -->
+<!-- @dsCard group="Screens" height=720 width=1280 -->
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><title>Terminal — preview</title><style>
-.k-code .p { color: var(--term-foreground); font-weight: 600; } .k-code .d { color: var(--term-blue); } .k-code .g { color: var(--term-green); }
-.k-code .m { color: var(--term-bright-black); } .k-code .y { color: var(--term-yellow); } .k-code .c { color: var(--term-cyan); }
+.term { position: absolute; left: 12px; right: 12px; top: 38px; bottom: 12px; }
+.term .k-win-body { position: relative; background: var(--term-background); padding: 16px 20px; }
+.term .ghost { position: absolute; right: -40px; bottom: -60px; width: 760px; opacity: 0.06; filter: grayscale(1); pointer-events: none; }
+.term pre { position: relative; margin: 0; font-size: 13px; line-height: 20px; }
+.k-code .p { color: var(--term-bright-white); font-weight: 600; } .k-code .i { color: var(--term-white); }
+.k-code .d { color: var(--term-blue); } .k-code .g { color: var(--term-green); } .k-code .pc { color: var(--term-cursor); }
+.k-code .m { color: var(--term-bright-black); } .k-code .y { color: var(--term-yellow); } .k-code .c { color: var(--term-cyan); } .k-code .v { color: var(--term-magenta); }
 .k-code .r { color: var(--term-red); } .k-code .rb { color: var(--term-bright-red); font-weight: 600; } .k-code .yb { color: var(--term-bright-yellow); font-weight: 600; }
-.k-code .bl { color: var(--term-blue); } .k-code .b { font-weight: 600; }
-.strip { display: grid; grid-template-columns: repeat(8, 1fr); margin-top: 16px; max-width: 320px; }
-.k-swatch { display: block; height: 14px; }
+.k-code .bl { color: var(--term-blue); font-weight: 600; } .k-code .b { font-weight: 600; color: var(--term-bright-white); }
+.k-code .sw { display: inline-flex; vertical-align: -2px; } .k-code .sw i { display: inline-block; width: 26px; height: 12px; }
 </style></head>
 <body>
-<div style="padding:12px;height:500px;background:var(--background)">
-<div class="k-win" data-active style="height:100%"><div class="k-win-body" style="background:var(--term-background);padding:16px 20px">
-<pre class="k-code" style="color:var(--term-foreground)"><span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> git log --oneline -4
-<span class="y">d207083</span> <span class="m">(</span><span class="c">HEAD -&gt; </span><span class="g">main</span><span class="m">,</span> <span class="r">origin/main</span><span class="m">)</span> ci: update flake inputs and crates every week
-<span class="y">952d81c</span> <span class="m">(</span><span class="y">tag: v0.1.0</span><span class="m">,</span> <span class="r">origin/stable</span><span class="m">)</span> release: 0.1.0
-<span class="y">7c1e0aa</span> feat(installer): ask for the language first
-<span class="y">31b9f42</span> fix(theme): keep the default splash when the variable is missing
+<div class="k-screen" data-theme="saturnus">
+  <div class="k-wall" style="background-image:url(../../assets/Wallpapers/saturnus.jpg);background-position:center"></div>
+  <div class="k-grain"></div>
+  <div style="position:absolute;inset:0 0 auto 0">
+<div class="k-bar" role="toolbar" aria-label="Status">
+  <div>
+    <button aria-label="Search apps"><i class="k-icon" data-icon="search"></i><b id="clock">21:04</b></button>
+    <span class="k-meter" title="CPU"><i class="k-icon" data-icon="cpu"></i><u style="--p:17%"></u><span class="k-roll" data-value="17%" id="m-cpu"></span></span>
+    <span class="k-meter" title="Memory"><i class="k-icon" data-icon="memory-stick"></i><u style="--p:24%"></u><span>7.4 GiB</span></span>
+    <span class="k-meter" title="Temperature"><i class="k-icon" data-icon="thermometer"></i><u style="--p:46%"></u><span class="k-roll" data-value="46°" id="m-tmp"></span></span>
+  </div>
+  <div>
+    <span class="k-ws" role="tablist" aria-label="Workspaces"><button aria-label="Workspace 1" data-used></button><button aria-label="Workspace 2" data-used aria-current="true"></button><button aria-label="Workspace 3" data-used></button><button aria-label="Workspace 4"></button><button aria-label="Workspace 5"></button></span>
+    <button class="k-track" aria-label="Now playing"><i class="k-icon" data-icon="music"></i><span>Nocturne in E-flat major</span></button>
+  </div>
+  <div>
+    <button class="k-rec" aria-label="Recording"><i class="k-icon" data-icon="video"></i><span class="k-dot k-dot-live"></span></button>
+    <button aria-label="Notifications, 3 new"><i class="k-icon" data-icon="bell"></i><b>3</b></button>
+    <button class="k-power" aria-label="Session"><i class="k-icon" data-icon="power"></i></button>
+  </div>
+</div></div>
+  <div class="k-win term" data-active>
+    <div class="k-win-body">
+      <img class="ghost" alt="" src="../../assets/Wallpapers/saturnus.jpg">
+<pre class="k-code" style="color:var(--term-foreground)"><span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> strix-info
+<span class="m">╓</span>                                        <span class="m">╖</span>
+  <span class="p">larp</span>   <span class="i">Strix 0.1.0</span>
+  <span class="b">Kernel</span>  <span class="m">::</span> 6.18.2
+  <span class="b">Shell</span>   <span class="m">::</span> Quickshell on Hyprland
+  <span class="b">Theme</span>   <span class="m">::</span> Strix, dark
+  <span class="b">God</span>     <span class="m">::</span> <span class="pc">Saturnus</span>, for 4 more min
+  <span class="b">Disk</span>    <span class="m">::</span> 162 GiB of 952 GiB
+  <span class="sw"><i style="background:var(--term-black)"></i><i style="background:var(--term-red)"></i><i style="background:var(--term-green)"></i><i style="background:var(--term-yellow)"></i><i style="background:var(--term-blue)"></i><i style="background:var(--term-magenta)"></i><i style="background:var(--term-cyan)"></i><i style="background:var(--term-white)"></i></span>
+  <span class="sw"><i style="background:var(--term-bright-black)"></i><i style="background:var(--term-bright-red)"></i><i style="background:var(--term-bright-green)"></i><i style="background:var(--term-bright-yellow)"></i><i style="background:var(--term-bright-blue)"></i><i style="background:var(--term-bright-magenta)"></i><i style="background:var(--term-bright-cyan)"></i><i style="background:var(--term-bright-white)"></i></span>
+<span class="m">╙</span>                                        <span class="m">╜</span>
 
-<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> cargo build
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> git log --oneline -3
+<span class="y">d207083</span> <span class="m">(</span><span class="c">HEAD</span> <span class="m">→</span> <span class="g">main</span><span class="m">,</span> <span class="v">origin/main</span><span class="m">)</span> ci: update flake inputs and crates every week
+<span class="y">952d81c</span> <span class="m">(</span><span class="y">tag: v0.1.0</span><span class="m">,</span> <span class="v">origin/stable</span><span class="m">)</span> release: 0.1.0
+<span class="y">7c1e0aa</span> feat(installer): ask for the language first
+
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> cargo build
 <span class="g">   Compiling</span> theme-engine v0.1.0
 <span class="rb">error[E0308]</span><span class="b">: mismatched types</span>
-  <span class="bl">--&gt;</span> src/check.rs:14:16
-   <span class="bl">|</span>
-<span class="bl">14 |</span>         return fail(4.5);
-   <span class="bl">|</span>                     <span class="rb">^^^ expected `&amp;str`, found floating-point number</span>
+  <span class="m">--&gt;</span> src/check.rs:14:16
+<span class="m">14 |</span>         return fail(4.5);
+   <span class="m">|</span>                     <span class="r">^^^ expected `&amp;str`, found floating-point number</span>
 <span class="yb">warning</span><span class="b">: unused variable: `text`</span>
 
-<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> ls
-<span class="bl b">hosts</span>  <span class="bl b">installer</span>  <span class="bl b">modules</span>  <span class="bl b">packages</span>  <span class="bl b">themes</span>  <span class="g b">build.sh</span>  <span class="c">result</span>  flake.lock  flake.nix  README.md
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> ls
+<span class="bl">hosts</span>  <span class="bl">installer</span>  <span class="bl">modules</span>  <span class="bl">packages</span>  <span class="bl">themes</span>  <span class="g">build.sh</span>  flake.lock  flake.nix  README.md
 
-<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> <span class="k-caret" style="background:var(--term-cursor)"></span></pre>
-<div class="strip"><span class="k-swatch" style="background:var(--term-black)" title="black"></span><span class="k-swatch" style="background:var(--term-red)" title="red"></span><span class="k-swatch" style="background:var(--term-green)" title="green"></span><span class="k-swatch" style="background:var(--term-yellow)" title="yellow"></span><span class="k-swatch" style="background:var(--term-blue)" title="blue"></span><span class="k-swatch" style="background:var(--term-magenta)" title="magenta"></span><span class="k-swatch" style="background:var(--term-cyan)" title="cyan"></span><span class="k-swatch" style="background:var(--term-white)" title="white"></span><span class="k-swatch" style="background:var(--term-bright-black)" title="bright-black"></span><span class="k-swatch" style="background:var(--term-bright-red)" title="bright-red"></span><span class="k-swatch" style="background:var(--term-bright-green)" title="bright-green"></span><span class="k-swatch" style="background:var(--term-bright-yellow)" title="bright-yellow"></span><span class="k-swatch" style="background:var(--term-bright-blue)" title="bright-blue"></span><span class="k-swatch" style="background:var(--term-bright-magenta)" title="bright-magenta"></span><span class="k-swatch" style="background:var(--term-bright-cyan)" title="bright-cyan"></span><span class="k-swatch" style="background:var(--term-bright-white)" title="bright-white"></span></div>
-</div></div></div>
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> <span class="k-caret" style="background:var(--term-cursor)"></span></pre>
+    </div>
+  </div>
+</div>
 <script>
 Kit.hydrate(document);
 

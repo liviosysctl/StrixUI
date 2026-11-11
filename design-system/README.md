@@ -5,7 +5,7 @@ This system is the single source for that look on every surface: the desktop she
 ## Principles
 
 - Old and exact. The mood comes from engravings, blackletter, an old-style serif and small ornaments. The work is done in a fine monospace. Never mix the roles: nothing you operate is set in the serif, and nothing that sets the mood is set in mono.
-- One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, the active window, running progress, the cursor, and the disc on the wallpaper. Its colour belongs to the god of the moment (Strix red under Saturnus, the default), but there is only ever one. If two things carry it, one of them is wrong.
+- One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, running progress, the cursor, and the disc on the wallpaper; the focused window shows it only quietened, as `border-active`. Its colour belongs to the god of the moment (Strix red under Saturnus, the default), but there is only ever one. If two things carry it, one of them is wrong.
 - Fine, not heavy. Text is 12px, controls are 28px high, lines are one pixel, corners are 2 to 4px. When in doubt, make it thinner and leave more room around it.
 - Flat and dark. Surfaces are one step lighter than the ground and carry a hair border. No glass, no blur behind panels.
 - Lines, not fills. State is shown with a line, a border, a caret or a word before it is shown with a filled box.
@@ -31,7 +31,7 @@ This system is the single source for that look on every surface: the desktop she
 - Ground: `background` for the desktop, splash and installer; `surface` for windows, panels, cards and the dock; `surface-raised` for hover and selected rows; `surface-sunken` for wells (fields, tracks).
 - Text: `text` for what must be read, `text-muted` for secondary text and resting symbols, `text-faint` only for placeholders, line numbers, timestamps and the `::` separator.
 - The accent as a fill is `accent`, with `on-accent` on top (white on the dark accents, near-black on the light ones). The accent as text or as a symbol is `accent-text`; `accent` itself is not meant to be read as text. Hover and press of a red fill are `accent-hover` and `accent-pressed`.
-- Lines: `border` for decorative lines and inactive windows, `border-strong` for anything that carries meaning (control outlines), `line` for the cream line work of the wallpaper, bracket frames and the edge of the chosen theme card.
+- Lines: `border` for decorative lines and inactive windows, `border-active` for the focused window (the accent quietened, never the full accent), `border-strong` for anything that carries meaning (control outlines), `line` for the cream line work of the wallpaper, bracket frames and the edge of the chosen theme card.
 - Status is always a word or a symbol first. `error`, `warning`, `success` and `info` are muted and are used as text or a 1px border, never as a filled area.
 - Focus is `focus-ring` on every control: a 2px gap in `background`, then 2px of `focus`. Never the browser's blue.
 - Code uses the `syntax-` tokens; charts use `chart-1` to `chart-5` in order, and `chart-1` is the series that matters.
@@ -117,7 +117,7 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 ## Layout of the shell
 
 - The top bar is for reading. It has no surface; small grey text and symbols sit on the engraving. Left: search and the clock, then CPU, memory, temperature. Middle: workspaces and the playing track in serif italic. Right: recording, the bell with its count, power.
-- The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short red line. When the pointer reaches the bottom edge it rises to `dock-height` (28px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
+- The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short line in the accent. When the pointer reaches the bottom edge it rises to `dock-height` (28px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
 - Search (Super Space) is the one way in to everything else: a single field over the dimmed desktop that finds apps, the actions of the system menu, settings down to a single row, and commands. With an empty field it is the system menu itself. There is no separate app launcher or system menu.
 - The clock, the bell and power exist only in the bar. Network, sound and updates exist only in the dock.
 - Notifications arrive top right under the bar. The OSD appears bottom centre.

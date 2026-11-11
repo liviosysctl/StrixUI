@@ -108,6 +108,7 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 .k-seg button { position: relative; z-index: 1; height: 22px; padding: 0 var(--space-3); border: 0; background: transparent; border-radius: var(--radius-xs); color: var(--text-muted); font: 500 11px/16px var(--font-mono); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: color var(--dur-base) var(--ease-out); }
 .k-seg button .k-icon { width: 12px; height: 12px; }
 .k-seg button:hover { color: var(--text); }
+.k-seg button:disabled { opacity: var(--dim-disabled); cursor: not-allowed; }
 .k-seg button[aria-selected="true"] { color: var(--on-accent); }
 .k-seg-thumb { position: absolute; top: 1px; left: 0; height: 22px; width: 0; border-radius: var(--radius-xs); background: var(--accent); transition: transform var(--dur-base) var(--ease-in-out), width var(--dur-base) var(--ease-in-out); }
 .k-seg[data-ready="0"] .k-seg-thumb { transition: none; }
@@ -366,8 +367,8 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 .k-viz > i[data-peak] { background: var(--accent-text); }
 
 /* Window frame (compositor look) and app title bar */
-.k-win { border: var(--line-hair) solid var(--border); border-radius: var(--radius-md); background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 70%, var(--background))); box-shadow: var(--shadow-window); overflow: hidden; display: flex; flex-direction: column; min-width: 0; min-height: 0; transition: border-color var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out); }
-.k-win[data-active] { border-color: var(--accent); }
+.k-win { border: var(--line-hair) solid var(--border); border-radius: var(--radius-md); background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 70%, var(--background))); box-shadow: var(--shadow-window); overflow: hidden; display: flex; flex-direction: column; min-width: 0; min-height: 0; transition: border-color var(--dur-slow) var(--ease-in-out), opacity var(--dur-base) var(--ease-out); }
+.k-win[data-active] { border-color: var(--border-active); }
 .k-win-body { flex: 1; min-height: 0; padding: var(--space-3) var(--space-4); overflow: hidden; }
 .k-titlebar { height: 26px; display: flex; align-items: center; padding-left: var(--space-3); border-bottom: var(--line-hair) solid var(--border); font: 400 11px/16px var(--font-mono); color: var(--text-muted); flex: none; }
 .k-titlebar b { font: 400 15px/18px var(--font-serif); color: var(--text); margin-right: var(--space-2); }

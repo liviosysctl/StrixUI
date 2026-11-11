@@ -19,9 +19,10 @@ C = {
  'syntax-type':'#9db4cf','syntax-constant':'#c3a6c9','syntax-comment':'#8a847a','syntax-operator':'#a09a8f',
  'chart-1':'#c8102e','chart-2':'#ece6da','chart-3':'#8c877f','chart-4':'#cdb98a','chart-5':'#8ea8c8',
 }
-T = {'background':'#0b0a09','foreground':'#e6e0d4','cursor':'#c8102e','selection':'#3a1219',
- 'black':'#1b1917','red':'#e5475b','green':'#8fb894','yellow':'#d9b36a','blue':'#8ea8c8','magenta':'#c3a6c9','cyan':'#8fbcb8','white':'#c9c3b8',
- 'bright-black':'#857f76','bright-red':'#ff7885','bright-green':'#aed3b2','bright-yellow':'#edcd8c','bright-blue':'#b0c6e2','bright-magenta':'#dcc3e1','bright-cyan':'#b0d8d4','bright-white':'#f7f3ea'}
+T = {'background':'#0b0a09','foreground':'#e2dbcd','cursor':'#c8102e','selection':'#3a1219',
+ # dark academia: brick, olive, brass, slate, heather, patina, old paper; all muted, all 4.5:1 or more
+ 'black':'#1b1917','red':'#cc6b5f','green':'#9ca474','yellow':'#c7a26a','blue':'#8b9fb2','magenta':'#b08a9e','cyan':'#8eab9f','white':'#c9c1b1',
+ 'bright-black':'#857f76','bright-red':'#e08e7f','bright-green':'#b9c08f','bright-yellow':'#dfc08a','bright-blue':'#a9bccd','bright-magenta':'#cba7b9','bright-cyan':'#aac6ba','bright-white':'#f2ece0'}
 if __name__=='__main__':
     S=['background','surface','surface-raised']
     rows=[]

@@ -1,9 +1,9 @@
 # SlantCard
 
-The tall slanted card of the theme picker, and the carousel that holds a row of them.
+The tall slanted card of the theme picker and the pantheon, and the carousel that holds a row of them. The preview shows the eight gods, as in the pantheon.
 
 - Each card is a parallelogram that overlaps its neighbour. The chosen card in the middle is 420px wide and taller, with a cream hair edge and the theme's name in blackletter; all others are 96px wide and dimmed.
 - Markup: `.k-carousel` > `.k-carousel-track` > `button.k-slant` with `.k-slant-art` (the preview), `.k-slant-edge`, `.k-slant-name`.
 - Paging: left and right arrows, the wheel, or a click on a neighbour. The row glides over `dur-slow` while the old middle narrows and the new one widens.
 - A click on the middle card fires `apply` with the pointer position, which is where the circular reveal starts (`Kit.reveal`).
-- The preview art is the theme's own wallpaper, never a screenshot of somebody else's work.
+- The art is the theme's or the god's own engraving, never a screenshot of somebody else's work.

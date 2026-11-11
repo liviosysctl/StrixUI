@@ -23,13 +23,13 @@ comp('Button', 'Actions', 110, r'''
   <button class="k-btn k-btn-sm"><span>Check</span></button>
   <button class="k-btn" style="max-width:190px"><span>A label that is far too long for its button</span></button>
 </div>''', r'''
-The one way to trigger an action. `k-btn-primary` (red) appears at most once per view, for the thing the view is for. Plain `k-btn` is the secondary action, `k-btn-quiet` is for cancel and dismiss, `k-btn-danger` for actions that destroy data.
+The one way to trigger an action. `k-btn-primary` (filled with the accent) appears at most once per view, for the thing the view is for. Plain `k-btn` is the secondary action, `k-btn-quiet` is for cancel and dismiss, `k-btn-danger` for actions that destroy data.
 
 - Markup: `<button class="k-btn k-btn-primary"><span>Install</span></button>`. Put the label in a `span` so long text truncates.
 - Labels: sentence case, a verb first. "Install", "Check", "Erase disk".
 - Loading: set `data-loading`; a short piece runs along the bottom edge. Keep the label, change its wording ("Checking").
 - Disabled: the `disabled` attribute. Never hide a button that will come back.
-- Do not put two primary buttons side by side, and do not use red for anything that is not the main action.
+- Do not put two primary buttons side by side, and do not use the accent for anything that is not the main action.
 ''', js=r'''
 document.getElementById('load').addEventListener('click', function () { this.toggleAttribute('data-loading'); });
 ''')
@@ -45,7 +45,7 @@ comp('IconButton', 'Actions', 90, r'''
 A square button that carries one symbol. Always give it an `aria-label`, and a Tooltip when the symbol alone could be misread.
 
 - Sizes: 36px (`k-iconbtn`) and 28px (`k-iconbtn-sm`, inside dense panels).
-- Toggle: set `aria-pressed`; pressed turns the symbol red. Swap the symbol too (play and pause).
+- Toggle: set `aria-pressed`; pressed turns the symbol to `accent-text`. Swap the symbol too (play and pause).
 - `k-iconbtn-danger` is reserved for power.
 ''', js=r'''
 var pp = document.getElementById('pp');
@@ -100,7 +100,7 @@ comp('Switch', 'Inputs', 80, r'''
 On or off, applied at once. Use it for settings that take effect immediately; use Checkbox inside forms that are confirmed with a button.
 
 - Markup: `<label class="k-switch"><input type="checkbox"><span></span>Label</label>`.
-- The thumb slides with `ease-spring` and stretches slightly while pressed. On is red.
+- The thumb slides with `ease-spring` and stretches slightly while pressed. On is the accent.
 - Space toggles it; the ring sits on the track.
 ''')
 
@@ -113,7 +113,7 @@ comp('Checkbox', 'Inputs', 80, r'''
 A choice that is confirmed later, with the form's button. Several may be on at once.
 
 - Markup: `<label class="k-check"><input type="checkbox"><span></span>Label</label>`.
-- The mark is a small filled square that pops in; the box fills red.
+- The mark is a small filled square that pops in; the box fills with the accent.
 ''')
 
 comp('Radio', 'Inputs', 80, r'''
@@ -138,7 +138,7 @@ comp('Segmented', 'Inputs', 90, r'''
 Two to four short options, one always chosen. Also the tab switch at the top of a panel.
 
 - Markup: `<div class="k-seg"><button aria-selected="true">Dark</button><button>Light</button></div>`. `Kit.hydrate()` adds the thumb.
-- The labels never move: every label has the same weight in both states. Only the red thumb glides (`dur-base`, `ease-in-out`).
+- The labels never move: every label has the same weight in both states. Only the thumb in the accent glides (`dur-base`, `ease-in-out`).
 - As tabs: `data-for="#id"` points at a `.k-tabs` container; its sections switch with a short slide in the direction of travel.
 - Listens to `change` with `detail.index` and `detail.value`. Left and right arrows move the choice.
 ''')
@@ -151,7 +151,7 @@ comp('Slider', 'Inputs', 110, r'''
 A value on a range: volume, brightness, blur, timeouts.
 
 - Markup: `<label class="k-slider"><i class="k-icon" data-icon="volume-2"></i><input type="range"><output></output></label>`.
-- A 2px line, red up to the value, with a narrow cream handle. The number at the end follows the handle; `data-unit` adds the unit.
+- A 2px line, in the accent up to the value, with a narrow cream handle. The number at the end follows the handle; `data-unit` adds the unit.
 - Arrow keys step by one.
 ''')
 
@@ -162,7 +162,7 @@ comp('Progress', 'Feedback', 100, r'''
   <div class="k-progress-row"><div><b>Looking for updates</b><span></span></div><div class="k-progress" data-indeterminate role="progressbar"><i></i></div></div>
   <button class="k-btn k-btn-sm" id="again"><span>Run again</span></button>
 </div>''', r'''
-How far something is, as a 2px line. With a known amount the red part grows; without one, a short red piece runs along the line.
+How far something is, as a 2px line. With a known amount the part in the accent grows; without one, a short piece in the accent runs along the line.
 
 - Markup: `<div class="k-progress" style="--p:40%"><i></i></div>`; unknown amount: add `data-indeterminate`.
 - Say what is happening in words above the line (`k-progress-row`), with the number at the right.
@@ -201,9 +201,9 @@ comp('Badge', 'Feedback', 80, r'''
 </div>''', r'''
 One or two words of state beside a name, or a count.
 
-- `k-badge` outlined grey for neutral state, `k-badge-accent` filled red for the one thing that wants attention, `k-badge-error` with a symbol for a fault, `k-badge-count` for numbers.
+- `k-badge` outlined grey for neutral state, `k-badge-accent` filled with the accent for the one thing that wants attention, `k-badge-error` with a symbol for a fault, `k-badge-count` for numbers.
 - A badge is words, not a colour code: never rely on its colour alone.
-- `k-dot` is the 6px red dot for "live" (recording); `k-dot-live` lets it breathe.
+- `k-dot` is the 6px dot in the accent for "live" (recording); `k-dot-live` lets it breathe.
 ''')
 
 comp('Tooltip', 'Feedback', 110, r'''
@@ -229,7 +229,7 @@ comp('Notification', 'Feedback', 230, r'''
 A message from the system or an app, top right under the bar.
 
 - Parts: symbol, bold title, up to three lines of text, time, optional actions in a footer.
-- Normal messages leave after a few seconds. `data-urgency="critical"` gets a red border, a red symbol and a draining line, and stays until dismissed.
+- Normal messages leave after a few seconds. `data-urgency="critical"` gets a border and symbol in the accent and a draining line, and stays until dismissed.
 - Enters from the right (`k-notif-in`), leaves to the right (`Kit.dismiss(el)`); the rest of the stack closes the gap.
 - Title: what happened. Text: what it means or what to do. No exclamation marks.
 ''', js=r'''
@@ -301,7 +301,7 @@ comp('List', 'Data', 230, r'''
 Rows to pick from: app finder results, clipboard history, networks, devices.
 
 - A row: symbol, name (`k-grow`, truncates), a faint note at the end.
-- The chosen row gets a raised ground and a red `>` in front, like a cursor in a terminal. No coloured stripe.
+- The chosen row gets a raised ground and a `>` in `accent-text` in front, like a cursor in a terminal. No coloured stripe.
 - Rows enter one after another: class `k-enter` with `--i` as the position (`stagger` apart).
 - Up and down move the choice, Enter takes it. Matching letters of a search are bold.
 - Empty: one calm sentence in `k-empty`.
@@ -328,13 +328,15 @@ One setting per row: a bold title, one line that says what it does, and the cont
 - Rows are separated by a hair line; there are no boxes around them.
 ''')
 
-comp('InfoBlock', 'Data', 200, r'''
+comp('InfoBlock', 'Data', 230, r'''
 <div class="k-stage">
   <dl class="k-info">
     <h4>larp</h4>
     <dt>OS</dt><i>::</i><dd>Strix 0.1.0</dd>
     <dt>Kernel</dt><i>::</i><dd>6.18.2</dd>
     <dt>Shell</dt><i>::</i><dd>Quickshell on Hyprland</dd>
+    <dt>Theme</dt><i>::</i><dd>Strix, dark</dd>
+    <dt>God</dt><i>::</i><dd>Saturnus</dd>
     <dt>Memory</dt><i>::</i><dd>7.4 GiB of 32 GiB</dd>
     <dt>Disk</dt><i>::</i><dd>162 GiB of 952 GiB, btrfs</dd>
     <dt>Uptime</dt><i>::</i><dd>3 hours, 19 minutes</dd>
@@ -344,7 +346,7 @@ Facts as label and value, framed by double-line brackets with open corners. The 
 
 - Markup: `<dl class="k-info">` with `dt` label, `<i>::</i>`, `dd` value per row; an optional serif `h4` on top.
 - Labels are bold, values regular and muted, `::` between them is faint.
-- The brackets are `line` at reduced strength. Use the frame for system facts only (system info, About, the installer summary), at most once per view.
+- The brackets are `line` at reduced strength. Use the frame for system facts only (system info, About, the installer summary, `strix-info` in the terminal), at most once per view.
 ''')
 
 comp('Card', 'Data', 150, r'''
@@ -361,7 +363,7 @@ A bordered box for one self-contained thing: an app in the store, a state with i
 
 comp('Calendar', 'Data', 220, r'''
 <div class="k-stage"><div class="k-cal" data-date="2026-11-10"></div></div>''', r'''
-One month, Monday first, today marked in red. Lives in the Today panel.
+One month, Monday first, today marked in the accent. Lives in the Today panel.
 
 - Markup: `<div class="k-cal" data-date="2026-11-10"></div>`; without `data-date` it shows the current day.
 - The arrows step by month. Days of the neighbouring months are faint.
@@ -471,7 +473,7 @@ SEARCH_JS = r'''
     {k: 'command', t: 'strix-theme list', p: ['Show every theme and variant'], i: 'square-terminal', w: 'themes', g: 'commands'},
     {k: 'command', t: 'strix-theme set strix', p: ['Switch to the Strix theme'], i: 'square-terminal', w: 'theme'},
     {k: 'command', t: 'strix-theme set neutral', p: ['Switch to the Neutral theme'], i: 'square-terminal', w: 'theme'},
-    {k: 'command', t: 'strix-theme set chamber:dark', p: ['Switch to Chamber, Lights off'], i: 'square-terminal', w: 'theme'},
+    {k: 'command', t: 'strix-theme god neptunus', p: ['Call another god of the pantheon'], i: 'square-terminal', w: 'theme god pantheon aspect'},
     {k: 'command', t: 'strix-theme status', p: ['Check that every part shows the current theme'], i: 'square-terminal', w: 'theme'}
   ];
   var KINDS = ['all', 'app', 'action', 'setting', 'command'], LABEL = {app: 'App', action: 'Action', setting: 'Setting', command: 'Command', group: 'Menu'};
@@ -585,7 +587,7 @@ One field finds everything: apps, the actions of the system menu, settings down 
 - Enter: an app starts, an action runs, a setting opens Settings scrolled to that row with the row marked, a command runs in a terminal. Text that matches nothing runs as a command in a terminal.
 - Matching is fuzzy: the letters in order, word starts count most, so "nl" finds Night light and "rs" finds Region screenshot. Titles count more than places and extra words; results far below the best one are left out; frequently used entries rise.
 - Tab and Shift Tab cycle the filter (All, Apps, Actions, Settings, Commands). Up and Down move, Esc clears the field, a second Esc closes.
-- Rows: 40px, symbol, title in mono with the matched letters in `text` and semibold, the place in `aside` style, kind in `micro`. The chosen row has the raised ground and the red caret, as in List.
+- Rows: 40px, symbol, title in mono with the matched letters in `text` and semibold, the place in `aside` style, kind in `micro`. The chosen row has the raised ground and the caret in `accent-text`, as in List.
 - Motion: the panel drops 8px into place over `dur-base`; entering a group slides the list in from the right, going back from the left; results update in place without animation while typing.
 - Markup: `.k-search.k-surface` > `.k-search-head` (symbol, `.k-crumb`, `input`, the Esc chip), `.k-search-filter` (a Segmented), `ul.k-hits` > `li.k-hit[data-kind]`, `.k-search-foot` (only the result line, hidden while empty; the keys are on the cheat sheet). `Kit.fuzzy(query, text)` and `Kit.mark(text, hits)` do the matching and the highlighting.
 ''', js=SEARCH_JS)
@@ -626,11 +628,11 @@ BAR_JS = r'''
 '''
 comp('TopBar', 'Shell', 120, r'''
 <div style="position:relative;height:120px;overflow:hidden">''' + WALL(SATURNUS, pos='center top') + r'''<div style="position:relative">''' + BAR + r'''</div></div>''', r'''
-The status line at the top of the screen. It has no surface of its own: small text and symbols sit straight on the wallpaper, in grey, with red for the one active thing.
+The status line at the top of the screen. It has no surface of its own: small text and symbols sit straight on the wallpaper, in grey, with the accent for the one active thing.
 
 - Left: search with the clock, then CPU, memory and temperature, each as symbol, a 3px vertical meter and a value.
-- Middle: workspaces as dots, the active one a red pill; next to them the playing track.
-- Right: recording (with a red dot while it runs), the bell with its count, power in red.
+- Middle: workspaces as dots, the active one a pill in the accent; next to them the playing track.
+- Right: recording (with a dot in the accent while it runs), the bell with its count, power in `accent-text`.
 - The bar is for reading. Search opens Search, the track opens the media player in the dock, the bell opens notifications, power opens the session menu. Everything adjustable lives in the dock.
 - Height `bar-height`. Values roll when they change; the workspace pill slides.
 ''', js=BAR_JS)
@@ -715,14 +717,14 @@ comp('EdgeDock', 'Shell', 380, r'''
   <div class="micro" style="position:absolute;right:16px;top:12px;color:var(--text-faint)">Preview only: move the pointer to the bottom edge</div>
   <div class="k-dockbar">''' + DOCK + r'''</div>
 </div>''', r'''
-The dock is part of the bottom edge of the screen, not a floating bar. At rest it is a tab 5px high and 132px wide with a short red line, flush with the edge, its corners flaring into it. When the pointer reaches the bottom edge it rises to 28px and widens to fit its content. When the pointer leaves, it sinks back after a short wait.
+The dock is part of the bottom edge of the screen, not a floating bar. At rest it is a tab 5px high and 132px wide with a short line in the accent, flush with the edge, its corners flaring into it. When the pointer reaches the bottom edge it rises to 28px and widens to fit its content. When the pointer leaves, it sinks back after a short wait.
 
 - Everything that can be adjusted starts here: settings, the date with the weather, media, Wi-Fi, Bluetooth, sound, about. A click on a symbol lets its panel grow upward out of that symbol; a second click, Escape or a click elsewhere folds it back.
 - Main panel: a Segmented with Today (date, weather, calendar, the day as a line), System (three rings and the disk) and About (name, version, channel, and "Check", which runs the update and shows its progress in place).
 - Small panels (`data-size="sm"`): Wi-Fi and Bluetooth as a switch with a List, sound as a Slider, media as a MediaPlayer.
 - While a panel is open or a control inside has keyboard focus, the dock stays out.
 - Motion: height over `dur-base`, width over `dur-slow`, content fades in `dur-fast` later. A panel scales up from its symbol over `dur-slow`.
-- Markup: `.k-dockbar` (the hot strip along the bottom edge) > `.k-dock` > panels (`.k-panel.k-surface` with an id) + `.k-edge` > `u` (the red line) + `.k-edge-in` > buttons with `data-panel="#id"` and optional `data-tab`. Thin `s` elements separate groups.
+- Markup: `.k-dockbar` (the hot strip along the bottom edge) > `.k-dock` > panels (`.k-panel.k-surface` with an id) + `.k-edge` > `u` (the line in the accent) + `.k-edge-in` > buttons with `data-panel="#id"` and optional `data-tab`. Thin `s` elements separate groups.
 - `data-pinned` on `.k-dock` keeps it out, for touch screens.
 ''', js=DOCK_JS + "\nsetTimeout(function () { var d = document.getElementById('dock')._k; d.show(); d.open(document.querySelector('.k-edge [data-panel=\"#p-main\"]')); }, 500);")
 
@@ -738,7 +740,7 @@ What is playing, with the three transport buttons. Opens from the music symbol i
 
 comp('Visualizer', 'Shell', 150, r'''
 <div class="k-stage" style="display:block"><div class="k-viz" data-bars="56"></div></div>''', r'''
-Bars that follow the sound. Grey at rest, red at the peaks.
+Bars that follow the sound. Grey at rest, the accent at the peaks.
 
 - Markup: `<div class="k-viz" data-bars="56"></div>`. Feed it with `el._k.frame(levels)` (values 0 to 1); without a source it idles on a soft signal.
 - Bars above 0.72 switch to `accent` (`chart-1`); the rest are `text-muted`.
@@ -751,7 +753,7 @@ function art(bg, disc, line) {
   return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
 }
 function pic(t) { return IMG[t[0]] ? '<img alt="" src="' + IMG[t[0]] + '">' : art(t[2], t[3], t[4]); }
-var THEMES = [['Paper', 'light', '#ece6da', '#1b1917', '#55504a'], ['Slate', 'dark', '#16191d', '#8ea8c8', '#8a8f96'], ['Chamber', 'lights off', '#2a2d32', '#f2f3f5', '#9aa0a8'], ['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a'], ['Moss', 'dark', '#0f1410', '#8fb894', '#7d8a7e'], ['Ember', 'dark', '#140d0a', '#d99a6c', '#8a7a6c']];
+var THEMES = [['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a']];
 function cards(track, sel) {
   track.innerHTML = THEMES.map(function (t, i) {
     return '<button class="k-slant" data-value="' + t[0] + '" aria-selected="' + (i === sel) + '" aria-label="' + t[0] + ' theme"><span class="k-slant-art">' + pic(t) + '</span><span class="k-slant-edge"></span><span class="k-slant-name">' + t[0] + '<small>' + t[1] + '</small></span></button>';
@@ -760,30 +762,33 @@ function cards(track, sel) {
 '''
 comp('SlantCard', 'Shell', 320, r'''
 <div class="k-carousel" style="height:320px" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>''', r'''
-The tall slanted card of the theme picker, and the carousel that holds a row of them.
+The tall slanted card of the theme picker and the pantheon, and the carousel that holds a row of them. The preview shows the eight gods, as in the pantheon.
 
 - Each card is a parallelogram that overlaps its neighbour. The chosen card in the middle is 420px wide and taller, with a cream hair edge and the theme's name in blackletter; all others are 96px wide and dimmed.
 - Markup: `.k-carousel` > `.k-carousel-track` > `button.k-slant` with `.k-slant-art` (the preview), `.k-slant-edge`, `.k-slant-name`.
 - Paging: left and right arrows, the wheel, or a click on a neighbour. The row glides over `dur-slow` while the old middle narrows and the new one widens.
 - A click on the middle card fires `apply` with the pointer position, which is where the circular reveal starts (`Kit.reveal`).
-- The preview art is the theme's own wallpaper, never a screenshot of somebody else's work.
-''', js=ART + r'''
-cards(document.getElementById('track'), 3);
+- The art is the theme's or the god's own engraving, never a screenshot of somebody else's work.
+''', js=r'''
+var GODS = ''' + json.dumps([['Saturnus', SATURNUS], ['Janus', JANUS], ['Apollo', APOLLO], ['Mars', MARS], ['Vulcanus', VULCANUS], ['Neptunus', NEPTUNUS], ['Pluto', PLUTO], ['Bacchus', BACCHUS]]) + r''';
+document.getElementById('track').innerHTML = GODS.map(function (g, i) {
+  return '<button class="k-slant" aria-selected="' + (i === 0) + '" aria-label="' + g[0] + '"><span class="k-slant-art"><img alt="" src="' + g[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + g[0] + '</span></button>';
+}).join('');
 Kit.hydrate(document);
 ''')
 
 comp('WindowFrame', 'Shell', 260, r'''
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;height:260px">
-  <div class="k-win" data-active id="w1"><div class="k-win-body"><span class="k-muted">Active window :: red border</span></div></div>
+  <div class="k-win" data-active id="w1"><div class="k-win-body"><span class="k-muted">Active window :: quiet accent border</span></div></div>
   <div style="display:grid;grid-template-rows:1fr 1fr;gap:12px;min-height:0">
     <div class="k-win" id="w2" style="opacity:var(--dim-inactive)"><div class="k-win-body"><span class="k-muted">Inactive :: grey border</span></div></div>
     <div class="k-win"><div class="k-titlebar"><b>Bootstick</b><span>Write the installer to a USB stick</span><button aria-label="Minimize">''' + I('minus') + r'''</button><button aria-label="Maximize">''' + I('square') + r'''</button><button aria-label="Close" data-close>''' + I('x') + r'''</button></div><div class="k-win-body"><span class="k-muted">App title bar on Windows</span></div></div>
   </div>
 </div>''', r'''
-How a window looks. Under Hyprland the compositor draws it: 1px border, 4px corners (`radius-md`), `shadow-window`, 12px (`space-3`) between windows and to the screen edge. The active window has the red border, all others the grey one and are a touch dimmer.
+How a window looks. Under Hyprland the compositor draws it: 1px border, 4px corners (`radius-md`), `shadow-window`, 12px (`space-3`) between windows and to the screen edge. The focused window has a quiet border in the accent (`border-active`, the accent quietened toward `border`), all others the grey one and are a touch dimmer. The border eases over `dur-slow`; focus never flashes.
 
 - Tiled windows have no title bar. The border colour fades over `dur-base` when focus moves.
-- Apps that run outside Hyprland (the Windows bootstick app) draw `k-titlebar`: serif app name, a muted subtitle, then minimise, maximise, close as 40px wide targets; close turns red on hover.
+- Apps that run outside Hyprland (the Windows bootstick app) draw `k-titlebar`: serif app name, a muted subtitle, then minimise, maximise, close as 40px wide targets; close fills with the accent on hover.
 - Click a window in the preview to move focus.
 ''', js=r'''
 var wins = document.querySelectorAll('.k-win');
@@ -917,7 +922,7 @@ The desktop. Workspace 1 is empty: the engraving, the top bar on it, and the doc
 - Click the workspace dots in the bar to switch between the empty and the busy desktop. Windows slide in from the side with a fade.
 - Move the pointer to the bottom edge to bring the dock out; click its symbols to open Today, System, About, media, Wi-Fi, Bluetooth and sound.
 - Gaps: `space-3` between windows and to the screen edge; the bar takes `bar-height` at the top; at rest the dock takes no room.
-- The active window has the red border. Click another window to move focus.
+- The focused window has the quiet accent border (`border-active`). Click another window to move focus.
 - Bottom left on the empty desktop: the plate caption of the wallpaper, in the serif italic.
 ''', css=r'''
 #tiles { position: absolute; inset: 32px 12px 12px 12px; display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--space-3); transition: opacity var(--dur-slow) var(--ease-in-out), transform var(--dur-slow) var(--ease-in-out); }
@@ -948,21 +953,19 @@ screen('ThemePicker', 720, r'''
   <div id="picker">
     <div class="k-scrim" style="animation:none"></div>
     <div class="tools"><div class="k-toolbar">
-      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Grid view">''' + I('layout-grid') + r'''</button><span role="tooltip">Grid view</span></span>
-      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Preview motion">''' + I('play') + r'''</button><span role="tooltip">Preview motion</span></span>
-      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light">Light</button></div>
-      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Search themes">''' + I('search') + r'''</button><span role="tooltip">Search themes</span></span>
+      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light" disabled title="Comes later">Light</button></div>
     </div></div>
     <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
   </div>
   <button class="k-btn" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
 </div>''', r'''
-The theme picker over the dimmed desktop: a carousel of SlantCards, the name of the chosen theme in blackletter on the middle card with its variant under it, and a small toolbar above with grid view, motion preview, the variant (Dark or Light) and search.
+The theme picker (Super Ctrl Shift Space) over the dimmed desktop: a carousel of SlantCards with every theme of the theme engine, the chosen one in the middle with its name in blackletter and its variant under it, and above it the variant (Dark or Light).
 
-- Browse with the arrow keys, the wheel or a click on a neighbour. Enter or a click on the middle card applies.
+- Themes today: Strix, the default, shown with the plate of the god on the desktop (its gods and their aspects are chosen in the pantheon, not here), and Neutral, plain black and red, there to test the change of theme. A new theme in `themes/` appears here on its own.
+- Light is greyed out until the light variant exists.
+- Browse with the arrow keys, the wheel or a click on a neighbour; Enter or a click on the middle card applies. The keys are on the cheat sheet, not on the screen.
 - Applying: the new wallpaper spreads as a growing circle from the click point over `dur-reveal`; when it covers the screen the picker fades out.
 - Everything except the middle card is dimmed, so the name is the one thing to read.
-- The cards other than Strix, Neutral and Chamber are sample data.
 ''', css=r'''
 #picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
 #picker[data-out] { opacity: 0; pointer-events: none; }
@@ -974,7 +977,7 @@ The theme picker over the dimmed desktop: a carousel of SlantCards, the name of 
 ''', js=ART + r'''
 (function () {
   var track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base'), picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
-  cards(track, 3); Kit.hydrate(document);
+  cards(track, 0); Kit.hydrate(document);
   function paint(el, t) {
     if (IMG[t[0]]) { el.innerHTML = ''; el.style.backgroundImage = 'url(' + IMG[t[0]] + ')'; }
     else { el.style.backgroundImage = 'none'; el.innerHTML = art(t[2], t[3], t[4]); }
@@ -1319,44 +1322,65 @@ Settings › Hotkeys: every action of the cheat sheet in the same groups, each w
 def sw(n):
     return '<span class="k-swatch" style="background:var(--term-%s)" title="%s"></span>' % (n, n)
 ANSI = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
-screen('Terminal', 500, r'''
-<div style="padding:12px;height:500px;background:var(--background)">
-<div class="k-win" data-active style="height:100%"><div class="k-win-body" style="background:var(--term-background);padding:16px 20px">
-<pre class="k-code" style="color:var(--term-foreground)"><span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> git log --oneline -4
-<span class="y">d207083</span> <span class="m">(</span><span class="c">HEAD -&gt; </span><span class="g">main</span><span class="m">,</span> <span class="r">origin/main</span><span class="m">)</span> ci: update flake inputs and crates every week
-<span class="y">952d81c</span> <span class="m">(</span><span class="y">tag: v0.1.0</span><span class="m">,</span> <span class="r">origin/stable</span><span class="m">)</span> release: 0.1.0
-<span class="y">7c1e0aa</span> feat(installer): ask for the language first
-<span class="y">31b9f42</span> fix(theme): keep the default splash when the variable is missing
+screen('Terminal', 720, r'''
+<div class="k-screen" data-theme="saturnus">
+  ''' + WALL(SATURNUS) + r'''
+  <div class="k-grain"></div>
+  <div style="position:absolute;inset:0 0 auto 0">''' + BAR + r'''</div>
+  <div class="k-win term" data-active>
+    <div class="k-win-body">
+      <img class="ghost" alt="" src="''' + SATURNUS + r'''">
+<pre class="k-code" style="color:var(--term-foreground)"><span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> strix-info
+<span class="m">╓</span>                                        <span class="m">╖</span>
+  <span class="p">larp</span>   <span class="i">Strix 0.1.0</span>
+  <span class="b">Kernel</span>  <span class="m">::</span> 6.18.2
+  <span class="b">Shell</span>   <span class="m">::</span> Quickshell on Hyprland
+  <span class="b">Theme</span>   <span class="m">::</span> Strix, dark
+  <span class="b">God</span>     <span class="m">::</span> <span class="pc">Saturnus</span>, for 4 more min
+  <span class="b">Disk</span>    <span class="m">::</span> 162 GiB of 952 GiB
+  <span class="sw">''' + ''.join('<i style="background:var(--term-%s)"></i>' % a for a in ANSI) + r'''</span>
+  <span class="sw">''' + ''.join('<i style="background:var(--term-bright-%s)"></i>' % a for a in ANSI) + r'''</span>
+<span class="m">╙</span>                                        <span class="m">╜</span>
 
-<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> cargo build
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> git log --oneline -3
+<span class="y">d207083</span> <span class="m">(</span><span class="c">HEAD</span> <span class="m">→</span> <span class="g">main</span><span class="m">,</span> <span class="v">origin/main</span><span class="m">)</span> ci: update flake inputs and crates every week
+<span class="y">952d81c</span> <span class="m">(</span><span class="y">tag: v0.1.0</span><span class="m">,</span> <span class="v">origin/stable</span><span class="m">)</span> release: 0.1.0
+<span class="y">7c1e0aa</span> feat(installer): ask for the language first
+
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> cargo build
 <span class="g">   Compiling</span> theme-engine v0.1.0
 <span class="rb">error[E0308]</span><span class="b">: mismatched types</span>
-  <span class="bl">--&gt;</span> src/check.rs:14:16
-   <span class="bl">|</span>
-<span class="bl">14 |</span>         return fail(4.5);
-   <span class="bl">|</span>                     <span class="rb">^^^ expected `&amp;str`, found floating-point number</span>
+  <span class="m">--&gt;</span> src/check.rs:14:16
+<span class="m">14 |</span>         return fail(4.5);
+   <span class="m">|</span>                     <span class="r">^^^ expected `&amp;str`, found floating-point number</span>
 <span class="yb">warning</span><span class="b">: unused variable: `text`</span>
 
-<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> ls
-<span class="bl b">hosts</span>  <span class="bl b">installer</span>  <span class="bl b">modules</span>  <span class="bl b">packages</span>  <span class="bl b">themes</span>  <span class="g b">build.sh</span>  <span class="c">result</span>  flake.lock  flake.nix  README.md
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> ls
+<span class="bl">hosts</span>  <span class="bl">installer</span>  <span class="bl">modules</span>  <span class="bl">packages</span>  <span class="bl">themes</span>  <span class="g">build.sh</span>  flake.lock  flake.nix  README.md
 
-<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> <span class="k-caret" style="background:var(--term-cursor)"></span></pre>
-<div class="strip">''' + ''.join(sw(a) for a in ANSI) + ''.join(sw('bright-' + a) for a in ANSI) + r'''</div>
-</div></div></div>''', r'''
-Ghostty with the theme's terminal colours: a prompt, `git log`, a compiler error and a warning, and `ls` with file-type colours. The strip at the bottom is the 16 ANSI colours, normal above bright.
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> <span class="k-caret" style="background:var(--term-cursor)"></span></pre>
+    </div>
+  </div>
+</div>''', r'''
+Ghostty in the Strix theme, tiled on the desktop under the bar: `strix-info`, `git log`, a compiler error and a warning, and `ls`.
 
-- Ground `term-background`, text `term-foreground`, a red block cursor (`term-cursor`), selection `term-selection`.
-- Red is reserved for errors and remote refs; the hash is sand, the branch sage, paths steel. Every colour holds 4.5:1 on the ground, including bright black.
-- Prompt: `user@host path branch >` with a single `>`; no symbols that need a patched font.
-- The colours are muted on purpose so the red cursor and the red of an error stay the loudest things in the window.
+- Colours: the 16 `term-` colours are muted like the rest of the system, brick, olive, brass, slate, heather, patina and old paper, each 4.5:1 or more on the ground of every god. The ground (`term-background`), the cursor and the selection follow the god's aspect; the cursor is a block in the accent.
+- The plate of the god on the desktop lies in the ground of the terminal at 6%, desaturated and anchored bottom right (Ghostty `background-image` with `background-image-opacity`), so the terminal belongs to the desktop without losing contrast.
+- Prompt: path, branch, and a single `›` in the accent. One line, no symbols that need a patched font, no colour blocks.
+- `strix-info` prints the facts as `label :: value` between the same double corner marks as InfoBlock, with the 16 colours as a strip. The motto and the wordmark stay out of the terminal.
+- Errors are `term-bright-red` and bold, warnings `term-bright-yellow`; that is the loudest the terminal gets. Font `mono` at 13px with 20px line height; padding 16px by 20px; no title bar under Hyprland.
 ''', css=r'''
-.k-code .p { color: var(--term-foreground); font-weight: 600; } .k-code .d { color: var(--term-blue); } .k-code .g { color: var(--term-green); }
-.k-code .m { color: var(--term-bright-black); } .k-code .y { color: var(--term-yellow); } .k-code .c { color: var(--term-cyan); }
+.term { position: absolute; left: 12px; right: 12px; top: 38px; bottom: 12px; }
+.term .k-win-body { position: relative; background: var(--term-background); padding: 16px 20px; }
+.term .ghost { position: absolute; right: -40px; bottom: -60px; width: 760px; opacity: 0.06; filter: grayscale(1); pointer-events: none; }
+.term pre { position: relative; margin: 0; font-size: 13px; line-height: 20px; }
+.k-code .p { color: var(--term-bright-white); font-weight: 600; } .k-code .i { color: var(--term-white); }
+.k-code .d { color: var(--term-blue); } .k-code .g { color: var(--term-green); } .k-code .pc { color: var(--term-cursor); }
+.k-code .m { color: var(--term-bright-black); } .k-code .y { color: var(--term-yellow); } .k-code .c { color: var(--term-cyan); } .k-code .v { color: var(--term-magenta); }
 .k-code .r { color: var(--term-red); } .k-code .rb { color: var(--term-bright-red); font-weight: 600; } .k-code .yb { color: var(--term-bright-yellow); font-weight: 600; }
-.k-code .bl { color: var(--term-blue); } .k-code .b { font-weight: 600; }
-.strip { display: grid; grid-template-columns: repeat(8, 1fr); margin-top: 16px; max-width: 320px; }
-.k-swatch { display: block; height: 14px; }
-''', width=960)
+.k-code .bl { color: var(--term-blue); font-weight: 600; } .k-code .b { font-weight: 600; color: var(--term-bright-white); }
+.k-code .sw { display: inline-flex; vertical-align: -2px; } .k-code .sw i { display: inline-block; width: 26px; height: 12px; }
+''')
 
 screen('BootSplash', 540, r'''
 <div style="height:540px;background:var(--background);display:flex;flex-direction:column">
@@ -1373,7 +1397,7 @@ screen('BootSplash', 540, r'''
 </div>''', r'''
 The boot splash (Plymouth): the blackletter wordmark on plain `background`, a lozenge rule, the motto, and one hair line.
 
-- Start and shut down: no percentage. A short red piece runs along the line (Progress, indeterminate).
+- Start and shut down: no percentage. A short piece in the accent runs along the line (Progress, indeterminate).
 - Disk passphrase: the line becomes the line field; typed characters show as dots.
 - Wrong passphrase: the field shakes once and the text under it reads "Wrong passphrase. Try again." in `error`.
 - Colours used: `background`, `text`, `text-muted`, `line`, `accent`, `error`. Nothing else, so the splash can be built per variant from six values.

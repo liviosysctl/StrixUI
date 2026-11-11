@@ -5,7 +5,7 @@ This system is the single source for that look on every surface: the desktop she
 ## Principles
 
 - Old and exact. The mood comes from engravings, blackletter, an old-style serif and small ornaments. The work is done in a fine monospace. Never mix the roles: nothing you operate is set in the serif, and nothing that sets the mood is set in mono.
-- One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, the active window, running progress, the cursor, and the disc on the wallpaper. Its colour belongs to the god of the moment (Strix red under Saturnus, the default), but there is only ever one. If two things carry it, one of them is wrong.
+- One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, running progress, the cursor, and the disc on the wallpaper; the focused window shows it only quietened, as `border-active`. Its colour belongs to the god of the moment (Strix red under Saturnus, the default), but there is only ever one. If two things carry it, one of them is wrong.
 - Fine, not heavy. Text is 12px, controls are 28px high, lines are one pixel, corners are 2 to 4px. When in doubt, make it thinner and leave more room around it.
 - Flat and dark. Surfaces are one step lighter than the ground and carry a hair border. No glass, no blur behind panels.
 - Lines, not fills. State is shown with a line, a border, a caret or a word before it is shown with a filled box.
@@ -31,7 +31,7 @@ This system is the single source for that look on every surface: the desktop she
 - Ground: `background` for the desktop, splash and installer; `surface` for windows, panels, cards and the dock; `surface-raised` for hover and selected rows; `surface-sunken` for wells (fields, tracks).
 - Text: `text` for what must be read, `text-muted` for secondary text and resting symbols, `text-faint` only for placeholders, line numbers, timestamps and the `::` separator.
 - The accent as a fill is `accent`, with `on-accent` on top (white on the dark accents, near-black on the light ones). The accent as text or as a symbol is `accent-text`; `accent` itself is not meant to be read as text. Hover and press of a red fill are `accent-hover` and `accent-pressed`.
-- Lines: `border` for decorative lines and inactive windows, `border-strong` for anything that carries meaning (control outlines), `line` for the cream line work of the wallpaper, bracket frames and the edge of the chosen theme card.
+- Lines: `border` for decorative lines and inactive windows, `border-active` for the focused window (the accent quietened, never the full accent), `border-strong` for anything that carries meaning (control outlines), `line` for the cream line work of the wallpaper, bracket frames and the edge of the chosen theme card.
 - Status is always a word or a symbol first. `error`, `warning`, `success` and `info` are muted and are used as text or a 1px border, never as a filled area.
 - Focus is `focus-ring` on every control: a 2px gap in `background`, then 2px of `focus`. Never the browser's blue.
 - Code uses the `syntax-` tokens; charts use `chart-1` to `chart-5` in order, and `chart-1` is the series that matters.
@@ -108,7 +108,7 @@ __GODS_TABLE__
 ## Layout of the shell
 
 - The top bar is for reading. It has no surface; small grey text and symbols sit on the engraving. Left: search and the clock, then CPU, memory, temperature. Middle: workspaces and the playing track in serif italic. Right: recording, the bell with its count, power.
-- The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short red line. When the pointer reaches the bottom edge it rises to `dock-height` (28px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
+- The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short line in the accent. When the pointer reaches the bottom edge it rises to `dock-height` (28px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
 - Search (Super Space) is the one way in to everything else: a single field over the dimmed desktop that finds apps, the actions of the system menu, settings down to a single row, and commands. With an empty field it is the system menu itself. There is no separate app launcher or system menu.
 - The clock, the bell and power exist only in the bar. Network, sound and updates exist only in the dock.
 - Notifications arrive top right under the bar. The OSD appears bottom centre.
@@ -132,7 +132,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 |---|---|---|
 | `dur-instant` | 80ms | Press feedback, menu hover |
 | `dur-fast` | 140ms | Hover, focus, tooltips, border colour |
-| `dur-base` | 220ms | Switch, segmented thumb, tabs, dialogs, list rows, window focus |
+| `dur-base` | 220ms | Switch, segmented thumb, tabs, dialogs, list rows |
 | `dur-slow` | 360ms | Panel out of the dock, carousel, windows, workspaces, rolling numbers |
 | `dur-reveal` | 640ms | Theme reveal, unlock, ring gauges |
 | `dur-loop` | 1400ms | One pass of an indeterminate line |
@@ -173,7 +173,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Progress | unknown | an 18% piece runs along the line | `dur-loop`, repeating | `ease-in-out` | stops with the state |
 | Ring | value | arc length; digits roll | `dur-reveal` | `ease-out` | retargets |
 | Rolling number | value | each digit column slides | `dur-slow` | `ease-in-out` | retargets |
-| List row | hover, select | background; the red caret slides in 4px | `dur-fast` | `ease-out` | reverses |
+| List row | hover, select | background; the caret in `accent-text` slides in 4px | `dur-fast` | `ease-out` | reverses |
 | List row | enter | 6px rise and fade, staggered | `dur-base` + `stagger` | `ease-out` | finishes |
 | List row | remove | fade and collapse | `dur-base` | `ease-in` | finishes |
 | Card | hover | border colour, 2px lift | `dur-fast` | `ease-out` | reverses |
@@ -193,14 +193,14 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Dock | pointer leaves, after 420ms | content fades, then it sinks and narrows | `dur-base`, `dur-slow` | `ease-out` | rises again |
 | Dock panel | open | scales up from the symbol that opened it; content fades in `dur-fast` later | `dur-slow` | `ease-out` | reverses from position |
 | Dock panel | close | reverse | `dur-base` | `ease-in` | reverses |
-| Dock symbol | active | fills red | `dur-fast` | `ease-out` | reverses |
+| Dock symbol | active | fills with the accent | `dur-fast` | `ease-out` | reverses |
 | Search | open (Super Space) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
 | Search | close | reverse | `dur-fast` | `ease-in` | finishes |
 | Search | enter a group, go back | the list slides 12px in from the right, going back from the left | `dur-base` | `ease-out` | the newer level wins |
 | Cheat sheet | open (Super K) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
 | Cheat sheet | edit a row | the sheet closes, Settings opens at the row; the row is marked in `accent-soft` and fades back | `dur-slow` | `ease-out` | finishes |
 | Hotkeys | record keys | the key field turns to the accent and its prompt pulses until keys are pressed | `0.9s` per pulse | `ease-in-out` | Esc cancels |
-| Search | typing | results update in place, no motion; the red caret follows the chosen row | none | none | none |
+| Search | typing | results update in place, no motion; the caret follows the chosen row | none | none | none |
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |
@@ -213,11 +213,11 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Window | open | pops from 86% and fades in | `dur-slow` | `ease-out` | closes |
 | Window | close | shrinks to 86% and fades out | `dur-base` | `ease-in` | finishes |
 | Window | move, resize, retile | position and size | `dur-slow` | `ease-in-out` | retargets |
-| Window | focus change | border colour, dimming | `dur-base` | `ease-out` | retargets |
+| Window | focus change | border eases to `border-active`, the others dim | `dur-slow` | `ease-in-out` | retargets |
 | Workspace | switch | windows slide sideways 20% with a fade | `dur-slow` | `ease-in-out` | retargets |
 | Special workspace | toggle | slides vertically with a fade | `dur-slow` | `ease-out` | reverses |
 | Shell layers | appear, disappear | fade | `dur-fast` | `ease-out` | reverses |
-| Boot splash | start, shut down | the red piece runs along the line | `dur-loop`, repeating | `ease-in-out` | none |
+| Boot splash | start, shut down | the piece in the accent runs along the line | `dur-loop`, repeating | `ease-in-out` | none |
 
 ## Compositor
 
@@ -237,7 +237,7 @@ hl.animation({ leaf = "fadeOut",          enabled = true, speed = 2.2, bezier = 
 hl.animation({ leaf = "fadeSwitch",       enabled = true, speed = 2.2, bezier = "ease-out" })
 hl.animation({ leaf = "fadeShadow",       enabled = true, speed = 2.2, bezier = "ease-out" })
 hl.animation({ leaf = "fadeDim",          enabled = true, speed = 2.2, bezier = "ease-out" })
-hl.animation({ leaf = "border",           enabled = true, speed = 2.2, bezier = "ease-out" })
+hl.animation({ leaf = "border",           enabled = true, speed = 3.6, bezier = "ease-in-out" })
 hl.animation({ leaf = "layersIn",         enabled = true, speed = 1.4, bezier = "ease-out",    style = "fade" })
 hl.animation({ leaf = "layersOut",        enabled = true, speed = 1.4, bezier = "ease-in",     style = "fade" })
 hl.animation({ leaf = "fadeLayersIn",     enabled = true, speed = 1.4, bezier = "ease-out" })
@@ -248,7 +248,7 @@ hl.animation({ leaf = "workspaces",       enabled = true, speed = 3.6, bezier = 
 hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 3.6, bezier = "ease-out",    style = "slidefadevert 20%" })
 ```
 
-Shell layers only fade at the compositor level, because the shell animates its own surfaces (a panel growing out of the dock is drawn by the shell, not by Hyprland). Window geometry to match: border 1px, rounding 4, gaps in 6 and out 12, active border `accent`, inactive border `border`, shadow range 22 with the colour of `shadow-window`, inactive opacity `dim-inactive`.
+Shell layers only fade at the compositor level, because the shell animates its own surfaces (a panel growing out of the dock is drawn by the shell, not by Hyprland). Window geometry to match: border 1px, rounding 4, gaps in 6 and out 12, active border `border-active` (the accent quietened, never the full accent), inactive border `border`, shadow range 22 with the colour of `shadow-window`, inactive opacity `dim-inactive`.
 '''
 
 SURFACES = r'''# Surfaces
@@ -261,9 +261,9 @@ How each surface takes the system. Component names, states and measurements stay
 | Windows bootstick app | Tauri, HTML | `tokens.css`, `bundle.css`, `bundle.js` as they are; WindowFrame's title bar |
 | Store | either of the two | The same components: SearchField, List, Card, Button, Progress, Badge |
 | Compositor | Hyprland | Window geometry and the animation block in the Motion section |
-| Terminal | Ghostty | `term-` colours, `mono` at 13px with 20px line height, a block cursor in `term-cursor` |
+| Terminal | Ghostty | `term-` colours, `mono` at 13px with 20px line height, a block cursor in `term-cursor`, the god's plate as `background-image` at `background-image-opacity = 0.06`, the prompt `›` in the accent |
 | Boot splash | Plymouth | `background`, `text`, `text-muted`, `line`, `accent`, `error`; the wordmark in `display`; the lozenge rule; the running line |
-| Text installer | console | `term-` colours with colour 0 as `background` and colour 7 as `term-foreground`; red for the current step and the logo, white only for what the person types |
+| Text installer | console | `term-` colours with colour 0 as `background` and colour 7 as `term-foreground`; the accent for the current step and the logo, white only for what the person types |
 
 ## Sizes on a 2560 by 1440 screen at scale 1
 

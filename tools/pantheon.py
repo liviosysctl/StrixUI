@@ -103,7 +103,18 @@ def _lighten_to(fg, bg, minimum, H, C, L):
         L += 0.01; c = oklch(L, C, H)
     return c
 
+def _border_active(t):
+    """The border of the focused window: the accent, quietened toward the border, so focus shows without glowing."""
+    La, Ca, Ha = to_oklch(t['accent'])
+    Lb = to_oklch(t['border'])[0]
+    return oklch(Lb + 0.38 * (La - Lb), Ca * 0.5, Ha)
+
 def aspect(name):
+    t = _aspect(name)
+    t['border-active'] = _border_active(t)
+    return t
+
+def _aspect(name):
     acc = dict((g[0], g[2]) for g in GODS)[name]
     if name == DEFAULT:
         return dict(BASE)
@@ -148,6 +159,7 @@ def checks(name, t):
         rows.append((name, 'on-accent', k, contrast(t['on-accent'], t[k]), 4.5))
     rows.append((name, 'term text', 'selection', contrast('#e6e0d4', t['selection']), 4.5))
     rows.append((name, 'cursor', 'background', contrast(t['cursor'], t['background']), 3))
+    rows.append((name, 'border-active', 'background', contrast(t['border-active'], t['background']), 1.8))
     return rows
 
 def all_aspects():

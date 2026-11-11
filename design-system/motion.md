@@ -8,7 +8,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 |---|---|---|
 | `dur-instant` | 80ms | Press feedback, menu hover |
 | `dur-fast` | 140ms | Hover, focus, tooltips, border colour |
-| `dur-base` | 220ms | Switch, segmented thumb, tabs, dialogs, list rows, window focus |
+| `dur-base` | 220ms | Switch, segmented thumb, tabs, dialogs, list rows |
 | `dur-slow` | 360ms | Panel out of the dock, carousel, windows, workspaces, rolling numbers |
 | `dur-reveal` | 640ms | Theme reveal, unlock, ring gauges |
 | `dur-loop` | 1400ms | One pass of an indeterminate line |
@@ -49,7 +49,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Progress | unknown | an 18% piece runs along the line | `dur-loop`, repeating | `ease-in-out` | stops with the state |
 | Ring | value | arc length; digits roll | `dur-reveal` | `ease-out` | retargets |
 | Rolling number | value | each digit column slides | `dur-slow` | `ease-in-out` | retargets |
-| List row | hover, select | background; the red caret slides in 4px | `dur-fast` | `ease-out` | reverses |
+| List row | hover, select | background; the caret in `accent-text` slides in 4px | `dur-fast` | `ease-out` | reverses |
 | List row | enter | 6px rise and fade, staggered | `dur-base` + `stagger` | `ease-out` | finishes |
 | List row | remove | fade and collapse | `dur-base` | `ease-in` | finishes |
 | Card | hover | border colour, 2px lift | `dur-fast` | `ease-out` | reverses |
@@ -69,14 +69,14 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Dock | pointer leaves, after 420ms | content fades, then it sinks and narrows | `dur-base`, `dur-slow` | `ease-out` | rises again |
 | Dock panel | open | scales up from the symbol that opened it; content fades in `dur-fast` later | `dur-slow` | `ease-out` | reverses from position |
 | Dock panel | close | reverse | `dur-base` | `ease-in` | reverses |
-| Dock symbol | active | fills red | `dur-fast` | `ease-out` | reverses |
+| Dock symbol | active | fills with the accent | `dur-fast` | `ease-out` | reverses |
 | Search | open (Super Space) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
 | Search | close | reverse | `dur-fast` | `ease-in` | finishes |
 | Search | enter a group, go back | the list slides 12px in from the right, going back from the left | `dur-base` | `ease-out` | the newer level wins |
 | Cheat sheet | open (Super K) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
 | Cheat sheet | edit a row | the sheet closes, Settings opens at the row; the row is marked in `accent-soft` and fades back | `dur-slow` | `ease-out` | finishes |
 | Hotkeys | record keys | the key field turns to the accent and its prompt pulses until keys are pressed | `0.9s` per pulse | `ease-in-out` | Esc cancels |
-| Search | typing | results update in place, no motion; the red caret follows the chosen row | none | none | none |
+| Search | typing | results update in place, no motion; the caret follows the chosen row | none | none | none |
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |
@@ -89,11 +89,11 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Window | open | pops from 86% and fades in | `dur-slow` | `ease-out` | closes |
 | Window | close | shrinks to 86% and fades out | `dur-base` | `ease-in` | finishes |
 | Window | move, resize, retile | position and size | `dur-slow` | `ease-in-out` | retargets |
-| Window | focus change | border colour, dimming | `dur-base` | `ease-out` | retargets |
+| Window | focus change | border eases to `border-active`, the others dim | `dur-slow` | `ease-in-out` | retargets |
 | Workspace | switch | windows slide sideways 20% with a fade | `dur-slow` | `ease-in-out` | retargets |
 | Special workspace | toggle | slides vertically with a fade | `dur-slow` | `ease-out` | reverses |
 | Shell layers | appear, disappear | fade | `dur-fast` | `ease-out` | reverses |
-| Boot splash | start, shut down | the red piece runs along the line | `dur-loop`, repeating | `ease-in-out` | none |
+| Boot splash | start, shut down | the piece in the accent runs along the line | `dur-loop`, repeating | `ease-in-out` | none |
 
 ## Compositor
 
@@ -113,7 +113,7 @@ hl.animation({ leaf = "fadeOut",          enabled = true, speed = 2.2, bezier = 
 hl.animation({ leaf = "fadeSwitch",       enabled = true, speed = 2.2, bezier = "ease-out" })
 hl.animation({ leaf = "fadeShadow",       enabled = true, speed = 2.2, bezier = "ease-out" })
 hl.animation({ leaf = "fadeDim",          enabled = true, speed = 2.2, bezier = "ease-out" })
-hl.animation({ leaf = "border",           enabled = true, speed = 2.2, bezier = "ease-out" })
+hl.animation({ leaf = "border",           enabled = true, speed = 3.6, bezier = "ease-in-out" })
 hl.animation({ leaf = "layersIn",         enabled = true, speed = 1.4, bezier = "ease-out",    style = "fade" })
 hl.animation({ leaf = "layersOut",        enabled = true, speed = 1.4, bezier = "ease-in",     style = "fade" })
 hl.animation({ leaf = "fadeLayersIn",     enabled = true, speed = 1.4, bezier = "ease-out" })
@@ -124,4 +124,4 @@ hl.animation({ leaf = "workspaces",       enabled = true, speed = 3.6, bezier = 
 hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 3.6, bezier = "ease-out",    style = "slidefadevert 20%" })
 ```
 
-Shell layers only fade at the compositor level, because the shell animates its own surfaces (a panel growing out of the dock is drawn by the shell, not by Hyprland). Window geometry to match: border 1px, rounding 4, gaps in 6 and out 12, active border `accent`, inactive border `border`, shadow range 22 with the colour of `shadow-window`, inactive opacity `dim-inactive`.
+Shell layers only fade at the compositor level, because the shell animates its own surfaces (a panel growing out of the dock is drawn by the shell, not by Hyprland). Window geometry to match: border 1px, rounding 4, gaps in 6 and out 12, active border `border-active` (the accent quietened, never the full accent), inactive border `border`, shadow range 22 with the colour of `shadow-window`, inactive opacity `dim-inactive`.

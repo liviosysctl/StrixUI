@@ -43,6 +43,7 @@ USAGE = {
  'surface-raised': 'Hover and selected rows, tooltips, the cover of a media card. One step above surface.',
  'surface-sunken': 'Wells: text fields, switch track, segmented track.',
  'border-strong': 'Borders that carry meaning: controls, secondary buttons, tooltips. 3.2:1 or more on every surface.',
+ 'border-active': 'The border of the focused window: the accent quietened toward border, so focus shows without glowing. About 2:1 on background; inactive windows are dimmed as well, so focus never rests on this colour alone.',
  'text-faint': 'Placeholders, line numbers, timestamps, the :: separator. 3.6:1 or more: never for text a person must read.',
  'accent-hover': 'Primary button under the pointer.',
  'accent-pressed': 'Primary button while pressed.',
@@ -66,7 +67,7 @@ USAGE = {
  'chart-4': 'Charts: fourth series.',
  'chart-5': 'Charts: fifth series. Series differ in lightness, so they hold without colour.',
 }
-ORDER = ['background', 'surface', 'surface-raised', 'surface-sunken', 'border', 'border-strong', 'line', 'scrim',
+ORDER = ['background', 'surface', 'surface-raised', 'surface-sunken', 'border', 'border-strong', 'border-active', 'line', 'scrim',
          'text', 'text-muted', 'text-faint', 'accent', 'accent-hover', 'accent-pressed', 'accent-soft', 'accent-text', 'on-accent', 'focus',
          'error', 'warning', 'success', 'info',
          'syntax-keyword', 'syntax-string', 'syntax-number', 'syntax-function', 'syntax-type', 'syntax-constant', 'syntax-comment', 'syntax-operator',
@@ -75,6 +76,7 @@ C['scrim'] = '#000000b8'
 TERM_USAGE = {'background': 'Terminal ground.', 'foreground': 'Terminal text.', 'cursor': 'Terminal cursor, a block.', 'selection': 'Terminal selection ground; foreground stays readable on it.'}
 
 ASPECTS = pantheon.all_aspects()
+C['border-active'] = ASPECTS[pantheon.DEFAULT]['border-active']
 GOD_IDS = [g[0] for g in pantheon.GODS]
 
 def per_god(token, base):
@@ -167,8 +169,8 @@ def tokens():
         'duration': fam([
             ('dur-instant', '80ms', 'Press feedback, menu hover.'),
             ('dur-fast', '140ms', 'Hover, focus, tooltips, small fades, border colour.'),
-            ('dur-base', '220ms', 'Switch, segmented thumb, tab change, dialogs, list items entering, window focus.'),
-            ('dur-slow', '360ms', 'Panel growing out of the pill, carousel, windows opening and moving, workspace change, rolling numbers.'),
+            ('dur-base', '220ms', 'Switch, segmented thumb, tab change, dialogs, list items entering.'),
+            ('dur-slow', '360ms', 'Panel growing out of the pill, carousel, windows opening and moving, window focus, workspace change, rolling numbers.'),
             ('dur-reveal', '640ms', 'Circular reveal of a new theme, unlocking, ring gauges filling.'),
             ('dur-loop', '1400ms', 'One pass of an indeterminate progress line.'),
             ('god-cycle', '600s', 'How often the god of the desktop changes by itself, unless kept in the pantheon.'),

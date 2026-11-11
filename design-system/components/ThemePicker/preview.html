@@ -18,10 +18,7 @@
   <div id="picker">
     <div class="k-scrim" style="animation:none"></div>
     <div class="tools"><div class="k-toolbar">
-      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Grid view"><i class="k-icon" data-icon="layout-grid"></i></button><span role="tooltip">Grid view</span></span>
-      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Preview motion"><i class="k-icon" data-icon="play"></i></button><span role="tooltip">Preview motion</span></span>
-      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light">Light</button></div>
-      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Search themes"><i class="k-icon" data-icon="search"></i></button><span role="tooltip">Search themes</span></span>
+      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light" disabled title="Comes later">Light</button></div>
     </div></div>
     <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
   </div>
@@ -34,7 +31,7 @@ function art(bg, disc, line) {
   return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
 }
 function pic(t) { return IMG[t[0]] ? '<img alt="" src="' + IMG[t[0]] + '">' : art(t[2], t[3], t[4]); }
-var THEMES = [['Paper', 'light', '#ece6da', '#1b1917', '#55504a'], ['Slate', 'dark', '#16191d', '#8ea8c8', '#8a8f96'], ['Chamber', 'lights off', '#2a2d32', '#f2f3f5', '#9aa0a8'], ['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a'], ['Moss', 'dark', '#0f1410', '#8fb894', '#7d8a7e'], ['Ember', 'dark', '#140d0a', '#d99a6c', '#8a7a6c']];
+var THEMES = [['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a']];
 function cards(track, sel) {
   track.innerHTML = THEMES.map(function (t, i) {
     return '<button class="k-slant" data-value="' + t[0] + '" aria-selected="' + (i === sel) + '" aria-label="' + t[0] + ' theme"><span class="k-slant-art">' + pic(t) + '</span><span class="k-slant-edge"></span><span class="k-slant-name">' + t[0] + '<small>' + t[1] + '</small></span></button>';
@@ -43,7 +40,7 @@ function cards(track, sel) {
 
 (function () {
   var track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base'), picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
-  cards(track, 3); Kit.hydrate(document);
+  cards(track, 0); Kit.hydrate(document);
   function paint(el, t) {
     if (IMG[t[0]]) { el.innerHTML = ''; el.style.backgroundImage = 'url(' + IMG[t[0]] + ')'; }
     else { el.style.backgroundImage = 'none'; el.innerHTML = art(t[2], t[3], t[4]); }
