@@ -1,0 +1,904 @@
+# Component and screen previews. Each entry: name, group, height, html, js, doc (+ css, width).
+def I(n, cls=''):
+    return '<i class="k-icon%s" data-icon="%s"></i>' % ((' ' + cls) if cls else '', n)
+
+BLOBS = {'b2e6a0104f7e93c6279bd62bc5401d27': 'apollo-belvedere.jpg', '21cb600de026124bb045c788de08e01c': 'laocoon.jpg', '072dd02cd62436020d9de9367ad4935b': 'hercules.jpg'}
+APOLLO, LAOCOON, HERCULES = ['/_blob/' + k for k in BLOBS]
+def WALL(url, extra='', pos='center'):
+    return '<div class="k-wall"%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
+COMPONENTS = []
+def comp(name, group, height, html, doc, js='', css='', width=None):
+    COMPONENTS.append(dict(name=name, group=group, height=height, html=html, doc=doc, js=js, css=css, width=width))
+
+# ------------------------------------------------------------------ Actions
+comp('Button', 'Actions', 110, r'''
+<div class="k-stage">
+  <button class="k-btn k-btn-primary"><span>Install</span></button>
+  <button class="k-btn"><span>Details</span></button>
+  <button class="k-btn k-btn-quiet"><span>Cancel</span></button>
+  <button class="k-btn k-btn-danger">''' + I('trash-2') + r'''<span>Erase disk</span></button>
+  <button class="k-btn k-btn-primary" disabled><span>Install</span></button>
+  <button class="k-btn k-btn-primary" data-loading id="load"><span>Checking</span></button>
+  <button class="k-btn k-btn-sm"><span>Check</span></button>
+  <button class="k-btn" style="max-width:190px"><span>A label that is far too long for its button</span></button>
+</div>''', r'''
+The one way to trigger an action. `k-btn-primary` (red) appears at most once per view, for the thing the view is for. Plain `k-btn` is the secondary action, `k-btn-quiet` is for cancel and dismiss, `k-btn-danger` for actions that destroy data.
+
+- Markup: `<button class="k-btn k-btn-primary"><span>Install</span></button>`. Put the label in a `span` so long text truncates.
+- Labels: sentence case, a verb first. "Install", "Check", "Erase disk".
+- Loading: set `data-loading`; a short piece runs along the bottom edge. Keep the label, change its wording ("Checking").
+- Disabled: the `disabled` attribute. Never hide a button that will come back.
+- Do not put two primary buttons side by side, and do not use red for anything that is not the main action.
+''', js=r'''
+document.getElementById('load').addEventListener('click', function () { this.toggleAttribute('data-loading'); });
+''')
+
+comp('IconButton', 'Actions', 90, r'''
+<div class="k-stage">
+  <span class="k-tip"><button class="k-iconbtn" aria-label="Settings">''' + I('settings') + r'''</button><span role="tooltip">Settings</span></span>
+  <button class="k-iconbtn" aria-label="Play" aria-pressed="false" id="pp">''' + I('play') + r'''</button>
+  <button class="k-iconbtn k-iconbtn-danger" aria-label="Power">''' + I('power') + r'''</button>
+  <button class="k-iconbtn k-iconbtn-sm" aria-label="Close">''' + I('x') + r'''</button>
+  <button class="k-iconbtn" aria-label="Copy" disabled>''' + I('copy') + r'''</button>
+</div>''', r'''
+A square button that carries one symbol. Always give it an `aria-label`, and a Tooltip when the symbol alone could be misread.
+
+- Sizes: 36px (`k-iconbtn`) and 28px (`k-iconbtn-sm`, inside dense panels).
+- Toggle: set `aria-pressed`; pressed turns the symbol red. Swap the symbol too (play and pause).
+- `k-iconbtn-danger` is reserved for power.
+''', js=r'''
+var pp = document.getElementById('pp');
+pp.addEventListener('click', function () {
+  var on = pp.getAttribute('aria-pressed') !== 'true';
+  pp.setAttribute('aria-pressed', on);
+  pp.querySelector('.k-icon').innerHTML = Kit.icon(on ? 'pause' : 'play');
+});
+''')
+
+# ------------------------------------------------------------------ Inputs
+comp('TextField', 'Inputs', 210, r'''
+<div class="k-stage" style="align-items:flex-start">
+  <div class="k-field"><label for="a">Host name</label><div class="k-input"><input id="a" value="larp"></div><span class="k-help">Lowercase letters, digits and hyphens.</span></div>
+  <div class="k-field"><label for="b">Passphrase</label><div class="k-input k-input-pill"><input id="b" type="password" value="hunter22"><button class="k-iconbtn k-iconbtn-sm" aria-label="Show passphrase" id="eye">''' + I('eye') + r'''</button></div><span class="k-help"></span></div>
+  <div class="k-field"><label for="c">Password</label><div class="k-input k-input-line"><input id="c" type="password" placeholder="Type to unlock"></div><span class="k-help"></span></div>
+  <div class="k-field" data-state="error"><label for="d">Host name</label><div class="k-input"><input id="d" value="My PC" aria-invalid="true"></div><span class="k-help">Spaces are not allowed.</span></div>
+  <div class="k-field" data-state="disabled"><label for="e">Disk</label><div class="k-input"><input id="e" value="/dev/nvme0n1" disabled></div><span class="k-help"></span></div>
+  <div class="k-field"><label for="f">Empty</label><div class="k-input"><input id="f" placeholder="Nothing typed yet"></div><span class="k-help"></span></div>
+</div>''', r'''
+One line of text. Three shapes share one behaviour: `k-input` (box, the default in apps), `k-input-pill` (search and the greeter), `k-input-line` (the lock screen: only a bottom line).
+
+- Structure: `.k-field` > `label`, `.k-input` > `input`, `.k-help`. The help line keeps its height so the layout does not jump when an error appears.
+- Error: `data-state="error"` on the field and `aria-invalid` on the input. The help text says what is wrong and how to fix it.
+- Passwords: `type="password"`; dots are spaced. A wrong password adds the class `k-shake` to the `.k-input` once.
+- Focus turns the border to `focus` and adds the ring.
+''', js=r'''
+document.getElementById('eye').addEventListener('click', function () {
+  var i = document.getElementById('b'), show = i.type === 'password';
+  i.type = show ? 'text' : 'password';
+  this.querySelector('.k-icon').innerHTML = Kit.icon(show ? 'eye-off' : 'eye');
+});
+''')
+
+comp('SearchField', 'Inputs', 90, r'''
+<div class="k-stage">
+  <div class="k-field" style="width:340px"><div class="k-input k-input-pill">''' + I('search') + r'''<input aria-label="Search apps" placeholder="Search apps" value="fire"><span class="k-kbd">Esc</span></div></div>
+</div>''', r'''
+A pill field with the search symbol in front. Used by the app finder, the clipboard history, the store and settings.
+
+- Results update while typing; there is no search button.
+- Show the key that closes or clears it as a `k-kbd` hint at the end.
+- Give the input an `aria-label`; there is no visible label.
+''')
+
+comp('Switch', 'Inputs', 80, r'''
+<div class="k-stage">
+  <label class="k-switch"><input type="checkbox" checked><span></span>24-hour clock</label>
+  <label class="k-switch"><input type="checkbox"><span></span>Greeting</label>
+  <label class="k-switch"><input type="checkbox" checked disabled><span></span>Locked on</label>
+</div>''', r'''
+On or off, applied at once. Use it for settings that take effect immediately; use Checkbox inside forms that are confirmed with a button.
+
+- Markup: `<label class="k-switch"><input type="checkbox"><span></span>Label</label>`.
+- The thumb slides with `ease-spring` and stretches slightly while pressed. On is red.
+- Space toggles it; the ring sits on the track.
+''')
+
+comp('Checkbox', 'Inputs', 80, r'''
+<div class="k-stage">
+  <label class="k-check"><input type="checkbox" checked><span></span>Encrypt the disk</label>
+  <label class="k-check"><input type="checkbox"><span></span>Enable hibernation</label>
+  <label class="k-check"><input type="checkbox" disabled><span></span>Not available</label>
+</div>''', r'''
+A choice that is confirmed later, with the form's button. Several may be on at once.
+
+- Markup: `<label class="k-check"><input type="checkbox"><span></span>Label</label>`.
+- The mark is a small filled square that pops in; the box fills red.
+''')
+
+comp('Radio', 'Inputs', 80, r'''
+<div class="k-stage">
+  <label class="k-check"><input type="radio" name="r" checked><span></span>English (US)</label>
+  <label class="k-check"><input type="radio" name="r"><span></span>Deutsch</label>
+  <label class="k-check"><input type="radio" name="r"><span></span>Français</label>
+  <label class="k-check"><input type="radio" name="r"><span></span>Italiano</label>
+</div>''', r'''
+One of several, when all options should stay visible and there are more than four, or the labels are long. For two to four short options use Segmented.
+
+- Markup: the Checkbox markup with `type="radio"` and a shared `name`.
+- Arrow keys move the choice inside the group.
+''')
+
+comp('Segmented', 'Inputs', 90, r'''
+<div class="k-stage">
+  <div class="k-seg" aria-label="Variant"><button aria-selected="true">Dark</button><button>Light</button></div>
+  <div class="k-seg" aria-label="Clock style"><button>Large</button><button aria-selected="true">Stacked</button><button>Minimal</button></div>
+  <div class="k-seg" aria-label="Section"><button aria-selected="true">''' + I('calendar') + r'''Today</button><button>''' + I('gauge') + r'''System</button><button>''' + I('info') + r'''About</button></div>
+</div>''', r'''
+Two to four short options, one always chosen. Also the tab switch at the top of a panel.
+
+- Markup: `<div class="k-seg"><button aria-selected="true">Dark</button><button>Light</button></div>`. `Kit.hydrate()` adds the thumb.
+- The labels never move: every label has the same weight in both states. Only the red thumb glides (`dur-base`, `ease-in-out`).
+- As tabs: `data-for="#id"` points at a `.k-tabs` container; its sections switch with a short slide in the direction of travel.
+- Listens to `change` with `detail.index` and `detail.value`. Left and right arrows move the choice.
+''')
+
+comp('Slider', 'Inputs', 110, r'''
+<div class="k-stage-col">
+  <label class="k-slider">''' + I('volume-2') + r'''<input type="range" min="0" max="100" value="62" data-unit="%" aria-label="Volume"><output></output></label>
+  <label class="k-slider">''' + I('sun') + r'''<input type="range" min="0" max="100" value="35" data-unit="%" aria-label="Brightness"><output></output></label>
+</div>''', r'''
+A value on a range: volume, brightness, blur, timeouts.
+
+- Markup: `<label class="k-slider"><i class="k-icon" data-icon="volume-2"></i><input type="range"><output></output></label>`.
+- A 2px line, red up to the value, with a narrow cream handle. The number at the end follows the handle; `data-unit` adds the unit.
+- Arrow keys step by one.
+''')
+
+# ------------------------------------------------------------------ Feedback
+comp('Progress', 'Feedback', 100, r'''
+<div class="k-stage" style="align-items:flex-start">
+  <div class="k-progress-row"><div><b>Writing image</b><span id="pv">0%</span></div><div class="k-progress" id="p" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>
+  <div class="k-progress-row"><div><b>Looking for updates</b><span></span></div><div class="k-progress" data-indeterminate role="progressbar"><i></i></div></div>
+  <button class="k-btn k-btn-sm" id="again"><span>Run again</span></button>
+</div>''', r'''
+How far something is, as a 2px line. With a known amount the red part grows; without one, a short red piece runs along the line.
+
+- Markup: `<div class="k-progress" style="--p:40%"><i></i></div>`; unknown amount: add `data-indeterminate`.
+- Say what is happening in words above the line (`k-progress-row`), with the number at the right.
+- The boot splash uses the indeterminate form only.
+''', js=r'''
+var p = document.getElementById('p'), pv = document.getElementById('pv'), v = 0, timer;
+function run() { clearInterval(timer); v = 0; timer = setInterval(function () { v = Math.min(100, v + 4 + Math.random() * 9); p.style.setProperty('--p', v + '%'); p.setAttribute('aria-valuenow', Math.round(v)); pv.textContent = Math.round(v) + '%'; if (v >= 100) clearInterval(timer); }, 380); }
+document.getElementById('again').addEventListener('click', run); run();
+''')
+
+comp('Ring', 'Feedback', 130, r'''
+<div class="k-stage">
+  <div class="k-ringset"><div class="k-ring" data-value="12"></div>CPU</div>
+  <div class="k-ringset"><div class="k-ring" data-value="38"></div>GPU</div>
+  <div class="k-ringset"><div class="k-ring" data-value="71"></div>RAM</div>
+  <button class="k-btn k-btn-sm" id="shuffle"><span>New values</span></button>
+</div>''', r'''
+A share of a whole at a glance: load, memory, battery. Three side by side in the System panel.
+
+- Markup: `<div class="k-ring" data-value="38"></div>`; update with `Kit.ring(el, value)`.
+- The arc fills over `dur-reveal`; the number rolls digit by digit.
+- Always put the name under it. The ring alone says nothing.
+''', js=r'''
+document.getElementById('shuffle').addEventListener('click', function () {
+  Array.prototype.forEach.call(document.querySelectorAll('.k-ring'), function (r) { Kit.ring(r, Math.round(Math.random() * 100)); });
+});
+''')
+
+comp('Badge', 'Feedback', 80, r'''
+<div class="k-stage">
+  <span class="k-badge">Installed</span>
+  <span class="k-badge k-badge-accent">Update</span>
+  <span class="k-badge k-badge-error">''' + I('circle-alert') + r'''Offline</span>
+  <span class="k-badge k-badge-count">3</span>
+  <span class="k-muted" style="font-size:12px"><span class="k-dot k-dot-live"></span> Recording</span>
+</div>''', r'''
+One or two words of state beside a name, or a count.
+
+- `k-badge` outlined grey for neutral state, `k-badge-accent` filled red for the one thing that wants attention, `k-badge-error` with a symbol for a fault, `k-badge-count` for numbers.
+- A badge is words, not a colour code: never rely on its colour alone.
+- `k-dot` is the 6px red dot for "live" (recording); `k-dot-live` lets it breathe.
+''')
+
+comp('Tooltip', 'Feedback', 110, r'''
+<div class="k-stage" style="padding:48px 24px 24px 96px">
+  <span class="k-tip" data-open><button class="k-iconbtn" aria-label="Wi-Fi">''' + I('wifi') + r'''</button><span role="tooltip">Wi-Fi :: Fibernet</span></span>
+  <span class="k-tip"><button class="k-btn"><span>Hover me</span></button><span role="tooltip">Appears after a short wait</span></span>
+</div>''', r'''
+The name of a control that shows only a symbol, or one extra fact about it.
+
+- Markup: wrap the control in `.k-tip` and add `<span role="tooltip">…</span>`.
+- Appears above after `dur-slow` of hover or on keyboard focus, and leaves at once.
+- One short line. Nothing a person needs in order to proceed belongs in a tooltip.
+''')
+
+comp('Notification', 'Feedback', 230, r'''
+<div class="k-stage" style="align-items:flex-start">
+  <div class="k-notif-stack" id="stack">
+    <div class="k-notif k-surface">''' + I('download') + r'''<div><b>Update ready</b><p>Version 0.2.0 has been downloaded. It is applied the next time you restart.</p></div><time>21:04</time><footer><button class="k-btn k-btn-sm"><span>Restart</span></button><button class="k-btn k-btn-sm k-btn-quiet" data-x><span>Later</span></button></footer></div>
+    <div class="k-notif k-surface" data-urgency="critical">''' + I('triangle-alert') + r'''<div><b>Disk almost full</b><p>Less than 2 GiB left on /home.</p></div><time>21:06</time></div>
+  </div>
+  <button class="k-btn k-btn-sm" id="send"><span>Send one</span></button>
+</div>''', r'''
+A message from the system or an app, top right under the bar.
+
+- Parts: symbol, bold title, up to three lines of text, time, optional actions in a footer.
+- Normal messages leave after a few seconds. `data-urgency="critical"` gets a red border, a red symbol and a draining line, and stays until dismissed.
+- Enters from the right (`k-notif-in`), leaves to the right (`Kit.dismiss(el)`); the rest of the stack closes the gap.
+- Title: what happened. Text: what it means or what to do. No exclamation marks.
+''', js=r'''
+var stack = document.getElementById('stack'), n = 0;
+var samples = [['clipboard', 'Copied', 'Screenshot saved to the clipboard.'], ['bluetooth', 'Headphones connected', 'Battery at 80%.'], ['package', 'Installed', 'The app is ready in the app finder.']];
+function bind(el) { var x = el.querySelector('[data-x]'); if (x) x.addEventListener('click', function () { Kit.dismiss(el); }); }
+Array.prototype.forEach.call(stack.children, bind);
+document.getElementById('send').addEventListener('click', function () {
+  var s = samples[n++ % samples.length], el = document.createElement('div');
+  el.className = 'k-notif k-surface k-notif-in';
+  el.innerHTML = '<i class="k-icon">' + Kit.icon(s[0]) + '</i><div><b>' + s[1] + '</b><p>' + s[2] + '</p></div><time>now</time>';
+  stack.insertBefore(el, stack.firstChild);
+  setTimeout(function () { Kit.dismiss(el); }, 4000);
+});
+''')
+
+comp('Osd', 'Feedback', 90, r'''
+<div class="k-stage">
+  <div class="k-osd k-surface" id="osd">''' + I('volume-2') + r'''<div class="k-progress" style="--p:62%"><i></i></div><output>62</output></div>
+  <button class="k-btn k-btn-sm" id="dn"><span>Volume down</span></button><button class="k-btn k-btn-sm" id="up"><span>Volume up</span></button>
+</div>''', r'''
+The answer to a hardware key: volume, brightness, mute. A pill at the bottom centre, above the dock.
+
+- Parts: symbol, line, number. It never takes focus and leaves by itself after 1.5 seconds.
+- The line follows the keys with `dur-fast` so repeated presses feel direct.
+''', js=r'''
+var val = 62, osd = document.getElementById('osd');
+function set(d) { val = Math.max(0, Math.min(100, val + d)); osd.querySelector('.k-progress').style.setProperty('--p', val + '%'); osd.querySelector('output').textContent = val; }
+document.getElementById('dn').addEventListener('click', function () { set(-5); });
+document.getElementById('up').addEventListener('click', function () { set(5); });
+''')
+
+comp('Dialog', 'Feedback', 260, r'''
+<div style="position:relative;height:260px">
+  <div class="k-stage"><button class="k-btn" id="open"><span>Open dialog</span></button></div>
+  <div class="k-scrim" id="scrim"><div class="k-dialog k-surface" role="dialog" aria-modal="true" aria-labelledby="dt">
+    <h3 id="dt">Erase this disk?</h3>
+    <p>Everything on /dev/nvme0n1 (512 GiB) will be deleted. This cannot be undone.</p>
+    <footer><button class="k-btn k-btn-quiet" id="no"><span>Cancel</span></button><button class="k-btn k-btn-danger" id="yes"><span>Erase disk</span></button></footer>
+  </div></div>
+</div>''', r'''
+A question that must be answered before anything else. Rare: only for actions that cannot be undone, or that end the session.
+
+- Parts: a serif title that is the question, one or two sentences that name the consequence, actions bottom right with the safe one first.
+- The button repeats the verb of the title ("Erase disk"), never "OK" or "Yes".
+- Opens with a fade of the `scrim` and a small rise; Escape and the quiet button close it. Focus starts on the safe action.
+''', js=r'''
+var scrim = document.getElementById('scrim');
+function close() { scrim.style.display = 'none'; document.getElementById('open').focus(); }
+function open() { scrim.style.display = 'grid'; document.getElementById('no').focus({ preventScroll: true }); }
+document.getElementById('open').addEventListener('click', open);
+document.getElementById('no').addEventListener('click', close);
+document.getElementById('yes').addEventListener('click', close);
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+''')
+
+# ------------------------------------------------------------------ Data
+comp('List', 'Data', 230, r'''
+<div class="k-stage" style="align-items:flex-start">
+  <ul class="k-list k-surface" role="listbox" aria-label="Apps" id="list" tabindex="0">
+    <li class="k-row k-enter" style="--i:0" role="option" aria-selected="true">''' + I('app-window') + r'''<span class="k-grow"><b>Fire</b>fox</span><small>Browser</small></li>
+    <li class="k-row k-enter" style="--i:1" role="option">''' + I('folder') + r'''<span class="k-grow"><b>Fi</b>les</span><small>File manager</small></li>
+    <li class="k-row k-enter" style="--i:2" role="option">''' + I('terminal') + r'''<span class="k-grow">Ghostty</span><small>Terminal</small></li>
+    <li class="k-row k-enter" style="--i:3" role="option">''' + I('settings') + r'''<span class="k-grow">A setting with a name so long that it has to be cut off at the end</span><small>Settings</small></li>
+    <li class="k-row k-enter" style="--i:4" role="option" aria-disabled="true">''' + I('package') + r'''<span class="k-grow">Store</span><small>Offline</small></li>
+  </ul>
+  <div class="k-list k-surface" style="width:220px"><div class="k-empty">Nothing copied yet.</div></div>
+</div>''', r'''
+Rows to pick from: app finder results, clipboard history, networks, devices.
+
+- A row: symbol, name (`k-grow`, truncates), a faint note at the end.
+- The chosen row gets a raised ground and a red `>` in front, like a cursor in a terminal. No coloured stripe.
+- Rows enter one after another: class `k-enter` with `--i` as the position (`stagger` apart).
+- Up and down move the choice, Enter takes it. Matching letters of a search are bold.
+- Empty: one calm sentence in `k-empty`.
+''', js=r'''
+var list = document.getElementById('list'), rows = Array.prototype.filter.call(list.children, function (r) { return r.getAttribute('aria-disabled') !== 'true'; }), cur = 0;
+function pick(i) { cur = (i + rows.length) % rows.length; Array.prototype.forEach.call(list.children, function (r) { r.setAttribute('aria-selected', r === rows[cur]); }); }
+rows.forEach(function (r, i) { r.addEventListener('click', function () { pick(i); }); });
+list.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); pick(cur + 1); } if (e.key === 'ArrowUp') { e.preventDefault(); pick(cur - 1); } });
+''')
+
+comp('SettingRow', 'Data', 260, r'''
+<div class="k-stage-col">
+  <div>
+    <div class="k-setting"><div><b>24-hour clock</b><p>Show 21:04 instead of 9:04 pm.</p></div><label class="k-switch"><input type="checkbox" checked aria-label="24-hour clock"><span></span></label></div>
+    <div class="k-setting"><div><b>Layout</b><p>Where the clock and the password field sit.</p></div><div class="k-seg" aria-label="Layout"><button>Centered</button><button aria-selected="true">Left</button></div></div>
+    <div class="k-setting"><div><b>Password field</b><p>The shape of the field on the lock screen.</p></div><div class="k-seg" aria-label="Password field"><button>Pill</button><button>Box</button><button aria-selected="true">Line</button></div></div>
+    <div class="k-setting"><div><b>Blur</b><p>How soft the wallpaper is behind the lock.</p></div><label class="k-slider" style="width:150px"><input type="range" min="0" max="20" value="6" aria-label="Blur"><output></output></label></div>
+  </div>
+</div>''', r'''
+One setting per row: a bold title, one line that says what it does, and the control at the right.
+
+- Markup: `.k-setting` > `div` (`b` title, `p` description) + one control (Switch, Segmented, Slider or a small Button).
+- The description says what changes, in one line. If it needs two, the setting is two settings.
+- Rows are separated by a hair line; there are no boxes around them.
+''')
+
+comp('InfoBlock', 'Data', 200, r'''
+<div class="k-stage">
+  <dl class="k-info">
+    <h4>larp</h4>
+    <dt>OS</dt><i>::</i><dd>Strix 0.1.0</dd>
+    <dt>Kernel</dt><i>::</i><dd>6.18.2</dd>
+    <dt>Shell</dt><i>::</i><dd>Quickshell on Hyprland</dd>
+    <dt>Memory</dt><i>::</i><dd>7.4 GiB of 32 GiB</dd>
+    <dt>Disk</dt><i>::</i><dd>162 GiB of 952 GiB, btrfs</dd>
+    <dt>Uptime</dt><i>::</i><dd>3 hours, 19 minutes</dd>
+  </dl>
+</div>''', r'''
+Facts as label and value, framed by double-line brackets with open corners. The signature frame of the system.
+
+- Markup: `<dl class="k-info">` with `dt` label, `<i>::</i>`, `dd` value per row; an optional serif `h4` on top.
+- Labels are bold, values regular and muted, `::` between them is faint.
+- The brackets are `line` at reduced strength. Use the frame for system facts only (system info, About, the installer summary), at most once per view.
+''')
+
+comp('Card', 'Data', 150, r'''
+<div class="k-stage">
+  <div class="k-card" data-interactive tabindex="0"><h3>Ghostty</h3><p>A fast terminal that follows the theme, with shaders.</p></div>
+  <div class="k-card"><h3>No network</h3><p>The store needs a connection to load the app list.</p><div style="margin-top:8px"><button class="k-btn k-btn-sm"><span>Try again</span></button></div></div>
+</div>''', r'''
+A bordered box for one self-contained thing: an app in the store, a state with its own action.
+
+- Parts: serif title, a short muted text, optional action.
+- `data-interactive` makes the whole card a target: the border brightens and it lifts by 2px on hover.
+- Cards do not nest, and a list of plain facts is not a card: use List or InfoBlock.
+''')
+
+comp('Calendar', 'Data', 220, r'''
+<div class="k-stage"><div class="k-cal" data-date="2026-11-10"></div></div>''', r'''
+One month, Monday first, today marked in red. Lives in the Today panel.
+
+- Markup: `<div class="k-cal" data-date="2026-11-10"></div>`; without `data-date` it shows the current day.
+- The arrows step by month. Days of the neighbouring months are faint.
+''')
+
+comp('ContextMenu', 'Data', 170, r'''
+<div class="k-stage" style="align-items:flex-start">
+  <div class="k-menu k-surface" role="menu">
+    <button role="menuitem">''' + I('copy') + r'''Copy<kbd>Ctrl C</kbd></button>
+    <button role="menuitem">''' + I('clipboard') + r'''Paste<kbd>Ctrl V</kbd></button>
+    <button role="menuitem" disabled>''' + I('image') + r'''Set as wallpaper</button>
+    <hr>
+    <button role="menuitem" data-danger>''' + I('trash-2') + r'''Delete<kbd>Del</kbd></button>
+  </div>
+</div>''', r'''
+Actions for the thing under the pointer.
+
+- Rows: symbol, verb, the key at the far right. Destructive actions sit last, after a divider, in `error`.
+- Opens at the pointer with a quick pop from its top left corner; Escape or a click elsewhere closes it.
+- At most eight rows. No sub-menus.
+''')
+
+# ------------------------------------------------------------------ Shell
+BAR = r'''
+<div class="k-bar" role="toolbar" aria-label="Status">
+  <div>
+    <button aria-label="Search apps">''' + I('search') + r'''<b id="clock">21:04</b></button>
+    <span class="k-meter" title="CPU">''' + I('cpu') + r'''<u style="--p:17%"></u><span class="k-roll" data-value="17%" id="m-cpu"></span></span>
+    <span class="k-meter" title="Memory">''' + I('memory-stick') + r'''<u style="--p:24%"></u><span>7.4 GiB</span></span>
+    <span class="k-meter" title="Temperature">''' + I('thermometer') + r'''<u style="--p:46%"></u><span class="k-roll" data-value="46°" id="m-tmp"></span></span>
+  </div>
+  <div>
+    <span class="k-ws" role="tablist" aria-label="Workspaces"><button aria-label="Workspace 1" data-used></button><button aria-label="Workspace 2" data-used aria-current="true"></button><button aria-label="Workspace 3" data-used></button><button aria-label="Workspace 4"></button><button aria-label="Workspace 5"></button></span>
+    <button class="k-track" aria-label="Now playing">''' + I('music') + r'''<span>Nocturne in E-flat major</span></button>
+  </div>
+  <div>
+    <button class="k-rec" aria-label="Recording">''' + I('video') + r'''<span class="k-dot k-dot-live"></span></button>
+    <button aria-label="Notifications, 3 new">''' + I('bell') + r'''<b>3</b></button>
+    <button class="k-power" aria-label="Session">''' + I('power') + r'''</button>
+  </div>
+</div>'''
+BAR_JS = r'''
+(function () {
+  var ws = document.querySelectorAll('.k-ws button');
+  Array.prototype.forEach.call(ws, function (b) { b.addEventListener('click', function () { Array.prototype.forEach.call(ws, function (o) { o.removeAttribute('aria-current'); }); b.setAttribute('aria-current', 'true'); b.setAttribute('data-used', ''); document.dispatchEvent(new CustomEvent('workspace', { detail: Array.prototype.indexOf.call(ws, b) })); }); });
+  function tick() {
+    var d = new Date(), c = document.getElementById('clock');
+    if (c) c.textContent = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    var cpu = 8 + Math.round(Math.random() * 40), tmp = 42 + Math.round(Math.random() * 14);
+    var a = document.getElementById('m-cpu'), t = document.getElementById('m-tmp');
+    if (a) { Kit.roll(a, (cpu < 10 ? ' ' : '') + cpu + '%'); a.parentNode.querySelector('u').style.setProperty('--p', cpu + '%'); }
+    if (t) { Kit.roll(t, tmp + '°'); t.parentNode.querySelector('u').style.setProperty('--p', tmp + '%'); }
+  }
+  tick(); if (!Kit.reduced()) setInterval(tick, 2500);
+})();
+'''
+comp('TopBar', 'Shell', 120, r'''
+<div style="position:relative;height:120px;overflow:hidden">''' + WALL(APOLLO, pos='center top') + r'''<div style="position:relative">''' + BAR + r'''</div></div>''', r'''
+The status line at the top of the screen. It has no surface of its own: small text and symbols sit straight on the wallpaper, in grey, with red for the one active thing.
+
+- Left: search with the clock, then CPU, memory and temperature, each as symbol, a 3px vertical meter and a value.
+- Middle: workspaces as dots, the active one a red pill; next to them the playing track.
+- Right: recording (with a red dot while it runs), the bell with its count, power in red.
+- The bar is for reading. Search opens the app finder, the track opens the media player in the dock, the bell opens notifications, power opens the session menu. Everything adjustable lives in the dock.
+- Height `bar-height`. Values roll when they change; the workspace pill slides.
+''', js=BAR_JS)
+
+DOCK = r'''
+<div class="k-dock" id="dock">
+  <div class="k-panel k-surface" id="p-main">
+    <div class="k-panel-head"><div class="k-seg" data-for="#tabs" aria-label="Section"><button aria-selected="true">''' + I('calendar') + r'''Today</button><button>''' + I('gauge') + r'''System</button><button>''' + I('info') + r'''About</button></div></div>
+    <div class="k-tabs" id="tabs">
+      <section data-active>
+        <div class="k-today">
+          <div><span class="k-plate" id="dow">Tuesday</span><h3 id="dmy">10 November</h3>
+            <div class="k-rule"><i></i></div>
+            <div class="k-wx">''' + I('cloud-sun') + r'''<div><b>8°</b>Partly cloudy :: Basel</div></div>
+            <div class="k-progress-row k-day" style="width:100%"><div><b>Day</b><span id="dayp">88%</span></div><div class="k-progress" id="dayl" style="width:100%"><i></i></div></div>
+          </div>
+          <div class="k-cal"></div>
+        </div>
+      </section>
+      <section>
+        <div class="k-sys">
+          <div class="k-ringset"><div class="k-ring" data-target="17"></div>CPU</div>
+          <div class="k-ringset"><div class="k-ring" data-target="6"></div>GPU</div>
+          <div class="k-ringset"><div class="k-ring" data-target="24"></div>RAM</div>
+        </div>
+        <div class="k-progress-row"><div><b>Disk /</b><span>162 GiB of 952 GiB</span></div><div class="k-progress" style="--p:17%"><i></i></div></div>
+      </section>
+      <section>
+        <div class="k-about">
+          <div><h3>Strix<small>0.1.0</small></h3><span class="k-motto">nocte vigilat</span></div>
+          <div class="k-rule"><i></i></div>
+          <div class="k-up"><i class="k-icon" data-icon="check" id="up-i"></i><div><b id="up-t">You are up to date</b><small id="up-s">Channel :: stable. Checked just now</small><div class="k-progress" id="up-p" data-indeterminate style="width:100%;margin-top:6px;display:none"><i></i></div></div><button class="k-btn k-btn-sm" id="up-b"><span>Check</span></button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-wifi">
+    <h4>Wi-Fi<label class="k-switch"><input type="checkbox" checked aria-label="Wi-Fi"><span></span></label></h4>
+    <ul class="k-list" role="listbox"><li class="k-row" role="option" aria-selected="true">''' + I('wifi') + r'''<span class="k-grow">Fibernet</span><small>Connected</small></li><li class="k-row" role="option">''' + I('wifi') + r'''<span class="k-grow">Atelier</span>''' + I('lock') + r'''</li><li class="k-row" role="option">''' + I('wifi') + r'''<span class="k-grow">Guest</span></li></ul>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-bt">
+    <h4>Bluetooth<label class="k-switch"><input type="checkbox" checked aria-label="Bluetooth"><span></span></label></h4>
+    <ul class="k-list" role="listbox"><li class="k-row" role="option" aria-selected="true">''' + I('bluetooth') + r'''<span class="k-grow">Headphones</span><small>80%</small></li><li class="k-row" role="option">''' + I('keyboard') + r'''<span class="k-grow">Keyboard</span><small>Paired</small></li></ul>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-vol">
+    <h4>Sound</h4>
+    <label class="k-slider" style="width:100%">''' + I('volume-2') + r'''<input type="range" min="0" max="100" value="62" data-unit="%" aria-label="Volume"><output></output></label>
+  </div>
+  <div class="k-panel k-surface" id="p-media" style="width:344px;padding:0">
+    <div class="k-media"><div class="k-cover">''' + I('disc-3') + r'''</div><div style="min-width:0"><b>Nocturne in E-flat major</b><small>Sample artist</small></div>
+      <div class="k-ctl"><span>1:12</span><div class="k-progress" style="--p:27%"><i></i></div><span>4:31</span><button class="k-iconbtn k-iconbtn-sm" aria-label="Previous">''' + I('skip-back') + r'''</button><button class="k-iconbtn k-iconbtn-sm" aria-label="Pause">''' + I('pause') + r'''</button><button class="k-iconbtn k-iconbtn-sm" aria-label="Next">''' + I('skip-forward') + r'''</button></div></div>
+  </div>
+  <div class="k-edge" role="toolbar" aria-label="Dock"><u></u><div class="k-edge-in">
+    <button aria-label="Settings">''' + I('settings') + r'''</button><s></s>
+    <button data-panel="#p-main" data-tab="0" aria-label="Today">''' + I('cloud-sun') + r'''<b>8°</b><span id="pdate">Tue 10 Nov</span></button><s></s>
+    <button data-panel="#p-media" aria-label="Media">''' + I('music') + r'''</button>
+    <button data-panel="#p-wifi" aria-label="Wi-Fi">''' + I('wifi') + r'''</button>
+    <button data-panel="#p-bt" aria-label="Bluetooth">''' + I('bluetooth') + r'''</button>
+    <button data-panel="#p-vol" aria-label="Sound">''' + I('volume-2') + r'''</button><s></s>
+    <button data-panel="#p-main" data-tab="2" aria-label="About">''' + I('info') + r'''</button>
+  </div></div>
+</div>'''
+DOCK_JS = r'''
+(function () {
+  var d = new Date(), days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], mon = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  document.getElementById('dow').textContent = days[d.getDay()];
+  document.getElementById('dmy').textContent = d.getDate() + ' ' + mon[d.getMonth()];
+  document.getElementById('pdate').textContent = days[d.getDay()].slice(0, 3) + ' ' + d.getDate() + ' ' + mon[d.getMonth()].slice(0, 3);
+  var part = Math.round((d.getHours() * 60 + d.getMinutes()) / 14.4);
+  document.getElementById('dayp').textContent = part + '%';
+  document.getElementById('dayl').style.setProperty('--p', part + '%');
+  var b = document.getElementById('up-b'), t = document.getElementById('up-t'), s = document.getElementById('up-s'), p = document.getElementById('up-p'), i = document.getElementById('up-i');
+  b.addEventListener('click', function () {
+    b.disabled = true; t.textContent = 'Looking for updates'; s.textContent = 'Asking the stable channel'; p.style.display = 'block'; i.innerHTML = Kit.icon('refresh-cw');
+    setTimeout(function () { t.textContent = 'Installing 0.2.0'; s.textContent = 'Building the new system'; }, 1600);
+    setTimeout(function () { b.disabled = false; p.style.display = 'none'; t.textContent = 'You are up to date'; s.textContent = 'Now on 0.2.0. Checked just now'; i.innerHTML = Kit.icon('check'); }, 4200);
+  });
+})();
+'''
+comp('EdgeDock', 'Shell', 380, r'''
+<div style="position:relative;height:380px;overflow:hidden">''' + WALL(HERCULES, pos='center 30%') + r'''
+  <div class="k-plate" style="position:absolute;left:16px;top:12px">Move the pointer to the bottom edge. Move it away and the dock sinks back.</div>
+  <div class="k-dockbar">''' + DOCK + r'''</div>
+</div>''', r'''
+The dock is part of the bottom edge of the screen, not a floating bar. At rest it is a tab 5px high and 132px wide with a short red line, flush with the edge, its corners flaring into it. When the pointer reaches the bottom edge it rises to 28px and widens to fit its content. When the pointer leaves, it sinks back after a short wait.
+
+- Everything that can be adjusted starts here: settings, the date with the weather, media, Wi-Fi, Bluetooth, sound, about. A click on a symbol lets its panel grow upward out of that symbol; a second click, Escape or a click elsewhere folds it back.
+- Main panel: a Segmented with Today (date, weather, calendar, the day as a line), System (three rings and the disk) and About (name, version, channel, and "Check", which runs the update and shows its progress in place).
+- Small panels (`data-size="sm"`): Wi-Fi and Bluetooth as a switch with a List, sound as a Slider, media as a MediaPlayer.
+- While a panel is open or a control inside has keyboard focus, the dock stays out.
+- Motion: height over `dur-base`, width over `dur-slow`, content fades in `dur-fast` later. A panel scales up from its symbol over `dur-slow`.
+- Markup: `.k-dockbar` (the hot strip along the bottom edge) > `.k-dock` > panels (`.k-panel.k-surface` with an id) + `.k-edge` > `u` (the red line) + `.k-edge-in` > buttons with `data-panel="#id"` and optional `data-tab`. Thin `s` elements separate groups.
+- `data-pinned` on `.k-dock` keeps it out, for touch screens.
+''', js=DOCK_JS + "\nsetTimeout(function () { var d = document.getElementById('dock')._k; d.show(); d.open(document.querySelector('.k-edge [data-panel=\"#p-main\"]')); }, 500);")
+
+comp('MediaPlayer', 'Shell', 130, r'''
+<div class="k-stage"><div class="k-media k-surface"><div class="k-cover">''' + I('disc-3') + r'''</div><div style="min-width:0"><b>Nocturne in E-flat major, a title that runs on</b><small>Sample artist</small></div>
+  <div class="k-ctl"><span>1:12</span><div class="k-progress" style="--p:27%"><i></i></div><span>4:31</span><button class="k-iconbtn k-iconbtn-sm" aria-label="Previous">''' + I('skip-back') + r'''</button><button class="k-iconbtn k-iconbtn-sm" aria-label="Pause">''' + I('pause') + r'''</button><button class="k-iconbtn k-iconbtn-sm" aria-label="Next">''' + I('skip-forward') + r'''</button></div></div></div>''', r'''
+What is playing, with the three transport buttons. Opens from the music symbol in the dock or from the track in the top bar.
+
+- Parts: cover (a disc symbol when there is none), serif title, muted artist, elapsed and total time around a Progress line, previous, play or pause, next.
+- Title and artist truncate; they never wrap.
+- Nothing playing: the pill hides its music symbol and the top bar shows no track.
+''')
+
+comp('Visualizer', 'Shell', 150, r'''
+<div class="k-stage" style="display:block"><div class="k-viz" data-bars="56"></div></div>''', r'''
+Bars that follow the sound. Grey at rest, red at the peaks.
+
+- Markup: `<div class="k-viz" data-bars="56"></div>`. Feed it with `el._k.frame(levels)` (values 0 to 1); without a source it idles on a soft signal.
+- Bars above 0.72 switch to `accent` (`chart-1`); the rest are `text-muted`.
+- With reduced motion it stands still.
+''')
+
+ART = r'''
+var IMG = {Strix: "''' + APOLLO + r'''", Laocoon: "''' + LAOCOON + r'''", Hercules: "''' + HERCULES + r'''"};
+function art(bg, disc, line) {
+  return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
+}
+function pic(t) { return IMG[t[0]] ? '<img alt="" src="' + IMG[t[0]] + '">' : art(t[2], t[3], t[4]); }
+var THEMES = [['Paper', 'light', '#ece6da', '#1b1917', '#55504a'], ['Slate', 'dark', '#16191d', '#8ea8c8', '#8a8f96'], ['Chamber', 'lights off', '#2a2d32', '#f2f3f5', '#9aa0a8'], ['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a'], ['Moss', 'dark', '#0f1410', '#8fb894', '#7d8a7e'], ['Ember', 'dark', '#140d0a', '#d99a6c', '#8a7a6c']];
+function cards(track, sel) {
+  track.innerHTML = THEMES.map(function (t, i) {
+    return '<button class="k-slant" data-value="' + t[0] + '" aria-selected="' + (i === sel) + '" aria-label="' + t[0] + ' theme"><span class="k-slant-art">' + pic(t) + '</span><span class="k-slant-edge"></span><span class="k-slant-name">' + t[0] + '<small>' + t[1] + '</small></span></button>';
+  }).join('');
+}
+'''
+comp('SlantCard', 'Shell', 320, r'''
+<div class="k-carousel" style="height:320px" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>''', r'''
+The tall slanted card of the theme picker, and the carousel that holds a row of them.
+
+- Each card is a parallelogram that overlaps its neighbour. The chosen card in the middle is 420px wide and taller, with a cream hair edge and the theme's name in blackletter; all others are 96px wide and dimmed.
+- Markup: `.k-carousel` > `.k-carousel-track` > `button.k-slant` with `.k-slant-art` (the preview), `.k-slant-edge`, `.k-slant-name`.
+- Paging: left and right arrows, the wheel, or a click on a neighbour. The row glides over `dur-slow` while the old middle narrows and the new one widens.
+- A click on the middle card fires `apply` with the pointer position, which is where the circular reveal starts (`Kit.reveal`).
+- The preview art is the theme's own wallpaper, never a screenshot of somebody else's work.
+''', js=ART + r'''
+cards(document.getElementById('track'), 3);
+Kit.hydrate(document);
+''')
+
+comp('WindowFrame', 'Shell', 260, r'''
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;height:260px">
+  <div class="k-win" data-active id="w1"><div class="k-win-body"><span class="k-muted">Active window :: red border</span></div></div>
+  <div style="display:grid;grid-template-rows:1fr 1fr;gap:12px;min-height:0">
+    <div class="k-win" id="w2" style="opacity:var(--dim-inactive)"><div class="k-win-body"><span class="k-muted">Inactive :: grey border</span></div></div>
+    <div class="k-win"><div class="k-titlebar"><b>Bootstick</b><span>Write the installer to a USB stick</span><button aria-label="Minimize">''' + I('minus') + r'''</button><button aria-label="Maximize">''' + I('square') + r'''</button><button aria-label="Close" data-close>''' + I('x') + r'''</button></div><div class="k-win-body"><span class="k-muted">App title bar on Windows</span></div></div>
+  </div>
+</div>''', r'''
+How a window looks. Under Hyprland the compositor draws it: 1px border, 4px corners (`radius-md`), `shadow-window`, 12px (`space-3`) between windows and to the screen edge. The active window has the red border, all others the grey one and are a touch dimmer.
+
+- Tiled windows have no title bar. The border colour fades over `dur-base` when focus moves.
+- Apps that run outside Hyprland (the Windows bootstick app) draw `k-titlebar`: serif app name, a muted subtitle, then minimise, maximise, close as 40px wide targets; close turns red on hover.
+- Click a window in the preview to move focus.
+''', js=r'''
+var wins = document.querySelectorAll('.k-win');
+Array.prototype.forEach.call(wins, function (w) { w.addEventListener('click', function () { Array.prototype.forEach.call(wins, function (o) { o.removeAttribute('data-active'); o.style.opacity = 'var(--dim-inactive)'; }); w.setAttribute('data-active', ''); w.style.opacity = 1; }); });
+''')
+
+# ------------------------------------------------------------------ Screens
+SCREENS = []
+def screen(name, height, html, doc, js='', css='', width=1280):
+    SCREENS.append(dict(name=name, group='Screens', height=height, html=html, doc=doc, js=js, css=css, width=width))
+
+screen('LockScreen', 720, r'''
+<div class="k-screen" id="scr">
+  ''' + WALL(LAOCOON, ' data-dim id="wall"') + r'''
+  <div class="k-grain"></div>
+  <div id="lock">
+    <div class="col">
+      <div class="clock" id="hh">21</div><div class="clock" id="mm">04</div>
+      <div class="caption k-muted" id="date" style="margin-top:14px">Tuesday, 10 November</div>
+      <div class="motto" id="greet" style="color:var(--text)">good evening, livio</div>
+      <div class="k-field" id="field" style="width:200px;margin-top:22px"><div class="k-input k-input-line"><input id="pw" type="password" aria-label="Password" placeholder="Password" autocomplete="off"></div><span class="k-help" id="help"></span></div>
+      <div style="display:flex;gap:2px;margin:2px 0 0 -7px">
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Log out">''' + I('log-out') + r'''</button><span role="tooltip">Log out</span></span>
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Shut down">''' + I('power') + r'''</button><span role="tooltip">Shut down</span></span>
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Suspend">''' + I('moon') + r'''</button><span role="tooltip">Suspend</span></span>
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Restart">''' + I('rotate-cw') + r'''</button><span role="tooltip">Restart</span></span>
+      </div>
+    </div>
+    <div class="foot caption k-muted"><b>3 notifications</b><br><b>CPU</b> <i>::</i> 8%&emsp;<b>RAM</b> <i>::</i> 24%&emsp;<b>GPU</b> <i>::</i> 3%</div>
+    <div class="mark"><div class="k-wordmark">Strix</div><div class="k-rule" style="margin:4px 0 2px"><i></i></div><div class="k-motto">nocte vigilat</div></div>
+    <div class="plate k-plate">Laocoön. Engraved by Nicolas Beatrizet, Rome, about 1550</div>
+    <div class="hint micro">Demo password :: strix</div>
+  </div>
+  <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
+</div>''', r'''
+The lock screen, left layout. A narrow column on the left over the dimmed engraving: a very light clock with hours stacked over minutes, the date, a greeting in spaced italic, the password as a single hair line, and four session buttons. Bottom left: notifications and load. Bottom right: the blackletter wordmark, a lozenge rule and the motto. Bottom centre: the plate caption of the engraving.
+
+- States, all in this preview: empty, typing (dots), wrong password (the line turns to `error`, shakes once, and says "Wrong password"), Caps Lock ("Caps Lock is on"), locked out after three tries with a countdown, unlocking.
+- Unlock: the column fades and slides left while the engraving sharpens and brightens over `dur-reveal`.
+- The demo password is `strix`. Type anything else to see the error.
+- Text: date as "Tuesday, 10 November"; greeting lowercase by time of day with the user name.
+- The centred layout and the greeter use the same parts, centred, with the wordmark above the field.
+''', css=r'''
+#lock { position: absolute; inset: 0; transition: opacity var(--dur-slow) var(--ease-in), transform var(--dur-slow) var(--ease-in); }
+#lock[data-out] { opacity: 0; transform: translateX(-24px); pointer-events: none; }
+#lock .col { position: absolute; left: var(--space-8); top: 76px; }
+#lock .clock { color: var(--text); margin-left: -6px; }
+#lock .foot { position: absolute; left: var(--space-8); bottom: var(--space-6); line-height: 18px; }
+#lock .foot b { color: var(--text); font-weight: 500; }
+#lock .foot i { font-style: normal; color: var(--text-faint); }
+#lock .mark { position: absolute; right: var(--space-8); bottom: var(--space-6); text-align: center; }
+#lock .plate { position: absolute; left: 0; right: 0; bottom: var(--space-6); text-align: center; opacity: 0.8; }
+#lock .hint { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
+.k-wall[data-clear] { filter: none; transform: none; }
+''', js=r'''
+(function () {
+  var d = new Date(), days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], mon = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function two(n) { return ('0' + n).slice(-2); }
+  function tick() { var n = new Date(); document.getElementById('hh').textContent = two(n.getHours()); document.getElementById('mm').textContent = two(n.getMinutes()); }
+  tick(); setInterval(tick, 10000);
+  document.getElementById('date').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + mon[d.getMonth()];
+  var h = d.getHours();
+  document.getElementById('greet').textContent = 'good ' + (h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening') + ', livio';
+  var pw = document.getElementById('pw'), field = document.getElementById('field'), help = document.getElementById('help'), lock = document.getElementById('lock'), wall = document.getElementById('wall'), tries = 0, wait = 0;
+  function err(msg) { field.setAttribute('data-state', 'error'); help.textContent = msg; var box = pw.parentNode; box.classList.remove('k-shake'); void box.offsetWidth; box.classList.add('k-shake'); }
+  pw.addEventListener('keydown', function (e) {
+    if (wait) { e.preventDefault(); return; }
+    if (e.getModifierState && e.getModifierState('CapsLock')) { field.removeAttribute('data-state'); help.textContent = 'Caps Lock is on'; }
+    else if (e.key !== 'Enter' && field.getAttribute('data-state') !== 'error') help.textContent = '';
+    if (e.key !== 'Enter') { if (e.key.length === 1) { field.removeAttribute('data-state'); } return; }
+    if (pw.value === 'strix') {
+      help.textContent = ''; lock.setAttribute('data-out', ''); wall.setAttribute('data-clear', '');
+      setTimeout(function () { document.getElementById('relock').style.display = 'inline-flex'; }, 700);
+    } else {
+      tries++; pw.value = '';
+      if (tries >= 3) {
+        wait = 10; pw.disabled = true; err('Too many tries. Wait ' + wait + ' s');
+        var t = setInterval(function () { wait--; help.textContent = 'Too many tries. Wait ' + wait + ' s'; if (wait <= 0) { clearInterval(t); tries = 0; pw.disabled = false; field.removeAttribute('data-state'); help.textContent = ''; pw.focus({ preventScroll: true }); } }, 1000);
+      } else err('Wrong password');
+    }
+  });
+  document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
+})();
+''')
+
+CODE = r'''<span class="ln"> 1</span>  <span class="cm">// Reads a theme and checks its contrast rules.</span>
+<span class="ln"> 2</span>  <span class="kw">use</span> <span class="ty">std::path::Path</span><span class="op">;</span>
+<span class="ln"> 3</span>
+<span class="ln"> 4</span>  <span class="co">#[derive(Debug)]</span>
+<span class="ln"> 5</span>  <span class="kw">pub struct</span> <span class="ty">Variant</span> <span class="op">{</span>
+<span class="ln"> 6</span>      <span class="kw">pub</span> name<span class="op">:</span> <span class="ty">String</span><span class="op">,</span>
+<span class="ln"> 7</span>      <span class="kw">pub</span> colors<span class="op">:</span> <span class="ty">Colors</span><span class="op">,</span>
+<span class="ln"> 8</span>  <span class="op">}</span>
+<span class="ln"> 9</span>
+<span class="ln">10</span>  <span class="kw">pub fn</span> <span class="fn">check</span><span class="op">(</span>path<span class="op">:</span> <span class="op">&amp;</span><span class="ty">Path</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="ty">Result</span><span class="op">&lt;</span><span class="ty">Variant</span><span class="op">&gt;</span> <span class="op">{</span>
+<span class="ln">11</span>      <span class="kw">let</span> text <span class="op">=</span> <span class="fn">read</span><span class="op">(</span>path<span class="op">)?;</span>
+<span class="ln">12</span>      <span class="kw">let</span> v<span class="op">:</span> <span class="ty">Variant</span> <span class="op">=</span> toml<span class="op">::</span><span class="fn">from_str</span><span class="op">(&amp;</span>text<span class="op">)?;</span>
+<span class="ln">13</span>      <span class="kw">if</span> <span class="fn">ratio</span><span class="op">(</span>v<span class="op">.</span>colors<span class="op">.</span>text<span class="op">,</span> v<span class="op">.</span>colors<span class="op">.</span>surface<span class="op">)</span> <span class="op">&lt;</span> <span class="nu">4.5</span> <span class="op">{</span>
+<span class="ln">14</span>          <span class="kw">return</span> <span class="fn">fail</span><span class="op">(</span><span class="st">"text needs 4.5:1 on surface"</span><span class="op">);</span>
+<span class="ln">15</span>      <span class="op">}</span>
+<span class="ln">16</span>      <span class="co">Ok</span><span class="op">(</span>v<span class="op">)</span><span class="k-caret"></span>
+<span class="ln">17</span>  <span class="op">}</span>'''
+
+
+screen('Desktop', 720, r'''
+<div class="k-screen">
+  ''' + WALL(APOLLO) + r'''
+  <div class="k-grain"></div>
+  <div style="position:absolute;inset:0 0 auto 0">''' + BAR + r'''</div>
+  <div class="k-plate" id="plate">Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592</div>
+  <div id="tiles" data-hidden>
+    <div class="k-win" data-active><div class="k-win-body"><pre class="k-code">''' + CODE + r'''</pre></div></div>
+    <div class="k-win"><div class="k-win-body"><div style="display:flex;gap:20px;align-items:center"><div style="text-align:center"><div class="k-wordmark">Strix</div><div class="k-motto" style="font-size:11px">nocte vigilat</div></div>
+      <dl class="k-info"><dt>OS</dt><i>::</i><dd>Strix 0.1.0</dd><dt>Kernel</dt><i>::</i><dd>6.18.2</dd><dt>Shell</dt><i>::</i><dd>Quickshell</dd><dt>Memory</dt><i>::</i><dd>7.4 of 32 GiB</dd><dt>Uptime</dt><i>::</i><dd>3 h 19 min</dd></dl></div>
+      <pre class="k-code" style="margin-top:12px"><b>livio@larp</b> <span class="ty">~</span> <span class="op">&gt;</span> <span class="k-caret"></span></pre></div></div>
+    <div class="k-win"><div class="k-win-body" style="display:flex;align-items:flex-end"><div class="k-viz" data-bars="120" style="height:100%"></div></div></div>
+  </div>
+  <div class="k-dockbar">''' + DOCK + r'''</div>
+</div>''', r'''
+The desktop. Workspace 1 is empty: the engraving, the top bar on it, and the dock as a thin tab on the bottom edge. Workspace 2 holds three tiled windows: an editor with the syntax colours, a terminal with the system InfoBlock, and the Visualizer.
+
+- Click the workspace dots in the bar to switch between the empty and the busy desktop. Windows slide in from the side with a fade.
+- Move the pointer to the bottom edge to bring the dock out; click its symbols to open Today, System, About, media, Wi-Fi, Bluetooth and sound.
+- Gaps: `space-3` between windows and to the screen edge; the bar takes `bar-height` at the top; at rest the dock takes no room.
+- The active window has the red border. Click another window to move focus.
+- Bottom left on the empty desktop: the plate caption of the wallpaper, in the serif italic.
+''', css=r'''
+#tiles { position: absolute; inset: 32px 12px 12px 12px; display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--space-3); transition: opacity var(--dur-slow) var(--ease-in-out), transform var(--dur-slow) var(--ease-in-out); }
+#tiles[data-hidden] { opacity: 0; transform: translateX(20%); pointer-events: none; }
+#tiles > .k-win:first-child { grid-row: 1 / 3; }
+#tiles .k-win:not([data-active]) { opacity: var(--dim-inactive); }
+#plate { position: absolute; left: var(--space-5); bottom: var(--space-4); transition: opacity var(--dur-base) var(--ease-out); }
+''', js=BAR_JS + DOCK_JS + r'''
+(function () {
+  var tiles = document.getElementById('tiles'), plate = document.getElementById('plate'), ws = document.querySelectorAll('.k-ws button');
+  var wins = document.querySelectorAll('#tiles .k-win');
+  Array.prototype.forEach.call(wins, function (w) { w.addEventListener('click', function () { Array.prototype.forEach.call(wins, function (o) { o.removeAttribute('data-active'); }); w.setAttribute('data-active', ''); }); });
+  function go(i) {
+    Array.prototype.forEach.call(ws, function (b, n) { if (n === i) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    if (i === 1) { tiles.removeAttribute('data-hidden'); plate.style.opacity = 0; } else { tiles.setAttribute('data-hidden', ''); plate.style.opacity = 1; }
+  }
+  ws[2].removeAttribute('data-used');
+  document.addEventListener('workspace', function (e) { go(e.detail); });
+  go(0);
+})();
+''')
+
+screen('ThemePicker', 720, r'''
+<div class="k-screen" id="scr">
+  ''' + WALL(HERCULES, ' id="base"') + r'''
+  <div class="k-reveal" id="rev"></div>
+  <div class="k-grain"></div>
+  <div id="picker">
+    <div class="k-scrim" style="animation:none"></div>
+    <div class="tools"><div class="k-toolbar">
+      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Grid view">''' + I('layout-grid') + r'''</button><span role="tooltip">Grid view</span></span>
+      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Preview motion">''' + I('play') + r'''</button><span role="tooltip">Preview motion</span></span>
+      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light">Light</button></div>
+      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Search themes">''' + I('search') + r'''</button><span role="tooltip">Search themes</span></span>
+    </div></div>
+    <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
+    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card applies&emsp;<span class="k-kbd">Esc</span> closes</div>
+  </div>
+  <button class="k-btn" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
+</div>''', r'''
+The theme picker over the dimmed desktop: a carousel of SlantCards, the name of the chosen theme in blackletter on the middle card with its variant under it, and a small toolbar above with grid view, motion preview, the variant (Dark or Light) and search.
+
+- Browse with the arrow keys, the wheel or a click on a neighbour. Enter or a click on the middle card applies.
+- Applying: the new wallpaper spreads as a growing circle from the click point over `dur-reveal`; when it covers the screen the picker fades out.
+- Everything except the middle card is dimmed, so the name is the one thing to read.
+- The cards other than Strix, Neutral and Chamber are sample data.
+''', css=r'''
+#picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
+#picker[data-out] { opacity: 0; pointer-events: none; }
+#picker .tools { position: absolute; top: 150px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
+#picker .k-carousel { position: absolute; top: 200px; left: 0; right: 0; height: 300px; }
+#picker .hint { position: absolute; bottom: 120px; left: 0; right: 0; text-align: center; }
+#rev { background: var(--background) center / cover no-repeat; }
+#rev svg { width: 100%; height: 100%; display: block; }
+''', js=ART + r'''
+(function () {
+  var track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base'), picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
+  cards(track, 3); Kit.hydrate(document);
+  function paint(el, t) {
+    if (IMG[t[0]]) { el.innerHTML = ''; el.style.backgroundImage = 'url(' + IMG[t[0]] + ')'; }
+    else { el.style.backgroundImage = 'none'; el.innerHTML = art(t[2], t[3], t[4]); }
+  }
+  document.getElementById('variant').addEventListener('change', function (e) {
+    Array.prototype.forEach.call(track.querySelectorAll('.k-slant[aria-selected="true"] small'), function (s) { s.textContent = e.detail.value; });
+  });
+  car.addEventListener('apply', function (e) {
+    var t = THEMES[e.detail.index];
+    paint(rev, t);
+    Kit.reveal(rev, e.detail.x, e.detail.y).then(function () {
+      paint(base, t); picker.setAttribute('data-out', '');
+      setTimeout(function () { rev.removeAttribute('data-on'); reopen.style.display = 'inline-flex'; }, 260);
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (picker.hasAttribute('data-out')) return;
+    if (e.key === 'Enter') { var c = track.querySelector('[aria-selected="true"]').getBoundingClientRect(); car.dispatchEvent(new CustomEvent('apply', { detail: { index: car._k.index, x: c.left + c.width / 2, y: c.top + c.height / 2 } })); }
+    if (e.key === 'ArrowRight') car._k.select(car._k.index + 1);
+    if (e.key === 'ArrowLeft') car._k.select(car._k.index - 1);
+  });
+  reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
+})();
+''')
+
+def sw(n):
+    return '<span class="k-swatch" style="background:var(--term-%s)" title="%s"></span>' % (n, n)
+ANSI = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+screen('Terminal', 500, r'''
+<div style="padding:12px;height:500px;background:var(--background)">
+<div class="k-win" data-active style="height:100%"><div class="k-win-body" style="background:var(--term-background);padding:16px 20px">
+<pre class="k-code" style="color:var(--term-foreground)"><span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> git log --oneline -4
+<span class="y">d207083</span> <span class="m">(</span><span class="c">HEAD -&gt; </span><span class="g">main</span><span class="m">,</span> <span class="r">origin/main</span><span class="m">)</span> ci: update flake inputs and crates every week
+<span class="y">952d81c</span> <span class="m">(</span><span class="y">tag: v0.1.0</span><span class="m">,</span> <span class="r">origin/stable</span><span class="m">)</span> release: 0.1.0
+<span class="y">7c1e0aa</span> feat(installer): ask for the language first
+<span class="y">31b9f42</span> fix(theme): keep the default splash when the variable is missing
+
+<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> cargo build
+<span class="g">   Compiling</span> theme-engine v0.1.0
+<span class="rb">error[E0308]</span><span class="b">: mismatched types</span>
+  <span class="bl">--&gt;</span> src/check.rs:14:16
+   <span class="bl">|</span>
+<span class="bl">14 |</span>         return fail(4.5);
+   <span class="bl">|</span>                     <span class="rb">^^^ expected `&amp;str`, found floating-point number</span>
+<span class="yb">warning</span><span class="b">: unused variable: `text`</span>
+
+<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> ls
+<span class="bl b">hosts</span>  <span class="bl b">installer</span>  <span class="bl b">modules</span>  <span class="bl b">packages</span>  <span class="bl b">themes</span>  <span class="g b">build.sh</span>  <span class="c">result</span>  flake.lock  flake.nix  README.md
+
+<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> <span class="k-caret" style="background:var(--term-cursor)"></span></pre>
+<div class="strip">''' + ''.join(sw(a) for a in ANSI) + ''.join(sw('bright-' + a) for a in ANSI) + r'''</div>
+</div></div></div>''', r'''
+Ghostty with the theme's terminal colours: a prompt, `git log`, a compiler error and a warning, and `ls` with file-type colours. The strip at the bottom is the 16 ANSI colours, normal above bright.
+
+- Ground `term-background`, text `term-foreground`, a red block cursor (`term-cursor`), selection `term-selection`.
+- Red is reserved for errors and remote refs; the hash is sand, the branch sage, paths steel. Every colour holds 4.5:1 on the ground, including bright black.
+- Prompt: `user@host path branch >` with a single `>`; no symbols that need a patched font.
+- The colours are muted on purpose so the red cursor and the red of an error stay the loudest things in the window.
+''', css=r'''
+.k-code .p { color: var(--term-foreground); font-weight: 600; } .k-code .d { color: var(--term-blue); } .k-code .g { color: var(--term-green); }
+.k-code .m { color: var(--term-bright-black); } .k-code .y { color: var(--term-yellow); } .k-code .c { color: var(--term-cyan); }
+.k-code .r { color: var(--term-red); } .k-code .rb { color: var(--term-bright-red); font-weight: 600; } .k-code .yb { color: var(--term-bright-yellow); font-weight: 600; }
+.k-code .bl { color: var(--term-blue); } .k-code .b { font-weight: 600; }
+.strip { display: grid; grid-template-columns: repeat(8, 1fr); margin-top: 16px; max-width: 320px; }
+.k-swatch { display: block; height: 14px; }
+''', width=960)
+
+screen('BootSplash', 540, r'''
+<div style="height:540px;background:var(--background);display:flex;flex-direction:column">
+  <div class="splash" id="splash" data-state="boot">
+    <div class="display" style="color:var(--text)">Strix</div>
+    <div class="k-rule" style="width:150px;margin:6px 0 4px"><i></i></div>
+    <div class="motto k-muted">nocte vigilat</div>
+    <div class="slot">
+      <div class="k-progress" data-indeterminate id="run"><i></i></div>
+      <div class="k-field" id="pass" style="width:220px"><div class="k-input k-input-line"><input type="password" aria-label="Passphrase" placeholder="Passphrase" id="pp"></div><span class="k-help" id="msg">Enter the passphrase for this disk</span></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:center;padding:16px"><div class="k-seg" id="state" aria-label="State"><button aria-selected="true">Start</button><button>Passphrase</button><button>Wrong passphrase</button><button>Shut down</button></div></div>
+</div>''', r'''
+The boot splash (Plymouth): the blackletter wordmark on plain `background`, a lozenge rule, the motto, and one hair line.
+
+- Start and shut down: no percentage. A short red piece runs along the line (Progress, indeterminate).
+- Disk passphrase: the line becomes the line field; typed characters show as dots.
+- Wrong passphrase: the field shakes once and the text under it reads "Wrong passphrase. Try again." in `error`.
+- Colours used: `background`, `text`, `text-muted`, `line`, `accent`, `error`. Nothing else, so the splash can be built per variant from six values.
+- Switch the states with the control under the preview.
+''', css=r'''
+.splash { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.splash .slot { height: 60px; margin-top: 36px; display: flex; flex-direction: column; align-items: center; }
+.splash[data-state="boot"] #pass, .splash[data-state="off"] #pass { display: none; }
+.splash[data-state="pass"] #run, .splash[data-state="wrong"] #run { display: none; }
+.splash #run { width: 180px; }
+.splash .k-help { text-align: center; }
+''', js=r'''
+(function () {
+  var s = document.getElementById('splash'), msg = document.getElementById('msg'), pass = document.getElementById('pass'), pp = document.getElementById('pp');
+  var names = ['boot', 'pass', 'wrong', 'off'];
+  function set(i) {
+    s.setAttribute('data-state', names[i]);
+    pass.removeAttribute('data-state'); msg.textContent = 'Enter the passphrase for this disk'; pp.value = i === 2 ? '' : pp.value;
+    if (i === 2) { pass.setAttribute('data-state', 'error'); msg.textContent = 'Wrong passphrase. Try again.'; var b = pp.parentNode; b.classList.remove('k-shake'); void b.offsetWidth; b.classList.add('k-shake'); }
+    if (i === 1) pp.value = 'correct horse';
+  }
+  document.getElementById('state').addEventListener('change', function (e) { set(e.detail.index); });
+})();
+''', width=960)
+
+DTS = r'''// The bundle is plain CSS classes (prefix k-) plus a small script, window.Kit. No framework.
+// Markup for every component is in its README and preview.
+
+export interface SegmentedHandle { select(index: number, silent?: boolean): void; place(): void; readonly index: number }
+export interface CarouselHandle { select(index: number, silent?: boolean): void; readonly index: number }
+export interface DockHandle { open(button: HTMLElement): void; close(): void; show(): void; hide(): void }
+export interface VisualizerHandle { frame(levels?: number[]): void; start(): void; stop(): void }
+
+export interface KitApi {
+  /** Wires every component inside root: icons, wallpaper, segmented, sliders, rings, rolling numbers, calendars, visualizers, carousels, docks. Safe to call again. */
+  hydrate(root?: ParentNode): void;
+  /** Names of the bundled symbols. */
+  icons: string[];
+  /** SVG markup for one symbol (24px grid, 1.5 stroke, currentColor). */
+  icon(name: string): string;
+  /** SVG markup of the default wallpaper, drawn with the theme's tokens. */
+  wallpaper(): string;
+  /** True when motion should be reduced (system setting, or data-motion="reduced" on the html element). */
+  reduced(): boolean;
+  segmented(el: HTMLElement): SegmentedHandle;
+  slider(input: HTMLInputElement): void;
+  ring(el: HTMLElement, value?: number): void;
+  roll(el: HTMLElement, text?: string): void;
+  calendar(el: HTMLElement, date?: Date): void;
+  visualizer(el: HTMLElement): VisualizerHandle;
+  carousel(el: HTMLElement): CarouselHandle;
+  dock(el: HTMLElement): DockHandle;
+  /** Circular reveal of layer from a viewport point; resolves when it covers the layer. */
+  reveal(layer: HTMLElement, x: number, y: number): Promise<void>;
+  /** Plays the exit animation, then removes the element. */
+  dismiss(el: HTMLElement, className?: string): void;
+}
+declare global { interface Window { Kit: KitApi } }
+'''

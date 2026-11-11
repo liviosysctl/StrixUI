@@ -1,0 +1,27 @@
+{
+ "slug": "05a78ba4-5f4b-4227-97ae-49b0342f3bb9",
+ "url": "https://claude.ai/artifact/1hVsjYsQa8J26ydqaEeWZn",
+ "created": "2026-11-10T20:24:30Z",
+ "wallpapers": {
+  "apollo-belvedere.jpg": {
+   "blob": "b2e6a0104f7e93c6279bd62bc5401d27",
+   "size": 729315,
+   "type": "image/jpeg"
+  },
+  "laocoon.jpg": {
+   "blob": "21cb600de026124bb045c788de08e01c",
+   "size": 657929,
+   "type": "image/jpeg"
+  },
+  "hercules.jpg": {
+   "blob": "072dd02cd62436020d9de9367ad4935b",
+   "size": 796119,
+   "type": "image/jpeg"
+  },
+  "star-chart.svg": {
+   "blob": "b8a75701dc1dcaa7f4471d710c8cb99c",
+   "size": 6444,
+   "type": "image/svg+xml"
+  }
+ }
+}
