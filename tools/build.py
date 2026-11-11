@@ -171,6 +171,7 @@ def tokens():
             ('dur-slow', '360ms', 'Panel growing out of the pill, carousel, windows opening and moving, workspace change, rolling numbers.'),
             ('dur-reveal', '640ms', 'Circular reveal of a new theme, unlocking, ring gauges filling.'),
             ('dur-loop', '1400ms', 'One pass of an indeterminate progress line.'),
+            ('god-cycle', '600s', 'How often the god of the desktop changes by itself, unless kept in the pantheon.'),
             ('stagger', '30ms', 'Delay between neighbours when a list enters.'),
         ]),
         'easing': fam([
