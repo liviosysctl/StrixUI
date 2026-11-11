@@ -384,6 +384,194 @@ Actions for the thing under the pointer.
 ''')
 
 # ------------------------------------------------------------------ Shell
+SEARCH_JS = r'''
+(function () {
+  /* The index. In the shell it comes from the search service; here it is sample data in the same shape:
+     k kind (app, action, setting, command, group), t title, p path, i symbol, w extra words, key binding, v current value */
+  var E = [
+    {k: 'group', t: 'Apps', i: 'layout-grid', id: 'apps'},
+    {k: 'group', t: 'Style', i: 'swatch-book', id: 'style'},
+    {k: 'group', t: 'Capture', i: 'scan', id: 'capture'},
+    {k: 'group', t: 'Clipboard', i: 'clipboard', id: 'clipboard'},
+    {k: 'group', t: 'Settings', i: 'sliders-horizontal', id: 'settings'},
+    {k: 'group', t: 'Update', i: 'refresh-cw', id: 'update'},
+    {k: 'group', t: 'System', i: 'power', id: 'system'},
+    {k: 'group', t: 'Learn', i: 'book-open', id: 'learn'},
+    {k: 'group', t: 'Commands', i: 'square-terminal', id: 'commands'},
+
+    {k: 'app', t: 'Firefox', p: ['Apps'], i: 'app-window', w: 'browser web internet', g: 'apps'},
+    {k: 'app', t: 'Ghostty', p: ['Apps'], i: 'terminal', w: 'terminal shell console', g: 'apps'},
+    {k: 'app', t: 'Files', p: ['Apps'], i: 'folder', w: 'file manager explorer', g: 'apps'},
+    {k: 'app', t: 'Text editor', p: ['Apps'], i: 'file', w: 'notes write code', g: 'apps'},
+    {k: 'app', t: 'Image viewer', p: ['Apps'], i: 'image', w: 'photos pictures', g: 'apps'},
+    {k: 'app', t: 'Music', p: ['Apps'], i: 'music', w: 'audio player songs', g: 'apps'},
+    {k: 'app', t: 'Calculator', p: ['Apps'], i: 'plus', w: 'math', g: 'apps'},
+    {k: 'app', t: 'Settings', p: ['Apps'], i: 'settings', w: 'preferences control panel', g: 'apps'},
+
+    {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours', key: 'Super Ctrl Shift Space', g: 'style'},
+    {k: 'action', t: 'Wallpaper', p: ['Style'], i: 'wallpaper', w: 'background picture engraving', key: 'Super Ctrl Space', g: 'style'},
+    {k: 'action', t: 'Switch to light', p: ['Style'], i: 'sun', w: 'variant light dark appearance', g: 'style'},
+    {k: 'action', t: 'Next wallpaper', p: ['Style'], i: 'images', w: 'background cycle', g: 'style'},
+    {k: 'action', t: 'Region screenshot', p: ['Capture'], i: 'crop', w: 'screenshot area select snip', key: 'Print', g: 'capture'},
+    {k: 'action', t: 'Window screenshot', p: ['Capture'], i: 'app-window', w: 'screenshot window', key: 'Shift Print', g: 'capture'},
+    {k: 'action', t: 'Screen screenshot', p: ['Capture'], i: 'monitor', w: 'screenshot full display', key: 'Ctrl Print', g: 'capture'},
+    {k: 'action', t: 'Record a region', p: ['Capture'], i: 'video', w: 'screencast recording video', g: 'capture'},
+    {k: 'action', t: 'Colour picker', p: ['Capture'], i: 'pipette', w: 'color hex eyedropper', g: 'capture'},
+    {k: 'action', t: 'History', p: ['Clipboard'], i: 'history', w: 'clipboard paste copied', key: 'Super V', g: 'clipboard'},
+    {k: 'action', t: 'Clear history', p: ['Clipboard'], i: 'trash-2', w: 'clipboard delete', g: 'clipboard'},
+    {k: 'action', t: 'Check for updates', p: ['Update'], i: 'refresh-cw', w: 'upgrade new version', g: 'update'},
+    {k: 'action', t: 'Rebuild the system', p: ['Update'], i: 'hard-drive-download', w: 'rebuild switch nixos', g: 'update'},
+    {k: 'action', t: 'What changed', p: ['Update'], i: 'file', w: 'release notes changelog', g: 'update'},
+    {k: 'action', t: 'Lock', p: ['System'], i: 'lock', w: 'lock screen', key: 'Super Escape', g: 'system'},
+    {k: 'action', t: 'Log out', p: ['System'], i: 'log-out', w: 'sign out session', g: 'system'},
+    {k: 'action', t: 'Suspend', p: ['System'], i: 'moon', w: 'sleep', g: 'system'},
+    {k: 'action', t: 'Hibernate', p: ['System'], i: 'moon-star', w: 'sleep disk', g: 'system'},
+    {k: 'action', t: 'Restart', p: ['System'], i: 'rotate-cw', w: 'reboot', g: 'system'},
+    {k: 'action', t: 'Shut down', p: ['System'], i: 'power', w: 'power off', g: 'system'},
+    {k: 'action', t: 'Keybindings', p: ['Learn'], i: 'keyboard', w: 'shortcuts hotkeys keys', key: 'Super K', g: 'learn'},
+    {k: 'action', t: 'Manual', p: ['Learn'], i: 'book-open', w: 'help documentation', g: 'learn'},
+
+    {k: 'setting', t: 'Appearance', p: ['Settings'], i: 'swatch-book', w: 'theme look', g: 'settings', page: 1},
+    {k: 'setting', t: 'Lock screen', p: ['Settings'], i: 'lock', w: 'lockscreen', g: 'settings', page: 1},
+    {k: 'setting', t: 'Display', p: ['Settings'], i: 'monitor', w: 'screen monitor', g: 'settings', page: 1},
+    {k: 'setting', t: 'Sound', p: ['Settings'], i: 'volume-2', w: 'audio volume', g: 'settings', page: 1},
+    {k: 'setting', t: 'Network', p: ['Settings'], i: 'wifi', w: 'wi-fi wifi internet', g: 'settings', page: 1},
+    {k: 'setting', t: 'Bluetooth', p: ['Settings'], i: 'bluetooth', w: 'devices pair', g: 'settings', page: 1},
+    {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
+    {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
+    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Strix', w: 'colours look'},
+    {k: 'setting', t: 'Variant', p: ['Settings', 'Appearance'], i: 'sun', v: 'Dark', w: 'light dark'},
+    {k: 'setting', t: 'Text size', p: ['Settings', 'Appearance'], i: 'type', v: '100%', w: 'font scale'},
+    {k: 'setting', t: 'Clock style', p: ['Settings', 'Lock screen'], i: 'clock', v: 'Stacked', w: 'time'},
+    {k: 'setting', t: '24-hour clock', p: ['Settings', 'Lock screen'], i: 'clock', v: 'On', w: 'time format'},
+    {k: 'setting', t: 'Password field', p: ['Settings', 'Lock screen'], i: 'lock', v: 'Line', w: 'input shape'},
+    {k: 'setting', t: 'Background blur', p: ['Settings', 'Lock screen'], i: 'image', v: '6', w: 'wallpaper soft'},
+    {k: 'setting', t: 'Scale', p: ['Settings', 'Display'], i: 'monitor', v: '100%', w: 'resolution hidpi zoom'},
+    {k: 'setting', t: 'Night light', p: ['Settings', 'Display'], i: 'moon', v: 'Off', w: 'warm blue light colour temperature'},
+    {k: 'setting', t: 'Output device', p: ['Settings', 'Sound'], i: 'volume-2', v: 'Headphones', w: 'speaker audio'},
+    {k: 'setting', t: 'Layout', p: ['Settings', 'Keyboard'], i: 'keyboard', v: 'Swiss German', w: 'keymap language'},
+    {k: 'setting', t: 'Do not disturb', p: ['Settings', 'Notifications'], i: 'bell', v: 'Off', w: 'silence quiet mute'},
+
+    {k: 'command', t: 'strix-update', p: ['Fetch and apply the latest release'], i: 'square-terminal', w: 'update upgrade', g: 'commands'},
+    {k: 'command', t: 'strix-rebuild switch', p: ['Build the configuration in /etc/nixos and switch to it'], i: 'square-terminal', w: 'rebuild nixos', g: 'commands'},
+    {k: 'command', t: 'strix-theme list', p: ['Show every theme and variant'], i: 'square-terminal', w: 'themes', g: 'commands'},
+    {k: 'command', t: 'strix-theme set strix', p: ['Switch to the Strix theme'], i: 'square-terminal', w: 'theme'},
+    {k: 'command', t: 'strix-theme set neutral', p: ['Switch to the Neutral theme'], i: 'square-terminal', w: 'theme'},
+    {k: 'command', t: 'strix-theme set chamber:dark', p: ['Switch to Chamber, Lights off'], i: 'square-terminal', w: 'theme'},
+    {k: 'command', t: 'strix-theme status', p: ['Check that every part shows the current theme'], i: 'square-terminal', w: 'theme'}
+  ];
+  var KINDS = ['all', 'app', 'action', 'setting', 'command'], LABEL = {app: 'App', action: 'Action', setting: 'Setting', command: 'Command', group: 'Menu'};
+  var root = document.getElementById('srch'), input = root.querySelector('input'), list = document.getElementById('hits');
+  var crumb = document.getElementById('crumb'), seg = document.getElementById('filter'), out = document.getElementById('said');
+  var stack = [], filter = 'all', sel = 0, shown = [];
+
+  function pathOf(e) { return (e.p || []).concat(e.k === 'setting' && !e.page ? [] : []); }
+  function children(id) {
+    if (id === 'settings') return E.filter(function (e) { return e.k === 'setting' && e.page; });
+    var page = E.filter(function (e) { return e.k === 'setting' && e.page && e.t.toLowerCase().replace(/ /g, '') === id; })[0];
+    if (page) return E.filter(function (e) { return e.k === 'setting' && e.p.length === 2 && e.p[1] === page.t; });
+    return E.filter(function (e) { return e.g === id; });
+  }
+  function score(q, e) {
+    var best = null, m;
+    if ((m = Kit.fuzzy(q, e.t))) best = {score: m.score + 6, hits: m.hits};
+    var extra = [(e.p || []).join(' '), e.w || ''].join(' ');
+    if ((m = Kit.fuzzy(q, e.t + ' ' + extra)) && (!best || m.score * 0.55 > best.score)) best = {score: m.score * 0.55, hits: m.hits.filter(function (h) { return h < e.t.length; })};
+    if (best && e.k === 'group') best.score -= 4;
+    return best;
+  }
+  function search() {
+    var q = input.value.trim(), here = stack.length ? stack[stack.length - 1] : null, pool, res;
+    if (!q) {
+      pool = here ? children(here.id) : E.filter(function (e) { return e.k === 'group'; });
+      res = pool.map(function (e) { return {e: e, hits: []}; });
+    } else {
+      pool = here ? collect(here.id) : E;
+      res = [];
+      pool.forEach(function (e) { var m = score(q, e); if (m) res.push({e: e, hits: m.hits, s: m.score}); });
+      res.sort(function (a, b) { return b.s - a.s; });
+      if (res.length) { var top = res[0].s; res = res.filter(function (r) { return r.s >= top * 0.45; }); }
+    }
+    if (filter !== 'all') res = res.filter(function (r) { return r.e.k === filter || (r.e.k === 'group' && false); });
+    return res.slice(0, 40);
+  }
+  function collect(id) {
+    var acc = [], seen = {};
+    (function walk(i) { children(i).forEach(function (e) { if (seen[e.t + e.p]) return; seen[e.t + e.p] = 1; acc.push(e); if (e.k === 'group' || e.page) walk(e.id || e.t.toLowerCase().replace(/ /g, '')); }); })(id);
+    return acc;
+  }
+  function row(r, n) {
+    var e = r.e, right = '';
+    if (e.k === 'group' || e.page) right = '<i class="k-icon">' + Kit.icon('chevron-right') + '</i>';
+    else if (e.v) right = '<em>' + e.v + '</em>' + LABEL[e.k];
+    else if (e.key) right = e.key.split(' ').map(function (k) { return '<span class="k-kbd">' + k + '</span>'; }).join('') + LABEL[e.k];
+    else right = LABEL[e.k];
+    var path = (e.p && e.p.length) ? '<span class="p">' + e.p.join('<i>›</i>') + '</span>' : '';
+    return '<li class="k-hit" role="option" data-kind="' + e.k + '" data-n="' + n + '" aria-selected="' + (n === sel) + '"><i class="k-icon">' + Kit.icon(e.i) + '</i><div><span class="t">' + Kit.mark(e.t, r.hits) + '</span>' + path + '</div><span class="r">' + right + '</span></li>';
+  }
+  function draw(dir) {
+    shown = search();
+    if (sel >= shown.length) sel = Math.max(0, shown.length - 1);
+    list.innerHTML = shown.length ? shown.map(row).join('') : '<li class="k-empty">Nothing matches. <span class="k-kbd">Enter</span> runs it in a terminal.</li>';
+    if (dir) { list.removeAttribute('data-dir'); void list.offsetWidth; list.setAttribute('data-dir', dir); }
+    crumb.style.display = stack.length ? 'inline-flex' : 'none';
+    crumb.innerHTML = stack.map(function (s) { return s.t; }).join('<i>›</i>');
+    input.placeholder = stack.length ? 'Search in ' + stack[stack.length - 1].t : 'Search apps, actions, settings and commands';
+    var cur = list.querySelector('[aria-selected="true"]'); if (cur) cur.scrollIntoView({block: 'nearest'});
+  }
+  function enter(e) { stack.push({id: e.id || e.t.toLowerCase().replace(/ /g, ''), t: e.t}); input.value = ''; sel = 0; draw(1); }
+  function up() { if (!stack.length) return false; stack.pop(); sel = 0; draw(-1); return true; }
+  function run(r) {
+    if (!r) { if (input.value.trim()) out.textContent = 'Runs in a terminal :: ' + input.value.trim(); return; }
+    var e = r.e;
+    if (e.k === 'group' || e.page) return enter(e);
+    var what = {app: 'Opens ', action: 'Runs ', setting: 'Opens Settings at ', command: 'Runs in a terminal :: '}[e.k];
+    out.textContent = what + (e.k === 'setting' ? e.p.slice(1).concat(e.t).join(' › ') : e.k === 'action' ? (e.p || []).concat(e.t).join(' › ') : e.t);
+  }
+  input.addEventListener('input', function () { sel = 0; out.textContent = ''; draw(); });
+  input.addEventListener('keydown', function (ev) {
+    if (ev.key === 'ArrowDown') { ev.preventDefault(); sel = Math.min(shown.length - 1, sel + 1); draw(); }
+    else if (ev.key === 'ArrowUp') { ev.preventDefault(); sel = Math.max(0, sel - 1); draw(); }
+    else if (ev.key === 'Enter') { ev.preventDefault(); run(shown[sel]); }
+    else if (ev.key === 'Tab') { ev.preventDefault(); var i = (KINDS.indexOf(filter) + (ev.shiftKey ? KINDS.length - 1 : 1)) % KINDS.length; seg._k.select(i); }
+    else if (ev.key === 'Backspace' && !input.value) { if (up()) ev.preventDefault(); }
+    else if (ev.key === 'Escape') { ev.preventDefault(); if (input.value) { input.value = ''; draw(); } else if (!up()) { out.textContent = 'Closes'; } }
+  });
+  list.addEventListener('mousemove', function (ev) { var li = ev.target.closest('.k-hit'); if (li && +li.dataset.n !== sel) { sel = +li.dataset.n; Array.prototype.forEach.call(list.children, function (c) { c.setAttribute('aria-selected', +c.dataset.n === sel); }); } });
+  list.addEventListener('click', function (ev) { var li = ev.target.closest('.k-hit'); if (li) { sel = +li.dataset.n; run(shown[sel]); input.focus({preventScroll: true}); } });
+  seg.addEventListener('change', function (ev) { filter = KINDS[ev.detail.index]; sel = 0; draw(); input.focus({preventScroll: true}); });
+  input.value = root.getAttribute('data-query') || '';
+  draw();
+  try { input.focus({preventScroll: true}); } catch (e) {}
+})();
+'''
+
+comp('Search', 'Shell', 560, r'''
+<div style="position:relative;height:560px;overflow:hidden">''' + WALL(APOLLO, ' data-dim', pos='center 20%') + r'''
+  <div class="k-grain"></div>
+  <div style="position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;padding-top:56px">
+    <div class="k-search k-surface" id="srch" data-query="theme" role="dialog" aria-label="Search">
+      <div class="k-search-head">''' + I('search') + r'''<span class="k-crumb" id="crumb"></span><input aria-label="Search" autocomplete="off" spellcheck="false"><span class="k-kbd">Esc</span></div>
+      <div class="k-search-filter"><div class="k-seg" id="filter" aria-label="Show"><button aria-selected="true">All</button><button>Apps</button><button>Actions</button><button>Settings</button><button>Commands</button></div><span class="k-plate">one field for everything</span></div>
+      <ul class="k-hits" id="hits" role="listbox"></ul>
+      <div class="k-search-foot"><span><span class="k-kbd">Enter</span>open</span><span><span class="k-kbd">Tab</span>filter</span><span><span class="k-kbd">Backspace</span>back</span><output id="said"></output></div>
+    </div>
+  </div>
+</div>''', r'''
+One field finds everything: apps, the actions of the system menu, settings down to a single row, and commands. It replaces a separate app launcher and system menu. Opens with Super Space, centred near the top over the dimmed desktop; Super Alt Space opens it with the Apps filter set.
+
+- With an empty field it is the system menu: Apps, Style, Capture, Clipboard, Settings, Update, System, Learn, Commands. Enter on a group opens it, the group shows as a crumb in the field, Backspace on an empty field goes back up. Typing searches inside the open group.
+- Typing searches every level at once. Each result shows where it lives under its name, in the serif italic: "Style › Theme", "Settings › Lock screen". The same word can appear more than once with different places; the place tells them apart.
+- Kinds, named at the right of each row: App, Action, Setting, Command, Menu. Actions show their keybinding, settings show their current value.
+- Enter: an app starts, an action runs, a setting opens Settings scrolled to that row with the row marked, a command runs in a terminal. Text that matches nothing runs as a command in a terminal.
+- Matching is fuzzy: the letters in order, word starts count most, so "nl" finds Night light and "rs" finds Region screenshot. Titles count more than places and extra words; results far below the best one are left out; frequently used entries rise.
+- Tab and Shift Tab cycle the filter (All, Apps, Actions, Settings, Commands). Up and Down move, Esc clears the field, a second Esc closes.
+- Rows: 40px, symbol, title in mono with the matched letters in `text` and semibold, the place in `aside` style, kind in `micro`. The chosen row has the raised ground and the red caret, as in List.
+- Motion: the panel drops 8px into place over `dur-base`; entering a group slides the list in from the right, going back from the left; results update in place without animation while typing.
+- Markup: `.k-search.k-surface` > `.k-search-head` (symbol, `.k-crumb`, `input`, key hint), `.k-search-filter` (a Segmented), `ul.k-hits` > `li.k-hit[data-kind]`, `.k-search-foot`. `Kit.fuzzy(query, text)` and `Kit.mark(text, hits)` do the matching and the highlighting.
+''', js=SEARCH_JS)
+
+
 BAR = r'''
 <div class="k-bar" role="toolbar" aria-label="Status">
   <div>
@@ -424,7 +612,7 @@ The status line at the top of the screen. It has no surface of its own: small te
 - Left: search with the clock, then CPU, memory and temperature, each as symbol, a 3px vertical meter and a value.
 - Middle: workspaces as dots, the active one a red pill; next to them the playing track.
 - Right: recording (with a red dot while it runs), the bell with its count, power in red.
-- The bar is for reading. Search opens the app finder, the track opens the media player in the dock, the bell opens notifications, power opens the session menu. Everything adjustable lives in the dock.
+- The bar is for reading. Search opens Search, the track opens the media player in the dock, the bell opens notifications, power opens the session menu. Everything adjustable lives in the dock.
 - Height `bar-height`. Values roll when they change; the workspace pill slides.
 ''', js=BAR_JS)
 
@@ -876,6 +1064,8 @@ export interface CarouselHandle { select(index: number, silent?: boolean): void;
 export interface DockHandle { open(button: HTMLElement): void; close(): void; show(): void; hide(): void }
 export interface VisualizerHandle { frame(levels?: number[]): void; start(): void; stop(): void }
 
+export interface FuzzyMatch { score: number; hits: number[] }
+
 export interface KitApi {
   /** Wires every component inside root: icons, wallpaper, segmented, sliders, rings, rolling numbers, calendars, visualizers, carousels, docks. Safe to call again. */
   hydrate(root?: ParentNode): void;
@@ -897,6 +1087,10 @@ export interface KitApi {
   dock(el: HTMLElement): DockHandle;
   /** Circular reveal of layer from a viewport point; resolves when it covers the layer. */
   reveal(layer: HTMLElement, x: number, y: number): Promise<void>;
+  /** Fuzzy match of query in text: characters in order, word starts and runs score higher. Null when it does not match. */
+  fuzzy(query: string, text: string): FuzzyMatch | null;
+  /** text as HTML with the matched positions wrapped in <b>. */
+  mark(text: string, hits: number[]): string;
   /** Plays the exit animation, then removes the element. */
   dismiss(el: HTMLElement, className?: string): void;
 }

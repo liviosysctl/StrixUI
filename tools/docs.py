@@ -90,6 +90,7 @@ The ten required colours of `theme.toml` have the same names here: `background`,
 
 - The top bar is for reading. It has no surface; small grey text and symbols sit on the engraving. Left: search and the clock, then CPU, memory, temperature. Middle: workspaces and the playing track in serif italic. Right: recording, the bell with its count, power.
 - The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short red line. When the pointer reaches the bottom edge it rises to `dock-height` (28px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
+- Search (Super Space) is the one way in to everything else: a single field over the dimmed desktop that finds apps, the actions of the system menu, settings down to a single row, and commands. With an empty field it is the system menu itself. There is no separate app launcher or system menu.
 - The clock, the bell and power exist only in the bar. Network, sound and updates exist only in the dock.
 - Notifications arrive top right under the bar. The OSD appears bottom centre.
 - The lock screen puts everything in one narrow column on the left, the wordmark bottom right, the plate caption bottom centre. The greeter uses the same parts, centred.
@@ -174,6 +175,10 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Dock panel | open | scales up from the symbol that opened it; content fades in `dur-fast` later | `dur-slow` | `ease-out` | reverses from position |
 | Dock panel | close | reverse | `dur-base` | `ease-in` | reverses |
 | Dock symbol | active | fills red | `dur-fast` | `ease-out` | reverses |
+| Search | open (Super Space) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
+| Search | close | reverse | `dur-fast` | `ease-in` | finishes |
+| Search | enter a group, go back | the list slides 12px in from the right, going back from the left | `dur-base` | `ease-out` | the newer level wins |
+| Search | typing | results update in place, no motion; the red caret follows the chosen row | none | none | none |
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |

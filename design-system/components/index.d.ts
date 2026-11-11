@@ -6,6 +6,8 @@ export interface CarouselHandle { select(index: number, silent?: boolean): void;
 export interface DockHandle { open(button: HTMLElement): void; close(): void; show(): void; hide(): void }
 export interface VisualizerHandle { frame(levels?: number[]): void; start(): void; stop(): void }
 
+export interface FuzzyMatch { score: number; hits: number[] }
+
 export interface KitApi {
   /** Wires every component inside root: icons, wallpaper, segmented, sliders, rings, rolling numbers, calendars, visualizers, carousels, docks. Safe to call again. */
   hydrate(root?: ParentNode): void;
@@ -27,6 +29,10 @@ export interface KitApi {
   dock(el: HTMLElement): DockHandle;
   /** Circular reveal of layer from a viewport point; resolves when it covers the layer. */
   reveal(layer: HTMLElement, x: number, y: number): Promise<void>;
+  /** Fuzzy match of query in text: characters in order, word starts and runs score higher. Null when it does not match. */
+  fuzzy(query: string, text: string): FuzzyMatch | null;
+  /** text as HTML with the matched positions wrapped in <b>. */
+  mark(text: string, hits: number[]): string;
   /** Plays the exit animation, then removes the element. */
   dismiss(el: HTMLElement, className?: string): void;
 }

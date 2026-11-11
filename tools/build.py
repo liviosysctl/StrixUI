@@ -248,7 +248,8 @@ ICON_NAMES = ['search', 'cpu', 'memory-stick', 'thermometer', 'music', 'bell', '
               'sun', 'cloud', 'chevron-left', 'chevron-right', 'x', 'minus', 'square', 'check', 'lock', 'log-out', 'moon', 'rotate-cw',
               'play', 'pause', 'skip-back', 'skip-forward', 'layout-grid', 'hard-drive', 'download', 'trash-2', 'copy', 'clipboard',
               'folder', 'file', 'terminal', 'info', 'triangle-alert', 'usb', 'package', 'image', 'calendar', 'monitor', 'plus',
-              'arrow-right', 'eye', 'eye-off', 'refresh-cw', 'palette', 'camera', 'crop', 'app-window', 'keyboard', 'gauge', 'disc-3', 'circle-alert', 'cloud-sun']
+              'arrow-right', 'eye', 'eye-off', 'refresh-cw', 'palette', 'camera', 'crop', 'app-window', 'keyboard', 'gauge', 'disc-3', 'circle-alert', 'cloud-sun',
+              'sliders-horizontal', 'zap', 'corner-down-left', 'arrow-up', 'book-open', 'pipette', 'scan-line', 'history', 'square-terminal', 'wallpaper', 'swatch-book', 'type', 'moon-star', 'scan', 'clock', 'hard-drive-download', 'images']
 def icons():
     d = {}
     for n in ICON_NAMES:

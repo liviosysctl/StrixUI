@@ -70,6 +70,10 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Dock panel | open | scales up from the symbol that opened it; content fades in `dur-fast` later | `dur-slow` | `ease-out` | reverses from position |
 | Dock panel | close | reverse | `dur-base` | `ease-in` | reverses |
 | Dock symbol | active | fills red | `dur-fast` | `ease-out` | reverses |
+| Search | open (Super Space) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
+| Search | close | reverse | `dur-fast` | `ease-in` | finishes |
+| Search | enter a group, go back | the list slides 12px in from the right, going back from the left | `dur-base` | `ease-out` | the newer level wins |
+| Search | typing | results update in place, no motion; the red caret follows the chosen row | none | none | none |
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |

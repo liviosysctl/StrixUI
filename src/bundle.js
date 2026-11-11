@@ -273,6 +273,42 @@
     return el._k;
   };
 
+  /* Fuzzy match. Every query character must appear in order. Word starts and runs score higher,
+     so "tp" finds "Theme picker" and "lscs" finds "Lock screen :: Clock style". Returns null or
+     { score, hits } where hits are the matched character positions, for highlighting. */
+  K.fuzzy = function (query, text) {
+    var q = query.toLowerCase().replace(/\s+/g, ''), t = text.toLowerCase();
+    if (!q) return { score: 0, hits: [] };
+    var hits = [], score = 0, ti = 0, last = -2;
+    for (var qi = 0; qi < q.length; qi++) {
+      var c = q[qi], found = -1;
+      for (var j = ti; j < t.length; j++) {
+        if (t[j] !== c) continue;
+        var start = j === 0 || /[\s\-_/.:>]/.test(t[j - 1]);
+        if (start || found < 0) { found = j; if (start) break; }
+      }
+      if (found < 0) return null;
+      var atStart = found === 0 || /[\s\-_/.:>]/.test(t[found - 1]);
+      score += 10 + (atStart ? 14 : 0) + (found === last + 1 ? 9 : 0) - Math.min(found - ti, 8);
+      hits.push(found); last = found; ti = found + 1;
+    }
+    if (t.indexOf(q) === 0) score += 24;
+    else if (t.indexOf(q) > 0) score += 10;
+    score -= t.length * 0.15;
+    return { score: score, hits: hits };
+  };
+
+  /* Wraps the matched characters of text in <b>, escaping the rest */
+  K.mark = function (text, hits) {
+    var out = '', set = {};
+    (hits || []).forEach(function (h) { set[h] = 1; });
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      out += set[i] ? '<b>' + ch + '</b>' : ch;
+    }
+    return out;
+  };
+
   /* Dismiss with the exit animation, then remove */
   K.dismiss = function (el, cls) {
     el.classList.add(cls || 'k-notif-out');
