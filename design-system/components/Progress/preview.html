@@ -1,0 +1,18 @@
+<!-- @dsCard group="Feedback" height=100 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Progress — preview</title></head>
+<body>
+<div class="k-stage" style="align-items:flex-start">
+  <div class="k-progress-row"><div><b>Writing image</b><span id="pv">0%</span></div><div class="k-progress" id="p" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>
+  <div class="k-progress-row"><div><b>Looking for updates</b><span></span></div><div class="k-progress" data-indeterminate role="progressbar"><i></i></div></div>
+  <button class="k-btn k-btn-sm" id="again"><span>Run again</span></button>
+</div>
+<script>
+Kit.hydrate(document);
+var p = document.getElementById('p'), pv = document.getElementById('pv'), v = 0, timer;
+function run() { clearInterval(timer); v = 0; timer = setInterval(function () { v = Math.min(100, v + 4 + Math.random() * 9); p.style.setProperty('--p', v + '%'); p.setAttribute('aria-valuenow', Math.round(v)); pv.textContent = Math.round(v) + '%'; if (v >= 100) clearInterval(timer); }, 380); }
+document.getElementById('again').addEventListener('click', run); run();
+</script>
+</body>
+</html>

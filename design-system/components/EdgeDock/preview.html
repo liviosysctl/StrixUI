@@ -1,0 +1,88 @@
+<!-- @dsCard group="Shell" height=380 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>EdgeDock — preview</title></head>
+<body>
+<div style="position:relative;height:380px;overflow:hidden"><div class="k-wall" style="background-image:url(../../assets/Wallpapers/hercules.jpg);background-position:center 30%"></div>
+  <div class="k-plate" style="position:absolute;left:16px;top:12px">Move the pointer to the bottom edge. Move it away and the dock sinks back.</div>
+  <div class="k-dockbar">
+<div class="k-dock" id="dock">
+  <div class="k-panel k-surface" id="p-main">
+    <div class="k-panel-head"><div class="k-seg" data-for="#tabs" aria-label="Section"><button aria-selected="true"><i class="k-icon" data-icon="calendar"></i>Today</button><button><i class="k-icon" data-icon="gauge"></i>System</button><button><i class="k-icon" data-icon="info"></i>About</button></div></div>
+    <div class="k-tabs" id="tabs">
+      <section data-active>
+        <div class="k-today">
+          <div><span class="k-plate" id="dow">Tuesday</span><h3 id="dmy">10 November</h3>
+            <div class="k-rule"><i></i></div>
+            <div class="k-wx"><i class="k-icon" data-icon="cloud-sun"></i><div><b>8°</b>Partly cloudy :: Basel</div></div>
+            <div class="k-progress-row k-day" style="width:100%"><div><b>Day</b><span id="dayp">88%</span></div><div class="k-progress" id="dayl" style="width:100%"><i></i></div></div>
+          </div>
+          <div class="k-cal"></div>
+        </div>
+      </section>
+      <section>
+        <div class="k-sys">
+          <div class="k-ringset"><div class="k-ring" data-target="17"></div>CPU</div>
+          <div class="k-ringset"><div class="k-ring" data-target="6"></div>GPU</div>
+          <div class="k-ringset"><div class="k-ring" data-target="24"></div>RAM</div>
+        </div>
+        <div class="k-progress-row"><div><b>Disk /</b><span>162 GiB of 952 GiB</span></div><div class="k-progress" style="--p:17%"><i></i></div></div>
+      </section>
+      <section>
+        <div class="k-about">
+          <div><h3>Strix<small>0.1.0</small></h3><span class="k-motto">nocte vigilat</span></div>
+          <div class="k-rule"><i></i></div>
+          <div class="k-up"><i class="k-icon" data-icon="check" id="up-i"></i><div><b id="up-t">You are up to date</b><small id="up-s">Channel :: stable. Checked just now</small><div class="k-progress" id="up-p" data-indeterminate style="width:100%;margin-top:6px;display:none"><i></i></div></div><button class="k-btn k-btn-sm" id="up-b"><span>Check</span></button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-wifi">
+    <h4>Wi-Fi<label class="k-switch"><input type="checkbox" checked aria-label="Wi-Fi"><span></span></label></h4>
+    <ul class="k-list" role="listbox"><li class="k-row" role="option" aria-selected="true"><i class="k-icon" data-icon="wifi"></i><span class="k-grow">Fibernet</span><small>Connected</small></li><li class="k-row" role="option"><i class="k-icon" data-icon="wifi"></i><span class="k-grow">Atelier</span><i class="k-icon" data-icon="lock"></i></li><li class="k-row" role="option"><i class="k-icon" data-icon="wifi"></i><span class="k-grow">Guest</span></li></ul>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-bt">
+    <h4>Bluetooth<label class="k-switch"><input type="checkbox" checked aria-label="Bluetooth"><span></span></label></h4>
+    <ul class="k-list" role="listbox"><li class="k-row" role="option" aria-selected="true"><i class="k-icon" data-icon="bluetooth"></i><span class="k-grow">Headphones</span><small>80%</small></li><li class="k-row" role="option"><i class="k-icon" data-icon="keyboard"></i><span class="k-grow">Keyboard</span><small>Paired</small></li></ul>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-vol">
+    <h4>Sound</h4>
+    <label class="k-slider" style="width:100%"><i class="k-icon" data-icon="volume-2"></i><input type="range" min="0" max="100" value="62" data-unit="%" aria-label="Volume"><output></output></label>
+  </div>
+  <div class="k-panel k-surface" id="p-media" style="width:344px;padding:0">
+    <div class="k-media"><div class="k-cover"><i class="k-icon" data-icon="disc-3"></i></div><div style="min-width:0"><b>Nocturne in E-flat major</b><small>Sample artist</small></div>
+      <div class="k-ctl"><span>1:12</span><div class="k-progress" style="--p:27%"><i></i></div><span>4:31</span><button class="k-iconbtn k-iconbtn-sm" aria-label="Previous"><i class="k-icon" data-icon="skip-back"></i></button><button class="k-iconbtn k-iconbtn-sm" aria-label="Pause"><i class="k-icon" data-icon="pause"></i></button><button class="k-iconbtn k-iconbtn-sm" aria-label="Next"><i class="k-icon" data-icon="skip-forward"></i></button></div></div>
+  </div>
+  <div class="k-edge" role="toolbar" aria-label="Dock"><u></u><div class="k-edge-in">
+    <button aria-label="Settings"><i class="k-icon" data-icon="settings"></i></button><s></s>
+    <button data-panel="#p-main" data-tab="0" aria-label="Today"><i class="k-icon" data-icon="cloud-sun"></i><b>8°</b><span id="pdate">Tue 10 Nov</span></button><s></s>
+    <button data-panel="#p-media" aria-label="Media"><i class="k-icon" data-icon="music"></i></button>
+    <button data-panel="#p-wifi" aria-label="Wi-Fi"><i class="k-icon" data-icon="wifi"></i></button>
+    <button data-panel="#p-bt" aria-label="Bluetooth"><i class="k-icon" data-icon="bluetooth"></i></button>
+    <button data-panel="#p-vol" aria-label="Sound"><i class="k-icon" data-icon="volume-2"></i></button><s></s>
+    <button data-panel="#p-main" data-tab="2" aria-label="About"><i class="k-icon" data-icon="info"></i></button>
+  </div></div>
+</div></div>
+</div>
+<script>
+Kit.hydrate(document);
+(function () {
+  var d = new Date(), days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], mon = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  document.getElementById('dow').textContent = days[d.getDay()];
+  document.getElementById('dmy').textContent = d.getDate() + ' ' + mon[d.getMonth()];
+  document.getElementById('pdate').textContent = days[d.getDay()].slice(0, 3) + ' ' + d.getDate() + ' ' + mon[d.getMonth()].slice(0, 3);
+  var part = Math.round((d.getHours() * 60 + d.getMinutes()) / 14.4);
+  document.getElementById('dayp').textContent = part + '%';
+  document.getElementById('dayl').style.setProperty('--p', part + '%');
+  var b = document.getElementById('up-b'), t = document.getElementById('up-t'), s = document.getElementById('up-s'), p = document.getElementById('up-p'), i = document.getElementById('up-i');
+  b.addEventListener('click', function () {
+    b.disabled = true; t.textContent = 'Looking for updates'; s.textContent = 'Asking the stable channel'; p.style.display = 'block'; i.innerHTML = Kit.icon('refresh-cw');
+    setTimeout(function () { t.textContent = 'Installing 0.2.0'; s.textContent = 'Building the new system'; }, 1600);
+    setTimeout(function () { b.disabled = false; p.style.display = 'none'; t.textContent = 'You are up to date'; s.textContent = 'Now on 0.2.0. Checked just now'; i.innerHTML = Kit.icon('check'); }, 4200);
+  });
+})();
+
+setTimeout(function () { var d = document.getElementById('dock')._k; d.show(); d.open(document.querySelector('.k-edge [data-panel="#p-main"]')); }, 500);
+</script>
+</body>
+</html>

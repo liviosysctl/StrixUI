@@ -1,0 +1,50 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Strix</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--background); color: var(--text); overflow: hidden; }
+  .cover { position: relative; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
+  .art svg { display: block; width: 480px; height: 288px; }
+  .red { fill: var(--accent); }
+  .cream { fill: var(--line); }
+  .deep { fill: var(--surface-raised); }
+  .soft { fill: var(--accent-soft); }
+  .blk { rx: var(--radius-md); }
+  .arc { fill: none; stroke: var(--line); stroke-width: var(--line-hair); opacity: 0.6; }
+  .words { position: absolute; left: var(--space-6); bottom: var(--space-6); max-width: 440px; }
+  .name { margin: 0; font-family: var(--font-fraktur); font-weight: 300; font-size: 120px; line-height: 0.95; color: var(--text); }
+  .tag { margin: var(--space-2) 0 0 4px; font-family: var(--font-serif); font-style: italic; font-size: 14px; line-height: 20px; letter-spacing: 0.04em; color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      accent disc, 176 across (rx = half the side), the one hue the system is known by · line (cream) slab 96×208 bled off the top · surface-raised 168×200 bleeding off the right edge · accent-soft 96×48 once, for relief — about a third of 960×288
+  arrangement one disc between two slabs, bottoms on a line space-5 above the edge, space-5 gutters; the disc sits high, as on the wallpaper
+  pattern     the literal motif: "a star chart drawn in a few fine line strokes" — three concentric arcs and a meridian in line at line-hair, centred under the disc, crossing the blocks
+  scales      sides in space-2 multiples; gutters space-5; arcs space-7 apart; corners radius-md; disc rx 88
+-->
+<rect class="cream blk" x="24" y="-16" width="96" height="208" rx="4"/>
+<rect class="soft blk" x="24" y="216" width="96" height="48" rx="4"/>
+<rect class="deep blk" x="336" y="64" width="168" height="200" rx="4"/>
+<circle class="red" cx="232" cy="124" r="88"/>
+<circle class="arc" cx="232" cy="264" r="96"/>
+<circle class="arc" cx="232" cy="264" r="144"/>
+<circle class="arc" cx="232" cy="264" r="192"/>
+<path class="arc" d="M232 0V288"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Strix</h1>
+<p class="tag">Old engravings, fine lines, one red.</p>
+</div>
+</div>
+</body>
+</html>

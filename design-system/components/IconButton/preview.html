@@ -1,0 +1,23 @@
+<!-- @dsCard group="Actions" height=90 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>IconButton — preview</title></head>
+<body>
+<div class="k-stage">
+  <span class="k-tip"><button class="k-iconbtn" aria-label="Settings"><i class="k-icon" data-icon="settings"></i></button><span role="tooltip">Settings</span></span>
+  <button class="k-iconbtn" aria-label="Play" aria-pressed="false" id="pp"><i class="k-icon" data-icon="play"></i></button>
+  <button class="k-iconbtn k-iconbtn-danger" aria-label="Power"><i class="k-icon" data-icon="power"></i></button>
+  <button class="k-iconbtn k-iconbtn-sm" aria-label="Close"><i class="k-icon" data-icon="x"></i></button>
+  <button class="k-iconbtn" aria-label="Copy" disabled><i class="k-icon" data-icon="copy"></i></button>
+</div>
+<script>
+Kit.hydrate(document);
+var pp = document.getElementById('pp');
+pp.addEventListener('click', function () {
+  var on = pp.getAttribute('aria-pressed') !== 'true';
+  pp.setAttribute('aria-pressed', on);
+  pp.querySelector('.k-icon').innerHTML = Kit.icon(on ? 'pause' : 'play');
+});
+</script>
+</body>
+</html>

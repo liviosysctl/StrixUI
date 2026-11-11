@@ -1,0 +1,19 @@
+<!-- @dsCard group="Feedback" height=130 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Ring — preview</title></head>
+<body>
+<div class="k-stage">
+  <div class="k-ringset"><div class="k-ring" data-value="12"></div>CPU</div>
+  <div class="k-ringset"><div class="k-ring" data-value="38"></div>GPU</div>
+  <div class="k-ringset"><div class="k-ring" data-value="71"></div>RAM</div>
+  <button class="k-btn k-btn-sm" id="shuffle"><span>New values</span></button>
+</div>
+<script>
+Kit.hydrate(document);
+document.getElementById('shuffle').addEventListener('click', function () {
+  Array.prototype.forEach.call(document.querySelectorAll('.k-ring'), function (r) { Kit.ring(r, Math.round(Math.random() * 100)); });
+});
+</script>
+</body>
+</html>

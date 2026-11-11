@@ -1,0 +1,18 @@
+<!-- @dsCard group="Feedback" height=90 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Osd — preview</title></head>
+<body>
+<div class="k-stage">
+  <div class="k-osd k-surface" id="osd"><i class="k-icon" data-icon="volume-2"></i><div class="k-progress" style="--p:62%"><i></i></div><output>62</output></div>
+  <button class="k-btn k-btn-sm" id="dn"><span>Volume down</span></button><button class="k-btn k-btn-sm" id="up"><span>Volume up</span></button>
+</div>
+<script>
+Kit.hydrate(document);
+var val = 62, osd = document.getElementById('osd');
+function set(d) { val = Math.max(0, Math.min(100, val + d)); osd.querySelector('.k-progress').style.setProperty('--p', val + '%'); osd.querySelector('output').textContent = val; }
+document.getElementById('dn').addEventListener('click', function () { set(-5); });
+document.getElementById('up').addEventListener('click', function () { set(5); });
+</script>
+</body>
+</html>

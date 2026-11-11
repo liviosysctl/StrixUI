@@ -1,0 +1,41 @@
+<!-- @dsCard group="Shell" height=120 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>TopBar — preview</title></head>
+<body>
+<div style="position:relative;height:120px;overflow:hidden"><div class="k-wall" style="background-image:url(../../assets/Wallpapers/apollo-belvedere.jpg);background-position:center top"></div><div style="position:relative">
+<div class="k-bar" role="toolbar" aria-label="Status">
+  <div>
+    <button aria-label="Search apps"><i class="k-icon" data-icon="search"></i><b id="clock">21:04</b></button>
+    <span class="k-meter" title="CPU"><i class="k-icon" data-icon="cpu"></i><u style="--p:17%"></u><span class="k-roll" data-value="17%" id="m-cpu"></span></span>
+    <span class="k-meter" title="Memory"><i class="k-icon" data-icon="memory-stick"></i><u style="--p:24%"></u><span>7.4 GiB</span></span>
+    <span class="k-meter" title="Temperature"><i class="k-icon" data-icon="thermometer"></i><u style="--p:46%"></u><span class="k-roll" data-value="46°" id="m-tmp"></span></span>
+  </div>
+  <div>
+    <span class="k-ws" role="tablist" aria-label="Workspaces"><button aria-label="Workspace 1" data-used></button><button aria-label="Workspace 2" data-used aria-current="true"></button><button aria-label="Workspace 3" data-used></button><button aria-label="Workspace 4"></button><button aria-label="Workspace 5"></button></span>
+    <button class="k-track" aria-label="Now playing"><i class="k-icon" data-icon="music"></i><span>Nocturne in E-flat major</span></button>
+  </div>
+  <div>
+    <button class="k-rec" aria-label="Recording"><i class="k-icon" data-icon="video"></i><span class="k-dot k-dot-live"></span></button>
+    <button aria-label="Notifications, 3 new"><i class="k-icon" data-icon="bell"></i><b>3</b></button>
+    <button class="k-power" aria-label="Session"><i class="k-icon" data-icon="power"></i></button>
+  </div>
+</div></div></div>
+<script>
+Kit.hydrate(document);
+(function () {
+  var ws = document.querySelectorAll('.k-ws button');
+  Array.prototype.forEach.call(ws, function (b) { b.addEventListener('click', function () { Array.prototype.forEach.call(ws, function (o) { o.removeAttribute('aria-current'); }); b.setAttribute('aria-current', 'true'); b.setAttribute('data-used', ''); document.dispatchEvent(new CustomEvent('workspace', { detail: Array.prototype.indexOf.call(ws, b) })); }); });
+  function tick() {
+    var d = new Date(), c = document.getElementById('clock');
+    if (c) c.textContent = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    var cpu = 8 + Math.round(Math.random() * 40), tmp = 42 + Math.round(Math.random() * 14);
+    var a = document.getElementById('m-cpu'), t = document.getElementById('m-tmp');
+    if (a) { Kit.roll(a, (cpu < 10 ? ' ' : '') + cpu + '%'); a.parentNode.querySelector('u').style.setProperty('--p', cpu + '%'); }
+    if (t) { Kit.roll(t, tmp + '°'); t.parentNode.querySelector('u').style.setProperty('--p', tmp + '%'); }
+  }
+  tick(); if (!Kit.reduced()) setInterval(tick, 2500);
+})();
+</script>
+</body>
+</html>

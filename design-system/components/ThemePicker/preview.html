@@ -1,0 +1,73 @@
+<!-- @dsCard group="Screens" height=720 width=1280 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ThemePicker — preview</title><style>
+#picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
+#picker[data-out] { opacity: 0; pointer-events: none; }
+#picker .tools { position: absolute; top: 150px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
+#picker .k-carousel { position: absolute; top: 200px; left: 0; right: 0; height: 300px; }
+#picker .hint { position: absolute; bottom: 120px; left: 0; right: 0; text-align: center; }
+#rev { background: var(--background) center / cover no-repeat; }
+#rev svg { width: 100%; height: 100%; display: block; }
+</style></head>
+<body>
+<div class="k-screen" id="scr">
+  <div class="k-wall" id="base" style="background-image:url(../../assets/Wallpapers/hercules.jpg);background-position:center"></div>
+  <div class="k-reveal" id="rev"></div>
+  <div class="k-grain"></div>
+  <div id="picker">
+    <div class="k-scrim" style="animation:none"></div>
+    <div class="tools"><div class="k-toolbar">
+      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Grid view"><i class="k-icon" data-icon="layout-grid"></i></button><span role="tooltip">Grid view</span></span>
+      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Preview motion"><i class="k-icon" data-icon="play"></i></button><span role="tooltip">Preview motion</span></span>
+      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light">Light</button></div>
+      <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Search themes"><i class="k-icon" data-icon="search"></i></button><span role="tooltip">Search themes</span></span>
+    </div></div>
+    <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
+    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card applies&emsp;<span class="k-kbd">Esc</span> closes</div>
+  </div>
+  <button class="k-btn" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
+</div>
+<script>
+Kit.hydrate(document);
+var IMG = {Strix: "../../assets/Wallpapers/apollo-belvedere.jpg", Laocoon: "../../assets/Wallpapers/laocoon.jpg", Hercules: "../../assets/Wallpapers/hercules.jpg"};
+function art(bg, disc, line) {
+  return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
+}
+function pic(t) { return IMG[t[0]] ? '<img alt="" src="' + IMG[t[0]] + '">' : art(t[2], t[3], t[4]); }
+var THEMES = [['Paper', 'light', '#ece6da', '#1b1917', '#55504a'], ['Slate', 'dark', '#16191d', '#8ea8c8', '#8a8f96'], ['Chamber', 'lights off', '#2a2d32', '#f2f3f5', '#9aa0a8'], ['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a'], ['Moss', 'dark', '#0f1410', '#8fb894', '#7d8a7e'], ['Ember', 'dark', '#140d0a', '#d99a6c', '#8a7a6c']];
+function cards(track, sel) {
+  track.innerHTML = THEMES.map(function (t, i) {
+    return '<button class="k-slant" data-value="' + t[0] + '" aria-selected="' + (i === sel) + '" aria-label="' + t[0] + ' theme"><span class="k-slant-art">' + pic(t) + '</span><span class="k-slant-edge"></span><span class="k-slant-name">' + t[0] + '<small>' + t[1] + '</small></span></button>';
+  }).join('');
+}
+
+(function () {
+  var track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base'), picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
+  cards(track, 3); Kit.hydrate(document);
+  function paint(el, t) {
+    if (IMG[t[0]]) { el.innerHTML = ''; el.style.backgroundImage = 'url(' + IMG[t[0]] + ')'; }
+    else { el.style.backgroundImage = 'none'; el.innerHTML = art(t[2], t[3], t[4]); }
+  }
+  document.getElementById('variant').addEventListener('change', function (e) {
+    Array.prototype.forEach.call(track.querySelectorAll('.k-slant[aria-selected="true"] small'), function (s) { s.textContent = e.detail.value; });
+  });
+  car.addEventListener('apply', function (e) {
+    var t = THEMES[e.detail.index];
+    paint(rev, t);
+    Kit.reveal(rev, e.detail.x, e.detail.y).then(function () {
+      paint(base, t); picker.setAttribute('data-out', '');
+      setTimeout(function () { rev.removeAttribute('data-on'); reopen.style.display = 'inline-flex'; }, 260);
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (picker.hasAttribute('data-out')) return;
+    if (e.key === 'Enter') { var c = track.querySelector('[aria-selected="true"]').getBoundingClientRect(); car.dispatchEvent(new CustomEvent('apply', { detail: { index: car._k.index, x: c.left + c.width / 2, y: c.top + c.height / 2 } })); }
+    if (e.key === 'ArrowRight') car._k.select(car._k.index + 1);
+    if (e.key === 'ArrowLeft') car._k.select(car._k.index - 1);
+  });
+  reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
+})();
+</script>
+</body>
+</html>

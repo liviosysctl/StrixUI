@@ -1,0 +1,23 @@
+<!-- @dsCard group="Inputs" height=210 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>TextField — preview</title></head>
+<body>
+<div class="k-stage" style="align-items:flex-start">
+  <div class="k-field"><label for="a">Host name</label><div class="k-input"><input id="a" value="larp"></div><span class="k-help">Lowercase letters, digits and hyphens.</span></div>
+  <div class="k-field"><label for="b">Passphrase</label><div class="k-input k-input-pill"><input id="b" type="password" value="hunter22"><button class="k-iconbtn k-iconbtn-sm" aria-label="Show passphrase" id="eye"><i class="k-icon" data-icon="eye"></i></button></div><span class="k-help"></span></div>
+  <div class="k-field"><label for="c">Password</label><div class="k-input k-input-line"><input id="c" type="password" placeholder="Type to unlock"></div><span class="k-help"></span></div>
+  <div class="k-field" data-state="error"><label for="d">Host name</label><div class="k-input"><input id="d" value="My PC" aria-invalid="true"></div><span class="k-help">Spaces are not allowed.</span></div>
+  <div class="k-field" data-state="disabled"><label for="e">Disk</label><div class="k-input"><input id="e" value="/dev/nvme0n1" disabled></div><span class="k-help"></span></div>
+  <div class="k-field"><label for="f">Empty</label><div class="k-input"><input id="f" placeholder="Nothing typed yet"></div><span class="k-help"></span></div>
+</div>
+<script>
+Kit.hydrate(document);
+document.getElementById('eye').addEventListener('click', function () {
+  var i = document.getElementById('b'), show = i.type === 'password';
+  i.type = show ? 'text' : 'password';
+  this.querySelector('.k-icon').innerHTML = Kit.icon(show ? 'eye-off' : 'eye');
+});
+</script>
+</body>
+</html>

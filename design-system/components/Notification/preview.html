@@ -1,0 +1,28 @@
+<!-- @dsCard group="Feedback" height=230 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Notification — preview</title></head>
+<body>
+<div class="k-stage" style="align-items:flex-start">
+  <div class="k-notif-stack" id="stack">
+    <div class="k-notif k-surface"><i class="k-icon" data-icon="download"></i><div><b>Update ready</b><p>Version 0.2.0 has been downloaded. It is applied the next time you restart.</p></div><time>21:04</time><footer><button class="k-btn k-btn-sm"><span>Restart</span></button><button class="k-btn k-btn-sm k-btn-quiet" data-x><span>Later</span></button></footer></div>
+    <div class="k-notif k-surface" data-urgency="critical"><i class="k-icon" data-icon="triangle-alert"></i><div><b>Disk almost full</b><p>Less than 2 GiB left on /home.</p></div><time>21:06</time></div>
+  </div>
+  <button class="k-btn k-btn-sm" id="send"><span>Send one</span></button>
+</div>
+<script>
+Kit.hydrate(document);
+var stack = document.getElementById('stack'), n = 0;
+var samples = [['clipboard', 'Copied', 'Screenshot saved to the clipboard.'], ['bluetooth', 'Headphones connected', 'Battery at 80%.'], ['package', 'Installed', 'The app is ready in the app finder.']];
+function bind(el) { var x = el.querySelector('[data-x]'); if (x) x.addEventListener('click', function () { Kit.dismiss(el); }); }
+Array.prototype.forEach.call(stack.children, bind);
+document.getElementById('send').addEventListener('click', function () {
+  var s = samples[n++ % samples.length], el = document.createElement('div');
+  el.className = 'k-notif k-surface k-notif-in';
+  el.innerHTML = '<i class="k-icon">' + Kit.icon(s[0]) + '</i><div><b>' + s[1] + '</b><p>' + s[2] + '</p></div><time>now</time>';
+  stack.insertBefore(el, stack.firstChild);
+  setTimeout(function () { Kit.dismiss(el); }, 4000);
+});
+</script>
+</body>
+</html>

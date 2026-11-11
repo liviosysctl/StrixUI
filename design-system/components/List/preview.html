@@ -1,0 +1,24 @@
+<!-- @dsCard group="Data" height=230 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>List — preview</title></head>
+<body>
+<div class="k-stage" style="align-items:flex-start">
+  <ul class="k-list k-surface" role="listbox" aria-label="Apps" id="list" tabindex="0">
+    <li class="k-row k-enter" style="--i:0" role="option" aria-selected="true"><i class="k-icon" data-icon="app-window"></i><span class="k-grow"><b>Fire</b>fox</span><small>Browser</small></li>
+    <li class="k-row k-enter" style="--i:1" role="option"><i class="k-icon" data-icon="folder"></i><span class="k-grow"><b>Fi</b>les</span><small>File manager</small></li>
+    <li class="k-row k-enter" style="--i:2" role="option"><i class="k-icon" data-icon="terminal"></i><span class="k-grow">Ghostty</span><small>Terminal</small></li>
+    <li class="k-row k-enter" style="--i:3" role="option"><i class="k-icon" data-icon="settings"></i><span class="k-grow">A setting with a name so long that it has to be cut off at the end</span><small>Settings</small></li>
+    <li class="k-row k-enter" style="--i:4" role="option" aria-disabled="true"><i class="k-icon" data-icon="package"></i><span class="k-grow">Store</span><small>Offline</small></li>
+  </ul>
+  <div class="k-list k-surface" style="width:220px"><div class="k-empty">Nothing copied yet.</div></div>
+</div>
+<script>
+Kit.hydrate(document);
+var list = document.getElementById('list'), rows = Array.prototype.filter.call(list.children, function (r) { return r.getAttribute('aria-disabled') !== 'true'; }), cur = 0;
+function pick(i) { cur = (i + rows.length) % rows.length; Array.prototype.forEach.call(list.children, function (r) { r.setAttribute('aria-selected', r === rows[cur]); }); }
+rows.forEach(function (r, i) { r.addEventListener('click', function () { pick(i); }); });
+list.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); pick(cur + 1); } if (e.key === 'ArrowUp') { e.preventDefault(); pick(cur - 1); } });
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!-- @dsCard group="Screens" height=540 width=960 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>BootSplash — preview</title><style>
+.splash { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.splash .slot { height: 60px; margin-top: 36px; display: flex; flex-direction: column; align-items: center; }
+.splash[data-state="boot"] #pass, .splash[data-state="off"] #pass { display: none; }
+.splash[data-state="pass"] #run, .splash[data-state="wrong"] #run { display: none; }
+.splash #run { width: 180px; }
+.splash .k-help { text-align: center; }
+</style></head>
+<body>
+<div style="height:540px;background:var(--background);display:flex;flex-direction:column">
+  <div class="splash" id="splash" data-state="boot">
+    <div class="display" style="color:var(--text)">Strix</div>
+    <div class="k-rule" style="width:150px;margin:6px 0 4px"><i></i></div>
+    <div class="motto k-muted">nocte vigilat</div>
+    <div class="slot">
+      <div class="k-progress" data-indeterminate id="run"><i></i></div>
+      <div class="k-field" id="pass" style="width:220px"><div class="k-input k-input-line"><input type="password" aria-label="Passphrase" placeholder="Passphrase" id="pp"></div><span class="k-help" id="msg">Enter the passphrase for this disk</span></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:center;padding:16px"><div class="k-seg" id="state" aria-label="State"><button aria-selected="true">Start</button><button>Passphrase</button><button>Wrong passphrase</button><button>Shut down</button></div></div>
+</div>
+<script>
+Kit.hydrate(document);
+(function () {
+  var s = document.getElementById('splash'), msg = document.getElementById('msg'), pass = document.getElementById('pass'), pp = document.getElementById('pp');
+  var names = ['boot', 'pass', 'wrong', 'off'];
+  function set(i) {
+    s.setAttribute('data-state', names[i]);
+    pass.removeAttribute('data-state'); msg.textContent = 'Enter the passphrase for this disk'; pp.value = i === 2 ? '' : pp.value;
+    if (i === 2) { pass.setAttribute('data-state', 'error'); msg.textContent = 'Wrong passphrase. Try again.'; var b = pp.parentNode; b.classList.remove('k-shake'); void b.offsetWidth; b.classList.add('k-shake'); }
+    if (i === 1) pp.value = 'correct horse';
+  }
+  document.getElementById('state').addEventListener('change', function (e) { set(e.detail.index); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!-- @dsCard group="Feedback" height=260 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Dialog — preview</title></head>
+<body>
+<div style="position:relative;height:260px">
+  <div class="k-stage"><button class="k-btn" id="open"><span>Open dialog</span></button></div>
+  <div class="k-scrim" id="scrim"><div class="k-dialog k-surface" role="dialog" aria-modal="true" aria-labelledby="dt">
+    <h3 id="dt">Erase this disk?</h3>
+    <p>Everything on /dev/nvme0n1 (512 GiB) will be deleted. This cannot be undone.</p>
+    <footer><button class="k-btn k-btn-quiet" id="no"><span>Cancel</span></button><button class="k-btn k-btn-danger" id="yes"><span>Erase disk</span></button></footer>
+  </div></div>
+</div>
+<script>
+Kit.hydrate(document);
+var scrim = document.getElementById('scrim');
+function close() { scrim.style.display = 'none'; document.getElementById('open').focus(); }
+function open() { scrim.style.display = 'grid'; document.getElementById('no').focus({ preventScroll: true }); }
+document.getElementById('open').addEventListener('click', open);
+document.getElementById('no').addEventListener('click', close);
+document.getElementById('yes').addEventListener('click', close);
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+</script>
+</body>
+</html>

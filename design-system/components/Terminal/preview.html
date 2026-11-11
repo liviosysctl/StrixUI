@@ -1,0 +1,41 @@
+<!-- @dsCard group="Screens" height=500 width=960 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Terminal — preview</title><style>
+.k-code .p { color: var(--term-foreground); font-weight: 600; } .k-code .d { color: var(--term-blue); } .k-code .g { color: var(--term-green); }
+.k-code .m { color: var(--term-bright-black); } .k-code .y { color: var(--term-yellow); } .k-code .c { color: var(--term-cyan); }
+.k-code .r { color: var(--term-red); } .k-code .rb { color: var(--term-bright-red); font-weight: 600; } .k-code .yb { color: var(--term-bright-yellow); font-weight: 600; }
+.k-code .bl { color: var(--term-blue); } .k-code .b { font-weight: 600; }
+.strip { display: grid; grid-template-columns: repeat(8, 1fr); margin-top: 16px; max-width: 320px; }
+.k-swatch { display: block; height: 14px; }
+</style></head>
+<body>
+<div style="padding:12px;height:500px;background:var(--background)">
+<div class="k-win" data-active style="height:100%"><div class="k-win-body" style="background:var(--term-background);padding:16px 20px">
+<pre class="k-code" style="color:var(--term-foreground)"><span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> git log --oneline -4
+<span class="y">d207083</span> <span class="m">(</span><span class="c">HEAD -&gt; </span><span class="g">main</span><span class="m">,</span> <span class="r">origin/main</span><span class="m">)</span> ci: update flake inputs and crates every week
+<span class="y">952d81c</span> <span class="m">(</span><span class="y">tag: v0.1.0</span><span class="m">,</span> <span class="r">origin/stable</span><span class="m">)</span> release: 0.1.0
+<span class="y">7c1e0aa</span> feat(installer): ask for the language first
+<span class="y">31b9f42</span> fix(theme): keep the default splash when the variable is missing
+
+<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> cargo build
+<span class="g">   Compiling</span> theme-engine v0.1.0
+<span class="rb">error[E0308]</span><span class="b">: mismatched types</span>
+  <span class="bl">--&gt;</span> src/check.rs:14:16
+   <span class="bl">|</span>
+<span class="bl">14 |</span>         return fail(4.5);
+   <span class="bl">|</span>                     <span class="rb">^^^ expected `&amp;str`, found floating-point number</span>
+<span class="yb">warning</span><span class="b">: unused variable: `text`</span>
+
+<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> ls
+<span class="bl b">hosts</span>  <span class="bl b">installer</span>  <span class="bl b">modules</span>  <span class="bl b">packages</span>  <span class="bl b">themes</span>  <span class="g b">build.sh</span>  <span class="c">result</span>  flake.lock  flake.nix  README.md
+
+<span class="p">livio@larp</span> <span class="d">~/strixos</span> <span class="g">main</span> <span class="m">&gt;</span> <span class="k-caret" style="background:var(--term-cursor)"></span></pre>
+<div class="strip"><span class="k-swatch" style="background:var(--term-black)" title="black"></span><span class="k-swatch" style="background:var(--term-red)" title="red"></span><span class="k-swatch" style="background:var(--term-green)" title="green"></span><span class="k-swatch" style="background:var(--term-yellow)" title="yellow"></span><span class="k-swatch" style="background:var(--term-blue)" title="blue"></span><span class="k-swatch" style="background:var(--term-magenta)" title="magenta"></span><span class="k-swatch" style="background:var(--term-cyan)" title="cyan"></span><span class="k-swatch" style="background:var(--term-white)" title="white"></span><span class="k-swatch" style="background:var(--term-bright-black)" title="bright-black"></span><span class="k-swatch" style="background:var(--term-bright-red)" title="bright-red"></span><span class="k-swatch" style="background:var(--term-bright-green)" title="bright-green"></span><span class="k-swatch" style="background:var(--term-bright-yellow)" title="bright-yellow"></span><span class="k-swatch" style="background:var(--term-bright-blue)" title="bright-blue"></span><span class="k-swatch" style="background:var(--term-bright-magenta)" title="bright-magenta"></span><span class="k-swatch" style="background:var(--term-bright-cyan)" title="bright-cyan"></span><span class="k-swatch" style="background:var(--term-bright-white)" title="bright-white"></span></div>
+</div></div></div>
+<script>
+Kit.hydrate(document);
+
+</script>
+</body>
+</html>

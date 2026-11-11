@@ -1,0 +1,73 @@
+<!-- @dsCard group="Screens" height=720 width=1280 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>LockScreen — preview</title><style>
+#lock { position: absolute; inset: 0; transition: opacity var(--dur-slow) var(--ease-in), transform var(--dur-slow) var(--ease-in); }
+#lock[data-out] { opacity: 0; transform: translateX(-24px); pointer-events: none; }
+#lock .col { position: absolute; left: var(--space-8); top: 76px; }
+#lock .clock { color: var(--text); margin-left: -6px; }
+#lock .foot { position: absolute; left: var(--space-8); bottom: var(--space-6); line-height: 18px; }
+#lock .foot b { color: var(--text); font-weight: 500; }
+#lock .foot i { font-style: normal; color: var(--text-faint); }
+#lock .mark { position: absolute; right: var(--space-8); bottom: var(--space-6); text-align: center; }
+#lock .plate { position: absolute; left: 0; right: 0; bottom: var(--space-6); text-align: center; opacity: 0.8; }
+#lock .hint { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
+.k-wall[data-clear] { filter: none; transform: none; }
+</style></head>
+<body>
+<div class="k-screen" id="scr">
+  <div class="k-wall" data-dim id="wall" style="background-image:url(../../assets/Wallpapers/laocoon.jpg);background-position:center"></div>
+  <div class="k-grain"></div>
+  <div id="lock">
+    <div class="col">
+      <div class="clock" id="hh">21</div><div class="clock" id="mm">04</div>
+      <div class="caption k-muted" id="date" style="margin-top:14px">Tuesday, 10 November</div>
+      <div class="motto" id="greet" style="color:var(--text)">good evening, livio</div>
+      <div class="k-field" id="field" style="width:200px;margin-top:22px"><div class="k-input k-input-line"><input id="pw" type="password" aria-label="Password" placeholder="Password" autocomplete="off"></div><span class="k-help" id="help"></span></div>
+      <div style="display:flex;gap:2px;margin:2px 0 0 -7px">
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Log out"><i class="k-icon" data-icon="log-out"></i></button><span role="tooltip">Log out</span></span>
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Shut down"><i class="k-icon" data-icon="power"></i></button><span role="tooltip">Shut down</span></span>
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Suspend"><i class="k-icon" data-icon="moon"></i></button><span role="tooltip">Suspend</span></span>
+        <span class="k-tip"><button class="k-iconbtn" aria-label="Restart"><i class="k-icon" data-icon="rotate-cw"></i></button><span role="tooltip">Restart</span></span>
+      </div>
+    </div>
+    <div class="foot caption k-muted"><b>3 notifications</b><br><b>CPU</b> <i>::</i> 8%&emsp;<b>RAM</b> <i>::</i> 24%&emsp;<b>GPU</b> <i>::</i> 3%</div>
+    <div class="mark"><div class="k-wordmark">Strix</div><div class="k-rule" style="margin:4px 0 2px"><i></i></div><div class="k-motto">nocte vigilat</div></div>
+    <div class="plate k-plate">Laocoön. Engraved by Nicolas Beatrizet, Rome, about 1550</div>
+    <div class="hint micro">Demo password :: strix</div>
+  </div>
+  <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
+</div>
+<script>
+Kit.hydrate(document);
+(function () {
+  var d = new Date(), days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], mon = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function two(n) { return ('0' + n).slice(-2); }
+  function tick() { var n = new Date(); document.getElementById('hh').textContent = two(n.getHours()); document.getElementById('mm').textContent = two(n.getMinutes()); }
+  tick(); setInterval(tick, 10000);
+  document.getElementById('date').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + mon[d.getMonth()];
+  var h = d.getHours();
+  document.getElementById('greet').textContent = 'good ' + (h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening') + ', livio';
+  var pw = document.getElementById('pw'), field = document.getElementById('field'), help = document.getElementById('help'), lock = document.getElementById('lock'), wall = document.getElementById('wall'), tries = 0, wait = 0;
+  function err(msg) { field.setAttribute('data-state', 'error'); help.textContent = msg; var box = pw.parentNode; box.classList.remove('k-shake'); void box.offsetWidth; box.classList.add('k-shake'); }
+  pw.addEventListener('keydown', function (e) {
+    if (wait) { e.preventDefault(); return; }
+    if (e.getModifierState && e.getModifierState('CapsLock')) { field.removeAttribute('data-state'); help.textContent = 'Caps Lock is on'; }
+    else if (e.key !== 'Enter' && field.getAttribute('data-state') !== 'error') help.textContent = '';
+    if (e.key !== 'Enter') { if (e.key.length === 1) { field.removeAttribute('data-state'); } return; }
+    if (pw.value === 'strix') {
+      help.textContent = ''; lock.setAttribute('data-out', ''); wall.setAttribute('data-clear', '');
+      setTimeout(function () { document.getElementById('relock').style.display = 'inline-flex'; }, 700);
+    } else {
+      tries++; pw.value = '';
+      if (tries >= 3) {
+        wait = 10; pw.disabled = true; err('Too many tries. Wait ' + wait + ' s');
+        var t = setInterval(function () { wait--; help.textContent = 'Too many tries. Wait ' + wait + ' s'; if (wait <= 0) { clearInterval(t); tries = 0; pw.disabled = false; field.removeAttribute('data-state'); help.textContent = ''; pw.focus({ preventScroll: true }); } }, 1000);
+      } else err('Wrong password');
+    }
+  });
+  document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
+})();
+</script>
+</body>
+</html>

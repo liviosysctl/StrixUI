@@ -1,0 +1,121 @@
+/* Strix — generated from tokens.json */
+:root, [data-theme="dark"] {
+  --background: #0b0a09;
+  --surface: #131211;
+  --surface-raised: #1b1917;
+  --surface-sunken: #070606;
+  --border: #2f2c28;
+  --border-strong: #6e6a63;
+  --line: #d8d0c0;
+  --scrim: #000000b8;
+  --text: #ece6da;
+  --text-muted: #a09a8f;
+  --text-faint: #77726a;
+  --accent: #c8102e;
+  --accent-hover: #dc1f3d;
+  --accent-pressed: #a50d26;
+  --accent-soft: #2a0c12;
+  --accent-text: #f2556a;
+  --on-accent: #ffffff;
+  --focus: #e8324a;
+  --error: #ff6b78;
+  --warning: #d9a441;
+  --success: #8fb894;
+  --info: #8ea8c8;
+  --syntax-keyword: #f2556a;
+  --syntax-string: #cdb98a;
+  --syntax-number: #d99a6c;
+  --syntax-function: #f4efe6;
+  --syntax-type: #9db4cf;
+  --syntax-constant: #c3a6c9;
+  --syntax-comment: #8a847a;
+  --syntax-operator: #a09a8f;
+  --chart-1: #c8102e;
+  --chart-2: #ece6da;
+  --chart-3: #8c877f;
+  --chart-4: #cdb98a;
+  --chart-5: #8ea8c8;
+  --term-background: #0b0a09;
+  --term-foreground: #e6e0d4;
+  --term-cursor: #c8102e;
+  --term-selection: #3a1219;
+  --term-black: #1b1917;
+  --term-red: #e5475b;
+  --term-green: #8fb894;
+  --term-yellow: #d9b36a;
+  --term-blue: #8ea8c8;
+  --term-magenta: #c3a6c9;
+  --term-cyan: #8fbcb8;
+  --term-white: #c9c3b8;
+  --term-bright-black: #857f76;
+  --term-bright-red: #ff7885;
+  --term-bright-green: #aed3b2;
+  --term-bright-yellow: #edcd8c;
+  --term-bright-blue: #b0c6e2;
+  --term-bright-magenta: #dcc3e1;
+  --term-bright-cyan: #b0d8d4;
+  --term-bright-white: #f7f3ea;
+  --shadow-pop: 0 3px 10px rgba(0, 0, 0, 0.5);
+  --shadow-window: 0 8px 22px rgba(0, 0, 0, 0.5);
+  --shadow-panel: 0 14px 36px rgba(0, 0, 0, 0.6);
+  --focus-ring: 0 0 0 2px #0b0a09, 0 0 0 4px #e8324a;
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+  --line-hair: 1px;
+  --line-bold: 2px;
+  --bar-height: 26px;
+  --control-sm: 22px;
+  --control-md: 28px;
+  --dock-rest: 5px;
+  --dock-height: 28px;
+  --osd-height: 28px;
+  --dur-instant: 80ms;
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 360ms;
+  --dur-reveal: 640ms;
+  --dur-loop: 1400ms;
+  --stagger: 30ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in: cubic-bezier(0.5, 0, 0.9, 0.3);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.3, 1.4, 0.5, 1);
+  --dim-disabled: 0.4;
+  --dim-inactive: 0.92;
+  --dim-wallpaper: 0.55;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --font-serif: "IM Fell English", "Iowan Old Style", Georgia, serif;
+  --font-fraktur: "Grenze Gotisch", "IM Fell English", Georgia, serif;
+}
+.display { font-family: var(--font-fraktur); font-size: 96px; line-height: 1; font-weight: 300; }
+.emblem { font-family: var(--font-fraktur); font-size: 44px; line-height: 1; font-weight: 300; }
+.title-lg { font-family: var(--font-serif); font-size: 26px; line-height: 30px; font-weight: 400; font-style: italic; }
+.title { font-family: var(--font-serif); font-size: 22px; line-height: 26px; font-weight: 400; }
+.subtitle { font-family: var(--font-serif); font-size: 18px; line-height: 22px; font-weight: 400; }
+.aside { font-family: var(--font-serif); font-size: 16px; line-height: 20px; font-weight: 400; font-style: italic; }
+.motto { font-family: var(--font-serif); font-size: 13px; line-height: 18px; font-weight: 400; font-style: italic; letter-spacing: 0.22em; }
+.clock { font-family: var(--font-mono); font-size: 112px; line-height: 0.92; font-weight: 200; letter-spacing: -0.04em; }
+.heading { font-family: var(--font-mono); font-size: 13px; line-height: 20px; font-weight: 600; }
+.body { font-family: var(--font-mono); font-size: 12px; line-height: 18px; font-weight: 400; }
+.label { font-family: var(--font-mono); font-size: 12px; line-height: 18px; font-weight: 600; }
+.value { font-family: var(--font-mono); font-size: 12px; line-height: 18px; font-weight: 400; }
+.caption { font-family: var(--font-mono); font-size: 11px; line-height: 16px; font-weight: 400; }
+.micro { font-family: var(--font-mono); font-size: 10px; line-height: 14px; font-weight: 500; }
+@font-face { font-family: "JetBrains Mono"; src: url("fonts/JetBrainsMono-Variable.woff2") format("woff2"); font-weight: 100 800; font-style: normal; font-display: block; }
+@font-face { font-family: "JetBrains Mono"; src: url("fonts/JetBrainsMono-Italic-Variable.woff2") format("woff2"); font-weight: 100 800; font-style: italic; font-display: block; }
+@font-face { font-family: "IM Fell English"; src: url("fonts/IMFellEnglish-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: "IM Fell English"; src: url("fonts/IMFellEnglish-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: block; }
+@font-face { font-family: "Grenze Gotisch"; src: url("fonts/GrenzeGotisch-Variable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: block; }
