@@ -35,7 +35,7 @@ USAGE = {
  'border': 'Decorative lines and frames on surface and background: inactive window border, dividers, progress track.',
  'text': 'Primary text on background, surface and surface-raised (13.9:1 or more). Wordmark, slider thumb.',
  'text-muted': 'Secondary text and resting icons on background, surface and surface-raised (6.2:1 or more).',
- 'accent': 'The colour of the god of the moment: Strix red under Carna, the default, and one hue per aspect. Fills only: main action, selected segment, active workspace, active window border, running progress, cursor, the disc of the wallpaper. Not for text; use accent-text.',
+ 'accent': 'The colour of the god of the moment: Strix red under Saturnus, the default, and one hue per aspect. Fills only: main action, selected segment, active workspace, active window border, running progress, cursor, the disc of the wallpaper. Not for text; use accent-text.',
  'on-accent': 'Text and icons on accent, accent-hover and accent-pressed (4.5:1 or more in every aspect): white on dark accents, near-black on light ones.',
  'focus': 'Focus ring, 2px, after a 2px gap in background. 4.0:1 or more on background, surface and surface-raised in every aspect.',
  'error': 'Error text and the border of a field in error, on background, surface and surface-raised (6.3:1 or more). Always with words.',
@@ -78,7 +78,7 @@ ASPECTS = pantheon.all_aspects()
 GOD_IDS = [g[0] for g in pantheon.GODS]
 
 def per_god(token, base):
-    """A colour value for every aspect: the god's own where the aspect sets the token, else Carna's."""
+    """A colour value for every aspect: the god's own where the aspect sets the token, else the default's."""
     v = {GOD_IDS[0]: base}
     for gid in GOD_IDS[1:]:
         if token in ASPECTS[gid] and ASPECTS[gid][token] != base:
@@ -366,7 +366,7 @@ def write_preview(allc):
     for c in [{'name': 'Cover', 'group': 'Overview'}] + allc:
         src = open(os.path.join(OUT, 'components', c['name'], 'preview.html'), encoding='utf-8').read()
         src = src.replace('../../assets/', rel + '/assets/')
-        src = src.replace('<head>', '<head>' + head, 1).replace('<html lang="en">', '<html lang="en" data-theme="carna">')
+        src = src.replace('<head>', '<head>' + head, 1).replace('<html lang="en">', '<html lang="en" data-theme="saturnus">')
         open(os.path.join(PREVIEW, c['name'] + '.html'), 'w', encoding='utf-8').write(src)
         links.append('<li><a href="%s.html">%s</a> <small>%s</small></li>' % (c['name'], c['name'], c['group']))
     open(os.path.join(PREVIEW, 'index.html'), 'w', encoding='utf-8').write(

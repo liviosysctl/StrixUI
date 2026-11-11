@@ -3,8 +3,8 @@ import json
 def I(n, cls=''):
     return '<i class="k-icon%s" data-icon="%s"></i>' % ((' ' + cls) if cls else '', n)
 
-BLOBS = {'5c259dc8ec61ba29431e7649ca47ec6a': 'carna.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', 'b41733760ffae9de3f6f5d88682af092': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', 'b4ec8e071ce499247b7f5574f8ea26c2': 'minerva.jpg', 'f23de46dea7fe1908c7bd773b98dd1ae': 'mercurius.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
-CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
+BLOBS = {'0d757135df30d2bf6652f3c0a18483d5': 'saturnus.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', '0cc6a7c9004fdc677a5ee5e9a15fa027': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', 'b4ec8e071ce499247b7f5574f8ea26c2': 'minerva.jpg', 'f23de46dea7fe1908c7bd773b98dd1ae': 'mercurius.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
+SATURNUS, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
 def WALL(url, extra='', pos='center'):
     return '<div class="k-wall"%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
 COMPONENTS = []
@@ -411,7 +411,7 @@ SEARCH_JS = r'''
 
     {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours', key: 'Super Ctrl Shift Space', g: 'style'},
     {k: 'action', t: 'Pantheon', p: ['Style'], i: 'wallpaper', w: 'wallpaper gods aspect background picture engraving', key: 'Super Ctrl Space', g: 'style'},
-    {k: 'action', t: 'Carna', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper red default strix threshold', g: 'style'},
+    {k: 'action', t: 'Saturnus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper red default strix saturn time sickle', g: 'style'},
     {k: 'action', t: 'Janus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper patina green door', g: 'style'},
     {k: 'action', t: 'Apollo', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper antique gold brass sun', g: 'style'},
     {k: 'action', t: 'Mars', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper rust war', g: 'style'},
@@ -449,7 +449,7 @@ SEARCH_JS = r'''
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
     {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Strix', w: 'colours look'},
-    {k: 'setting', t: 'God', p: ['Settings', 'Appearance'], i: 'swatch-book', v: 'Carna', w: 'aspect accent colour pantheon'},
+    {k: 'setting', t: 'God', p: ['Settings', 'Appearance'], i: 'swatch-book', v: 'Saturnus', w: 'aspect accent colour pantheon'},
     {k: 'setting', t: 'Variant', p: ['Settings', 'Appearance'], i: 'sun', v: 'Dark', w: 'light dark'},
     {k: 'setting', t: 'Text size', p: ['Settings', 'Appearance'], i: 'type', v: '100%', w: 'font scale'},
     {k: 'setting', t: 'Clock style', p: ['Settings', 'Lock screen'], i: 'clock', v: 'Stacked', w: 'time'},
@@ -562,10 +562,10 @@ SEARCH_JS = r'''
 '''
 
 comp('Search', 'Shell', 560, r'''
-<div data-wall-host data-theme="carna" style="position:relative;height:560px;overflow:hidden;background:var(--background)">''' + WALL(CARNA, ' data-dim', pos='center 30%') + r'''
+<div data-wall-host data-theme="saturnus" style="position:relative;height:560px;overflow:hidden;background:var(--background)">''' + WALL(SATURNUS, ' data-dim', pos='center 30%') + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;padding-top:56px">
-    <div class="k-search k-surface" id="srch" data-query="theme" data-gods=''' + "'" + json.dumps(dict(zip(['carna', 'janus', 'apollo', 'mars', 'minerva', 'mercurius', 'pluto', 'bacchus'], [CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))) + "'" + r''' role="dialog" aria-label="Search">
+    <div class="k-search k-surface" id="srch" data-query="theme" data-gods=''' + "'" + json.dumps(dict(zip(['saturnus', 'janus', 'apollo', 'mars', 'minerva', 'mercurius', 'pluto', 'bacchus'], [SATURNUS, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))) + "'" + r''' role="dialog" aria-label="Search">
       <div class="k-search-head">''' + I('search') + r'''<span class="k-crumb" id="crumb"></span><input aria-label="Search" autocomplete="off" spellcheck="false"><span class="k-kbd">Esc</span></div>
       <div class="k-search-filter"><div class="k-seg" id="filter" aria-label="Show"><button aria-selected="true">All</button><button>Apps</button><button>Actions</button><button>Settings</button><button>Commands</button></div><span class="k-plate">one field for everything</span></div>
       <ul class="k-hits" id="hits" role="listbox"></ul>
@@ -621,7 +621,7 @@ BAR_JS = r'''
 })();
 '''
 comp('TopBar', 'Shell', 120, r'''
-<div style="position:relative;height:120px;overflow:hidden">''' + WALL(CARNA, pos='center top') + r'''<div style="position:relative">''' + BAR + r'''</div></div>''', r'''
+<div style="position:relative;height:120px;overflow:hidden">''' + WALL(SATURNUS, pos='center top') + r'''<div style="position:relative">''' + BAR + r'''</div></div>''', r'''
 The status line at the top of the screen. It has no surface of its own: small text and symbols sit straight on the wallpaper, in grey, with red for the one active thing.
 
 - Left: search with the clock, then CPU, memory and temperature, each as symbol, a 3px vertical meter and a value.
@@ -742,7 +742,7 @@ Bars that follow the sound. Grey at rest, red at the peaks.
 ''')
 
 ART = r'''
-var IMG = {Strix: "''' + CARNA + r'''"};
+var IMG = {Strix: "''' + SATURNUS + r'''"};
 function art(bg, disc, line) {
   return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
 }
@@ -886,10 +886,10 @@ CODE = r'''<span class="ln"> 1</span>  <span class="cm">// Reads a theme and che
 
 screen('Desktop', 720, r'''
 <div class="k-screen">
-  ''' + WALL(CARNA) + r'''
+  ''' + WALL(SATURNUS) + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0 0 auto 0">''' + BAR + r'''</div>
-  <div class="k-plate" id="plate">Carna. A veiled vestal, engraved by Claude Mellan, Rome, 1631</div>
+  <div class="k-plate" id="plate">Saturnus with his sickle. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592</div>
   <div id="tiles" data-hidden>
     <div class="k-win" data-active><div class="k-win-body"><pre class="k-code">''' + CODE + r'''</pre></div></div>
     <div class="k-win"><div class="k-win-body"><div style="display:flex;gap:20px;align-items:center"><div style="text-align:center"><div class="k-wordmark">Strix</div><div class="k-motto" style="font-size:11px">nocte vigilat</div></div>
@@ -929,7 +929,7 @@ The desktop. Workspace 1 is empty: the engraving, the top bar on it, and the doc
 
 screen('ThemePicker', 720, r'''
 <div class="k-screen" id="scr">
-  ''' + WALL(CARNA, ' id="base"') + r'''
+  ''' + WALL(SATURNUS, ' id="base"') + r'''
   <div class="k-reveal" id="rev"></div>
   <div class="k-grain"></div>
   <div id="picker">
@@ -991,16 +991,16 @@ The theme picker over the dimmed desktop: a carousel of SlantCards, the name of 
 
 import pantheon as _pan
 _CAP = {
-    'carna': ('Mellan, 1631', 'Carna, keeper of the threshold, who drives the striges from the cradle. No ancient likeness survives; the plate is a veiled vestal of the Giustiniani collection, engraved by Claude Mellan, Rome, 1631'),
+    'saturnus': ('Goltzius, 1592', 'Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'janus': ('Audenaerd, about 1700', 'Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta'),
-    'apollo': ('Goltzius, 1592', 'Apollo as Sol, the sun, with lyre and quiver in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
+    'apollo': ('Goltzius, 1588', 'Apollo with the rays of the sun around his head. Engraved by Hendrick Goltzius, Haarlem, 1588'),
     'mars': ('Quellinus, 1655', 'Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655'),
     'minerva': ('Saenredam, 1595', 'Minerva with helmet, spear and owl. Engraved by Jan Saenredam after Hendrick Goltzius, about 1595'),
     'mercurius': ('Goltzius, 1592', 'Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'pluto': ('Goltzius, 1592', 'Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'bacchus': ('Goltzius, 1592', 'Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
 }
-_URL = dict(zip([g[0] for g in _pan.GODS], [CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))
+_URL = dict(zip([g[0] for g in _pan.GODS], [SATURNUS, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))
 PLATES = [(g[0], _URL[g[0]], g[1], _CAP[g[0]][0], _CAP[g[0]][1], _pan.aspect(g[0])['accent']) for g in _pan.GODS]
 WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
 (function () {
@@ -1031,8 +1031,8 @@ WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
 """
 
 screen('Pantheon', 720, r'''
-<div class="k-screen" id="scr" data-theme="carna">
-  ''' + WALL(CARNA, ' id="base"') + r'''
+<div class="k-screen" id="scr" data-theme="saturnus">
+  ''' + WALL(SATURNUS, ' id="base"') + r'''
   <div class="k-reveal" id="rev" style="background:var(--background) center / cover no-repeat"></div>
   <div class="k-grain"></div>
   <div id="picker">
@@ -1045,7 +1045,7 @@ screen('Pantheon', 720, r'''
 </div>''', r'''
 The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no single wallpaper but eight Roman gods. Each god is a plate and an aspect: the plate is the wallpaper, the aspect recolours the system to match it. Calling a god sets both at once.
 
-- The gods, in order: Carna (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Minerva (olive leaf), Mercurius (slate blue), Pluto (heather), Bacchus (claret). All but Carna are muted, as in dark academia: deep, warm, never bright. Carna and Janus belong to the strix: Carna keeps the striges from the cradle, Janus gave her the power over the door.
+- The gods, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Minerva (olive leaf), Mercurius (slate blue), Pluto (heather), Bacchus (claret). All but Saturnus are muted, as in dark academia: deep, warm, never bright. Janus keeps the doors and so the lock screen; in Ovid it is his gift that keeps the striges out of the house.
 - An aspect changes only the accent and its family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, terminal cursor and selection) and tints the grounds (`background`, the surfaces, `border`) a little toward the god's hue. Text, `line`, the status colours and syntax stay the same in every aspect, so readability never depends on the god.
 - In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo and Minerva) put dark text on their fills, the others white; `on-accent` says which.
 - Every plate is an engraving printed in two inks of its aspect: dark ink on dim cream, and inside the disc the paper takes the god's colour.

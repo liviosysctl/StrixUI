@@ -4,7 +4,7 @@ The design system of Strix: tokens, components, screens and motion for every sur
 
 ![The pantheon: eight gods, eight aspects](docs/renders/Pantheon-plates.jpg)
 
-The default theme has eight gods: Carna (Strix red, the default), Janus, Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. Each is a wallpaper and an aspect, a set of colour tokens that recolours the accent and tints the grounds to match the plate. Choosing a god sets both.
+The default theme has eight gods: Saturnus (Strix red, the default), Janus, Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. Each is a wallpaper and an aspect, a set of colour tokens that recolours the accent and tints the grounds to match the plate. Choosing a god sets both.
 
 ![Lock screen](docs/renders/LockScreen.png)
 

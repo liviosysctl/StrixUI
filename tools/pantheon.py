@@ -8,18 +8,18 @@ Text, line, the status colours and syntax stay as they are in every aspect.
     python3 tools/pantheon.py          # print every aspect and check its contrast
 
 The accent of each god is picked by hand; the rest is derived in OKLCH so that every aspect has
-the same lightness steps as Carna, the default.
+the same lightness steps as Saturnus, the default.
 """
 import math
 
 # name, Latin name, accent fill, short note on the colour.
 # Dark academia: every accent is muted (OKLCH chroma 0.05 to 0.10, against 0.2 for a pure colour) and
-# leans warm, like leather, brass, ink and old bindings. Only Carna keeps the full Strix red.
+# leans warm, like leather, brass, ink and old bindings. Only Saturnus, the default, keeps the full Strix red.
 def _acc(L, C, H):
     return oklch(L, C, H)
 
 GODS_SPEC = [
-    ('carna',     'Carna',     '#c8102e',               'Strix red. Carna keeps the striges from the cradle; the default.'),
+    ('saturnus',  'Saturnus',  '#c8102e',               'Strix red. Saturn, lord of time and of the night hours; the default.'),
     ('janus',     'Janus',     (0.59, 0.048, 168),      'Patina, the green of old bronze doors and keys.'),
     ('apollo',    'Apollo',    (0.68, 0.085, 78),       'Antique gold, worn brass.'),
     ('mars',      'Mars',      (0.57, 0.105, 45),       'Rust, iron and burnt sienna.'),
@@ -28,9 +28,9 @@ GODS_SPEC = [
     ('pluto',     'Pluto',     (0.55, 0.060, 305),      'Heather, faded plum.'),
     ('bacchus',   'Bacchus',   (0.52, 0.085, 10),      'Claret, old wine.'),
 ]
-DEFAULT = 'carna'
+DEFAULT = 'saturnus'
 
-# Carna's tokens, used as the reference for lightness; the hand-made values stay exact for Carna
+# The default's tokens, used as the reference for lightness; the hand-made values stay exact for Saturnus
 BASE = {
     'background': '#0b0a09', 'surface': '#131211', 'surface-raised': '#1b1917', 'surface-sunken': '#070606',
     'border': '#2f2c28', 'accent': '#c8102e', 'accent-hover': '#dc1f3d', 'accent-pressed': '#a50d26',
@@ -109,7 +109,7 @@ def aspect(name):
         return dict(BASE)
     La, Ca, Ha = to_oklch(acc)
     t = {}
-    # grounds: Carna's lightness, a faint tint of the god's hue
+    # grounds: the default's lightness, a faint tint of the god's hue
     for k, c in (('background', 0.010), ('surface', 0.011), ('surface-raised', 0.012), ('surface-sunken', 0.008), ('border', 0.016)):
         Lb = to_oklch(BASE[k])[0]
         t[k] = oklch(Lb, c, Ha)

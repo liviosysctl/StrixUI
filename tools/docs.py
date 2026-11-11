@@ -5,7 +5,7 @@ This system is the single source for that look on every surface: the desktop she
 ## Principles
 
 - Old and exact. The mood comes from engravings, blackletter, an old-style serif and small ornaments. The work is done in a fine monospace. Never mix the roles: nothing you operate is set in the serif, and nothing that sets the mood is set in mono.
-- One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, the active window, running progress, the cursor, and the disc on the wallpaper. Its colour belongs to the god of the moment (Strix red under Carna, the default), but there is only ever one. If two things carry it, one of them is wrong.
+- One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, the active window, running progress, the cursor, and the disc on the wallpaper. Its colour belongs to the god of the moment (Strix red under Saturnus, the default), but there is only ever one. If two things carry it, one of them is wrong.
 - Fine, not heavy. Text is 12px, controls are 28px high, lines are one pixel, corners are 2 to 4px. When in doubt, make it thinner and leave more room around it.
 - Flat and dark. Surfaces are one step lighter than the ground and carry a hair border. No glass, no blur behind panels.
 - Lines, not fills. State is shown with a line, a border, a caret or a word before it is shown with a filled box.
@@ -43,24 +43,15 @@ The ten required colours of `theme.toml` have the same names here: `background`,
 
 ### The pantheon: one aspect per god
 
-The default theme has eight aspects, one for each god of its wallpapers. Choosing a god in the pantheon (Style › Wallpaper) sets the plate and its aspect together. In the tokens the aspects are the colour themes: `carna` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches the rest.
+The default theme has eight aspects, one for each god of its wallpapers. Choosing a god in the pantheon (Style › Wallpaper) sets the plate and its aspect together. In the tokens the aspects are the colour themes: `saturnus` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches the rest.
 
-| God | `accent` | `background` | Colour |
-| --- | --- | --- | --- |
-| Carna | `#c8102e` | `#0b0a09` | Strix red. Carna keeps the striges from the cradle; the default. |
-| Janus | `#2e9a84` | `#060c0a` | Verdigris, the green of old bronze doors and keys. |
-| Apollo | `#d4a21a` | `#0c0a06` | Sun gold. |
-| Mars | `#e0641f` | `#0e0907` | Ember, iron in the forge. |
-| Minerva | `#8f9b2c` | `#0a0b06` | Olive, her tree. |
-| Mercurius | `#448bcd` | `#070b0e` | Quicksilver blue. |
-| Pluto | `#7a4fd1` | `#0a090e` | Violet of the underworld. |
-| Bacchus | `#b23472` | `#0e090a` | Wine. |
+__GODS_TABLE__
 
-- An aspect sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep Carna's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
-- The colours follow dark academia: deep, muted and warm, like leather, brass, ink and old bindings. Every accent but Carna's has an OKLCH chroma between 0.05 and 0.11, so none is pure or bright; only the Strix red stays at full strength, as the colour of the brand.
+- An aspect sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep the default's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
+- The colours follow dark academia: deep, muted and warm, like leather, brass, ink and old bindings. Every accent but the default's has an OKLCH chroma between 0.05 and 0.11, so none is pure or bright; only the Strix red stays at full strength, as the colour of the brand.
 - The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/pantheon.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
-- Light accents (Janus, Apollo and Minerva) carry near-black text; dark ones (Carna, Mars, Mercurius, Pluto and Bacchus) carry white. Use `on-accent`, never a fixed white.
-- `error` stays red under every god. Under Carna the error and the accent are both red; that is why status is always a word first.
+- Light accents (__LIGHT__) carry near-black text; dark ones (__DARK__) carry white. Use `on-accent`, never a fixed white.
+- `error` stays red under every god. Under Saturnus the error and the accent are both red; that is why status is always a word first.
 
 ## Type
 
@@ -94,7 +85,7 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 ## Wallpaper and imagery
 
 - Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
-- Eight plates are in the Wallpapers asset group, one per god: Carna (the default desktop), Janus (the lock screen: he keeps the doors), Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). No ancient likeness of Carna survives; her plate is a veiled vestal and its caption says so. The group's README gives title, engraver, date, source and licence for each.
+- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus (the lock screen: he keeps the doors), Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
 - Under the lock screen, the theme picker and the pantheon the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
 - Add further gods only as engravings or etchings in the public domain from a collection that says so, with an aspect of their own whose accent is far enough in hue from the others, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
@@ -283,7 +274,7 @@ The pantheon of the default theme: eight Roman gods, each an engraving printed i
 
 def _plates():
     import pantheon, wallpapers
-    role = {'carna': ' The default desktop.', 'janus': ' The lock screen.'}
+    role = {'saturnus': ' The default desktop.', 'janus': ' The lock screen.'}
     rows = []
     for g in pantheon.GODS:
         credit = wallpapers.PLATES[g[0]][3]
@@ -292,8 +283,6 @@ def _plates():
     return '\n'.join(rows) + '\n'
 
 WALL_README += _plates() + r'''- `star-chart.svg` — the plain fallback without a picture: cream lines and the disc. Own drawing. Colours are fixed in the file; `Kit.wallpaper()` gives the version that follows the tokens.
-
-No ancient likeness of Carna survives. Her plate is a statue of a veiled vestal with a raised hand, as if warding something off, and its caption says so.
 
 Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
 
@@ -351,3 +340,17 @@ COVER = r'''<!-- @dsCard height=288 -->
 </body>
 </html>
 '''
+
+
+def _fill():
+    import pantheon
+    global README
+    rows = ['| God | `accent` | `background` | Colour |', '| --- | --- | --- | --- |']
+    for g in pantheon.GODS:
+        t = pantheon.aspect(g[0])
+        rows.append('| %s | `%s` | `%s` | %s |' % (g[1], t['accent'], t['background'], g[3]))
+    light = [g[1] for g in pantheon.GODS if pantheon.aspect(g[0])['on-accent'] != '#ffffff']
+    dark = [g[1] for g in pantheon.GODS if pantheon.aspect(g[0])['on-accent'] == '#ffffff']
+    both = lambda x: ', '.join(x[:-1]) + ' and ' + x[-1] if len(x) > 1 else x[0]
+    README = README.replace('__GODS_TABLE__', '\n'.join(rows)).replace('__LIGHT__', both(light)).replace('__DARK__', both(dark))
+_fill()
