@@ -3,7 +3,7 @@ import json
 def I(n, cls=''):
     return '<i class="k-icon%s" data-icon="%s"></i>' % ((' ' + cls) if cls else '', n)
 
-BLOBS = {'c2fed1a6ff87b9c51e1417c413bd869d': 'carna.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', 'd735047cea0ba70ed7848aa9bc72824e': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', 'b4ec8e071ce499247b7f5574f8ea26c2': 'minerva.jpg', 'f23de46dea7fe1908c7bd773b98dd1ae': 'mercurius.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
+BLOBS = {'5c259dc8ec61ba29431e7649ca47ec6a': 'carna.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', 'b41733760ffae9de3f6f5d88682af092': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', 'b4ec8e071ce499247b7f5574f8ea26c2': 'minerva.jpg', 'f23de46dea7fe1908c7bd773b98dd1ae': 'mercurius.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
 CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
 def WALL(url, extra='', pos='center'):
     return '<div class="k-wall"%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
@@ -889,7 +889,7 @@ screen('Desktop', 720, r'''
   ''' + WALL(CARNA) + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0 0 auto 0">''' + BAR + r'''</div>
-  <div class="k-plate" id="plate">Carna. A veiled vestal, engraved by J. F. Cazenave, about 1800</div>
+  <div class="k-plate" id="plate">Carna. A veiled vestal, engraved by Claude Mellan, Rome, 1631</div>
   <div id="tiles" data-hidden>
     <div class="k-win" data-active><div class="k-win-body"><pre class="k-code">''' + CODE + r'''</pre></div></div>
     <div class="k-win"><div class="k-win-body"><div style="display:flex;gap:20px;align-items:center"><div style="text-align:center"><div class="k-wordmark">Strix</div><div class="k-motto" style="font-size:11px">nocte vigilat</div></div>
@@ -991,9 +991,9 @@ The theme picker over the dimmed desktop: a carousel of SlantCards, the name of 
 
 import pantheon as _pan
 _CAP = {
-    'carna': ('Cazenave, about 1800', 'Carna, keeper of the threshold, who drives the striges from the cradle. No ancient likeness survives; the plate is a veiled vestal, engraved by J. F. Cazenave'),
+    'carna': ('Mellan, 1631', 'Carna, keeper of the threshold, who drives the striges from the cradle. No ancient likeness survives; the plate is a veiled vestal of the Giustiniani collection, engraved by Claude Mellan, Rome, 1631'),
     'janus': ('Audenaerd, about 1700', 'Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta'),
-    'apollo': ('Goltzius, 1592', 'The Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592'),
+    'apollo': ('Goltzius, 1592', 'Apollo as Sol, the sun, with lyre and quiver in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'mars': ('Quellinus, 1655', 'Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655'),
     'minerva': ('Saenredam, 1595', 'Minerva with helmet, spear and owl. Engraved by Jan Saenredam after Hendrick Goltzius, about 1595'),
     'mercurius': ('Goltzius, 1592', 'Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),

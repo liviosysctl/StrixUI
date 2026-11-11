@@ -77,7 +77,7 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 ## Ornament
 
 - `.k-rule` is a hair line with a small open lozenge in the middle, as between the parts of an old title page. Use it once in a view to part the mood from the matter: under the wordmark, between the date and the weather, above the update card.
-- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "The Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592". Every engraving shown full screen carries one.
+- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592". Every engraving shown full screen carries one.
 - InfoBlock's double-line brackets are the only frame. Use them for system facts, once per view.
 - `.k-grain` lays a fine grain over a full-screen picture. Use it on wallpapers only, never on surfaces.
 - That is the whole stock of ornament. No flourishes, corner pieces, drop caps or borders made of pattern.
@@ -279,17 +279,21 @@ WALL_README = r'''# Wallpapers
 
 The pantheon of the default theme: eight Roman gods, each an engraving printed in two inks of the god's aspect, with one disc in the god's colour. Sources: Art Institute of Chicago, open-access collection, released under CC0; Rijksmuseum, open data, Public Domain Mark. Each file is 2560 by 1440 and made by `tools/wallpapers.py`.
 
-- `carna.jpg` — Carna, accent `#c8102e` on `#0b0a09`. the default desktop. Head of a vestal, engraved by J. F. Cazenave after Augustin Raymond Aubert, 1780 to 1820. Rijksmuseum RP-P-2017-9060, public domain.
-- `janus.jpg` — Janus, accent `#2e9a84` on `#060c0a`. the lock screen. Janus opens the door of the year, engraved by Robert van Audenaerd after Carlo Maratta, 1685 to 1723. Rijksmuseum RP-P-OB-67.432, public domain.
-- `apollo.jpg` — Apollo, accent `#d4a21a` on `#0c0a06`. Hendrick Goltzius, The Apollo Belvedere, about 1592. Art Institute of Chicago 1990.498, CC0.
-- `mars.jpg` — Mars, accent `#e0641f` on `#0e0907`. Hubert Quellinus after Artus Quellinus, Mars in the west gallery of the Amsterdam town hall, 1655. Rijksmuseum RP-P-AO-22-1Q-1, public domain.
-- `minerva.jpg` — Minerva, accent `#8f9b2c` on `#0a0b06`. Jan Saenredam after Hendrick Goltzius, Pallas Athena, from Three Goddesses, about 1595. Art Institute of Chicago 2023.161, CC0.
-- `mercurius.jpg` — Mercurius, accent `#448bcd` on `#070b0e`. Hendrick Goltzius after Polidoro da Caravaggio, Mercurius, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.975, CC0.
-- `pluto.jpg` — Pluto, accent `#7a4fd1` on `#0a090e`. Hendrick Goltzius after Polidoro da Caravaggio, Pluto, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.970, CC0.
-- `bacchus.jpg` — Bacchus, accent `#b23472` on `#0e090a`. Hendrick Goltzius after Polidoro da Caravaggio, Bacchus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.974, CC0.
-- `star-chart.svg` — the plain fallback without a picture: cream lines and the disc. Own drawing. Colours are fixed in the file; `Kit.wallpaper()` gives the version that follows the tokens.
+'''
 
-No ancient likeness of Carna survives. Her plate is a veiled vestal, chosen for the veil and the watchful face, and its caption says so.
+def _plates():
+    import pantheon, wallpapers
+    role = {'carna': ' The default desktop.', 'janus': ' The lock screen.'}
+    rows = []
+    for g in pantheon.GODS:
+        credit = wallpapers.PLATES[g[0]][3]
+        t = pantheon.aspect(g[0])
+        rows.append('- `%s.jpg` — %s: accent `%s` on `%s`.%s %s.' % (g[0], g[1], t['accent'], t['background'], role.get(g[0], ''), credit.rstrip('.')))
+    return '\n'.join(rows) + '\n'
+
+WALL_README += _plates() + r'''- `star-chart.svg` — the plain fallback without a picture: cream lines and the disc. Own drawing. Colours are fixed in the file; `Kit.wallpaper()` gives the version that follows the tokens.
+
+No ancient likeness of Carna survives. Her plate is a statue of a veiled vestal with a raised hand, as if warding something off, and its caption says so.
 
 Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
 

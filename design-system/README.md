@@ -77,7 +77,7 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 ## Ornament
 
 - `.k-rule` is a hair line with a small open lozenge in the middle, as between the parts of an old title page. Use it once in a view to part the mood from the matter: under the wordmark, between the date and the weather, above the update card.
-- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "The Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592". Every engraving shown full screen carries one.
+- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592". Every engraving shown full screen carries one.
 - InfoBlock's double-line brackets are the only frame. Use them for system facts, once per view.
 - `.k-grain` lays a fine grain over a full-screen picture. Use it on wallpapers only, never on surfaces.
 - That is the whole stock of ornament. No flourishes, corner pieces, drop caps or borders made of pattern.

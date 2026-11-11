@@ -28,12 +28,12 @@ CREAM = np.array([0xd8, 0xd0, 0xc0], float)
 # god: (source, crop as x0, y0, x1 of the scan (y1 follows from 16:9), disc centre x, y and radius in px, credit[, options for make()])
 # source is ('aic', IIIF image id) or ('rijks', Micrio id, width to fetch)
 PLATES = {
-    'carna': (('rijks', 'phqRO', 3000), (0.0, 0.13, 1.0), (1280, 650, 300),
-              'Head of a vestal, engraved by J. F. Cazenave after Augustin Raymond Aubert, 1780 to 1820. Rijksmuseum RP-P-2017-9060, public domain', {'paper': 0.36}),
+    'carna': (('rijks', 'fIyei', 4140), (0.20, 0.16, 0.80), (1200, 505, 260),
+              'Claude Mellan, Statue of a vestal in the Giustiniani collection, 1631, published 1636 to 1637. Rijksmuseum RP-P-OB-71.030, public domain', {'paper': 0.38}),
     'janus': (('rijks', 'jGPOs', 6098), (0.36, 0.23, 0.74), (1110, 450, 300),
               'Janus opens the door of the year, engraved by Robert van Audenaerd after Carlo Maratta, 1685 to 1723. Rijksmuseum RP-P-OB-67.432, public domain'),
-    'apollo': (('aic', 'fed2add8-1ef4-aee4-b063-09fb4363b207'), (0.12, 0.08, 0.88), (1010, 430, 330),
-               'Hendrick Goltzius, The Apollo Belvedere, about 1592. Art Institute of Chicago 1990.498, CC0'),
+    'apollo': (('aic', 'f9b4ca78-b118-0595-7e4d-ea082b618d9d'), (0.10, 0.12, 0.90), (1297, 585, 250),
+               'Hendrick Goltzius after Polidoro da Caravaggio, Sol, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.972, CC0'),
     'mars': (('rijks', 'yzhwS', 3064), (0.22, 0.17, 0.84), (1060, 560, 260),
              'Hubert Quellinus after Artus Quellinus, Mars in the west gallery of the Amsterdam town hall, 1655. Rijksmuseum RP-P-AO-22-1Q-1, public domain'),
     'minerva': (('aic', '27c735cb-2d28-bf3f-d67b-3bea6278957c'), (0.0, 0.10, 1.0), (1580, 700, 300),
