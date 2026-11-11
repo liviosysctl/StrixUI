@@ -41,9 +41,9 @@ This system is the single source for that look on every surface: the desktop she
 
 The ten required colours of `theme.toml` have the same names here: `background`, `surface`, `border`, `text`, `text-muted`, `accent`, `on-accent`, `focus`, `error`, `warning`. Every other colour token is an extra colour under the same name. `term-background`, `term-foreground`, `term-cursor`, `term-selection` and the sixteen `term-` colours map to the keys of the `terminal` table without the prefix. All contrast rules of the engine hold: text 4.5:1 on background and surface, focus 3:1, terminal text 4.5:1.
 
-### The pantheon: one aspect per god
+### Themes: one per god
 
-The default theme has eight aspects, one for each god of its wallpapers. Choosing a god in the pantheon (Style › Wallpaper) sets the plate and its aspect together. In the tokens the aspects are the colour themes: `saturnus` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches the rest.
+Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme is a plate and a set of colours; choosing it in the theme picker (Super Ctrl Space) sets both. In the tokens the god themes are the colour themes: `saturnus` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches to another. The theme changes by itself to another god every 10 minutes (`theme-cycle`) unless it is kept in the theme picker.
 
 | God | `accent` | `background` | Colour |
 | --- | --- | --- | --- |
@@ -56,9 +56,9 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 | Pluto | `#746388` | `#0b090e` | Heather, faded plum. |
 | Bacchus | `#93535e` | `#0e0909` | Claret, old wine. |
 
-- An aspect sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep the default's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
+- A god theme sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, `border-active`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep the default's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
 - The colours follow dark academia: deep, muted and warm, like leather, brass, ink and old bindings. Every accent but the default's has an OKLCH chroma between 0.05 and 0.11, so none is pure or bright; only the Strix red stays at full strength, as the colour of the brand.
-- The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/pantheon.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
+- The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/themes.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
 - Light accents (Janus, Apollo and Vulcanus) carry near-black text; dark ones (Saturnus, Mars, Neptunus, Pluto and Bacchus) carry white. Use `on-accent`, never a fixed white.
 - `error` stays red under every god. Under Saturnus the error and the accent are both red; that is why status is always a word first.
 
@@ -93,18 +93,18 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 
 ## Wallpaper and imagery
 
-- Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
-- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. The desktop changes its god every 10 minutes (`god-cycle`) unless the god is kept in the pantheon; the lock screen shows another god at every lock, in that god's aspect, never the same twice in a row. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
+- Wallpapers are engravings of Roman gods, printed in two inks of the god's theme: dim cream for the paper and the theme's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
+- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. The desktop changes to another god theme every 10 minutes (`theme-cycle`) unless the theme is kept in the theme picker; the lock screen shows another god theme at every lock, never the same twice in a row. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
-- Under the lock screen, the theme picker and the pantheon the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
-- Add further gods only as engravings or etchings in the public domain from a collection that says so, with an aspect of their own whose accent is far enough in hue from the others, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
+- Under the lock screen and the theme picker the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
+- Add further gods only as engravings or etchings in the public domain from a collection that says so, as a theme of their own whose accent is far enough in hue from the others (at most eight god themes), treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
 - `Kit.wallpaper()` still returns the plain star chart drawn with the tokens (cream lines and the disc, no picture). It is the fallback where a picture cannot be shipped: the boot splash and the installer.
 
 ## Help and hotkeys
 
 - The interface does not explain itself in sentences. No component carries a line such as "Enter applies, Esc closes" or "drag to move".
 - The cheat sheet explains the keys, all in one place: Super K opens it over the desktop, with every hotkey in groups, a filter, and a direct way into Settings › Hotkeys, where every binding can be changed and new ones added.
-- A single key chip (`.k-kbd`) may stand next to a control where one key matters and is not obvious: Esc in Search, K for "Keep this god" in the pantheon. Never more than one or two in a view, and never with a sentence around them.
+- A single key chip (`.k-kbd`) may stand next to a control where one key matters and is not obvious: Esc in Search, K for "Keep this theme" in the theme picker. Never more than one or two in a view, and never with a sentence around them.
 - In the design system's own previews, a note that only exists to try the preview (a demo password, a faster clock) starts with "Preview only" and sits small and faint in a corner. It is not part of the design.
 
 ## Symbols

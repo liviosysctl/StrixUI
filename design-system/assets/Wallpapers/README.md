@@ -1,6 +1,6 @@
 # Wallpapers
 
-The pantheon of the default theme: eight Roman gods, each an engraving printed in two inks of the god's aspect, with one disc in the god's colour. Sources: Art Institute of Chicago, open-access collection, released under CC0; Rijksmuseum, open data, Public Domain Mark. Each file is 2560 by 1440 and made by `tools/wallpapers.py`.
+The plates of the eight god themes: Roman gods, each an engraving printed in two inks of the theme, with one disc in the god's colour. Sources: Art Institute of Chicago, open-access collection, released under CC0; Rijksmuseum, open data, Public Domain Mark. Each file is 2560 by 1440 and made by `tools/wallpapers.py`.
 
 - `saturnus.jpg` — Saturnus: accent `#c8102e` on `#0b0a09`. The default desktop. Hendrick Goltzius after Polidoro da Caravaggio, Saturnus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.968, CC0.
 - `janus.jpg` — Janus: accent `#688f7f` on `#070c09`. Janus opens the door of the year, engraved by Robert van Audenaerd after Carlo Maratta, 1685 to 1723. Rijksmuseum RP-P-OB-67.432, public domain.
@@ -12,6 +12,6 @@ The pantheon of the default theme: eight Roman gods, each an engraving printed i
 - `bacchus.jpg` — Bacchus: accent `#93535e` on `#0e0909`. Hendrick Goltzius after Polidoro da Caravaggio, Bacchus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.974, CC0.
 - `star-chart.svg` — the plain fallback without a picture: cream lines and the disc. Own drawing. Colours are fixed in the file; `Kit.wallpaper()` gives the version that follows the tokens.
 
-Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
+Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the theme's `background`; inside the disc the paper becomes the theme's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
 
-Add further gods only from collections that state public-domain status, give each an aspect in `tools/pantheon.py`, treat it the same way, and list title, engraver, date, source and licence here.
+Add further gods only from collections that state public-domain status, give each a theme in `tools/themes.py`, treat it the same way, and list title, engraver, date, source and licence here.

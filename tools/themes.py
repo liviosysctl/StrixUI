@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""The pantheon of the default theme: eight Roman gods, each a wallpaper and an aspect.
+"""The themes of Strix: one per Roman god, each a wallpaper and a set of colours.
 
-An aspect is a small set of colour tokens that follows the god: a tinted background and its
+The colours of a theme are a small set of tokens that follow the god: a tinted background and its
 surfaces, the accent and everything derived from it, and the terminal cursor and selection.
-Text, line, the status colours and syntax stay as they are in every aspect.
+Text, line, the status colours and syntax stay as they are in every theme.
 
-    python3 tools/pantheon.py          # print every aspect and check its contrast
+    python3 tools/themes.py            # print every theme and check its contrast
 
-The accent of each god is picked by hand; the rest is derived in OKLCH so that every aspect has
+The accent of each god is picked by hand; the rest is derived in OKLCH so that every theme has
 the same lightness steps as Saturnus, the default.
 """
 import math
@@ -38,7 +38,7 @@ BASE = {
     'cursor': '#c8102e', 'selection': '#3a1219',
 }
 TEXT, MUTED, FAINT, BSTRONG = '#ece6da', '#a09a8f', '#77726a', '#6e6a63'
-ASPECT_TOKENS = list(BASE)
+THEME_TOKENS = list(BASE)
 
 
 # ---------------------------------------------------------------- colour maths
@@ -95,7 +95,7 @@ def contrast(a, b):
 
 GODS = [(n, l, a if isinstance(a, str) else oklch(*a), d) for n, l, a, d in GODS_SPEC]
 
-# ---------------------------------------------------------------- aspects
+# ---------------------------------------------------------------- colours of a theme
 def _lighten_to(fg, bg, minimum, H, C, L):
     """Raise L until fg reaches the contrast minimum on bg."""
     c = oklch(L, C, H)
@@ -109,12 +109,12 @@ def _border_active(t):
     Lb = to_oklch(t['border'])[0]
     return oklch(Lb + 0.38 * (La - Lb), Ca * 0.5, Ha)
 
-def aspect(name):
-    t = _aspect(name)
+def colours(name):
+    t = _colours(name)
     t['border-active'] = _border_active(t)
     return t
 
-def _aspect(name):
+def _colours(name):
     acc = dict((g[0], g[2]) for g in GODS)[name]
     if name == DEFAULT:
         return dict(BASE)
@@ -162,13 +162,13 @@ def checks(name, t):
     rows.append((name, 'border-active', 'background', contrast(t['border-active'], t['background']), 1.8))
     return rows
 
-def all_aspects():
-    return {g[0]: aspect(g[0]) for g in GODS}
+def all_colours():
+    return {g[0]: colours(g[0]) for g in GODS}
 
 if __name__ == '__main__':
     fails = 0
     for g in GODS:
-        t = aspect(g[0])
+        t = colours(g[0])
         print('%-10s ' % g[0] + ' '.join('%s=%s' % (k.replace('accent-', 'a-').replace('surface', 's'), v) for k, v in t.items()))
         for row in checks(g[0], t):
             if row[3] < row[4]:

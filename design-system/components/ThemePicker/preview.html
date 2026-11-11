@@ -4,63 +4,78 @@
 <head><meta charset="utf-8"><title>ThemePicker — preview</title><style>
 #picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
 #picker[data-out] { opacity: 0; pointer-events: none; }
-#picker .tools { position: absolute; top: 150px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
-#picker .k-carousel { position: absolute; top: 200px; left: 0; right: 0; height: 300px; }
-#picker .hint { position: absolute; bottom: 120px; left: 0; right: 0; text-align: center; }
-#rev { background: var(--background) center / cover no-repeat; }
-#rev svg { width: 100%; height: 100%; display: block; }
+#picker .tools { position: absolute; top: 122px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
+#picker .k-carousel { position: absolute; top: 170px; left: 0; right: 0; height: 300px; }
+#plate { position: absolute; top: 482px; left: 160px; right: 160px; text-align: center; font-size: 14px; line-height: 20px; }
+#picker .cycle { position: absolute; top: 536px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: var(--space-4); }
+#picker .cycle .caption { min-width: 260px; font-variant-numeric: tabular-nums; }
+#picker .demo { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
+.k-slant-name .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.k-slant-name .var { font-weight: inherit; }
 </style></head>
 <body>
-<div class="k-screen" id="scr">
+<div class="k-screen" id="scr" data-theme="saturnus">
   <div class="k-wall" id="base" style="background-image:url(../../assets/Wallpapers/saturnus.jpg);background-position:center"></div>
-  <div class="k-reveal" id="rev"></div>
+  <div class="k-reveal" id="rev" style="background:var(--background) center / cover no-repeat"></div>
   <div class="k-grain"></div>
   <div id="picker">
     <div class="k-scrim" style="animation:none"></div>
-    <div class="tools"><div class="k-toolbar">
-      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light" disabled title="Comes later">Light</button></div>
-    </div></div>
+    <div class="tools"><div class="k-toolbar"><div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light" disabled title="Comes later">Light</button></div></div></div>
     <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
+    <div class="k-plate" id="plate"></div>
+    <div class="cycle"><label class="k-switch"><input type="checkbox" id="keep"><span></span>Keep this theme</label><span class="k-kbd">K</span><span class="caption k-muted" id="next"></span></div>
+    <label class="k-switch micro demo"><input type="checkbox" id="fast"><span></span>Preview only: one minute in one second</label>
   </div>
-  <button class="k-btn" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
+  <button class="k-btn k-btn-primary" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
 </div>
 <script>
 Kit.hydrate(document);
-var IMG = {Strix: "../../assets/Wallpapers/saturnus.jpg"};
-function art(bg, disc, line) {
-  return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
-}
-function pic(t) { return IMG[t[0]] ? '<img alt="" src="' + IMG[t[0]] + '">' : art(t[2], t[3], t[4]); }
-var THEMES = [['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a']];
-function cards(track, sel) {
-  track.innerHTML = THEMES.map(function (t, i) {
-    return '<button class="k-slant" data-value="' + t[0] + '" aria-selected="' + (i === sel) + '" aria-label="' + t[0] + ' theme"><span class="k-slant-art">' + pic(t) + '</span><span class="k-slant-edge"></span><span class="k-slant-name">' + t[0] + '<small>' + t[1] + '</small></span></button>';
-  }).join('');
-}
+var P = [["saturnus", "../../assets/Wallpapers/saturnus.jpg", "Saturnus", "dark", "Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#c8102e"], ["janus", "../../assets/Wallpapers/janus.jpg", "Janus", "dark", "Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta", "#688f7f"], ["apollo", "../../assets/Wallpapers/apollo.jpg", "Apollo", "dark", "Apollo as Sol, the sun, with lyre and quiver in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#b5925a"], ["mars", "../../assets/Wallpapers/mars.jpg", "Mars", "dark", "Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655", "#9f5836"], ["vulcanus", "../../assets/Wallpapers/vulcanus.jpg", "Vulcanus", "dark", "Vulcanus, the smith of the gods, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#878a5d"], ["neptunus", "../../assets/Wallpapers/neptunus.jpg", "Neptunus", "dark", "Neptunus with his crown and trident, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#546d85"], ["pluto", "../../assets/Wallpapers/pluto.jpg", "Pluto", "dark", "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#746388"], ["bacchus", "../../assets/Wallpapers/bacchus.jpg", "Bacchus", "dark", "Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#93535e"]];
 
 (function () {
-  var track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base'), picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
-  cards(track, 0); Kit.hydrate(document);
-  function paint(el, t) {
-    if (IMG[t[0]]) { el.innerHTML = ''; el.style.backgroundImage = 'url(' + IMG[t[0]] + ')'; }
-    else { el.style.backgroundImage = 'none'; el.innerHTML = art(t[2], t[3], t[4]); }
-  }
-  document.getElementById('variant').addEventListener('change', function (e) {
-    Array.prototype.forEach.call(track.querySelectorAll('.k-slant[aria-selected="true"] small'), function (s) { s.textContent = e.detail.value; });
-  });
-  car.addEventListener('apply', function (e) {
-    var t = THEMES[e.detail.index];
-    paint(rev, t);
-    Kit.reveal(rev, e.detail.x, e.detail.y).then(function () {
-      paint(base, t); picker.setAttribute('data-out', '');
-      setTimeout(function () { rev.removeAttribute('data-on'); reopen.style.display = 'inline-flex'; }, 260);
+  var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
+  var picker = document.getElementById('picker'), reopen = document.getElementById('reopen'), plate = document.getElementById('plate');
+  track.innerHTML = P.map(function (p, i) {
+    return '<button class="k-slant" aria-selected="' + (i === 0) + '" aria-label="' + p[2] + '"><span class="k-slant-art"><img alt="" src="' + p[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + p[2] + '<small><i class="dot" style="background:' + p[5] + '"></i>' + p[3] + '</small></span></button>';
+  }).join('');
+  Kit.hydrate(document);
+  function caption() { plate.textContent = P[car._k.index][4]; }
+  car.addEventListener('change', caption); caption();
+  // the theme on the desktop: set by hand, or by the cycle every 10 minutes
+  var cur = 0, PERIOD = 10 * 60 * 1000, speed = 1, last = Date.now(), virt = 0, prev = Date.now();
+  var keep = document.getElementById('keep'), fast = document.getElementById('fast'), next = document.getElementById('next');
+  function show(i, x, y, close) {
+    var p = P[i]; cur = i;
+    rev.style.backgroundImage = 'url("' + p[1] + '")';
+    return Kit.reveal(rev, x, y).then(function () {
+      base.style.backgroundImage = 'url("' + p[1] + '")'; scr.setAttribute('data-theme', p[0]);
+      if (close) picker.setAttribute('data-out', '');
+      setTimeout(function () { rev.removeAttribute('data-on'); if (close) reopen.style.display = 'inline-flex'; }, 260);
     });
+  }
+  car.addEventListener('apply', function (e) {
+    show(e.detail.index, e.detail.x, e.detail.y, true);
+    virt = 0;                                    // a theme chosen by hand starts a new cycle
   });
+  function mmss(ms) { var t = Math.ceil(ms / 1000); return Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
+  setInterval(function () {
+    var now = Date.now(); virt += (now - prev) * speed; prev = now;
+    if (virt >= PERIOD) {
+      virt -= PERIOD;                            // the cycle keeps counting whether the theme is kept or not
+      if (!keep.checked) {
+        var i; do { i = Math.floor(Math.random() * P.length); } while (i === cur);
+        var r = scr.getBoundingClientRect(); show(i, r.left + r.width / 2, r.top + r.height / 2, false);
+      }
+    }
+    next.textContent = (keep.checked ? 'Kept. The cycle still counts: ' : 'Next theme in ') + mmss(PERIOD - virt);
+  }, 200);
+  fast.addEventListener('change', function () { speed = fast.checked ? 60 : 1; });
   document.addEventListener('keydown', function (e) {
     if (picker.hasAttribute('data-out')) return;
     if (e.key === 'Enter') { var c = track.querySelector('[aria-selected="true"]').getBoundingClientRect(); car.dispatchEvent(new CustomEvent('apply', { detail: { index: car._k.index, x: c.left + c.width / 2, y: c.top + c.height / 2 } })); }
     if (e.key === 'ArrowRight') car._k.select(car._k.index + 1);
     if (e.key === 'ArrowLeft') car._k.select(car._k.index - 1);
+    if ((e.key === 'k' || e.key === 'K') && !e.ctrlKey && !e.metaKey && !e.altKey) { keep.checked = !keep.checked; keep.dispatchEvent(new Event('change', { bubbles: true })); }
   });
   reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
 })();

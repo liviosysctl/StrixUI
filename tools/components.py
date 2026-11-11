@@ -328,15 +328,14 @@ One setting per row: a bold title, one line that says what it does, and the cont
 - Rows are separated by a hair line; there are no boxes around them.
 ''')
 
-comp('InfoBlock', 'Data', 230, r'''
+comp('InfoBlock', 'Data', 215, r'''
 <div class="k-stage">
   <dl class="k-info">
     <h4>larp</h4>
     <dt>OS</dt><i>::</i><dd>Strix 0.1.0</dd>
     <dt>Kernel</dt><i>::</i><dd>6.18.2</dd>
     <dt>Shell</dt><i>::</i><dd>Quickshell on Hyprland</dd>
-    <dt>Theme</dt><i>::</i><dd>Strix, dark</dd>
-    <dt>God</dt><i>::</i><dd>Saturnus</dd>
+    <dt>Theme</dt><i>::</i><dd>Saturnus, dark</dd>
     <dt>Memory</dt><i>::</i><dd>7.4 GiB of 32 GiB</dd>
     <dt>Disk</dt><i>::</i><dd>162 GiB of 952 GiB, btrfs</dd>
     <dt>Uptime</dt><i>::</i><dd>3 hours, 19 minutes</dd>
@@ -411,18 +410,17 @@ SEARCH_JS = r'''
     {k: 'app', t: 'Calculator', p: ['Apps'], i: 'plus', w: 'math', g: 'apps'},
     {k: 'app', t: 'Settings', p: ['Apps'], i: 'settings', w: 'preferences control panel', g: 'apps'},
 
-    {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours', key: 'Super Ctrl Shift Space', g: 'style'},
-    {k: 'action', t: 'Keep this god', p: ['Style', 'Pantheon'], i: 'lock', w: 'pin stop change cycle rotate god', key: 'K', g: 'style'},
-    {k: 'setting', t: 'Change god', p: ['Settings', 'Appearance'], i: 'history', v: 'Every 10 minutes', w: 'cycle rotate interval pantheon wallpaper'},
-    {k: 'action', t: 'Pantheon', p: ['Style'], i: 'wallpaper', w: 'wallpaper gods aspect background picture engraving', key: 'Super Ctrl Space', g: 'style'},
-    {k: 'action', t: 'Saturnus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper red default strix saturn time sickle', g: 'style'},
-    {k: 'action', t: 'Janus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper patina green door', g: 'style'},
-    {k: 'action', t: 'Apollo', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper antique gold brass sun', g: 'style'},
-    {k: 'action', t: 'Mars', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper rust war', g: 'style'},
-    {k: 'action', t: 'Vulcanus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper olive forge smith fire', g: 'style'},
-    {k: 'action', t: 'Neptunus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper sea water blue trident', g: 'style'},
-    {k: 'action', t: 'Pluto', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper heather plum violet underworld', g: 'style'},
-    {k: 'action', t: 'Bacchus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper claret wine', g: 'style'},
+    {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours wallpaper god', key: 'Super Ctrl Space', g: 'style', page: 1, id: 'theme'},
+    {k: 'action', t: 'Keep this theme', p: ['Style', 'Theme'], i: 'lock', w: 'pin stop change cycle rotate god', key: 'K', g: 'theme'},
+    {k: 'setting', t: 'Change theme', p: ['Settings', 'Appearance'], i: 'history', v: 'Every 10 minutes', w: 'cycle rotate interval god wallpaper'},
+    {k: 'action', t: 'Saturnus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper red default strix saturn time sickle', g: 'theme'},
+    {k: 'action', t: 'Janus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper patina green door', g: 'theme'},
+    {k: 'action', t: 'Apollo', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper antique gold brass sun', g: 'theme'},
+    {k: 'action', t: 'Mars', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper rust war', g: 'theme'},
+    {k: 'action', t: 'Vulcanus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper olive forge smith fire', g: 'theme'},
+    {k: 'action', t: 'Neptunus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper sea water blue trident', g: 'theme'},
+    {k: 'action', t: 'Pluto', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper heather plum violet underworld', g: 'theme'},
+    {k: 'action', t: 'Bacchus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper claret wine', g: 'theme'},
     {k: 'action', t: 'Switch to light', p: ['Style'], i: 'sun', w: 'variant light dark appearance', g: 'style'},
     {k: 'action', t: 'Next wallpaper', p: ['Style'], i: 'images', w: 'background cycle', g: 'style'},
     {k: 'action', t: 'Region screenshot', p: ['Capture'], i: 'crop', w: 'screenshot area select snip', key: 'Print', g: 'capture'},
@@ -453,15 +451,14 @@ SEARCH_JS = r'''
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
     {k: 'setting', t: 'Hotkeys', p: ['Settings'], i: 'command', w: 'shortcuts keybindings keys bind change add', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
-    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Strix', w: 'colours look'},
-    {k: 'setting', t: 'God', p: ['Settings', 'Appearance'], i: 'swatch-book', v: 'Saturnus', w: 'aspect accent colour pantheon'},
+    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Saturnus', w: 'colours look god'},
     {k: 'setting', t: 'Variant', p: ['Settings', 'Appearance'], i: 'sun', v: 'Dark', w: 'light dark'},
     {k: 'setting', t: 'Text size', p: ['Settings', 'Appearance'], i: 'type', v: '100%', w: 'font scale'},
     {k: 'setting', t: 'Clock style', p: ['Settings', 'Lock screen'], i: 'clock', v: 'Stacked', w: 'time'},
     {k: 'setting', t: '24-hour clock', p: ['Settings', 'Lock screen'], i: 'clock', v: 'On', w: 'time format'},
     {k: 'setting', t: 'Password field', p: ['Settings', 'Lock screen'], i: 'lock', v: 'Line', w: 'input shape'},
     {k: 'setting', t: 'Background blur', p: ['Settings', 'Lock screen'], i: 'image', v: '6', w: 'wallpaper soft'},
-    {k: 'setting', t: 'Wallpaper', p: ['Settings', 'Lock screen'], i: 'images', v: 'Another god at each lock', w: 'god pantheon change rotate random'},
+    {k: 'setting', t: 'Wallpaper', p: ['Settings', 'Lock screen'], i: 'images', v: 'Another theme at each lock', w: 'god theme change rotate random'},
     {k: 'setting', t: 'Scale', p: ['Settings', 'Display'], i: 'monitor', v: '100%', w: 'resolution hidpi zoom'},
     {k: 'setting', t: 'Night light', p: ['Settings', 'Display'], i: 'moon', v: 'Off', w: 'warm blue light colour temperature'},
     {k: 'setting', t: 'Output device', p: ['Settings', 'Sound'], i: 'volume-2', v: 'Headphones', w: 'speaker audio'},
@@ -471,9 +468,8 @@ SEARCH_JS = r'''
     {k: 'command', t: 'strix-update', p: ['Fetch and apply the latest release'], i: 'square-terminal', w: 'update upgrade', g: 'commands'},
     {k: 'command', t: 'strix-rebuild switch', p: ['Build the configuration in /etc/nixos and switch to it'], i: 'square-terminal', w: 'rebuild nixos', g: 'commands'},
     {k: 'command', t: 'strix-theme list', p: ['Show every theme and variant'], i: 'square-terminal', w: 'themes', g: 'commands'},
-    {k: 'command', t: 'strix-theme set strix', p: ['Switch to the Strix theme'], i: 'square-terminal', w: 'theme'},
-    {k: 'command', t: 'strix-theme set neutral', p: ['Switch to the Neutral theme'], i: 'square-terminal', w: 'theme'},
-    {k: 'command', t: 'strix-theme god neptunus', p: ['Call another god of the pantheon'], i: 'square-terminal', w: 'theme god pantheon aspect'},
+    {k: 'command', t: 'strix-theme set saturnus', p: ['Switch to the Saturnus theme'], i: 'square-terminal', w: 'theme'},
+    {k: 'command', t: 'strix-theme set neptunus', p: ['Switch to the Neptunus theme'], i: 'square-terminal', w: 'theme god'},
     {k: 'command', t: 'strix-theme status', p: ['Check that every part shows the current theme'], i: 'square-terminal', w: 'theme'}
   ];
   var KINDS = ['all', 'app', 'action', 'setting', 'command'], LABEL = {app: 'App', action: 'Action', setting: 'Setting', command: 'Command', group: 'Menu'};
@@ -544,7 +540,7 @@ SEARCH_JS = r'''
     var what = {app: 'Opens ', action: 'Runs ', setting: 'Opens Settings at ', command: 'Runs in a terminal :: '}[e.k];
     out.textContent = what + (e.k === 'setting' ? e.p.slice(1).concat(e.t).join(' › ') : e.k === 'action' ? (e.p || []).concat(e.t).join(' › ') : e.t);
     var gods = JSON.parse(root.getAttribute('data-gods') || '{}'), g = e.t.toLowerCase();
-    if (e.p && e.p[1] === 'Pantheon' && gods[g]) {
+    if (e.p && e.p[1] === 'Theme' && gods[g]) {
       var host = root.closest('[data-wall-host]'); host.setAttribute('data-theme', g);
       host.querySelector('.k-wall').style.backgroundImage = 'url(' + gods[g] + ')';
     }
@@ -747,22 +743,9 @@ Bars that follow the sound. Grey at rest, the accent at the peaks.
 - With reduced motion it stands still.
 ''')
 
-ART = r'''
-var IMG = {Strix: "''' + SATURNUS + r'''"};
-function art(bg, disc, line) {
-  return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
-}
-function pic(t) { return IMG[t[0]] ? '<img alt="" src="' + IMG[t[0]] + '">' : art(t[2], t[3], t[4]); }
-var THEMES = [['Strix', 'dark', '', '', ''], ['Neutral', 'dark', '#000000', '#c8102e', '#3a3a3a']];
-function cards(track, sel) {
-  track.innerHTML = THEMES.map(function (t, i) {
-    return '<button class="k-slant" data-value="' + t[0] + '" aria-selected="' + (i === sel) + '" aria-label="' + t[0] + ' theme"><span class="k-slant-art">' + pic(t) + '</span><span class="k-slant-edge"></span><span class="k-slant-name">' + t[0] + '<small>' + t[1] + '</small></span></button>';
-  }).join('');
-}
-'''
 comp('SlantCard', 'Shell', 320, r'''
 <div class="k-carousel" style="height:320px" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>''', r'''
-The tall slanted card of the theme picker and the pantheon, and the carousel that holds a row of them. The preview shows the eight gods, as in the pantheon.
+The tall slanted card of the theme picker, and the carousel that holds a row of them. The preview shows the eight god themes.
 
 - Each card is a parallelogram that overlaps its neighbour. The chosen card in the middle is 420px wide and taller, with a cream hair edge and the theme's name in blackletter; all others are 96px wide and dimmed.
 - Markup: `.k-carousel` > `.k-carousel-track` > `button.k-slant` with `.k-slant-art` (the preview), `.k-slant-edge`, `.k-slant-name`.
@@ -824,7 +807,7 @@ screen('LockScreen', 720, r'''
   </div>
   <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
 </div>''', r'''
-The lock screen, left layout. Every time the screen locks, it shows another god of the pantheon in that god's aspect: the plate, the accent and the tinted grounds change together, and the same god never comes twice in a row. The desktop keeps the god chosen in the pantheon; after unlocking, its aspect comes back. A narrow column on the left over the dimmed engraving: a very light clock with hours stacked over minutes, the date, a greeting in spaced italic, the password as a single hair line, and four session buttons. Bottom left: notifications and load. Bottom right: the blackletter wordmark, a lozenge rule and the motto. Bottom centre: the plate caption of the engraving.
+The lock screen, left layout. Every time the screen locks, it shows another god theme: the plate, the accent and the tinted grounds change together, and the same god never comes twice in a row. The desktop keeps its own theme; after unlocking, its colours come back. A narrow column on the left over the dimmed engraving: a very light clock with hours stacked over minutes, the date, a greeting in spaced italic, the password as a single hair line, and four session buttons. Bottom left: notifications and load. Bottom right: the blackletter wordmark, a lozenge rule and the motto. Bottom centre: the plate caption of the engraving.
 
 - States, all in this preview: empty, typing (dots), wrong password (the line turns to `error`, shakes once, and says "Wrong password"), Caps Lock ("Caps Lock is on"), locked out after three tries with a countdown, unlocking.
 - Unlock: the column fades and slides left while the engraving sharpens and brightens over `dur-reveal`.
@@ -945,66 +928,7 @@ The desktop. Workspace 1 is empty: the engraving, the top bar on it, and the doc
 })();
 ''')
 
-screen('ThemePicker', 720, r'''
-<div class="k-screen" id="scr">
-  ''' + WALL(SATURNUS, ' id="base"') + r'''
-  <div class="k-reveal" id="rev"></div>
-  <div class="k-grain"></div>
-  <div id="picker">
-    <div class="k-scrim" style="animation:none"></div>
-    <div class="tools"><div class="k-toolbar">
-      <div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light" disabled title="Comes later">Light</button></div>
-    </div></div>
-    <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
-  </div>
-  <button class="k-btn" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
-</div>''', r'''
-The theme picker (Super Ctrl Shift Space) over the dimmed desktop: a carousel of SlantCards with every theme of the theme engine, the chosen one in the middle with its name in blackletter and its variant under it, and above it the variant (Dark or Light).
-
-- Themes today: Strix, the default, shown with the plate of the god on the desktop (its gods and their aspects are chosen in the pantheon, not here), and Neutral, plain black and red, there to test the change of theme. A new theme in `themes/` appears here on its own.
-- Light is greyed out until the light variant exists.
-- Browse with the arrow keys, the wheel or a click on a neighbour; Enter or a click on the middle card applies. The keys are on the cheat sheet, not on the screen.
-- Applying: the new wallpaper spreads as a growing circle from the click point over `dur-reveal`; when it covers the screen the picker fades out.
-- Everything except the middle card is dimmed, so the name is the one thing to read.
-''', css=r'''
-#picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
-#picker[data-out] { opacity: 0; pointer-events: none; }
-#picker .tools { position: absolute; top: 150px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
-#picker .k-carousel { position: absolute; top: 200px; left: 0; right: 0; height: 300px; }
-#picker .hint { position: absolute; bottom: 120px; left: 0; right: 0; text-align: center; }
-#rev { background: var(--background) center / cover no-repeat; }
-#rev svg { width: 100%; height: 100%; display: block; }
-''', js=ART + r'''
-(function () {
-  var track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base'), picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
-  cards(track, 0); Kit.hydrate(document);
-  function paint(el, t) {
-    if (IMG[t[0]]) { el.innerHTML = ''; el.style.backgroundImage = 'url(' + IMG[t[0]] + ')'; }
-    else { el.style.backgroundImage = 'none'; el.innerHTML = art(t[2], t[3], t[4]); }
-  }
-  document.getElementById('variant').addEventListener('change', function (e) {
-    Array.prototype.forEach.call(track.querySelectorAll('.k-slant[aria-selected="true"] small'), function (s) { s.textContent = e.detail.value; });
-  });
-  car.addEventListener('apply', function (e) {
-    var t = THEMES[e.detail.index];
-    paint(rev, t);
-    Kit.reveal(rev, e.detail.x, e.detail.y).then(function () {
-      paint(base, t); picker.setAttribute('data-out', '');
-      setTimeout(function () { rev.removeAttribute('data-on'); reopen.style.display = 'inline-flex'; }, 260);
-    });
-  });
-  document.addEventListener('keydown', function (e) {
-    if (picker.hasAttribute('data-out')) return;
-    if (e.key === 'Enter') { var c = track.querySelector('[aria-selected="true"]').getBoundingClientRect(); car.dispatchEvent(new CustomEvent('apply', { detail: { index: car._k.index, x: c.left + c.width / 2, y: c.top + c.height / 2 } })); }
-    if (e.key === 'ArrowRight') car._k.select(car._k.index + 1);
-    if (e.key === 'ArrowLeft') car._k.select(car._k.index - 1);
-  });
-  reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
-})();
-''')
-
-
-import pantheon as _pan
+import themes as _pan
 _CAP = {
     'saturnus': ('Goltzius, 1592', 'Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'janus': ('Audenaerd, about 1700', 'Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta'),
@@ -1016,11 +940,9 @@ _CAP = {
     'bacchus': ('Goltzius, 1592', 'Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
 }
 _URL = dict(zip([g[0] for g in _pan.GODS], [SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS]))
-PLATES = [(g[0], _URL[g[0]], g[1], _CAP[g[0]][0], _CAP[g[0]][1], _pan.aspect(g[0])['accent']) for g in _pan.GODS]
-for _s in SCREENS:
-    if _s['name'] == 'LockScreen':
-        _s['js'] = _s['js'].replace('__LOCK_GODS__', json.dumps([[p[0], p[1], p[4]] for p in PLATES]))
-WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
+PLATES = [(g[0], _URL[g[0]], g[1], _CAP[g[0]][0], _CAP[g[0]][1], _pan.colours(g[0])['accent']) for g in _pan.GODS]
+THEMES = [(p[0], p[1], p[2], 'dark', p[4], p[5]) for p in PLATES]
+WP_JS = 'var P = ' + json.dumps(THEMES) + ';\n' + r"""
 (function () {
   var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
   var picker = document.getElementById('picker'), reopen = document.getElementById('reopen'), plate = document.getElementById('plate');
@@ -1030,33 +952,33 @@ WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
   Kit.hydrate(document);
   function caption() { plate.textContent = P[car._k.index][4]; }
   car.addEventListener('change', caption); caption();
-  // the god on the desktop: set by hand, or by the cycle every 10 minutes
+  // the theme on the desktop: set by hand, or by the cycle every 10 minutes
   var cur = 0, PERIOD = 10 * 60 * 1000, speed = 1, last = Date.now(), virt = 0, prev = Date.now();
   var keep = document.getElementById('keep'), fast = document.getElementById('fast'), next = document.getElementById('next');
   function show(i, x, y, close) {
     var p = P[i]; cur = i;
-    rev.style.backgroundImage = 'url(' + p[1] + ')';
+    rev.style.backgroundImage = 'url("' + p[1] + '")';
     return Kit.reveal(rev, x, y).then(function () {
-      base.style.backgroundImage = 'url(' + p[1] + ')'; scr.setAttribute('data-theme', p[0]);
+      base.style.backgroundImage = 'url("' + p[1] + '")'; scr.setAttribute('data-theme', p[0]);
       if (close) picker.setAttribute('data-out', '');
       setTimeout(function () { rev.removeAttribute('data-on'); if (close) reopen.style.display = 'inline-flex'; }, 260);
     });
   }
   car.addEventListener('apply', function (e) {
     show(e.detail.index, e.detail.x, e.detail.y, true);
-    virt = 0;                                    // a god chosen by hand starts a new cycle
+    virt = 0;                                    // a theme chosen by hand starts a new cycle
   });
   function mmss(ms) { var t = Math.ceil(ms / 1000); return Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2); }
   setInterval(function () {
     var now = Date.now(); virt += (now - prev) * speed; prev = now;
     if (virt >= PERIOD) {
-      virt -= PERIOD;                            // the cycle keeps counting whether the god is kept or not
+      virt -= PERIOD;                            // the cycle keeps counting whether the theme is kept or not
       if (!keep.checked) {
         var i; do { i = Math.floor(Math.random() * P.length); } while (i === cur);
         var r = scr.getBoundingClientRect(); show(i, r.left + r.width / 2, r.top + r.height / 2, false);
       }
     }
-    next.textContent = (keep.checked ? 'Kept. The cycle still counts: ' : 'Next god in ') + mmss(PERIOD - virt);
+    next.textContent = (keep.checked ? 'Kept. The cycle still counts: ' : 'Next theme in ') + mmss(PERIOD - virt);
   }, 200);
   fast.addEventListener('change', function () { speed = fast.checked ? 60 : 1; });
   document.addEventListener('keydown', function (e) {
@@ -1070,41 +992,41 @@ WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
 })();
 """
 
-screen('Pantheon', 720, r'''
+screen('ThemePicker', 720, r'''
 <div class="k-screen" id="scr" data-theme="saturnus">
   ''' + WALL(SATURNUS, ' id="base"') + r'''
   <div class="k-reveal" id="rev" style="background:var(--background) center / cover no-repeat"></div>
   <div class="k-grain"></div>
   <div id="picker">
     <div class="k-scrim" style="animation:none"></div>
-    <div class="k-carousel" id="car" tabindex="-1" aria-label="Gods"><div class="k-carousel-track" id="track"></div></div>
+    <div class="tools"><div class="k-toolbar"><div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light" disabled title="Comes later">Light</button></div></div></div>
+    <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
     <div class="k-plate" id="plate"></div>
-    <div class="cycle"><label class="k-switch"><input type="checkbox" id="keep"><span></span>Keep this god</label><span class="k-kbd">K</span><span class="caption k-muted" id="next"></span></div>
+    <div class="cycle"><label class="k-switch"><input type="checkbox" id="keep"><span></span>Keep this theme</label><span class="k-kbd">K</span><span class="caption k-muted" id="next"></span></div>
     <label class="k-switch micro demo"><input type="checkbox" id="fast"><span></span>Preview only: one minute in one second</label>
   </div>
-  <button class="k-btn k-btn-primary" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Choose another god</span></button>
+  <button class="k-btn k-btn-primary" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
 </div>''', r'''
-The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no single wallpaper but eight Roman gods. Each god is a plate and an aspect: the plate is the wallpaper, the aspect recolours the system to match it. Calling a god sets both at once.
+The theme picker (Super Ctrl Space) over the dimmed desktop. Strix has one theme per Roman god, and Saturnus is the default. Each theme is a plate and its colours: the plate is the wallpaper, the colours tint the whole system to match it. Choosing a theme sets both at once.
 
-- The gods, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Vulcanus (olive), Neptunus (slate blue), Pluto (heather), Bacchus (claret). All but Saturnus are muted, as in dark academia: deep, warm, never bright. Janus keeps the doors; in Ovid it is his gift that keeps the striges out of the house. The lock screen shows another god at every lock.
-- An aspect changes only the accent and its family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, terminal cursor and selection) and tints the grounds (`background`, the surfaces, `border`) a little toward the god's hue. Text, `line`, the status colours and syntax stay the same in every aspect, so readability never depends on the god.
-- In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo and Vulcanus) put dark text on their fills, the others white; `on-accent` says which.
-- Every plate is an engraving printed in two inks of its aspect: dark ink on dim cream, and inside the disc the paper takes the god's colour.
-- The god changes by itself every 10 minutes (`god-cycle`): another god at random, never the same one, spreading from the middle of the screen with the same reveal. A god chosen by hand starts a new cycle.
-- "Keep this god" stops the change. While the pantheon is open, the K key turns it on and off. The cycle keeps counting while it is on, and a change that falls due is skipped. Turned off again, nothing happens at once: the next god comes at the next turn of the running cycle. Under the switch the time to the next god is shown, or, while kept, the time to the next turn.
-- The lock screen keeps its own rule: another god at every lock.
-- Browse with the arrow keys, the wheel or a click on a neighbour; the small dot under the name is the god's colour. Enter or a click on the middle card spreads the plate as a growing circle from the click point over `dur-reveal`; then the aspect switches and the picker fades.
-- Other themes bring their own wallpapers and keep one accent.
+- The themes, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Vulcanus (olive), Neptunus (slate blue), Pluto (heather), Bacchus (claret). All gods but Saturnus are muted, as in dark academia: deep, warm, never bright.
+- The middle card names the theme in blackletter, with a dot in its accent and its variant under it; the plate caption stands below the carousel. Light is greyed out until the light variant exists.
+- A theme changes only the accent and its family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, `border-active`, terminal cursor and selection) and tints the grounds (`background`, the surfaces, `border`) a little toward the god's hue. Text, `line`, the status colours and syntax stay the same in every theme, so readability never depends on the god. In code: `data-theme="mars"` on the root, or on any element to scope it.
+- The theme changes by itself every 10 minutes (`theme-cycle`): another god at random, never the same one, spreading from the middle of the screen with the same reveal. A theme chosen by hand starts a new cycle.
+- "Keep this theme" stops the change; K turns it on and off while the picker is open. The cycle keeps counting while it is on, and a change that falls due is skipped. Turned off again, nothing happens at once: the next theme comes at the next turn of the running cycle. Under the switch the time to the next theme is shown, or, while kept, the time to the next turn.
+- The lock screen keeps its own rule: another god theme at every lock, whatever the desktop shows.
+- Browse with the arrow keys, the wheel or a click on a neighbour; Enter or a click on the middle card spreads the plate as a growing circle from the click point over `dur-reveal`, then the colours switch and the picker fades.
 ''', css=r'''
 #picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
 #picker[data-out] { opacity: 0; pointer-events: none; }
+#picker .tools { position: absolute; top: 122px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
 #picker .k-carousel { position: absolute; top: 170px; left: 0; right: 0; height: 300px; }
 #plate { position: absolute; top: 482px; left: 160px; right: 160px; text-align: center; font-size: 14px; line-height: 20px; }
-#picker .hint { position: absolute; bottom: 120px; left: 0; right: 0; text-align: center; }
 #picker .cycle { position: absolute; top: 536px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: var(--space-4); }
-#picker .cycle .caption { min-width: 230px; font-variant-numeric: tabular-nums; }
+#picker .cycle .caption { min-width: 260px; font-variant-numeric: tabular-nums; }
 #picker .demo { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
 .k-slant-name .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.k-slant-name .var { font-weight: inherit; }
 ''', js=WP_JS)
 
 
@@ -1129,8 +1051,8 @@ HOTKEYS = [
     ('Workspaces', 'Move window there', 'Super Shift 1–9', 'Workspace'),
     ('Workspaces', 'Next workspace', 'Super Tab', 'Workspace'),
     ('Workspaces', 'Scratchpad', 'Super S', 'Special workspace'),
-    ('Style', 'Pantheon', 'Super Ctrl Space', 'Wallpaper and god'),
-    ('Style', 'Theme', 'Super Ctrl Shift Space', 'Theme picker'),
+    ('Style', 'Theme picker', 'Super Ctrl Space', 'Themes and wallpapers'),
+    ('Style', 'Keep this theme', 'K', 'In the theme picker'),
     ('Style', 'Toggle the top bar', 'Super Shift Space', 'Bar'),
     ('Capture', 'Region screenshot', 'Print', 'Capture'),
     ('Capture', 'Window screenshot', 'Shift Print', 'Capture'),
@@ -1288,7 +1210,7 @@ screen('Cheatsheet', 720, r'''
   </div>
   ''' + SETTINGS_HTML() + r'''
 </div>''', r'''
-The cheat sheet (Super K) is the one place that explains the keys. Components carry no instructions of their own; at most a single key chip stands next to a control where one key matters (Esc in Search, K in the pantheon). Everything else is learned here.
+The cheat sheet (Super K) is the one place that explains the keys. Components carry no instructions of their own; at most a single key chip stands next to a control where one key matters (Esc in Search, K in the theme picker). Everything else is learned here.
 
 - Over the dimmed desktop, a wide panel lists every hotkey of the system in groups: Learn, Apps, Windows, Workspaces, Style, Capture, Clipboard, System. Group names in the serif italic, actions in mono, keys as chips at the right.
 - Typing filters by action or by keys, fuzzy as in Search: "shot" finds the screenshots, "super shift" every binding with both. Up and Down move, Enter runs the action, Esc clears the field and a second Esc closes.
@@ -1335,8 +1257,7 @@ screen('Terminal', 720, r'''
   <span class="p">larp</span>   <span class="i">Strix 0.1.0</span>
   <span class="b">Kernel</span>  <span class="m">::</span> 6.18.2
   <span class="b">Shell</span>   <span class="m">::</span> Quickshell on Hyprland
-  <span class="b">Theme</span>   <span class="m">::</span> Strix, dark
-  <span class="b">God</span>     <span class="m">::</span> <span class="pc">Saturnus</span>, for 4 more min
+  <span class="b">Theme</span>   <span class="m">::</span> <span class="pc">Saturnus</span>, dark, 4 more min
   <span class="b">Disk</span>    <span class="m">::</span> 162 GiB of 952 GiB
   <span class="sw">''' + ''.join('<i style="background:var(--term-%s)"></i>' % a for a in ANSI) + r'''</span>
   <span class="sw">''' + ''.join('<i style="background:var(--term-bright-%s)"></i>' % a for a in ANSI) + r'''</span>
@@ -1364,8 +1285,8 @@ screen('Terminal', 720, r'''
 </div>''', r'''
 Ghostty in the Strix theme, tiled on the desktop under the bar: `strix-info`, `git log`, a compiler error and a warning, and `ls`.
 
-- Colours: the 16 `term-` colours are muted like the rest of the system, brick, olive, brass, slate, heather, patina and old paper, each 4.5:1 or more on the ground of every god. The ground (`term-background`), the cursor and the selection follow the god's aspect; the cursor is a block in the accent.
-- The plate of the god on the desktop lies in the ground of the terminal at 6%, desaturated and anchored bottom right (Ghostty `background-image` with `background-image-opacity`), so the terminal belongs to the desktop without losing contrast.
+- Colours: the 16 `term-` colours are muted like the rest of the system, brick, olive, brass, slate, heather, patina and old paper, each 4.5:1 or more on the ground of every theme. The ground (`term-background`), the cursor and the selection follow the theme; the cursor is a block in the accent.
+- The plate of the theme lies in the ground of the terminal at 6%, desaturated and anchored bottom right (Ghostty `background-image` with `background-image-opacity`), so the terminal belongs to the desktop without losing contrast.
 - Prompt: path, branch, and a single `›` in the accent. One line, no symbols that need a patched font, no colour blocks.
 - `strix-info` prints the facts as `label :: value` between the same double corner marks as InfoBlock, with the 16 colours as a strip. The motto and the wordmark stay out of the terminal.
 - Errors are `term-bright-red` and bold, warnings `term-bright-yellow`; that is the loudest the terminal gets. Font `mono` at 13px with 20px line height; padding 16px by 20px; no title bar under Hyprland.

@@ -39,18 +39,17 @@ Kit.hydrate(document);
     {k: 'app', t: 'Calculator', p: ['Apps'], i: 'plus', w: 'math', g: 'apps'},
     {k: 'app', t: 'Settings', p: ['Apps'], i: 'settings', w: 'preferences control panel', g: 'apps'},
 
-    {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours', key: 'Super Ctrl Shift Space', g: 'style'},
-    {k: 'action', t: 'Keep this god', p: ['Style', 'Pantheon'], i: 'lock', w: 'pin stop change cycle rotate god', key: 'K', g: 'style'},
-    {k: 'setting', t: 'Change god', p: ['Settings', 'Appearance'], i: 'history', v: 'Every 10 minutes', w: 'cycle rotate interval pantheon wallpaper'},
-    {k: 'action', t: 'Pantheon', p: ['Style'], i: 'wallpaper', w: 'wallpaper gods aspect background picture engraving', key: 'Super Ctrl Space', g: 'style'},
-    {k: 'action', t: 'Saturnus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper red default strix saturn time sickle', g: 'style'},
-    {k: 'action', t: 'Janus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper patina green door', g: 'style'},
-    {k: 'action', t: 'Apollo', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper antique gold brass sun', g: 'style'},
-    {k: 'action', t: 'Mars', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper rust war', g: 'style'},
-    {k: 'action', t: 'Vulcanus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper olive forge smith fire', g: 'style'},
-    {k: 'action', t: 'Neptunus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper sea water blue trident', g: 'style'},
-    {k: 'action', t: 'Pluto', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper heather plum violet underworld', g: 'style'},
-    {k: 'action', t: 'Bacchus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper claret wine', g: 'style'},
+    {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours wallpaper god', key: 'Super Ctrl Space', g: 'style', page: 1, id: 'theme'},
+    {k: 'action', t: 'Keep this theme', p: ['Style', 'Theme'], i: 'lock', w: 'pin stop change cycle rotate god', key: 'K', g: 'theme'},
+    {k: 'setting', t: 'Change theme', p: ['Settings', 'Appearance'], i: 'history', v: 'Every 10 minutes', w: 'cycle rotate interval god wallpaper'},
+    {k: 'action', t: 'Saturnus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper red default strix saturn time sickle', g: 'theme'},
+    {k: 'action', t: 'Janus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper patina green door', g: 'theme'},
+    {k: 'action', t: 'Apollo', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper antique gold brass sun', g: 'theme'},
+    {k: 'action', t: 'Mars', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper rust war', g: 'theme'},
+    {k: 'action', t: 'Vulcanus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper olive forge smith fire', g: 'theme'},
+    {k: 'action', t: 'Neptunus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper sea water blue trident', g: 'theme'},
+    {k: 'action', t: 'Pluto', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper heather plum violet underworld', g: 'theme'},
+    {k: 'action', t: 'Bacchus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper claret wine', g: 'theme'},
     {k: 'action', t: 'Switch to light', p: ['Style'], i: 'sun', w: 'variant light dark appearance', g: 'style'},
     {k: 'action', t: 'Next wallpaper', p: ['Style'], i: 'images', w: 'background cycle', g: 'style'},
     {k: 'action', t: 'Region screenshot', p: ['Capture'], i: 'crop', w: 'screenshot area select snip', key: 'Print', g: 'capture'},
@@ -81,15 +80,14 @@ Kit.hydrate(document);
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
     {k: 'setting', t: 'Hotkeys', p: ['Settings'], i: 'command', w: 'shortcuts keybindings keys bind change add', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
-    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Strix', w: 'colours look'},
-    {k: 'setting', t: 'God', p: ['Settings', 'Appearance'], i: 'swatch-book', v: 'Saturnus', w: 'aspect accent colour pantheon'},
+    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Saturnus', w: 'colours look god'},
     {k: 'setting', t: 'Variant', p: ['Settings', 'Appearance'], i: 'sun', v: 'Dark', w: 'light dark'},
     {k: 'setting', t: 'Text size', p: ['Settings', 'Appearance'], i: 'type', v: '100%', w: 'font scale'},
     {k: 'setting', t: 'Clock style', p: ['Settings', 'Lock screen'], i: 'clock', v: 'Stacked', w: 'time'},
     {k: 'setting', t: '24-hour clock', p: ['Settings', 'Lock screen'], i: 'clock', v: 'On', w: 'time format'},
     {k: 'setting', t: 'Password field', p: ['Settings', 'Lock screen'], i: 'lock', v: 'Line', w: 'input shape'},
     {k: 'setting', t: 'Background blur', p: ['Settings', 'Lock screen'], i: 'image', v: '6', w: 'wallpaper soft'},
-    {k: 'setting', t: 'Wallpaper', p: ['Settings', 'Lock screen'], i: 'images', v: 'Another god at each lock', w: 'god pantheon change rotate random'},
+    {k: 'setting', t: 'Wallpaper', p: ['Settings', 'Lock screen'], i: 'images', v: 'Another theme at each lock', w: 'god theme change rotate random'},
     {k: 'setting', t: 'Scale', p: ['Settings', 'Display'], i: 'monitor', v: '100%', w: 'resolution hidpi zoom'},
     {k: 'setting', t: 'Night light', p: ['Settings', 'Display'], i: 'moon', v: 'Off', w: 'warm blue light colour temperature'},
     {k: 'setting', t: 'Output device', p: ['Settings', 'Sound'], i: 'volume-2', v: 'Headphones', w: 'speaker audio'},
@@ -99,9 +97,8 @@ Kit.hydrate(document);
     {k: 'command', t: 'strix-update', p: ['Fetch and apply the latest release'], i: 'square-terminal', w: 'update upgrade', g: 'commands'},
     {k: 'command', t: 'strix-rebuild switch', p: ['Build the configuration in /etc/nixos and switch to it'], i: 'square-terminal', w: 'rebuild nixos', g: 'commands'},
     {k: 'command', t: 'strix-theme list', p: ['Show every theme and variant'], i: 'square-terminal', w: 'themes', g: 'commands'},
-    {k: 'command', t: 'strix-theme set strix', p: ['Switch to the Strix theme'], i: 'square-terminal', w: 'theme'},
-    {k: 'command', t: 'strix-theme set neutral', p: ['Switch to the Neutral theme'], i: 'square-terminal', w: 'theme'},
-    {k: 'command', t: 'strix-theme god neptunus', p: ['Call another god of the pantheon'], i: 'square-terminal', w: 'theme god pantheon aspect'},
+    {k: 'command', t: 'strix-theme set saturnus', p: ['Switch to the Saturnus theme'], i: 'square-terminal', w: 'theme'},
+    {k: 'command', t: 'strix-theme set neptunus', p: ['Switch to the Neptunus theme'], i: 'square-terminal', w: 'theme god'},
     {k: 'command', t: 'strix-theme status', p: ['Check that every part shows the current theme'], i: 'square-terminal', w: 'theme'}
   ];
   var KINDS = ['all', 'app', 'action', 'setting', 'command'], LABEL = {app: 'App', action: 'Action', setting: 'Setting', command: 'Command', group: 'Menu'};
@@ -172,7 +169,7 @@ Kit.hydrate(document);
     var what = {app: 'Opens ', action: 'Runs ', setting: 'Opens Settings at ', command: 'Runs in a terminal :: '}[e.k];
     out.textContent = what + (e.k === 'setting' ? e.p.slice(1).concat(e.t).join(' › ') : e.k === 'action' ? (e.p || []).concat(e.t).join(' › ') : e.t);
     var gods = JSON.parse(root.getAttribute('data-gods') || '{}'), g = e.t.toLowerCase();
-    if (e.p && e.p[1] === 'Pantheon' && gods[g]) {
+    if (e.p && e.p[1] === 'Theme' && gods[g]) {
       var host = root.closest('[data-wall-host]'); host.setAttribute('data-theme', g);
       host.querySelector('.k-wall').style.backgroundImage = 'url(' + gods[g] + ')';
     }

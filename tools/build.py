@@ -7,7 +7,7 @@
 Every value comes from tools/palette.py and the tokens() function below; nothing in design-system/ is edited by hand.
 """
 import argparse, datetime, json, math, os, re, shutil, random, sys
-import palette, pantheon
+import palette, themes
 from palette import C, T
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,14 +30,14 @@ def w(path, text):
 
 # ---------------------------------------------------------------- tokens
 USAGE = {
- 'background': 'Desktop behind everything, boot splash, installer. Tinted faintly toward the god in each aspect. Ground for text, text-muted, accent-text, error.',
+ 'background': 'Desktop behind everything, boot splash, installer. Tinted faintly toward the god in each theme. Ground for text, text-muted, accent-text, error.',
  'surface': 'Windows, panels, the pill, cards, dialogs. Ground for text, text-muted, accent-text, error.',
  'border': 'Decorative lines and frames on surface and background: inactive window border, dividers, progress track.',
  'text': 'Primary text on background, surface and surface-raised (13.9:1 or more). Wordmark, slider thumb.',
  'text-muted': 'Secondary text and resting icons on background, surface and surface-raised (6.2:1 or more).',
- 'accent': 'The colour of the god of the moment: Strix red under Saturnus, the default, and one hue per aspect. Fills only: main action, selected segment, active workspace, active window border, running progress, cursor, the disc of the wallpaper. Not for text; use accent-text.',
- 'on-accent': 'Text and icons on accent, accent-hover and accent-pressed (4.5:1 or more in every aspect): white on dark accents, near-black on light ones.',
- 'focus': 'Focus ring, 2px, after a 2px gap in background. 4.0:1 or more on background, surface and surface-raised in every aspect.',
+ 'accent': 'The colour of the theme: Strix red under Saturnus, the default, and one muted hue per god. Fills only: main action, selected segment, active workspace, active window border, running progress, cursor, the disc of the wallpaper. Not for text; use accent-text.',
+ 'on-accent': 'Text and icons on accent, accent-hover and accent-pressed (4.5:1 or more in every theme): white on dark accents, near-black on light ones.',
+ 'focus': 'Focus ring, 2px, after a 2px gap in background. 4.0:1 or more on background, surface and surface-raised in every theme.',
  'error': 'Error text and the border of a field in error, on background, surface and surface-raised (6.3:1 or more). Always with words.',
  'warning': 'Warnings as text or icon with words, on background and surface (7.7:1 or more). Never a filled box.',
  'surface-raised': 'Hover and selected rows, tooltips, the cover of a media card. One step above surface.',
@@ -75,16 +75,16 @@ ORDER = ['background', 'surface', 'surface-raised', 'surface-sunken', 'border', 
 C['scrim'] = '#000000b8'
 TERM_USAGE = {'background': 'Terminal ground.', 'foreground': 'Terminal text.', 'cursor': 'Terminal cursor, a block.', 'selection': 'Terminal selection ground; foreground stays readable on it.'}
 
-ASPECTS = pantheon.all_aspects()
-C['border-active'] = ASPECTS[pantheon.DEFAULT]['border-active']
-GOD_IDS = [g[0] for g in pantheon.GODS]
+COLOURS = themes.all_colours()
+C['border-active'] = COLOURS[themes.DEFAULT]['border-active']
+GOD_IDS = [g[0] for g in themes.GODS]
 
 def per_god(token, base):
-    """A colour value for every aspect: the god's own where the aspect sets the token, else the default's."""
+    """A colour value for every theme: the god's own where the theme sets the token, else the default's."""
     v = {GOD_IDS[0]: base}
     for gid in GOD_IDS[1:]:
-        if token in ASPECTS[gid] and ASPECTS[gid][token] != base:
-            v[gid] = ASPECTS[gid][token]
+        if token in COLOURS[gid] and COLOURS[gid][token] != base:
+            v[gid] = COLOURS[gid][token]
     return v
 
 def tokens():
@@ -129,7 +129,7 @@ def tokens():
         return {'tokens': [{'name': n, 'value': v, 'usage': u} for n, v, u in rows]}
     return {
         'name': TITLE, 'version': 1,
-        'color': {'themes': [{'id': g[0], 'name': g[1]} for g in pantheon.GODS], 'tokens': color},
+        'color': {'themes': [{'id': g[0], 'name': g[1]} for g in themes.GODS], 'tokens': color},
         'type': {'fonts': fonts, 'families': {'mono': mono, 'serif': serif, 'fraktur': fraktur}, 'groups': groups},
         'spacing': fam([
             ('space-1', '4px', 'Gap between an icon and its value; padding inside the pill.'),
@@ -173,7 +173,7 @@ def tokens():
             ('dur-slow', '360ms', 'Panel growing out of the pill, carousel, windows opening and moving, window focus, workspace change, rolling numbers.'),
             ('dur-reveal', '640ms', 'Circular reveal of a new theme, unlocking, ring gauges filling.'),
             ('dur-loop', '1400ms', 'One pass of an indeterminate progress line.'),
-            ('god-cycle', '600s', 'How often the god of the desktop changes by itself, unless kept in the pantheon.'),
+            ('theme-cycle', '600s', 'How often the theme of the desktop changes by itself to another god, unless kept in the theme picker.'),
             ('stagger', '30ms', 'Delay between neighbours when a list enters.'),
         ]),
         'easing': fam([

@@ -41,15 +41,15 @@ This system is the single source for that look on every surface: the desktop she
 
 The ten required colours of `theme.toml` have the same names here: `background`, `surface`, `border`, `text`, `text-muted`, `accent`, `on-accent`, `focus`, `error`, `warning`. Every other colour token is an extra colour under the same name. `term-background`, `term-foreground`, `term-cursor`, `term-selection` and the sixteen `term-` colours map to the keys of the `terminal` table without the prefix. All contrast rules of the engine hold: text 4.5:1 on background and surface, focus 3:1, terminal text 4.5:1.
 
-### The pantheon: one aspect per god
+### Themes: one per god
 
-The default theme has eight aspects, one for each god of its wallpapers. Choosing a god in the pantheon (Style › Wallpaper) sets the plate and its aspect together. In the tokens the aspects are the colour themes: `saturnus` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches the rest.
+Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme is a plate and a set of colours; choosing it in the theme picker (Super Ctrl Space) sets both. In the tokens the god themes are the colour themes: `saturnus` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches to another. The theme changes by itself to another god every 10 minutes (`theme-cycle`) unless it is kept in the theme picker.
 
 __GODS_TABLE__
 
-- An aspect sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep the default's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
+- A god theme sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, `border-active`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep the default's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
 - The colours follow dark academia: deep, muted and warm, like leather, brass, ink and old bindings. Every accent but the default's has an OKLCH chroma between 0.05 and 0.11, so none is pure or bright; only the Strix red stays at full strength, as the colour of the brand.
-- The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/pantheon.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
+- The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/themes.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
 - Light accents (__LIGHT__) carry near-black text; dark ones (__DARK__) carry white. Use `on-accent`, never a fixed white.
 - `error` stays red under every god. Under Saturnus the error and the accent are both red; that is why status is always a word first.
 
@@ -84,18 +84,18 @@ __GODS_TABLE__
 
 ## Wallpaper and imagery
 
-- Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
-- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. The desktop changes its god every 10 minutes (`god-cycle`) unless the god is kept in the pantheon; the lock screen shows another god at every lock, in that god's aspect, never the same twice in a row. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
+- Wallpapers are engravings of Roman gods, printed in two inks of the god's theme: dim cream for the paper and the theme's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
+- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. The desktop changes to another god theme every 10 minutes (`theme-cycle`) unless the theme is kept in the theme picker; the lock screen shows another god theme at every lock, never the same twice in a row. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
-- Under the lock screen, the theme picker and the pantheon the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
-- Add further gods only as engravings or etchings in the public domain from a collection that says so, with an aspect of their own whose accent is far enough in hue from the others, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
+- Under the lock screen and the theme picker the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
+- Add further gods only as engravings or etchings in the public domain from a collection that says so, as a theme of their own whose accent is far enough in hue from the others (at most eight god themes), treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
 - `Kit.wallpaper()` still returns the plain star chart drawn with the tokens (cream lines and the disc, no picture). It is the fallback where a picture cannot be shipped: the boot splash and the installer.
 
 ## Help and hotkeys
 
 - The interface does not explain itself in sentences. No component carries a line such as "Enter applies, Esc closes" or "drag to move".
 - The cheat sheet explains the keys, all in one place: Super K opens it over the desktop, with every hotkey in groups, a filter, and a direct way into Settings › Hotkeys, where every binding can be changed and new ones added.
-- A single key chip (`.k-kbd`) may stand next to a control where one key matters and is not obvious: Esc in Search, K for "Keep this god" in the pantheon. Never more than one or two in a view, and never with a sentence around them.
+- A single key chip (`.k-kbd`) may stand next to a control where one key matters and is not obvious: Esc in Search, K for "Keep this theme" in the theme picker. Never more than one or two in a view, and never with a sentence around them.
 - In the design system's own previews, a note that only exists to try the preview (a demo password, a faster clock) starts with "Preview only" and sits small and faint in a corner. It is not part of the design.
 
 ## Symbols
@@ -204,7 +204,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |
-| Lock screen | lock | another god's plate and aspect; wallpaper dims and softens; column slides in from the left | `dur-reveal`, `dur-slow` | `ease-out` | finishes |
+| Lock screen | lock | another god theme, plate and colours; wallpaper dims and softens; column slides in from the left | `dur-reveal`, `dur-slow` | `ease-out` | finishes |
 | Lock screen | unlock | column fades and moves 24px left; wallpaper sharpens | `dur-slow`, `dur-reveal` | `ease-in`, `ease-out` | finishes |
 | Lock screen | wrong password | field shakes; message appears | `dur-slow` | `ease-out` | restarts |
 | Visualizer | sound | bar heights | `dur-fast` | linear | follows |
@@ -278,25 +278,25 @@ SECTIONS = {'motion.md': MOTION, 'surfaces.md': SURFACES}
 
 WALL_README = r'''# Wallpapers
 
-The pantheon of the default theme: eight Roman gods, each an engraving printed in two inks of the god's aspect, with one disc in the god's colour. Sources: Art Institute of Chicago, open-access collection, released under CC0; Rijksmuseum, open data, Public Domain Mark. Each file is 2560 by 1440 and made by `tools/wallpapers.py`.
+The plates of the eight god themes: Roman gods, each an engraving printed in two inks of the theme, with one disc in the god's colour. Sources: Art Institute of Chicago, open-access collection, released under CC0; Rijksmuseum, open data, Public Domain Mark. Each file is 2560 by 1440 and made by `tools/wallpapers.py`.
 
 '''
 
 def _plates():
-    import pantheon, wallpapers
+    import themes, wallpapers
     role = {'saturnus': ' The default desktop.'}
     rows = []
-    for g in pantheon.GODS:
+    for g in themes.GODS:
         credit = wallpapers.PLATES[g[0]][3]
-        t = pantheon.aspect(g[0])
+        t = themes.colours(g[0])
         rows.append('- `%s.jpg` — %s: accent `%s` on `%s`.%s %s.' % (g[0], g[1], t['accent'], t['background'], role.get(g[0], ''), credit.rstrip('.')))
     return '\n'.join(rows) + '\n'
 
 WALL_README += _plates() + r'''- `star-chart.svg` — the plain fallback without a picture: cream lines and the disc. Own drawing. Colours are fixed in the file; `Kit.wallpaper()` gives the version that follows the tokens.
 
-Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
+Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the theme's `background`; inside the disc the paper becomes the theme's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
 
-Add further gods only from collections that state public-domain status, give each an aspect in `tools/pantheon.py`, treat it the same way, and list title, engraver, date, source and licence here.
+Add further gods only from collections that state public-domain status, give each a theme in `tools/themes.py`, treat it the same way, and list title, engraver, date, source and licence here.
 '''
 
 COVER = r'''<!-- @dsCard height=288 -->
@@ -353,14 +353,14 @@ COVER = r'''<!-- @dsCard height=288 -->
 
 
 def _fill():
-    import pantheon
+    import themes
     global README
     rows = ['| God | `accent` | `background` | Colour |', '| --- | --- | --- | --- |']
-    for g in pantheon.GODS:
-        t = pantheon.aspect(g[0])
+    for g in themes.GODS:
+        t = themes.colours(g[0])
         rows.append('| %s | `%s` | `%s` | %s |' % (g[1], t['accent'], t['background'], g[3]))
-    light = [g[1] for g in pantheon.GODS if pantheon.aspect(g[0])['on-accent'] != '#ffffff']
-    dark = [g[1] for g in pantheon.GODS if pantheon.aspect(g[0])['on-accent'] == '#ffffff']
+    light = [g[1] for g in themes.GODS if themes.colours(g[0])['on-accent'] != '#ffffff']
+    dark = [g[1] for g in themes.GODS if themes.colours(g[0])['on-accent'] == '#ffffff']
     both = lambda x: ', '.join(x[:-1]) + ' and ' + x[-1] if len(x) > 1 else x[0]
     README = README.replace('__GODS_TABLE__', '\n'.join(rows)).replace('__LIGHT__', both(light)).replace('__DARK__', both(dark))
 _fill()

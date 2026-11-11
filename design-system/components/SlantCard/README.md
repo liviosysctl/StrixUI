@@ -1,6 +1,6 @@
 # SlantCard
 
-The tall slanted card of the theme picker and the pantheon, and the carousel that holds a row of them. The preview shows the eight gods, as in the pantheon.
+The tall slanted card of the theme picker, and the carousel that holds a row of them. The preview shows the eight god themes.
 
 - Each card is a parallelogram that overlaps its neighbour. The chosen card in the middle is 420px wide and taller, with a cream hair edge and the theme's name in blackletter; all others are 96px wide and dimmed.
 - Markup: `.k-carousel` > `.k-carousel-track` > `button.k-slant` with `.k-slant-art` (the preview), `.k-slant-edge`, `.k-slant-name`.

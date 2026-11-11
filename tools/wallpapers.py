@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Makes the engraving wallpapers in src/wallpapers/.
 
-One plate per god of the pantheon (tools/pantheon.py). Each is downloaded from an open-access
+One plate per god theme (tools/themes.py). Each is downloaded from an open-access
 collection (Art Institute of Chicago, CC0, or Rijksmuseum, public domain), cropped to the upper
-body at 16:9, and printed in two inks of the god's aspect: paper becomes the cream `line` colour,
-ink becomes the aspect's `background`, and ink inside one disc becomes its `accent`. The picture is darkened toward
+body at 16:9, and printed in two inks of the god's theme: paper becomes the cream `line` colour,
+ink becomes the theme's `background`, and ink inside one disc becomes its `accent`. The picture is darkened toward
 the edges, hardest along the top (bar) and the bottom (dock), and gets a little grain.
 
     python3 tools/wallpapers.py            # all plates
@@ -18,7 +18,7 @@ from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pantheon
+import themes
 
 OUT = os.path.join(ROOT, 'src', 'wallpapers')
 CACHE = os.path.join(ROOT, 'build', 'engravings')
@@ -60,7 +60,7 @@ def fetch(source):
     return path
 
 def rgb(h):
-    return np.array(pantheon.hex2rgb(h), float)
+    return np.array(themes.hex2rgb(h), float)
 
 def make(src, box, disc, out, bg='#0b0a09', accent='#c8102e', paper=0.46, vig=0.92, seed=3):
     BG, ACC = rgb(bg), rgb(accent)
@@ -107,7 +107,7 @@ def main():
     for n in names:
         source, box, disc, credit = PLATES[n][:4]
         extra = PLATES[n][4] if len(PLATES[n]) > 4 else {}    # per plate: paper brightness for a print with much bare paper
-        t = pantheon.aspect(n)
+        t = themes.colours(n)
         out = os.path.join(OUT, n + '.jpg')
         make(fetch(source), box, disc, out, bg=t['background'], accent=t['accent'], **extra)
         print('%s  %d bytes  (%s)' % (n + '.jpg', os.path.getsize(out), credit))
