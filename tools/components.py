@@ -410,7 +410,7 @@ SEARCH_JS = r'''
     {k: 'app', t: 'Settings', p: ['Apps'], i: 'settings', w: 'preferences control panel', g: 'apps'},
 
     {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours', key: 'Super Ctrl Shift Space', g: 'style'},
-    {k: 'action', t: 'Keep this god', p: ['Style', 'Pantheon'], i: 'lock', w: 'pin stop change cycle rotate god', g: 'style'},
+    {k: 'action', t: 'Keep this god', p: ['Style', 'Pantheon'], i: 'lock', w: 'pin stop change cycle rotate god', key: 'K', g: 'style'},
     {k: 'setting', t: 'Change god', p: ['Settings', 'Appearance'], i: 'history', v: 'Every 10 minutes', w: 'cycle rotate interval pantheon wallpaper'},
     {k: 'action', t: 'Pantheon', p: ['Style'], i: 'wallpaper', w: 'wallpaper gods aspect background picture engraving', key: 'Super Ctrl Space', g: 'style'},
     {k: 'action', t: 'Saturnus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper red default strix saturn time sickle', g: 'style'},
@@ -1061,6 +1061,7 @@ WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
     if (e.key === 'Enter') { var c = track.querySelector('[aria-selected="true"]').getBoundingClientRect(); car.dispatchEvent(new CustomEvent('apply', { detail: { index: car._k.index, x: c.left + c.width / 2, y: c.top + c.height / 2 } })); }
     if (e.key === 'ArrowRight') car._k.select(car._k.index + 1);
     if (e.key === 'ArrowLeft') car._k.select(car._k.index - 1);
+    if ((e.key === 'k' || e.key === 'K') && !e.ctrlKey && !e.metaKey && !e.altKey) { keep.checked = !keep.checked; keep.dispatchEvent(new Event('change', { bubbles: true })); }
   });
   reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
 })();
@@ -1075,8 +1076,8 @@ screen('Pantheon', 720, r'''
     <div class="k-scrim" style="animation:none"></div>
     <div class="k-carousel" id="car" tabindex="-1" aria-label="Gods"><div class="k-carousel-track" id="track"></div></div>
     <div class="k-plate" id="plate"></div>
-    <div class="cycle"><label class="k-switch"><input type="checkbox" id="keep"><span></span>Keep this god</label><span class="caption k-muted" id="next"></span></div>
-    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card calls the god&emsp;<span class="k-kbd">Esc</span> closes</div>
+    <div class="cycle"><label class="k-switch"><input type="checkbox" id="keep"><span></span>Keep this god</label><span class="k-kbd">K</span><span class="caption k-muted" id="next"></span></div>
+    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card calls the god&emsp;<span class="k-kbd">K</span> keeps the god&emsp;<span class="k-kbd">Esc</span> closes</div>
     <label class="k-switch micro demo"><input type="checkbox" id="fast"><span></span>Preview only: one minute in one second</label>
   </div>
   <button class="k-btn k-btn-primary" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Choose another god</span></button>
@@ -1088,7 +1089,7 @@ The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no s
 - In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo and Vulcanus) put dark text on their fills, the others white; `on-accent` says which.
 - Every plate is an engraving printed in two inks of its aspect: dark ink on dim cream, and inside the disc the paper takes the god's colour.
 - The god changes by itself every 10 minutes (`god-cycle`): another god at random, never the same one, spreading from the middle of the screen with the same reveal. A god chosen by hand starts a new cycle.
-- "Keep this god" stops the change. The cycle keeps counting while it is on, and a change that falls due is skipped. Turned off again, nothing happens at once: the next god comes at the next turn of the running cycle. Under the switch the time to the next god is shown, or, while kept, the time to the next turn.
+- "Keep this god" stops the change. While the pantheon is open, the K key turns it on and off. The cycle keeps counting while it is on, and a change that falls due is skipped. Turned off again, nothing happens at once: the next god comes at the next turn of the running cycle. Under the switch the time to the next god is shown, or, while kept, the time to the next turn.
 - The lock screen keeps its own rule: another god at every lock.
 - Browse with the arrow keys, the wheel or a click on a neighbour; the small dot under the name is the god's colour. Enter or a click on the middle card spreads the plate as a growing circle from the click point over `dur-reveal`; then the aspect switches and the picker fades.
 - Other themes bring their own wallpapers and keep one accent.
