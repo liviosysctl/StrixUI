@@ -23,8 +23,8 @@ GODS_SPEC = [
     ('janus',     'Janus',     (0.59, 0.048, 168),      'Patina, the green of old bronze doors and keys.'),
     ('apollo',    'Apollo',    (0.68, 0.085, 78),       'Antique gold, worn brass.'),
     ('mars',      'Mars',      (0.57, 0.105, 45),       'Rust, iron and burnt sienna.'),
-    ('minerva',   'Minerva',   (0.60, 0.065, 112),      'Olive leaf, moss on stone.'),
-    ('mercurius', 'Mercurius', (0.57, 0.048, 248),      'Slate and ink blue.'),
+    ('vulcanus',  'Vulcanus',  (0.60, 0.065, 112),      'Olive, the patina on old bronze from the forge.'),
+    ('neptunus',  'Neptunus',  (0.57, 0.048, 248),      'Deep water, slate and ink blue.'),
     ('pluto',     'Pluto',     (0.55, 0.060, 305),      'Heather, faded plum.'),
     ('bacchus',   'Bacchus',   (0.52, 0.085, 10),      'Claret, old wine.'),
 ]

@@ -51,15 +51,15 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 | Janus | `#688f7f` | `#070c09` | Patina, the green of old bronze doors and keys. |
 | Apollo | `#b5925a` | `#0d0a06` | Antique gold, worn brass. |
 | Mars | `#9f5836` | `#0e0907` | Rust, iron and burnt sienna. |
-| Minerva | `#878a5d` | `#0a0b06` | Olive leaf, moss on stone. |
-| Mercurius | `#546d85` | `#070b0e` | Slate and ink blue. |
+| Vulcanus | `#878a5d` | `#0a0b06` | Olive, the patina on old bronze from the forge. |
+| Neptunus | `#546d85` | `#070b0e` | Deep water, slate and ink blue. |
 | Pluto | `#746388` | `#0b090e` | Heather, faded plum. |
 | Bacchus | `#93535e` | `#0e0909` | Claret, old wine. |
 
 - An aspect sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep the default's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
 - The colours follow dark academia: deep, muted and warm, like leather, brass, ink and old bindings. Every accent but the default's has an OKLCH chroma between 0.05 and 0.11, so none is pure or bright; only the Strix red stays at full strength, as the colour of the brand.
 - The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/pantheon.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
-- Light accents (Janus, Apollo and Minerva) carry near-black text; dark ones (Saturnus, Mars, Mercurius, Pluto and Bacchus) carry white. Use `on-accent`, never a fixed white.
+- Light accents (Janus, Apollo and Vulcanus) carry near-black text; dark ones (Saturnus, Mars, Neptunus, Pluto and Bacchus) carry white. Use `on-accent`, never a fixed white.
 - `error` stays red under every god. Under Saturnus the error and the accent are both red; that is why status is always a word first.
 
 ## Type
@@ -77,7 +77,7 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 ## Ornament
 
 - `.k-rule` is a hair line with a small open lozenge in the middle, as between the parts of an old title page. Use it once in a view to part the mood from the matter: under the wordmark, between the date and the weather, above the update card.
-- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592". Every engraving shown full screen carries one.
+- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592". Every engraving shown full screen carries one.
 - InfoBlock's double-line brackets are the only frame. Use them for system facts, once per view.
 - `.k-grain` lays a fine grain over a full-screen picture. Use it on wallpapers only, never on surfaces.
 - That is the whole stock of ornament. No flourishes, corner pieces, drop caps or borders made of pattern.
@@ -94,7 +94,7 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 ## Wallpaper and imagery
 
 - Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
-- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus (the lock screen: he keeps the doors), Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
+- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus (the lock screen: he keeps the doors), Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
 - Under the lock screen, the theme picker and the pantheon the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
 - Add further gods only as engravings or etchings in the public domain from a collection that says so, with an aspect of their own whose accent is far enough in hue from the others, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.

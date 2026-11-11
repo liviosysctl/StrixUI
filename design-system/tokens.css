@@ -110,7 +110,7 @@
   --term-cursor: #9f5836;
   --term-selection: #372015;
 }
-[data-theme="minerva"] {
+[data-theme="vulcanus"] {
   --background: #0a0b06;
   --surface: #12130d;
   --surface-raised: #191a14;
@@ -127,7 +127,7 @@
   --term-cursor: #878a5d;
   --term-selection: #272819;
 }
-[data-theme="mercurius"] {
+[data-theme="neptunus"] {
   --background: #070b0e;
   --surface: #0f1317;
   --surface-raised: #151a1f;

@@ -3,8 +3,8 @@ import json
 def I(n, cls=''):
     return '<i class="k-icon%s" data-icon="%s"></i>' % ((' ' + cls) if cls else '', n)
 
-BLOBS = {'0d757135df30d2bf6652f3c0a18483d5': 'saturnus.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', '0cc6a7c9004fdc677a5ee5e9a15fa027': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', 'b4ec8e071ce499247b7f5574f8ea26c2': 'minerva.jpg', 'f23de46dea7fe1908c7bd773b98dd1ae': 'mercurius.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
-SATURNUS, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
+BLOBS = {'0d757135df30d2bf6652f3c0a18483d5': 'saturnus.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', 'b41733760ffae9de3f6f5d88682af092': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', '3b21996e74bfecb14fcb2f68061b8c3d': 'vulcanus.jpg', '479cdcb0b9c5173af68ab78ad369c814': 'neptunus.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
+SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
 def WALL(url, extra='', pos='center'):
     return '<div class="k-wall"%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
 COMPONENTS = []
@@ -415,8 +415,8 @@ SEARCH_JS = r'''
     {k: 'action', t: 'Janus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper patina green door', g: 'style'},
     {k: 'action', t: 'Apollo', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper antique gold brass sun', g: 'style'},
     {k: 'action', t: 'Mars', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper rust war', g: 'style'},
-    {k: 'action', t: 'Minerva', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper olive owl moss', g: 'style'},
-    {k: 'action', t: 'Mercurius', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper mercury slate blue ink', g: 'style'},
+    {k: 'action', t: 'Vulcanus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper olive forge smith fire', g: 'style'},
+    {k: 'action', t: 'Neptunus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper sea water blue trident', g: 'style'},
     {k: 'action', t: 'Pluto', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper heather plum violet underworld', g: 'style'},
     {k: 'action', t: 'Bacchus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper claret wine', g: 'style'},
     {k: 'action', t: 'Switch to light', p: ['Style'], i: 'sun', w: 'variant light dark appearance', g: 'style'},
@@ -565,7 +565,7 @@ comp('Search', 'Shell', 560, r'''
 <div data-wall-host data-theme="saturnus" style="position:relative;height:560px;overflow:hidden;background:var(--background)">''' + WALL(SATURNUS, ' data-dim', pos='center 30%') + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;padding-top:56px">
-    <div class="k-search k-surface" id="srch" data-query="theme" data-gods=''' + "'" + json.dumps(dict(zip(['saturnus', 'janus', 'apollo', 'mars', 'minerva', 'mercurius', 'pluto', 'bacchus'], [SATURNUS, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))) + "'" + r''' role="dialog" aria-label="Search">
+    <div class="k-search k-surface" id="srch" data-query="theme" data-gods=''' + "'" + json.dumps(dict(zip(['saturnus', 'janus', 'apollo', 'mars', 'vulcanus', 'neptunus', 'pluto', 'bacchus'], [SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS]))) + "'" + r''' role="dialog" aria-label="Search">
       <div class="k-search-head">''' + I('search') + r'''<span class="k-crumb" id="crumb"></span><input aria-label="Search" autocomplete="off" spellcheck="false"><span class="k-kbd">Esc</span></div>
       <div class="k-search-filter"><div class="k-seg" id="filter" aria-label="Show"><button aria-selected="true">All</button><button>Apps</button><button>Actions</button><button>Settings</button><button>Commands</button></div><span class="k-plate">one field for everything</span></div>
       <ul class="k-hits" id="hits" role="listbox"></ul>
@@ -707,7 +707,7 @@ DOCK_JS = r'''
 })();
 '''
 comp('EdgeDock', 'Shell', 380, r'''
-<div style="position:relative;height:380px;overflow:hidden">''' + WALL(MERCURIUS, pos='center 30%') + r'''
+<div style="position:relative;height:380px;overflow:hidden">''' + WALL(NEPTUNUS, pos='center 30%') + r'''
   <div class="k-plate" style="position:absolute;left:16px;top:12px">Move the pointer to the bottom edge. Move it away and the dock sinks back.</div>
   <div class="k-dockbar">''' + DOCK + r'''</div>
 </div>''', r'''
@@ -993,14 +993,14 @@ import pantheon as _pan
 _CAP = {
     'saturnus': ('Goltzius, 1592', 'Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'janus': ('Audenaerd, about 1700', 'Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta'),
-    'apollo': ('Goltzius, 1588', 'Apollo with the rays of the sun around his head. Engraved by Hendrick Goltzius, Haarlem, 1588'),
+    'apollo': ('Goltzius, 1592', 'Apollo as Sol, the sun, with lyre and quiver in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'mars': ('Quellinus, 1655', 'Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655'),
-    'minerva': ('Saenredam, 1595', 'Minerva with helmet, spear and owl. Engraved by Jan Saenredam after Hendrick Goltzius, about 1595'),
-    'mercurius': ('Goltzius, 1592', 'Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
+    'vulcanus': ('Goltzius, 1592', 'Vulcanus, the smith of the gods, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
+    'neptunus': ('Goltzius, 1592', 'Neptunus with his crown and trident, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'pluto': ('Goltzius, 1592', 'Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
     'bacchus': ('Goltzius, 1592', 'Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
 }
-_URL = dict(zip([g[0] for g in _pan.GODS], [SATURNUS, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))
+_URL = dict(zip([g[0] for g in _pan.GODS], [SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS]))
 PLATES = [(g[0], _URL[g[0]], g[1], _CAP[g[0]][0], _CAP[g[0]][1], _pan.aspect(g[0])['accent']) for g in _pan.GODS]
 WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
 (function () {
@@ -1045,9 +1045,9 @@ screen('Pantheon', 720, r'''
 </div>''', r'''
 The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no single wallpaper but eight Roman gods. Each god is a plate and an aspect: the plate is the wallpaper, the aspect recolours the system to match it. Calling a god sets both at once.
 
-- The gods, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Minerva (olive leaf), Mercurius (slate blue), Pluto (heather), Bacchus (claret). All but Saturnus are muted, as in dark academia: deep, warm, never bright. Janus keeps the doors and so the lock screen; in Ovid it is his gift that keeps the striges out of the house.
+- The gods, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Vulcanus (olive), Neptunus (slate blue), Pluto (heather), Bacchus (claret). All but Saturnus are muted, as in dark academia: deep, warm, never bright. Janus keeps the doors and so the lock screen; in Ovid it is his gift that keeps the striges out of the house.
 - An aspect changes only the accent and its family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, terminal cursor and selection) and tints the grounds (`background`, the surfaces, `border`) a little toward the god's hue. Text, `line`, the status colours and syntax stay the same in every aspect, so readability never depends on the god.
-- In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo and Minerva) put dark text on their fills, the others white; `on-accent` says which.
+- In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo and Vulcanus) put dark text on their fills, the others white; `on-accent` says which.
 - Every plate is an engraving printed in two inks of its aspect: dark ink on dim cream, and inside the disc the paper takes the god's colour.
 - Browse with the arrow keys, the wheel or a click on a neighbour; the small dot under the name is the god's colour. Enter or a click on the middle card spreads the plate as a growing circle from the click point over `dur-reveal`; then the aspect switches and the picker fades.
 - Other themes bring their own wallpapers and keep one accent.

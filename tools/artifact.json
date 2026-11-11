@@ -14,8 +14,8 @@
    "type": "image/jpeg"
   },
   "apollo.jpg": {
-   "blob": "0cc6a7c9004fdc677a5ee5e9a15fa027",
-   "size": 530983,
+   "blob": "b41733760ffae9de3f6f5d88682af092",
+   "size": 768866,
    "type": "image/jpeg"
   },
   "mars.jpg": {
@@ -23,14 +23,14 @@
    "size": 631553,
    "type": "image/jpeg"
   },
-  "minerva.jpg": {
-   "blob": "b4ec8e071ce499247b7f5574f8ea26c2",
-   "size": 697329,
+  "vulcanus.jpg": {
+   "blob": "3b21996e74bfecb14fcb2f68061b8c3d",
+   "size": 753428,
    "type": "image/jpeg"
   },
-  "mercurius.jpg": {
-   "blob": "f23de46dea7fe1908c7bd773b98dd1ae",
-   "size": 736383,
+  "neptunus.jpg": {
+   "blob": "479cdcb0b9c5173af68ab78ad369c814",
+   "size": 773557,
    "type": "image/jpeg"
   },
   "pluto.jpg": {
