@@ -7,7 +7,7 @@
 Every value comes from tools/palette.py and the tokens() function below; nothing in design-system/ is edited by hand.
 """
 import argparse, datetime, json, math, os, re, shutil, random, sys
-import palette
+import palette, pantheon
 from palette import C, T
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,14 +30,14 @@ def w(path, text):
 
 # ---------------------------------------------------------------- tokens
 USAGE = {
- 'background': 'Desktop behind everything, boot splash, installer. Ground for text, text-muted, accent-text, error.',
+ 'background': 'Desktop behind everything, boot splash, installer. Tinted faintly toward the god in each aspect. Ground for text, text-muted, accent-text, error.',
  'surface': 'Windows, panels, the pill, cards, dialogs. Ground for text, text-muted, accent-text, error.',
  'border': 'Decorative lines and frames on surface and background: inactive window border, dividers, progress track.',
  'text': 'Primary text on background, surface and surface-raised (13.9:1 or more). Wordmark, slider thumb.',
  'text-muted': 'Secondary text and resting icons on background, surface and surface-raised (6.2:1 or more).',
- 'accent': 'The brand red. Fills only: main action, selected segment, active workspace, active window border, running progress, cursor, the disc of the wallpaper. Not for text; use accent-text.',
- 'on-accent': 'Text and icons on accent, accent-hover and accent-pressed (4.8:1 or more).',
- 'focus': 'Focus ring, 2px, after a 2px gap in background. 4.1:1 or more on background, surface and surface-raised.',
+ 'accent': 'The colour of the god of the moment: Strix red under Carna, the default, and one hue per aspect. Fills only: main action, selected segment, active workspace, active window border, running progress, cursor, the disc of the wallpaper. Not for text; use accent-text.',
+ 'on-accent': 'Text and icons on accent, accent-hover and accent-pressed (4.5:1 or more in every aspect): white on dark accents, near-black on light ones.',
+ 'focus': 'Focus ring, 2px, after a 2px gap in background. 4.0:1 or more on background, surface and surface-raised in every aspect.',
  'error': 'Error text and the border of a field in error, on background, surface and surface-raised (6.3:1 or more). Always with words.',
  'warning': 'Warnings as text or icon with words, on background and surface (7.7:1 or more). Never a filled box.',
  'surface-raised': 'Hover and selected rows, tooltips, the cover of a media card. One step above surface.',
@@ -46,8 +46,8 @@ USAGE = {
  'text-faint': 'Placeholders, line numbers, timestamps, the :: separator. 3.6:1 or more: never for text a person must read.',
  'accent-hover': 'Primary button under the pointer.',
  'accent-pressed': 'Primary button while pressed.',
- 'accent-text': 'Red as text or icon on background, surface, surface-raised and accent-soft (5.2:1 or more): the list caret, the power icon, links.',
- 'accent-soft': 'Quiet red ground: hover of a danger button, selection in text.',
+ 'accent-text': 'The accent as text or icon on background, surface, surface-raised and accent-soft (5.2:1 or more): the list caret, the power icon, links.',
+ 'accent-soft': 'Quiet ground in the accent hue: hover of a danger button, selection in text.',
  'line': 'Cream line work: wallpaper drawing, bracket frames, the edge of the selected theme card. Drawn at 1px, usually at reduced opacity.',
  'scrim': 'Dimming layer under dialogs, the session menu and the theme picker.',
  'success': 'Success as text or icon with words, on background and surface (7.8:1 or more).',
@@ -74,11 +74,23 @@ ORDER = ['background', 'surface', 'surface-raised', 'surface-sunken', 'border', 
 C['scrim'] = '#000000b8'
 TERM_USAGE = {'background': 'Terminal ground.', 'foreground': 'Terminal text.', 'cursor': 'Terminal cursor, a block.', 'selection': 'Terminal selection ground; foreground stays readable on it.'}
 
+ASPECTS = pantheon.all_aspects()
+GOD_IDS = [g[0] for g in pantheon.GODS]
+
+def per_god(token, base):
+    """A colour value for every aspect: the god's own where the aspect sets the token, else Carna's."""
+    v = {GOD_IDS[0]: base}
+    for gid in GOD_IDS[1:]:
+        if token in ASPECTS[gid] and ASPECTS[gid][token] != base:
+            v[gid] = ASPECTS[gid][token]
+    return v
+
 def tokens():
-    color = [{'name': n, 'value': {'dark': C[n]}, 'usage': USAGE[n]} for n in ORDER]
+    color = [{'name': n, 'value': per_god(n, C[n]), 'usage': USAGE[n]} for n in ORDER]
     ansi = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
     for k in ['background', 'foreground', 'cursor', 'selection'] + ansi + ['bright-' + a for a in ansi]:
-        color.append({'name': 'term-' + k, 'value': {'dark': T[k]}, 'usage': TERM_USAGE.get(k, 'ANSI ' + k.replace('-', ' ') + '.')})
+        val = per_god('background' if k == 'background' else k, T[k]) if k in ('background', 'cursor', 'selection') else {GOD_IDS[0]: T[k]}
+        color.append({'name': 'term-' + k, 'value': val, 'usage': TERM_USAGE.get(k, 'ANSI ' + k.replace('-', ' ') + '.')})
     mono = '"JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace'
     serif = '"IM Fell English", "Iowan Old Style", Georgia, serif'
     fraktur = '"Grenze Gotisch", "IM Fell English", Georgia, serif'
@@ -115,7 +127,7 @@ def tokens():
         return {'tokens': [{'name': n, 'value': v, 'usage': u} for n, v, u in rows]}
     return {
         'name': TITLE, 'version': 1,
-        'color': {'themes': [{'id': 'dark', 'name': 'Dark'}], 'tokens': color},
+        'color': {'themes': [{'id': g[0], 'name': g[1]} for g in pantheon.GODS], 'tokens': color},
         'type': {'fonts': fonts, 'families': {'mono': mono, 'serif': serif, 'fraktur': fraktur}, 'groups': groups},
         'spacing': fam([
             ('space-1', '4px', 'Gap between an icon and its value; padding inside the pill.'),
@@ -175,12 +187,19 @@ def tokens():
     }
 
 def tokens_css(t):
-    out = ['/* %s — generated from tokens.json */' % TITLE, ':root, [data-theme="dark"] {']
+    first = t['color']['themes'][0]['id']
+    out = ['/* %s — generated from tokens.json */' % TITLE, ':root, [data-theme="%s"] {' % first]
     for c in t['color']['tokens']:
-        out.append('  --%s: %s;' % (c['name'], c['value']['dark']))
+        out.append('  --%s: %s;' % (c['name'], c['value'][first]))
     for s in t['shadow']['tokens']:
         out.append('  --%s: %s;' % (s['name'], s['value']))
     out.append('}')
+    for th in t['color']['themes'][1:]:
+        out.append('[data-theme="%s"] {' % th['id'])
+        for c in t['color']['tokens']:
+            if th['id'] in c['value']:
+                out.append('  --%s: %s;' % (c['name'], c['value'][th['id']]))
+        out.append('}')
     out.append(':root {')
     for famname in ('spacing', 'radius', 'line', 'size', 'duration', 'easing', 'opacity'):
         for s in t[famname]['tokens']:
@@ -347,7 +366,7 @@ def write_preview(allc):
     for c in [{'name': 'Cover', 'group': 'Overview'}] + allc:
         src = open(os.path.join(OUT, 'components', c['name'], 'preview.html'), encoding='utf-8').read()
         src = src.replace('../../assets/', rel + '/assets/')
-        src = src.replace('<head>', '<head>' + head, 1).replace('<html lang="en">', '<html lang="en" data-theme="dark">')
+        src = src.replace('<head>', '<head>' + head, 1).replace('<html lang="en">', '<html lang="en" data-theme="carna">')
         open(os.path.join(PREVIEW, c['name'] + '.html'), 'w', encoding='utf-8').write(src)
         links.append('<li><a href="%s.html">%s</a> <small>%s</small></li>' % (c['name'], c['name'], c['group']))
     open(os.path.join(PREVIEW, 'index.html'), 'w', encoding='utf-8').write(

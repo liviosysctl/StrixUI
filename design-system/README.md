@@ -1,11 +1,11 @@
-Strix is a NixOS-based system with its own desktop. Its default look is a dark study: near-black surfaces, old engravings of antique statues as the ground, one red, type from an old printing house beside a quiet monospace. It should feel like a terminal kept in a library. Everything is small, thin and exact; nothing is chunky.
+Strix is a NixOS-based system with its own desktop. Its default look is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace. It should feel like a terminal kept in a library. Everything is small, thin and exact; nothing is chunky.
 
 This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, settings, notifications), the terminal, the boot splash, the text installer, the store and the Windows bootstick app.
 
 ## Principles
 
 - Old and exact. The mood comes from engravings, blackletter, an old-style serif and small ornaments. The work is done in a fine monospace. Never mix the roles: nothing you operate is set in the serif, and nothing that sets the mood is set in mono.
-- One red. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, the active window, running progress, the cursor, and the disc on the wallpaper. If two things are red, one of them is wrong.
+- One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, the active window, running progress, the cursor, and the disc on the wallpaper. Its colour belongs to the god of the moment (Strix red under Carna, the default), but there is only ever one. If two things carry it, one of them is wrong.
 - Fine, not heavy. Text is 12px, controls are 28px high, lines are one pixel, corners are 2 to 4px. When in doubt, make it thinner and leave more room around it.
 - Flat and dark. Surfaces are one step lighter than the ground and carry a hair border. No glass, no blur behind panels.
 - Lines, not fills. State is shown with a line, a border, a caret or a word before it is shown with a filled box.
@@ -21,7 +21,7 @@ This system is the single source for that look on every surface: the desktop she
 - Numbers carry their unit with a space, in binary units for storage: `7.4 GiB`, `162 GiB of 952 GiB`. Percent has no space: `17%`. Time is 24-hour by default: `21:04`.
 - Dates read "Tuesday, 10 November"; short form "Tue 10 Nov".
 - Greetings and the motto are lowercase: "good evening, livio", "nocte vigilat".
-- Plate captions name the work, the engraver, the place and the date: "Laocoön. Engraved by Nicolas Beatrizet, Rome, about 1550".
+- Plate captions name the god or the work, then the engraver, the place and the date: "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592". Where a likeness is a stand-in, the caption says so.
 - Never use emoji, anywhere, including sample text, notifications and terminal output.
 - Never set labels in capitals with letter-spacing, never separate items with a middle dot, never draw a coloured box around a statement, never stripe table rows, and never use green, yellow and red together as a status code.
 - The system's name appears only where a person reads it. Component and class names are neutral (`k-`, `Kit`), so the name can change in one place.
@@ -30,16 +30,36 @@ This system is the single source for that look on every surface: the desktop she
 
 - Ground: `background` for the desktop, splash and installer; `surface` for windows, panels, cards and the dock; `surface-raised` for hover and selected rows; `surface-sunken` for wells (fields, tracks).
 - Text: `text` for what must be read, `text-muted` for secondary text and resting symbols, `text-faint` only for placeholders, line numbers, timestamps and the `::` separator.
-- Red as a fill is `accent`, with `on-accent` on top. Red as text or as a symbol is `accent-text`; `accent` itself is too dark to read as text. Hover and press of a red fill are `accent-hover` and `accent-pressed`.
+- The accent as a fill is `accent`, with `on-accent` on top (white on the dark accents, near-black on the light ones). The accent as text or as a symbol is `accent-text`; `accent` itself is not meant to be read as text. Hover and press of a red fill are `accent-hover` and `accent-pressed`.
 - Lines: `border` for decorative lines and inactive windows, `border-strong` for anything that carries meaning (control outlines), `line` for the cream line work of the wallpaper, bracket frames and the edge of the chosen theme card.
 - Status is always a word or a symbol first. `error`, `warning`, `success` and `info` are muted and are used as text or a 1px border, never as a filled area.
 - Focus is `focus-ring` on every control: a 2px gap in `background`, then 2px of `focus`. Never the browser's blue.
 - Code uses the `syntax-` tokens; charts use `chart-1` to `chart-5` in order, and `chart-1` is the series that matters.
-- The terminal uses the `term-` tokens. They are quieter than usual on purpose, so the red cursor and a red error stay the loudest things in a window.
+- The terminal uses the `term-` tokens. They are quieter than usual on purpose, so the cursor in the accent and a red error stay the loudest things in a window.
 
 ### The theme engine
 
 The ten required colours of `theme.toml` have the same names here: `background`, `surface`, `border`, `text`, `text-muted`, `accent`, `on-accent`, `focus`, `error`, `warning`. Every other colour token is an extra colour under the same name. `term-background`, `term-foreground`, `term-cursor`, `term-selection` and the sixteen `term-` colours map to the keys of the `terminal` table without the prefix. All contrast rules of the engine hold: text 4.5:1 on background and surface, focus 3:1, terminal text 4.5:1.
+
+### The pantheon: one aspect per god
+
+The default theme has eight aspects, one for each god of its wallpapers. Choosing a god in the pantheon (Style › Wallpaper) sets the plate and its aspect together. In the tokens the aspects are the colour themes: `carna` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches the rest.
+
+| God | `accent` | `background` | Colour |
+| --- | --- | --- | --- |
+| Carna | `#c8102e` | `#0b0a09` | Strix red. Carna keeps the striges from the cradle; the default. |
+| Janus | `#2e9a84` | `#060c0a` | Verdigris, the green of old bronze doors and keys. |
+| Apollo | `#d4a21a` | `#0c0a06` | Sun gold. |
+| Mars | `#e0641f` | `#0e0907` | Ember, iron in the forge. |
+| Minerva | `#8f9b2c` | `#0a0b06` | Olive, her tree. |
+| Mercurius | `#448bcd` | `#070b0e` | Quicksilver blue. |
+| Pluto | `#7a4fd1` | `#0a090e` | Violet of the underworld. |
+| Bacchus | `#b23472` | `#0e090a` | Wine. |
+
+- An aspect sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep Carna's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
+- The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/pantheon.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
+- Light accents (Janus, Apollo, Mars, Minerva, Mercurius) carry near-black text; dark ones (Carna, Pluto, Bacchus) carry white. Use `on-accent`, never a fixed white.
+- `error` stays red under every god. Under Carna the error and the accent are both red; that is why status is always a word first.
 
 ## Type
 
@@ -56,7 +76,7 @@ The ten required colours of `theme.toml` have the same names here: `background`,
 ## Ornament
 
 - `.k-rule` is a hair line with a small open lozenge in the middle, as between the parts of an old title page. Use it once in a view to part the mood from the matter: under the wordmark, between the date and the weather, above the update card.
-- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592". Every engraving shown full screen carries one.
+- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "The Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592". Every engraving shown full screen carries one.
 - InfoBlock's double-line brackets are the only frame. Use them for system facts, once per view.
 - `.k-grain` lays a fine grain over a full-screen picture. Use it on wallpapers only, never on surfaces.
 - That is the whole stock of ornament. No flourishes, corner pieces, drop caps or borders made of pattern.
@@ -72,11 +92,11 @@ The ten required colours of `theme.toml` have the same names here: `background`,
 
 ## Wallpaper and imagery
 
-- Wallpapers are engravings of antique statues from the 16th century, printed in two inks: cream for the paper, near-black for the ink, and `accent` for the ink inside one flat disc placed behind or beside the head. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
-- Three plates are in the Wallpapers asset group: the Apollo Belvedere (the default desktop), the Laocoön (the lock screen) and Hercules with Telephos. All three come from the open-access collection of the Art Institute of Chicago, which releases them under CC0. The group's README gives title, engraver, date and accession number for each.
+- Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
+- Eight plates are in the Wallpapers asset group, one per god: Carna (the default desktop), Janus (the lock screen: he keeps the doors), Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). No ancient likeness of Carna survives; her plate is a veiled vestal and its caption says so. The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
-- Under the lock screen and the theme picker the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
-- Add further pictures only if they are engravings or etchings in the public domain from a collection that says so, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
+- Under the lock screen, the theme picker and the pantheon the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
+- Add further gods only as engravings or etchings in the public domain from a collection that says so, with an aspect of their own whose accent is far enough in hue from the others, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
 - `Kit.wallpaper()` still returns the plain star chart drawn with the tokens (cream lines and the disc, no picture). It is the fallback where a picture cannot be shipped: the boot splash and the installer.
 
 ## Symbols

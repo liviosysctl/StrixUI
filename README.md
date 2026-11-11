@@ -1,6 +1,10 @@
 # StrixUI
 
-The design system of Strix: tokens, components, screens and motion for every surface of the system. Its default theme is a dark study: near-black surfaces, old engravings of antique statues as the ground, one red, type from an old printing house beside a quiet monospace.
+The design system of Strix: tokens, components, screens and motion for every surface of the system. Its default theme is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace.
+
+![The pantheon: eight gods, eight aspects](docs/renders/Pantheon-plates.jpg)
+
+The default theme has eight gods: Carna (Strix red, the default), Janus, Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. Each is a wallpaper and an aspect, a set of colour tokens that recolours the accent and tints the grounds to match the plate. Choosing a god sets both.
 
 ![Lock screen](docs/renders/LockScreen.png)
 
@@ -14,25 +18,27 @@ The same system is published as a Claude Design System artifact, where every com
 | `design-system/README.md` | The brand book: principles, content, colour, type, ornament, space, imagery, symbols, layout of the shell |
 | `design-system/motion.md` | Motion tokens, rules, the catalogue of every moving element, and the Hyprland animation block |
 | `design-system/surfaces.md` | How the shell, the Windows bootstick app, the store, Hyprland, Ghostty, Plymouth and the installer take the system |
-| `design-system/tokens.json`, `tokens.css` | Every token: colours (with the terminal colours), type, spacing, radius, shadow, line, size, duration, easing, opacity |
+| `design-system/tokens.json`, `tokens.css` | Every token: colours (with the terminal colours) in eight aspects, one per god, type, spacing, radius, shadow, line, size, duration, easing, opacity |
 | `design-system/components/` | `bundle.css` and `bundle.js` (plain HTML with `k-` classes and a small script, `window.Kit`), and for each component and screen a `README.md` and a live `preview.html` |
 | `design-system/fonts/` | JetBrains Mono, IM Fell English, Grenze Gotisch (all SIL Open Font License) |
-| `design-system/assets/Wallpapers/` | The engraving wallpapers and the star chart, with sources and licences |
+| `design-system/assets/Wallpapers/` | The eight god plates and the star chart, with sources and licences |
 | `src/` | Sources: `bundle.css`, `bundle.js`, fonts, the Lucide symbols in use (ISC), the wallpapers |
-| `tools/` | `build.py` (builds the system), `palette.py` (colours and the contrast check), `components.py` and `docs.py` (previews and texts), `wallpapers.py`, `render.py`, `artifact.json` |
+| `tools/` | `build.py` (builds the system), `palette.py` (colours and the contrast check), `pantheon.py` (the gods, their aspects and the contrast check of every aspect), `components.py` and `docs.py` (previews and texts), `wallpapers.py`, `render.py`, `artifact.json` |
 | `docs/renders/` | Renderings of the screens |
 
 ## Build
 
 ```sh
 python3 tools/palette.py                      # contrast check of every colour pair, ends with FAILS 0
+python3 tools/pantheon.py                     # the same for every aspect of the eight gods, ends with FAILS 0
+python3 tools/wallpapers.py                   # remakes the eight plates in src/wallpapers/ (python3 tools/wallpapers.py mars: one)
 python3 tools/build.py                        # writes design-system/ and build/preview/
 xdg-open build/preview/index.html             # every preview in the browser
 python3 tools/render.py                       # PNG of every preview into build/renders/ (needs playwright)
 python3 tools/render.py LockScreen --scale 2  # one preview at scale 2
 ```
 
-The build needs only Python 3. `render.py` needs `playwright` with Chromium; set `CHROME` to use an installed Chrome instead. `wallpapers.py` needs Pillow and numpy and downloads the engravings from the Art Institute of Chicago into `build/engravings/` the first time.
+The build needs only Python 3. `render.py` needs `playwright` with Chromium; set `CHROME` to use an installed Chrome instead. `wallpapers.py` needs Pillow and numpy and downloads the engravings from the Art Institute of Chicago and the Rijksmuseum into `build/engravings/` the first time.
 
 ## Publish to the artifact
 
@@ -52,9 +58,10 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 
 | | |
 |---|---|
-| ![Desktop](docs/renders/Desktop.png) | ![Theme picker](docs/renders/ThemePicker.png) |
+| ![Desktop](docs/renders/Desktop.png) | ![Pantheon](docs/renders/Pantheon.png) |
+| ![Theme picker](docs/renders/ThemePicker.png) | ![Lock screen in the Janus aspect](docs/renders/LockScreen.png) |
 | ![Dock](docs/renders/EdgeDock.png) | ![Search](docs/renders/Search.png) |
-| ![Terminal](docs/renders/Terminal.png) | |
+| ![Terminal](docs/renders/Terminal.png) | ![Boot splash](docs/renders/BootSplash.png) |
 
 ## Not done yet
 

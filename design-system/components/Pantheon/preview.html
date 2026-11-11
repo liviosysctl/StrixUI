@@ -1,0 +1,56 @@
+<!-- @dsCard group="Screens" height=720 width=1280 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Pantheon — preview</title><style>
+#picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
+#picker[data-out] { opacity: 0; pointer-events: none; }
+#picker .k-carousel { position: absolute; top: 170px; left: 0; right: 0; height: 300px; }
+#plate { position: absolute; top: 482px; left: 160px; right: 160px; text-align: center; font-size: 14px; line-height: 20px; }
+#picker .hint { position: absolute; bottom: 120px; left: 0; right: 0; text-align: center; }
+.k-slant-name .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+</style></head>
+<body>
+<div class="k-screen" id="scr" data-theme="carna">
+  <div class="k-wall" id="base" style="background-image:url(../../assets/Wallpapers/carna.jpg);background-position:center"></div>
+  <div class="k-reveal" id="rev" style="background:var(--background) center / cover no-repeat"></div>
+  <div class="k-grain"></div>
+  <div id="picker">
+    <div class="k-scrim" style="animation:none"></div>
+    <div class="k-carousel" id="car" tabindex="-1" aria-label="Gods"><div class="k-carousel-track" id="track"></div></div>
+    <div class="k-plate" id="plate"></div>
+    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card calls the god&emsp;<span class="k-kbd">Esc</span> closes</div>
+  </div>
+  <button class="k-btn k-btn-primary" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Choose another god</span></button>
+</div>
+<script>
+Kit.hydrate(document);
+var P = [["carna", "../../assets/Wallpapers/carna.jpg", "Carna", "Cazenave, about 1800", "Carna, keeper of the threshold, who drives the striges from the cradle. No ancient likeness survives; the plate is a veiled vestal, engraved by J. F. Cazenave", "#c8102e"], ["janus", "../../assets/Wallpapers/janus.jpg", "Janus", "Audenaerd, about 1700", "Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta", "#2e9a84"], ["apollo", "../../assets/Wallpapers/apollo.jpg", "Apollo", "Goltzius, 1592", "The Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592", "#d4a21a"], ["mars", "../../assets/Wallpapers/mars.jpg", "Mars", "Quellinus, 1655", "Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655", "#e0641f"], ["minerva", "../../assets/Wallpapers/minerva.jpg", "Minerva", "Saenredam, 1595", "Minerva with helmet, spear and owl. Engraved by Jan Saenredam after Hendrick Goltzius, about 1595", "#8f9b2c"], ["mercurius", "../../assets/Wallpapers/mercurius.jpg", "Mercurius", "Goltzius, 1592", "Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#448bcd"], ["pluto", "../../assets/Wallpapers/pluto.jpg", "Pluto", "Goltzius, 1592", "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#7a4fd1"], ["bacchus", "../../assets/Wallpapers/bacchus.jpg", "Bacchus", "Goltzius, 1592", "Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592", "#b23472"]];
+
+(function () {
+  var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
+  var picker = document.getElementById('picker'), reopen = document.getElementById('reopen'), plate = document.getElementById('plate');
+  track.innerHTML = P.map(function (p, i) {
+    return '<button class="k-slant" aria-selected="' + (i === 0) + '" aria-label="' + p[2] + '"><span class="k-slant-art"><img alt="" src="' + p[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + p[2] + '<small><i class="dot" style="background:' + p[5] + '"></i>' + p[3] + '</small></span></button>';
+  }).join('');
+  Kit.hydrate(document);
+  function caption() { plate.textContent = P[car._k.index][4]; }
+  car.addEventListener('change', caption); caption();
+  car.addEventListener('apply', function (e) {
+    var p = P[e.detail.index];
+    rev.style.backgroundImage = 'url(' + p[1] + ')';
+    Kit.reveal(rev, e.detail.x, e.detail.y).then(function () {
+      base.style.backgroundImage = 'url(' + p[1] + ')'; scr.setAttribute('data-theme', p[0]); picker.setAttribute('data-out', '');
+      setTimeout(function () { rev.removeAttribute('data-on'); reopen.style.display = 'inline-flex'; }, 260);
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (picker.hasAttribute('data-out')) return;
+    if (e.key === 'Enter') { var c = track.querySelector('[aria-selected="true"]').getBoundingClientRect(); car.dispatchEvent(new CustomEvent('apply', { detail: { index: car._k.index, x: c.left + c.width / 2, y: c.top + c.height / 2 } })); }
+    if (e.key === 'ArrowRight') car._k.select(car._k.index + 1);
+    if (e.key === 'ArrowLeft') car._k.select(car._k.index - 1);
+  });
+  reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
+})();
+</script>
+</body>
+</html>

@@ -1,9 +1,10 @@
+import json
 # Component and screen previews. Each entry: name, group, height, html, js, doc (+ css, width).
 def I(n, cls=''):
     return '<i class="k-icon%s" data-icon="%s"></i>' % ((' ' + cls) if cls else '', n)
 
-BLOBS = {'b2e6a0104f7e93c6279bd62bc5401d27': 'apollo-belvedere.jpg', '21cb600de026124bb045c788de08e01c': 'laocoon.jpg', '072dd02cd62436020d9de9367ad4935b': 'hercules.jpg'}
-APOLLO, LAOCOON, HERCULES = ['/_blob/' + k for k in BLOBS]
+BLOBS = {'51715aa263d5282e4cec311a9f1d2420': 'carna.jpg', '7ed521400d732c1cc38d2e13b61c5ad9': 'janus.jpg', 'bac5ff39649ac8fd3737c97c6dac7c71': 'apollo.jpg', '065083b2c7a87538a08d92c856112267': 'mars.jpg', '273e21040159cfb4f067cbd709dd2816': 'minerva.jpg', 'f4b6dc959e13984e7fb492379db986fc': 'mercurius.jpg', '40405f53f4aa051da1637bc6bfc40b67': 'pluto.jpg', 'dbba75815bb406d07480dfab4b749400': 'bacchus.jpg'}
+CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
 def WALL(url, extra='', pos='center'):
     return '<div class="k-wall"%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
 COMPONENTS = []
@@ -409,7 +410,15 @@ SEARCH_JS = r'''
     {k: 'app', t: 'Settings', p: ['Apps'], i: 'settings', w: 'preferences control panel', g: 'apps'},
 
     {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours', key: 'Super Ctrl Shift Space', g: 'style'},
-    {k: 'action', t: 'Wallpaper', p: ['Style'], i: 'wallpaper', w: 'background picture engraving', key: 'Super Ctrl Space', g: 'style'},
+    {k: 'action', t: 'Pantheon', p: ['Style'], i: 'wallpaper', w: 'wallpaper gods aspect background picture engraving', key: 'Super Ctrl Space', g: 'style'},
+    {k: 'action', t: 'Carna', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper red default strix threshold', g: 'style'},
+    {k: 'action', t: 'Janus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper verdigris green door', g: 'style'},
+    {k: 'action', t: 'Apollo', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper gold sun', g: 'style'},
+    {k: 'action', t: 'Mars', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper ember orange war', g: 'style'},
+    {k: 'action', t: 'Minerva', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper olive owl', g: 'style'},
+    {k: 'action', t: 'Mercurius', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper mercury blue quicksilver', g: 'style'},
+    {k: 'action', t: 'Pluto', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper violet underworld', g: 'style'},
+    {k: 'action', t: 'Bacchus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper wine', g: 'style'},
     {k: 'action', t: 'Switch to light', p: ['Style'], i: 'sun', w: 'variant light dark appearance', g: 'style'},
     {k: 'action', t: 'Next wallpaper', p: ['Style'], i: 'images', w: 'background cycle', g: 'style'},
     {k: 'action', t: 'Region screenshot', p: ['Capture'], i: 'crop', w: 'screenshot area select snip', key: 'Print', g: 'capture'},
@@ -440,6 +449,7 @@ SEARCH_JS = r'''
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
     {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Strix', w: 'colours look'},
+    {k: 'setting', t: 'God', p: ['Settings', 'Appearance'], i: 'swatch-book', v: 'Carna', w: 'aspect accent colour pantheon'},
     {k: 'setting', t: 'Variant', p: ['Settings', 'Appearance'], i: 'sun', v: 'Dark', w: 'light dark'},
     {k: 'setting', t: 'Text size', p: ['Settings', 'Appearance'], i: 'type', v: '100%', w: 'font scale'},
     {k: 'setting', t: 'Clock style', p: ['Settings', 'Lock screen'], i: 'clock', v: 'Stacked', w: 'time'},
@@ -527,6 +537,11 @@ SEARCH_JS = r'''
     if (e.k === 'group' || e.page) return enter(e);
     var what = {app: 'Opens ', action: 'Runs ', setting: 'Opens Settings at ', command: 'Runs in a terminal :: '}[e.k];
     out.textContent = what + (e.k === 'setting' ? e.p.slice(1).concat(e.t).join(' › ') : e.k === 'action' ? (e.p || []).concat(e.t).join(' › ') : e.t);
+    var gods = JSON.parse(root.getAttribute('data-gods') || '{}'), g = e.t.toLowerCase();
+    if (e.p && e.p[1] === 'Pantheon' && gods[g]) {
+      var host = root.closest('[data-wall-host]'); host.setAttribute('data-theme', g);
+      host.querySelector('.k-wall').style.backgroundImage = 'url(' + gods[g] + ')';
+    }
   }
   input.addEventListener('input', function () { sel = 0; out.textContent = ''; draw(); });
   input.addEventListener('keydown', function (ev) {
@@ -547,10 +562,10 @@ SEARCH_JS = r'''
 '''
 
 comp('Search', 'Shell', 560, r'''
-<div style="position:relative;height:560px;overflow:hidden">''' + WALL(APOLLO, ' data-dim', pos='center 20%') + r'''
+<div data-wall-host data-theme="carna" style="position:relative;height:560px;overflow:hidden;background:var(--background)">''' + WALL(CARNA, ' data-dim', pos='center 30%') + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;padding-top:56px">
-    <div class="k-search k-surface" id="srch" data-query="theme" role="dialog" aria-label="Search">
+    <div class="k-search k-surface" id="srch" data-query="theme" data-gods=''' + "'" + json.dumps(dict(zip(['carna', 'janus', 'apollo', 'mars', 'minerva', 'mercurius', 'pluto', 'bacchus'], [CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))) + "'" + r''' role="dialog" aria-label="Search">
       <div class="k-search-head">''' + I('search') + r'''<span class="k-crumb" id="crumb"></span><input aria-label="Search" autocomplete="off" spellcheck="false"><span class="k-kbd">Esc</span></div>
       <div class="k-search-filter"><div class="k-seg" id="filter" aria-label="Show"><button aria-selected="true">All</button><button>Apps</button><button>Actions</button><button>Settings</button><button>Commands</button></div><span class="k-plate">one field for everything</span></div>
       <ul class="k-hits" id="hits" role="listbox"></ul>
@@ -606,7 +621,7 @@ BAR_JS = r'''
 })();
 '''
 comp('TopBar', 'Shell', 120, r'''
-<div style="position:relative;height:120px;overflow:hidden">''' + WALL(APOLLO, pos='center top') + r'''<div style="position:relative">''' + BAR + r'''</div></div>''', r'''
+<div style="position:relative;height:120px;overflow:hidden">''' + WALL(CARNA, pos='center top') + r'''<div style="position:relative">''' + BAR + r'''</div></div>''', r'''
 The status line at the top of the screen. It has no surface of its own: small text and symbols sit straight on the wallpaper, in grey, with red for the one active thing.
 
 - Left: search with the clock, then CPU, memory and temperature, each as symbol, a 3px vertical meter and a value.
@@ -692,7 +707,7 @@ DOCK_JS = r'''
 })();
 '''
 comp('EdgeDock', 'Shell', 380, r'''
-<div style="position:relative;height:380px;overflow:hidden">''' + WALL(HERCULES, pos='center 30%') + r'''
+<div style="position:relative;height:380px;overflow:hidden">''' + WALL(MERCURIUS, pos='center 30%') + r'''
   <div class="k-plate" style="position:absolute;left:16px;top:12px">Move the pointer to the bottom edge. Move it away and the dock sinks back.</div>
   <div class="k-dockbar">''' + DOCK + r'''</div>
 </div>''', r'''
@@ -727,7 +742,7 @@ Bars that follow the sound. Grey at rest, red at the peaks.
 ''')
 
 ART = r'''
-var IMG = {Strix: "''' + APOLLO + r'''", Laocoon: "''' + LAOCOON + r'''", Hercules: "''' + HERCULES + r'''"};
+var IMG = {Strix: "''' + CARNA + r'''"};
 function art(bg, disc, line) {
   return '<svg viewBox="0 0 420 250" preserveAspectRatio="xMidYMid slice"><rect width="420" height="250" fill="' + bg + '"/><circle cx="230" cy="100" r="46" fill="' + disc + '"/><g fill="none" stroke="' + line + '" stroke-width="0.8" opacity=".6"><circle cx="230" cy="100" r="58"/><circle cx="230" cy="100" r="120"/><path d="M0 190h420M230 0v250"/></g></svg>';
 }
@@ -777,8 +792,8 @@ def screen(name, height, html, doc, js='', css='', width=1280):
     SCREENS.append(dict(name=name, group='Screens', height=height, html=html, doc=doc, js=js, css=css, width=width))
 
 screen('LockScreen', 720, r'''
-<div class="k-screen" id="scr">
-  ''' + WALL(LAOCOON, ' data-dim id="wall"') + r'''
+<div class="k-screen" id="scr" data-theme="janus">
+  ''' + WALL(JANUS, ' data-dim id="wall"') + r'''
   <div class="k-grain"></div>
   <div id="lock">
     <div class="col">
@@ -795,7 +810,7 @@ screen('LockScreen', 720, r'''
     </div>
     <div class="foot caption k-muted"><b>3 notifications</b><br><b>CPU</b> <i>::</i> 8%&emsp;<b>RAM</b> <i>::</i> 24%&emsp;<b>GPU</b> <i>::</i> 3%</div>
     <div class="mark"><div class="k-wordmark">Strix</div><div class="k-rule" style="margin:4px 0 2px"><i></i></div><div class="k-motto">nocte vigilat</div></div>
-    <div class="plate k-plate">Laocoön. Engraved by Nicolas Beatrizet, Rome, about 1550</div>
+    <div class="plate k-plate">Janus opens the door of the year. Robert van Audenaerd after Carlo Maratta</div>
     <div class="hint micro">Demo password :: strix</div>
   </div>
   <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
@@ -871,10 +886,10 @@ CODE = r'''<span class="ln"> 1</span>  <span class="cm">// Reads a theme and che
 
 screen('Desktop', 720, r'''
 <div class="k-screen">
-  ''' + WALL(APOLLO) + r'''
+  ''' + WALL(CARNA) + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0 0 auto 0">''' + BAR + r'''</div>
-  <div class="k-plate" id="plate">Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592</div>
+  <div class="k-plate" id="plate">Carna. A veiled vestal, engraved by J. F. Cazenave, about 1800</div>
   <div id="tiles" data-hidden>
     <div class="k-win" data-active><div class="k-win-body"><pre class="k-code">''' + CODE + r'''</pre></div></div>
     <div class="k-win"><div class="k-win-body"><div style="display:flex;gap:20px;align-items:center"><div style="text-align:center"><div class="k-wordmark">Strix</div><div class="k-motto" style="font-size:11px">nocte vigilat</div></div>
@@ -914,7 +929,7 @@ The desktop. Workspace 1 is empty: the engraving, the top bar on it, and the doc
 
 screen('ThemePicker', 720, r'''
 <div class="k-screen" id="scr">
-  ''' + WALL(HERCULES, ' id="base"') + r'''
+  ''' + WALL(CARNA, ' id="base"') + r'''
   <div class="k-reveal" id="rev"></div>
   <div class="k-grain"></div>
   <div id="picker">
@@ -972,6 +987,78 @@ The theme picker over the dimmed desktop: a carousel of SlantCards, the name of 
   reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
 })();
 ''')
+
+
+import pantheon as _pan
+_CAP = {
+    'carna': ('Cazenave, about 1800', 'Carna, keeper of the threshold, who drives the striges from the cradle. No ancient likeness survives; the plate is a veiled vestal, engraved by J. F. Cazenave'),
+    'janus': ('Audenaerd, about 1700', 'Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta'),
+    'apollo': ('Goltzius, 1592', 'The Apollo Belvedere. Engraved by Hendrick Goltzius, Haarlem, about 1592'),
+    'mars': ('Quellinus, 1655', 'Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655'),
+    'minerva': ('Saenredam, 1595', 'Minerva with helmet, spear and owl. Engraved by Jan Saenredam after Hendrick Goltzius, about 1595'),
+    'mercurius': ('Goltzius, 1592', 'Mercurius in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
+    'pluto': ('Goltzius, 1592', 'Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
+    'bacchus': ('Goltzius, 1592', 'Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592'),
+}
+_URL = dict(zip([g[0] for g in _pan.GODS], [CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS]))
+PLATES = [(g[0], _URL[g[0]], g[1], _CAP[g[0]][0], _CAP[g[0]][1], _pan.aspect(g[0])['accent']) for g in _pan.GODS]
+WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
+(function () {
+  var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
+  var picker = document.getElementById('picker'), reopen = document.getElementById('reopen'), plate = document.getElementById('plate');
+  track.innerHTML = P.map(function (p, i) {
+    return '<button class="k-slant" aria-selected="' + (i === 0) + '" aria-label="' + p[2] + '"><span class="k-slant-art"><img alt="" src="' + p[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + p[2] + '<small><i class="dot" style="background:' + p[5] + '"></i>' + p[3] + '</small></span></button>';
+  }).join('');
+  Kit.hydrate(document);
+  function caption() { plate.textContent = P[car._k.index][4]; }
+  car.addEventListener('change', caption); caption();
+  car.addEventListener('apply', function (e) {
+    var p = P[e.detail.index];
+    rev.style.backgroundImage = 'url(' + p[1] + ')';
+    Kit.reveal(rev, e.detail.x, e.detail.y).then(function () {
+      base.style.backgroundImage = 'url(' + p[1] + ')'; scr.setAttribute('data-theme', p[0]); picker.setAttribute('data-out', '');
+      setTimeout(function () { rev.removeAttribute('data-on'); reopen.style.display = 'inline-flex'; }, 260);
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (picker.hasAttribute('data-out')) return;
+    if (e.key === 'Enter') { var c = track.querySelector('[aria-selected="true"]').getBoundingClientRect(); car.dispatchEvent(new CustomEvent('apply', { detail: { index: car._k.index, x: c.left + c.width / 2, y: c.top + c.height / 2 } })); }
+    if (e.key === 'ArrowRight') car._k.select(car._k.index + 1);
+    if (e.key === 'ArrowLeft') car._k.select(car._k.index - 1);
+  });
+  reopen.addEventListener('click', function () { reopen.style.display = 'none'; picker.removeAttribute('data-out'); });
+})();
+"""
+
+screen('Pantheon', 720, r'''
+<div class="k-screen" id="scr" data-theme="carna">
+  ''' + WALL(CARNA, ' id="base"') + r'''
+  <div class="k-reveal" id="rev" style="background:var(--background) center / cover no-repeat"></div>
+  <div class="k-grain"></div>
+  <div id="picker">
+    <div class="k-scrim" style="animation:none"></div>
+    <div class="k-carousel" id="car" tabindex="-1" aria-label="Gods"><div class="k-carousel-track" id="track"></div></div>
+    <div class="k-plate" id="plate"></div>
+    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card calls the god&emsp;<span class="k-kbd">Esc</span> closes</div>
+  </div>
+  <button class="k-btn k-btn-primary" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Choose another god</span></button>
+</div>''', r'''
+The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no single wallpaper but eight Roman gods. Each god is a plate and an aspect: the plate is the wallpaper, the aspect recolours the system to match it. Calling a god sets both at once.
+
+- The gods, in order: Carna (Strix red, the default), Janus (verdigris), Apollo (gold), Mars (ember), Minerva (olive), Mercurius (quicksilver blue), Pluto (violet), Bacchus (wine). Carna and Janus belong to the strix: Carna keeps the striges from the cradle, Janus gave her the power over the door.
+- An aspect changes only the accent and its family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, terminal cursor and selection) and tints the grounds (`background`, the surfaces, `border`) a little toward the god's hue. Text, `line`, the status colours and syntax stay the same in every aspect, so readability never depends on the god.
+- In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo, Minerva, Mercurius, Mars) put dark text on their fills; `on-accent` says which.
+- Every plate is an engraving printed in two inks of its aspect: dark ink on dim cream, and inside the disc the paper takes the god's colour.
+- Browse with the arrow keys, the wheel or a click on a neighbour; the small dot under the name is the god's colour. Enter or a click on the middle card spreads the plate as a growing circle from the click point over `dur-reveal`; then the aspect switches and the picker fades.
+- Other themes bring their own wallpapers and keep one accent.
+''', css=r'''
+#picker { position: absolute; inset: 0; transition: opacity var(--dur-base) var(--ease-in); }
+#picker[data-out] { opacity: 0; pointer-events: none; }
+#picker .k-carousel { position: absolute; top: 170px; left: 0; right: 0; height: 300px; }
+#plate { position: absolute; top: 482px; left: 160px; right: 160px; text-align: center; font-size: 14px; line-height: 20px; }
+#picker .hint { position: absolute; bottom: 120px; left: 0; right: 0; text-align: center; }
+.k-slant-name .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+''', js=WP_JS)
 
 def sw(n):
     return '<span class="k-swatch" style="background:var(--term-%s)" title="%s"></span>' % (n, n)

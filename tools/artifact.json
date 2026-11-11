@@ -3,19 +3,44 @@
  "url": "https://claude.ai/artifact/1hVsjYsQa8J26ydqaEeWZn",
  "created": "2026-11-10T20:24:30Z",
  "wallpapers": {
-  "apollo-belvedere.jpg": {
-   "blob": "b2e6a0104f7e93c6279bd62bc5401d27",
-   "size": 729315,
+  "carna.jpg": {
+   "blob": "51715aa263d5282e4cec311a9f1d2420",
+   "size": 488498,
    "type": "image/jpeg"
   },
-  "laocoon.jpg": {
-   "blob": "21cb600de026124bb045c788de08e01c",
-   "size": 657929,
+  "janus.jpg": {
+   "blob": "7ed521400d732c1cc38d2e13b61c5ad9",
+   "size": 947227,
    "type": "image/jpeg"
   },
-  "hercules.jpg": {
-   "blob": "072dd02cd62436020d9de9367ad4935b",
-   "size": 796119,
+  "apollo.jpg": {
+   "blob": "bac5ff39649ac8fd3737c97c6dac7c71",
+   "size": 783904,
+   "type": "image/jpeg"
+  },
+  "mars.jpg": {
+   "blob": "065083b2c7a87538a08d92c856112267",
+   "size": 641605,
+   "type": "image/jpeg"
+  },
+  "minerva.jpg": {
+   "blob": "273e21040159cfb4f067cbd709dd2816",
+   "size": 702921,
+   "type": "image/jpeg"
+  },
+  "mercurius.jpg": {
+   "blob": "f4b6dc959e13984e7fb492379db986fc",
+   "size": 748903,
+   "type": "image/jpeg"
+  },
+  "pluto.jpg": {
+   "blob": "40405f53f4aa051da1637bc6bfc40b67",
+   "size": 745358,
+   "type": "image/jpeg"
+  },
+  "bacchus.jpg": {
+   "blob": "dbba75815bb406d07480dfab4b749400",
+   "size": 739672,
    "type": "image/jpeg"
   },
   "star-chart.svg": {
