@@ -784,8 +784,8 @@ def screen(name, height, html, doc, js='', css='', width=1280):
     SCREENS.append(dict(name=name, group='Screens', height=height, html=html, doc=doc, js=js, css=css, width=width))
 
 screen('LockScreen', 720, r'''
-<div class="k-screen" id="scr" data-theme="janus">
-  ''' + WALL(JANUS, ' data-dim id="wall"') + r'''
+<div class="k-screen" id="scr" data-theme="saturnus">
+  ''' + WALL(SATURNUS, ' data-dim id="wall"') + r'''
   <div class="k-grain"></div>
   <div id="lock">
     <div class="col">
@@ -802,7 +802,7 @@ screen('LockScreen', 720, r'''
     </div>
     <div class="foot caption k-muted"><b>3 notifications</b><br><b>CPU</b> <i>::</i> 8%&emsp;<b>RAM</b> <i>::</i> 24%&emsp;<b>GPU</b> <i>::</i> 3%</div>
     <div class="mark"><div class="k-wordmark">Strix</div><div class="k-rule" style="margin:4px 0 2px"><i></i></div><div class="k-motto">nocte vigilat</div></div>
-    <div class="plate k-plate" id="lplate">Janus opens the door of the year. Robert van Audenaerd after Carlo Maratta</div>
+    <div class="plate k-plate" id="lplate">Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592</div>
     <div class="hint micro">Preview only: the password is strix</div>
   </div>
   <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
@@ -861,7 +861,7 @@ The lock screen, left layout. Every time the screen locks, it shows another god 
     last = i; var g = GODS[i];
     scr.setAttribute('data-theme', g[0]); wall.style.backgroundImage = 'url(' + g[1] + ')'; plate.textContent = g[2];
   }
-  pick();
+  try { pick(); } catch (e) {}
   document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; pick(); lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
 })();
 ''')
@@ -942,6 +942,9 @@ _CAP = {
 _URL = dict(zip([g[0] for g in _pan.GODS], [SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS]))
 PLATES = [(g[0], _URL[g[0]], g[1], _CAP[g[0]][0], _CAP[g[0]][1], _pan.colours(g[0])['accent']) for g in _pan.GODS]
 THEMES = [(p[0], p[1], p[2], 'dark', p[4], p[5]) for p in PLATES]
+for _s in SCREENS:
+    if _s['name'] == 'LockScreen':
+        _s['js'] = _s['js'].replace('__LOCK_GODS__', json.dumps([[p[0], p[1], p[4]] for p in PLATES]))
 WP_JS = 'var P = ' + json.dumps(THEMES) + ';\n' + r"""
 (function () {
   var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
