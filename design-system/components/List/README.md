@@ -7,3 +7,18 @@ Rows to pick from: app finder results, clipboard history, networks, devices.
 - Rows enter one after another: class `k-enter` with `--i` as the position (`stagger` apart).
 - Up and down move the choice, Enter takes it. Matching letters of a search are bold.
 - Empty: one calm sentence in `k-empty`.
+
+## In Quickshell (Linux shell and apps)
+
+`import Strix`, then `ListRow`.
+
+```qml
+ListView {
+    model: apps
+    delegate: ListRow { width: ListView.view.width; text: name; iconName: icon; detail: keys; selected: ListView.isCurrentItem }
+}
+```
+
+## In Tauri (Windows app)
+
+The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

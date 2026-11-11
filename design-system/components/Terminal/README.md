@@ -7,3 +7,7 @@ Ghostty in the Strix theme, tiled on the desktop under the bar: `strix-info`, `g
 - Prompt: path, branch, and a single `›` in the accent. One line, no symbols that need a patched font, no colour blocks.
 - `strix-info` prints the facts as `label :: value` between the same double corner marks as InfoBlock, with the 16 colours as a strip. The motto and the wordmark stay out of the terminal.
 - Errors are `term-bright-red` and bold, warnings `term-bright-yellow`; that is the loudest the terminal gets. Font `mono` at 13px with 20px line height; padding 16px by 20px; no title bar under Hyprland.
+
+## In Quickshell
+
+Not a component: Ghostty reads the `term-` colours from the theme engine; see surfaces.md.

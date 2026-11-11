@@ -1,6 +1,6 @@
 # StrixUI
 
-The design system of Strix: tokens, components, screens and motion for every surface of the system. Its default theme is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace.
+The design system of Strix: tokens, components, screens and motion for every surface of the system, ready for both stacks of Strix: Quickshell (QML) with Rust behind it for the Linux shell and every Linux app, and Tauri (HTML) with Rust behind it for the Windows app. Its default theme is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace.
 
 ![The eight god themes](docs/renders/Themes-plates.jpg)
 
@@ -15,16 +15,19 @@ The same system is published as a Claude Design System artifact, where every com
 | Path | What |
 |---|---|
 | `design-system/` | The built system. Generated; never edit it by hand. |
-| `design-system/README.md` | The brand book: principles, content, colour, type, ornament, space, imagery, symbols, layout of the shell |
+| `design-system/README.md` | The brand book: principles, content, colour, type, ornament, space, imagery, symbols, layout of the shell, using the system in code |
 | `design-system/motion.md` | Motion tokens, rules, the catalogue of every moving element, and the Hyprland animation block |
-| `design-system/surfaces.md` | How the shell, the Windows bootstick app, the store, Hyprland, Ghostty, Plymouth and the installer take the system |
+| `design-system/surfaces.md` | Which surface uses which stack and takes what; how Quickshell front ends talk to Rust back ends; the Tauri app |
 | `design-system/tokens.json`, `tokens.css` | Every token: colours (with the terminal colours) in eight themes, one per god, type, spacing, radius, shadow, line, size, duration, easing, opacity |
-| `design-system/components/` | `bundle.css` and `bundle.js` (plain HTML with `k-` classes and a small script, `window.Kit`), and for each component and screen a `README.md` and a live `preview.html` |
+| `design-system/qml/` | QML module `Strix` for Quickshell (Theme, Icons and 43 components) and `Strix.Shell` (ThemeFile, Backend), the fonts, `gallery.qml` |
+| `design-system/rust/strix-design/` | Rust crate for every back end: tokens, the eight themes, the theme cycle and lock rotation, the default hotkeys. No dependencies |
+| `design-system/themes/` | One `theme.toml` per god in format 1 of the StrixOS theme engine |
+| `design-system/components/` | For the Tauri app and the artifact: `bundle.css` and `bundle.js` (plain HTML with `k-` classes and a small script, `window.Kit`), and for each component and screen a `README.md` (with its QML and HTML use) and a live `preview.html` |
 | `design-system/fonts/` | JetBrains Mono, IM Fell English, Grenze Gotisch (all SIL Open Font License) |
 | `design-system/assets/Wallpapers/` | The eight god plates and the star chart, with sources and licences |
-| `src/` | Sources: `bundle.css`, `bundle.js`, fonts, the Lucide symbols in use (ISC), the wallpapers |
-| `tools/` | `build.py` (builds the system), `palette.py` (colours and the contrast check), `themes.py` (the god themes, their colours and the contrast check of every theme), `components.py` and `docs.py` (previews and texts), `wallpapers.py`, `render.py`, `artifact.json` |
-| `docs/renders/` | Renderings of the screens |
+| `src/` | Sources: `bundle.css`, `bundle.js`, the QML components (`src/qml/`), the hand-written Rust (`src/rust/`), fonts, the Lucide symbols in use (ISC), the wallpapers |
+| `tools/` | `build.py` (builds the system), `targets.py` and `qml_gen.py` (the Rust crate, the theme files and the QML module), `usage.py` (QML and HTML use per component), `palette.py` (colours and the contrast check), `themes.py` (the god themes and the contrast check of every theme), `components.py` and `docs.py` (previews and texts), `wallpapers.py`, `render.py`, `render_qml.py`, `artifact.json` |
+| `docs/renders/` | Renderings of the screens and of the QML gallery |
 
 ## Build
 
@@ -36,9 +39,11 @@ python3 tools/build.py                        # writes design-system/ and build/
 xdg-open build/preview/index.html             # every preview in the browser
 python3 tools/render.py                       # PNG of every preview into build/renders/ (needs playwright)
 python3 tools/render.py LockScreen --scale 2  # one preview at scale 2
+python3 tools/render_qml.py                   # the QML gallery for every theme into build/renders/, fails on any QML error
+(cd design-system/rust/strix-design && cargo test && cargo clippy --all-targets -- -D warnings)
 ```
 
-The build needs only Python 3. `render.py` needs `playwright` with Chromium; set `CHROME` to use an installed Chrome instead. `wallpapers.py` needs Pillow and numpy and downloads the engravings from the Art Institute of Chicago and the Rijksmuseum into `build/engravings/` the first time.
+The build needs only Python 3 (with `rustfmt` on the path it also formats the generated Rust). `render.py` needs `playwright` with Chromium; set `CHROME` to use an installed Chrome instead. `render_qml.py` needs PySide6 (Qt 6.8 or newer) and a display, or Xvfb for one. `wallpapers.py` needs Pillow and numpy and downloads the engravings from the Art Institute of Chicago and the Rijksmuseum into `build/engravings/` the first time.
 
 ## Publish to the artifact
 
@@ -50,8 +55,11 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 
 ## Use it
 
-- Web and Tauri (the bootstick app, the store): load `tokens.css`, `components/bundle.css` and `components/bundle.js`, write the markup from a component's README, and call `Kit.hydrate(root)`.
-- Quickshell, Hyprland, Ghostty, Plymouth, the installer: take the values from `tokens.json`; keep component names, states and measurements as documented. `surfaces.md` says what each one reads.
+- Linux, the shell and every app (Quickshell): put `design-system/qml` on the import path, `import Strix`, and one `ThemeFile {}` from `Strix.Shell` so the colours follow the theme engine. Each component's README has its QML example.
+- Windows, the bootstick app (Tauri): load `tokens.css`, `components/bundle.css` and `components/bundle.js`, write the markup from a component's README, and call `Kit.hydrate(root)`.
+- Every back end (Rust): `strix-design = { git = "https://github.com/liviosysctl/strixui" }`.
+- StrixOS theme engine: copy `design-system/themes/*` into `themes/` of the strixos repository; `strix-theme check` passes on all eight.
+- Hyprland, Ghostty, Plymouth, the installer: take the values from `tokens.json` or the theme engine; `surfaces.md` says what each one reads.
 - The colour names match the theme engine of Strix: the ten required colours of `theme.toml` have the same names, and the `term-` colours map to its `terminal` table.
 
 ## Screens
@@ -62,12 +70,14 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 | ![Lock screen, another theme at every lock](docs/renders/LockScreen.png) | ![Search](docs/renders/Search.png) |
 | ![Dock](docs/renders/EdgeDock.png) | ![Terminal](docs/renders/Terminal.png) |
 | ![Cheat sheet](docs/renders/Cheatsheet.png) | ![Settings, hotkeys](docs/renders/SettingsHotkeys.png) |
-| ![Boot splash](docs/renders/BootSplash.png) | |
+| ![Boot splash](docs/renders/BootSplash.png) | ![QML gallery, Saturnus](docs/renders/qml-saturnus.png) |
 
 ## Not done yet
 
-- QML components for Quickshell, a QML gallery, and a test that compares the QML and web renderings.
+- The screens in QML: the shell assembles them from the components (each screen's README says with which Quickshell types); the gallery shows the components only.
+- A test that compares the QML and HTML renderings pixel by pixel; today they are compared by eye.
 - Screens: clipboard history, screenshot tool, greeter, session menu, the other settings pages (Hotkeys is done), text installer, store, bootstick app.
 - The search service behind Search (the component and its behaviour are done; the plan is in StrixOS-Plan, `10-search.md`).
 - The light variant.
+- The grain over the wallpaper in QML (HTML has it).
 - The Hyprland block in `motion.md` is not yet tested on a real Hyprland.

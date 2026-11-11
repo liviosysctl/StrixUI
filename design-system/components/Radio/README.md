@@ -4,3 +4,17 @@ One of several, when all options should stay visible and there are more than fou
 
 - Markup: the Checkbox markup with `type="radio"` and a shared `name`.
 - Arrow keys move the choice inside the group.
+
+## In Quickshell (Linux shell and apps)
+
+`import Strix`, then `RadioButton`, `ButtonGroup`.
+
+```qml
+ButtonGroup { id: look }
+RadioButton { text: "Dark"; checked: true; ButtonGroup.group: look }
+RadioButton { text: "Light"; ButtonGroup.group: look }
+```
+
+## In Tauri (Windows app)
+
+The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

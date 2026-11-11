@@ -5,3 +5,15 @@ How a window looks. Under Hyprland the compositor draws it: 1px border, 4px corn
 - Tiled windows have no title bar. The border colour fades over `dur-base` when focus moves.
 - Apps that run outside Hyprland (the Windows bootstick app) draw `k-titlebar`: serif app name, a muted subtitle, then minimise, maximise, close as 40px wide targets; close fills with the accent on hover.
 - Click a window in the preview to move focus.
+
+## In Quickshell (Linux shell and apps)
+
+`import Strix`, then `WindowFrame`.
+
+```qml
+WindowFrame { title: "Bootstick"; subtitle: "Strix 0.1"; active: true; Label { text: "The stick is ready." } }
+```
+
+## In Tauri (Windows app)
+
+The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

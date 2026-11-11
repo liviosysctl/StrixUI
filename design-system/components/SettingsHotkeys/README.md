@@ -7,3 +7,7 @@ Settings › Hotkeys: every action of the cheat sheet in the same groups, each w
 - A changed hotkey gets a reset button that brings back the default. Own hotkeys get a remove button instead.
 - Add hotkey asks for a name and what it runs (a command, an app or an action), then records the keys. Own hotkeys collect in the group "Your hotkeys".
 - The filter field narrows the list by action, keys or group. Changes apply at once; Hyprland reloads its bindings, and the cheat sheet shows them the next time it opens.
+
+## In Quickshell
+
+The Settings app, a Quickshell `FloatingWindow`: a WindowFrame body with a navigation of ListRow and a column of HotkeyRow. The Rust settings back end owns the bindings, starts from `strix_design::HOTKEYS`, checks for clashes and writes the Hyprland binds.

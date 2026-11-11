@@ -1,6 +1,6 @@
 Strix is a NixOS-based system with its own desktop. Its default look is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace. It should feel like a terminal kept in a library. Everything is small, thin and exact; nothing is chunky.
 
-This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, settings, notifications), the terminal, the boot splash, the text installer, the store and the Windows bootstick app.
+This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, search, notifications), the Linux apps (settings, the store, the graphical installer), the terminal, the boot splash, the text installer and the Windows bootstick app. Every own program has its back end in Rust; the front end is Quickshell (QML) on Linux and Tauri (HTML) in the one Windows app. Surfaces lists what each one takes.
 
 ## Principles
 
@@ -109,7 +109,7 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 
 ## Symbols
 
-- Symbols are Lucide (ISC licence), bundled in the script: 24px grid, drawn thin at a 1.25 stroke, round caps, in the current text colour. Use `<i class="k-icon" data-icon="wifi"></i>`; `Kit.icons` lists the names.
+- Symbols are Lucide (ISC licence), bundled with the system: 24px grid, drawn thin at a 1.25 stroke, round caps, in the current text colour. In QML `Icon { name: "wifi" }` (the `Icons` singleton lists the names), in HTML `<i class="k-icon" data-icon="wifi"></i>` (`Kit.icons` lists them).
 - Sizes: 14px in controls and lists, 12px in the top bar, the dock and small buttons, 10px in badges and title bars.
 - A symbol stands alone only where its meaning is certain (power, search, close, Wi-Fi, sound). Otherwise it sits beside a word, or carries a Tooltip.
 - No emoji, no coloured symbols, no symbols as decoration.
@@ -123,9 +123,12 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 - Notifications arrive top right under the bar. The OSD appears bottom centre.
 - The lock screen puts everything in one narrow column on the left, the wordmark bottom right, the plate caption bottom centre. The greeter uses the same parts, centred.
 
-## Using the files
+## Using the system in code
 
-- Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup.
+- Linux, the shell and every app: Quickshell. Add the `qml/` folder of the repository to the import path and `import Strix`. Every component has a QML type of the same purpose (its README says which), every token is a property of the `Theme` singleton in camelCase (`Theme.textMuted`, `Theme.space3`, `Theme.durBase` with `Theme.easeOut` as `easing.bezierCurve`), and `Label { textStyle: "caption" }` sets a type style. One `ThemeFile {}` from `Strix.Shell` keeps `Theme` on the theme the engine applied.
+- Windows, the bootstick app: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup.
+- Every back end: Rust, with the crate `strix-design` (`rust/strix-design/` in the repository): the tokens, the eight themes, the theme cycle, the lock screen rotation and the default hotkeys, without dependencies.
+- The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`.
 - Read a component's README before using it. Do not restyle a component from outside and do not add colours, radii, durations or curves that are not tokens.
-- For a surface that is not HTML (the Quickshell shell, Hyprland, Ghostty, the splash, the installer), take the values from `tokens.json` and keep the component names, states and measurements from here.
-- To reduce motion for one view, set `data-motion="reduced"` on the root element; the system setting is respected without it.
+- Hyprland, Ghostty, the splash and the installer take their values from `tokens.json` or from the theme engine; Surfaces says which.
+- To reduce motion, set `Theme.reducedMotion` in QML or `data-motion="reduced"` on the root element in HTML; in HTML the system setting is respected without it.

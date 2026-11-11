@@ -8,3 +8,7 @@ The lock screen, left layout. Every time the screen locks, it shows another god 
 - Settings › Lock screen › Wallpaper turns the change off and keeps one god instead.
 - Text: date as "Tuesday, 10 November"; greeting lowercase by time of day with the user name.
 - The centred layout and the greeter use the same parts, centred, with the wordmark above the field.
+
+## In Quickshell
+
+A `WlSessionLock` from Quickshell with a `WlSessionLockSurface` per screen. Inside: `Wallpaper { dim: true }`, the clock in `Label { textStyle: "clock" }`, `TextField { shape: "line"; echoMode: TextInput.Password }` with `shake()` after a wrong password, the session `IconButton`s, `Wordmark`, and `Plate` with the caption. Which god comes at each lock is decided by the Rust theme service (`strix_design::LockRotation`); the lock screen only shows it with `Theme.preview(id)`.

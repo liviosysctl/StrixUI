@@ -11,3 +11,19 @@ One field finds everything: apps, the actions of the system menu, settings down 
 - Rows: 40px, symbol, title in mono with the matched letters in `text` and semibold, the place in `aside` style, kind in `micro`. The chosen row has the raised ground and the caret in `accent-text`, as in List.
 - Motion: the panel drops 8px into place over `dur-base`; entering a group slides the list in from the right, going back from the left; results update in place without animation while typing.
 - Markup: `.k-search.k-surface` > `.k-search-head` (symbol, `.k-crumb`, `input`, the Esc chip), `.k-search-filter` (a Segmented), `ul.k-hits` > `li.k-hit[data-kind]`, `.k-search-foot` (only the result line, hidden while empty; the keys are on the cheat sheet). `Kit.fuzzy(query, text)` and `Kit.mark(text, hits)` do the matching and the highlighting.
+
+## In Quickshell (Linux shell and apps)
+
+`import Strix`, then `SearchField`, `SearchHit`, `KeyCaps`, `Surface`.
+
+```qml
+Surface {
+    // in a full-screen overlay layer over the dimmed desktop
+    SearchField { id: q; onTextChanged: search.call("query", { text: q.text }, r => hits.model = r) }
+    ListView { id: hits; delegate: SearchHit { text: modelData.title; hits: modelData.hits; path: modelData.path; kind: modelData.kind; iconName: modelData.icon; keys: modelData.keys } }
+}
+```
+
+## In Tauri (Windows app)
+
+The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

@@ -1,6 +1,6 @@
 README = r'''Strix is a NixOS-based system with its own desktop. Its default look is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace. It should feel like a terminal kept in a library. Everything is small, thin and exact; nothing is chunky.
 
-This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, settings, notifications), the terminal, the boot splash, the text installer, the store and the Windows bootstick app.
+This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, search, notifications), the Linux apps (settings, the store, the graphical installer), the terminal, the boot splash, the text installer and the Windows bootstick app. Every own program has its back end in Rust; the front end is Quickshell (QML) on Linux and Tauri (HTML) in the one Windows app. Surfaces lists what each one takes.
 
 ## Principles
 
@@ -100,7 +100,7 @@ __GODS_TABLE__
 
 ## Symbols
 
-- Symbols are Lucide (ISC licence), bundled in the script: 24px grid, drawn thin at a 1.25 stroke, round caps, in the current text colour. Use `<i class="k-icon" data-icon="wifi"></i>`; `Kit.icons` lists the names.
+- Symbols are Lucide (ISC licence), bundled with the system: 24px grid, drawn thin at a 1.25 stroke, round caps, in the current text colour. In QML `Icon { name: "wifi" }` (the `Icons` singleton lists the names), in HTML `<i class="k-icon" data-icon="wifi"></i>` (`Kit.icons` lists them).
 - Sizes: 14px in controls and lists, 12px in the top bar, the dock and small buttons, 10px in badges and title bars.
 - A symbol stands alone only where its meaning is certain (power, search, close, Wi-Fi, sound). Otherwise it sits beside a word, or carries a Tooltip.
 - No emoji, no coloured symbols, no symbols as decoration.
@@ -114,12 +114,15 @@ __GODS_TABLE__
 - Notifications arrive top right under the bar. The OSD appears bottom centre.
 - The lock screen puts everything in one narrow column on the left, the wordmark bottom right, the plate caption bottom centre. The greeter uses the same parts, centred.
 
-## Using the files
+## Using the system in code
 
-- Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup.
+- Linux, the shell and every app: Quickshell. Add the `qml/` folder of the repository to the import path and `import Strix`. Every component has a QML type of the same purpose (its README says which), every token is a property of the `Theme` singleton in camelCase (`Theme.textMuted`, `Theme.space3`, `Theme.durBase` with `Theme.easeOut` as `easing.bezierCurve`), and `Label { textStyle: "caption" }` sets a type style. One `ThemeFile {}` from `Strix.Shell` keeps `Theme` on the theme the engine applied.
+- Windows, the bootstick app: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup.
+- Every back end: Rust, with the crate `strix-design` (`rust/strix-design/` in the repository): the tokens, the eight themes, the theme cycle, the lock screen rotation and the default hotkeys, without dependencies.
+- The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`.
 - Read a component's README before using it. Do not restyle a component from outside and do not add colours, radii, durations or curves that are not tokens.
-- For a surface that is not HTML (the Quickshell shell, Hyprland, Ghostty, the splash, the installer), take the values from `tokens.json` and keep the component names, states and measurements from here.
-- To reduce motion for one view, set `data-motion="reduced"` on the root element; the system setting is respected without it.
+- Hyprland, Ghostty, the splash and the installer take their values from `tokens.json` or from the theme engine; Surfaces says which.
+- To reduce motion, set `Theme.reducedMotion` in QML or `data-motion="reduced"` on the root element in HTML; in HTML the system setting is respected without it.
 '''
 
 MOTION = r'''# Motion
@@ -253,17 +256,52 @@ Shell layers only fade at the compositor level, because the shell animates its o
 
 SURFACES = r'''# Surfaces
 
-How each surface takes the system. Component names, states and measurements stay the same everywhere; only the technology differs.
+Strix has two stacks. Every own program has its back end in Rust. The front end is Quickshell (QML) on Linux, for the shell and for every app, and Tauri (HTML) in the one Windows program. Component names, states and measurements stay the same in both; only the technology differs.
 
-| Surface | Technology | Takes |
-|---|---|---|
-| Desktop shell | Quickshell (QML) | All colour tokens at runtime from the theme engine; type, spacing, radius, line, size, duration and easing tokens; every component under the same name |
-| Windows bootstick app | Tauri, HTML | `tokens.css`, `bundle.css`, `bundle.js` as they are; WindowFrame's title bar |
-| Store | either of the two | The same components: SearchField, List, Card, Button, Progress, Badge |
-| Compositor | Hyprland | Window geometry and the animation block in the Motion section |
-| Terminal | Ghostty | `term-` colours, `mono` at 13px with 20px line height, a block cursor in `term-cursor`, the god's plate as `background-image` at `background-image-opacity = 0.06`, the prompt `›` in the accent |
-| Boot splash | Plymouth | `background`, `text`, `text-muted`, `line`, `accent`, `error`; the wordmark in `display`; the lozenge rule; the running line |
-| Text installer | console | `term-` colours with colour 0 as `background` and colour 7 as `term-foreground`; the accent for the current step and the logo, white only for what the person types |
+| Surface | Front end | Back end | Takes |
+|---|---|---|---|
+| Desktop shell: bar, dock, lock screen, greeter, theme picker, search, cheat sheet, notifications, OSD | Quickshell, QML module `Strix` | Rust services: theme, search, settings | Every token from `Theme`; the colours at runtime from the theme engine through `ThemeFile`; the components by the same name |
+| Linux apps: settings, store, graphical installer | Quickshell, a `FloatingWindow` per app, QML module `Strix` | Rust, one service per app | The same module; Hyprland frames the window like any other |
+| Windows bootstick app | Tauri 2, HTML | Rust (the app's core) with `strix-design` | `tokens.css`, `bundle.css`, `bundle.js` as they are; WindowFrame's title bar |
+| Theme engine | none | Rust (`strix-theme`) | `themes/<god>/theme.toml`, one per god |
+| Compositor | Hyprland | | Window geometry, `border-active` and the animation block in the Motion section |
+| Terminal | Ghostty | | `term-` colours, `mono` at 13px with 20px line height, a block cursor in `term-cursor`, the god's plate as `background-image` at `background-image-opacity = 0.06`, the prompt `›` in the accent |
+| Boot splash | Plymouth | theme engine | `background`, `text`, `text-muted`, `line`, `accent`, `error`; the wordmark in `display`; the lozenge rule; the running line |
+| Text installer | console | | `term-` colours with colour 0 as `background` and colour 7 as `term-foreground`; the accent for the current step and the logo, white only for what the person types |
+
+## Quickshell: the shell and the Linux apps
+
+- Import path: the `qml/` folder of the repository (the shell's config can link it, or the Nix package puts it on `QML_IMPORT_PATH`). Then `import Strix`; the Quickshell-only parts are in `import Strix.Shell`.
+- `ThemeFile {}` once in `shell.qml` (and in each app) watches `/run/strix/theme/tokens.json`, which the theme engine rewrites on every switch, and recolours everything at once. Without the engine the built-in Saturnus stays.
+- Tokens: `Theme.<token in camelCase>`, sizes in pixels at scale 1, durations in milliseconds, curves for `Easing.BezierSpline`: `NumberAnimation { duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut }`. `Theme.order`, `Theme.gods` and `Theme.wallpaper(id)` serve the theme picker.
+- Type: `Label { textStyle: "caption" }`; the fonts ship inside the module.
+- Components build on `QtQuick.Templates`, so keyboard focus, accessibility and Popup handling are Qt's own. Needs Qt 6.8 or newer (QtQuick.Shapes with `fillItem` and the curve renderer, QtQuick.Effects).
+- Screens are assembled in the shell from the components with Quickshell's own types: `PanelWindow` for the bar, dock, notifications and OSD; an overlay layer for search, the theme picker and the cheat sheet; `WlSessionLock` for the lock screen. Each screen's README says how.
+- `qml/gallery.qml` shows every QML component; `tools/render_qml.py` renders it for every theme and fails on any QML error.
+
+## Front end and back end
+
+Quickshell has no general D-Bus client in QML, so a front end talks to its Rust back end over a Unix socket:
+
+- Path: `$XDG_RUNTIME_DIR/strix/<service>.sock`, owned by the back end (a systemd user service).
+- One JSON object per line. A call: `{"id": 7, "method": "query", "params": {"text": "term"}}`. Its answer: `{"id": 7, "result": ...}` or `{"id": 7, "error": "No index yet"}`. A message the back end sends by itself: `{"event": "index-ready", "data": {...}}`.
+- `Backend { service: "search" }` from `Strix.Shell` does this on the QML side: `call(method, params, done)`, the signals `event(name, data)` and `failed(method, message)`, reconnecting when the service restarts.
+- Hyprland and scripts reach the shell with Quickshell's `IpcHandler`: `bind = SUPER, K, exec, qs ipc call cheatsheet toggle`.
+- State that only needs to be read (the current theme) is a file the back end writes atomically and the front end watches, like `tokens.json`. D-Bus stays where the system needs it, between back ends and system services (polkit, logind, NetworkManager).
+
+## Rust: every back end
+
+- The crate `strix-design` (`rust/strix-design/` in the repository), without dependencies: `strix-design = { git = "https://github.com/liviosysctl/strixui" }`.
+- Holds every token (`tokens::SPACE_3`, `tokens::DUR_BASE`, `tokens::EASE_OUT`, `tokens::text::BODY`), the eight themes (`THEMES`, `theme("janus")`, every colour as `Color` with `hex()` and `contrast()`), the theme cycle (`Cycle`: 10 minutes, Keep, the count goes on while kept) and the lock screen rotation (`LockRotation`), and the default hotkeys (`HOTKEYS`).
+- Its tests check every theme against the contrast rules of the theme engine and that no two hotkeys share keys.
+
+## Tauri: the Windows app
+
+- Put `tokens.css`, `components/` and `fonts/` into the app's `frontendDist`; nothing loads from the network, the fonts are local files.
+- `<html data-theme="saturnus">`: the app has the default theme. Set the window's `backgroundColor` in `tauri.conf.json` to the theme's `background` (`#0b0a09`), so no white shows before the page is drawn; from Rust, `strix_design::default_theme().colors.background.hex()` gives it.
+- Title bar: `decorations: false` and WindowFrame's `.k-titlebar`, with `data-tauri-drag-region` on the bar and on its title (the attribute does not reach children). The buttons call `getCurrentWindow().minimize()`, `toggleMaximize()` and `close()` from `@tauri-apps/api/window`; the capability needs `core:window:allow-start-dragging`, `allow-minimize`, `allow-toggle-maximize` and `allow-close`.
+- `bundle.js` uses no `eval` and no inline event handlers, so a content security policy without `'unsafe-eval'` works.
+- WebView2 follows the Windows setting "Animation effects" through `prefers-reduced-motion`.
 
 ## Sizes on a 2560 by 1440 screen at scale 1
 

@@ -7,3 +7,16 @@ The one way to trigger an action. `k-btn-primary` (filled with the accent) appea
 - Loading: set `data-loading`; a short piece runs along the bottom edge. Keep the label, change its wording ("Checking").
 - Disabled: the `disabled` attribute. Never hide a button that will come back.
 - Do not put two primary buttons side by side, and do not use the accent for anything that is not the main action.
+
+## In Quickshell (Linux shell and apps)
+
+`import Strix`, then `Button`.
+
+```qml
+Button { text: "Install"; variant: "primary"; onClicked: backend.call("install") }
+Button { text: "Checking"; loading: true }
+```
+
+## In Tauri (Windows app)
+
+The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

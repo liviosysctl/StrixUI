@@ -6,3 +6,15 @@ A message from the system or an app, top right under the bar.
 - Normal messages leave after a few seconds. `data-urgency="critical"` gets a border and symbol in the accent and a draining line, and stays until dismissed.
 - Enters from the right (`k-notif-in`), leaves to the right (`Kit.dismiss(el)`); the rest of the stack closes the gap.
 - Title: what happened. Text: what it means or what to do. No exclamation marks.
+
+## In Quickshell (Linux shell and apps)
+
+`import Strix`, then `Notification`.
+
+```qml
+Notification { title: n.summary; body: n.body; time: "now"; urgency: n.urgency === NotificationUrgency.Critical ? "critical" : "normal"; actions: ["Restart", "Later"] }
+```
+
+## In Tauri (Windows app)
+
+The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

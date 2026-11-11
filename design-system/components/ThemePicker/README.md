@@ -9,3 +9,7 @@ The theme picker (Super Ctrl Space) over the dimmed desktop. Strix has one theme
 - "Keep this theme" stops the change; K turns it on and off while the picker is open. The cycle keeps counting while it is on, and a change that falls due is skipped. Turned off again, nothing happens at once: the next theme comes at the next turn of the running cycle. Under the switch the time to the next theme is shown, or, while kept, the time to the next turn.
 - The lock screen keeps its own rule: another god theme at every lock, whatever the desktop shows.
 - Browse with the arrow keys, the wheel or a click on a neighbour; Enter or a click on the middle card spreads the plate as a growing circle from the click point over `dur-reveal`, then the colours switch and the picker fades.
+
+## In Quickshell
+
+A full-screen overlay `PanelWindow` (layer overlay, keyboard focus exclusive) with `Wallpaper { dim: true }`, a row of SlantCard, a Segmented for the variant and `Switch { text: "Keep this theme" }` with KeyCaps K. The cycle (every 10 minutes, Keep) runs in the Rust theme service (`strix_design::Cycle`); the picker sends the choice and the keep flag over its Backend socket.

@@ -9,3 +9,21 @@ The dock is part of the bottom edge of the screen, not a floating bar. At rest i
 - Motion: height over `dur-base`, width over `dur-slow`, content fades in `dur-fast` later. A panel scales up from its symbol over `dur-slow`.
 - Markup: `.k-dockbar` (the hot strip along the bottom edge) > `.k-dock` > panels (`.k-panel.k-surface` with an id) + `.k-edge` > `u` (the line in the accent) + `.k-edge-in` > buttons with `data-panel="#id"` and optional `data-tab`. Thin `s` elements separate groups.
 - `data-pinned` on `.k-dock` keeps it out, for touch screens.
+
+## In Quickshell (Linux shell and apps)
+
+`import Strix`, then `EdgeDock`.
+
+```qml
+PanelWindow {  // Quickshell, anchored to the bottom edge
+    EdgeDock {
+        out: edge.hovered
+        Button { small: true; variant: "quiet"; iconName: "settings" }
+    }
+    HoverHandler { id: edge }
+}
+```
+
+## In Tauri (Windows app)
+
+The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
