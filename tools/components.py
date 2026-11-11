@@ -1041,7 +1041,7 @@ HOTKEYS = [
     ('Apps', 'Terminal', 'Super Return', 'Ghostty'),
     ('Apps', 'Browser', 'Super Shift Return', 'Firefox'),
     ('Apps', 'Files', 'Super Shift F', 'File manager'),
-    ('Apps', 'Text editor', 'Super Shift N', 'Editor'),
+    ('Apps', 'Text editor', 'Super Shift E', 'Editor'),
     ('Apps', 'Music', 'Super Shift M', 'Music player'),
     ('Windows', 'Close window', 'Super W', 'Window'),
     ('Windows', 'Full screen', 'Super F', 'Window'),
