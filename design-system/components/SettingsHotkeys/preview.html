@@ -1,0 +1,104 @@
+<!-- @dsCard group="Screens" height=720 width=1280 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SettingsHotkeys — preview</title><style>
+#settings { left: 120px; right: 120px; top: 48px; bottom: 48px; }
+</style></head>
+<body>
+<div class="k-screen" data-theme="saturnus">
+  <div class="k-wall" style="background-image:url(../../assets/Wallpapers/saturnus.jpg);background-position:center"></div>
+  <div class="k-grain"></div>
+  
+<div class="k-win" data-active id="settings" style="position:absolute;left:150px;right:150px;top:64px;bottom:64px">
+  <div class="k-settings">
+    <nav class="k-settings-nav" aria-label="Settings">
+      <div class="who"><i>L</i><span>Livio</span></div>
+      <button><i class="k-icon" data-icon="swatch-book"></i>Appearance</button><button><i class="k-icon" data-icon="lock"></i>Lock screen</button><button><i class="k-icon" data-icon="monitor"></i>Display</button><button><i class="k-icon" data-icon="volume-2"></i>Sound</button><button><i class="k-icon" data-icon="wifi"></i>Network</button><button><i class="k-icon" data-icon="bluetooth"></i>Bluetooth</button><button><i class="k-icon" data-icon="keyboard"></i>Keyboard</button><button aria-current="page"><i class="k-icon" data-icon="command"></i>Hotkeys</button><button><i class="k-icon" data-icon="bell"></i>Notifications</button>
+    </nav>
+    <div class="k-settings-main">
+      <header><h2>Hotkeys</h2>
+        <div class="k-input" style="width:220px;height:28px"><i class="k-icon" data-icon="search"></i><input id="hkq" aria-label="Filter hotkeys" placeholder="Filter" autocomplete="off"></div>
+        <button class="k-btn k-btn-primary" id="hkadd"><i class="k-icon" data-icon="plus"></i><span>Add hotkey</span></button><span data-close hidden></span>
+      </header>
+      <div class="k-hk-new" id="hknew" hidden>
+        <div class="row"><div class="k-input" style="width:200px"><input id="hkname" aria-label="Name" placeholder="Name"></div><div class="k-input" style="flex:1"><input id="hkcmd" aria-label="Command" placeholder="Command, app or action"></div></div>
+        <div class="row"><button class="k-btn k-btn-quiet" data-cancel-new><span>Cancel</span></button><button class="k-btn k-btn-primary" data-save-new><span>Next: the keys</span></button></div>
+      </div>
+      <div id="hklist"></div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+Kit.hydrate(document);
+var HK = [{"g": "Learn", "t": "All hotkeys", "k": "Super K", "w": "This sheet", "id": 0}, {"g": "Learn", "t": "Search", "k": "Super Space", "w": "Apps, actions, settings and commands", "id": 1}, {"g": "Apps", "t": "Terminal", "k": "Super Return", "w": "Ghostty", "id": 2}, {"g": "Apps", "t": "Browser", "k": "Super Shift Return", "w": "Firefox", "id": 3}, {"g": "Apps", "t": "Files", "k": "Super Shift F", "w": "File manager", "id": 4}, {"g": "Apps", "t": "Text editor", "k": "Super Shift N", "w": "Editor", "id": 5}, {"g": "Apps", "t": "Music", "k": "Super Shift M", "w": "Music player", "id": 6}, {"g": "Windows", "t": "Close window", "k": "Super W", "w": "Window", "id": 7}, {"g": "Windows", "t": "Full screen", "k": "Super F", "w": "Window", "id": 8}, {"g": "Windows", "t": "Float or tile", "k": "Super T", "w": "Window", "id": 9}, {"g": "Windows", "t": "Split direction", "k": "Super J", "w": "Window", "id": 10}, {"g": "Windows", "t": "Move focus", "k": "Super Arrows", "w": "Window", "id": 11}, {"g": "Windows", "t": "Swap windows", "k": "Super Shift Arrows", "w": "Window", "id": 12}, {"g": "Windows", "t": "Grow or shrink", "k": "Super = -", "w": "Window", "id": 13}, {"g": "Workspaces", "t": "Go to workspace", "k": "Super 1\u20139", "w": "Workspace", "id": 14}, {"g": "Workspaces", "t": "Move window there", "k": "Super Shift 1\u20139", "w": "Workspace", "id": 15}, {"g": "Workspaces", "t": "Next workspace", "k": "Super Tab", "w": "Workspace", "id": 16}, {"g": "Workspaces", "t": "Scratchpad", "k": "Super S", "w": "Special workspace", "id": 17}, {"g": "Style", "t": "Pantheon", "k": "Super Ctrl Space", "w": "Wallpaper and god", "id": 18}, {"g": "Style", "t": "Theme", "k": "Super Ctrl Shift Space", "w": "Theme picker", "id": 19}, {"g": "Style", "t": "Toggle the top bar", "k": "Super Shift Space", "w": "Bar", "id": 20}, {"g": "Capture", "t": "Region screenshot", "k": "Print", "w": "Capture", "id": 21}, {"g": "Capture", "t": "Window screenshot", "k": "Shift Print", "w": "Capture", "id": 22}, {"g": "Capture", "t": "Screen screenshot", "k": "Ctrl Print", "w": "Capture", "id": 23}, {"g": "Capture", "t": "Record a region", "k": "Alt Print", "w": "Capture", "id": 24}, {"g": "Capture", "t": "Colour picker", "k": "Super Print", "w": "Capture", "id": 25}, {"g": "Clipboard", "t": "Clipboard history", "k": "Super V", "w": "Clipboard", "id": 26}, {"g": "System", "t": "Lock", "k": "Super Escape", "w": "Session", "id": 27}, {"g": "System", "t": "Session menu", "k": "Super Shift Escape", "w": "Log out, suspend, restart, shut down", "id": 28}, {"g": "System", "t": "Notifications", "k": "Super N", "w": "Panel", "id": 29}, {"g": "System", "t": "Do not disturb", "k": "Super Shift N", "w": "Notifications", "id": 30}];
+
+var HK_DEFAULT = HK.map(function (h) { return h.k; });
+function keys(k) { return '<span class="k-keys">' + k.split(' ').map(function (p) { return '<span class="k-kbd">' + p + '</span>'; }).join('') + '</span>'; }
+function groups(list) { var o = [], m = {}; list.forEach(function (h) { if (!m[h.g]) { m[h.g] = []; o.push(h.g); } m[h.g].push(h); }); return o.map(function (g) { return [g, m[g]]; }); }
+
+// Settings › Hotkeys: every action can get new keys; own hotkeys can be added and removed
+function Settings(root, onClose) {
+  var main = root.querySelector('.k-settings-main'), list = root.querySelector('#hklist'), q = root.querySelector('#hkq'), rec = null;
+  function combo(e) {
+    var m = [], k = e.key;
+    if (e.metaKey) m.push('Super'); if (e.ctrlKey) m.push('Ctrl'); if (e.altKey) m.push('Alt'); if (e.shiftKey) m.push('Shift');
+    if (['Meta', 'Control', 'Alt', 'Shift', 'OS'].indexOf(k) >= 0) return null;
+    k = { ' ': 'Space', Enter: 'Return', Escape: 'Escape', ArrowLeft: 'Left', ArrowRight: 'Right', ArrowUp: 'Up', ArrowDown: 'Down', PrintScreen: 'Print' }[k] || (k.length === 1 ? k.toUpperCase() : k);
+    return m.concat([k]).join(' ');
+  }
+  function draw(mark) {
+    var f = q.value.trim().toLowerCase();
+    var shown = HK.filter(function (h) { return !f || (h.t + ' ' + h.k + ' ' + h.g + ' ' + h.w).toLowerCase().indexOf(f) >= 0; });
+    list.innerHTML = groups(shown).map(function (gr) {
+      return '<section class="k-hk-group"><h3>' + gr[0] + '</h3>' + gr[1].map(function (h) {
+        var changed = !h.own && h.k !== HK_DEFAULT[h.id];
+        var tail = h.own ? '<button class="k-iconbtn" data-del="' + h.id + '" aria-label="Remove ' + h.t + '">' + '<i class=\"k-icon\">' + Kit.icon('trash-2') + '</i>' + '</button>'
+          : changed ? '<button class="k-iconbtn" data-reset="' + h.id + '" aria-label="Back to ' + HK_DEFAULT[h.id] + '">' + '<i class=\"k-icon\">' + Kit.icon('undo-2') + '</i>' + '</button>' : '<span></span>';
+        return '<div class="k-hk" data-id="' + h.id + '"' + (mark === h.id ? ' data-mark' : '') + '><div><b>' + h.t + '</b><small>' + h.w + '</small></div><button class="k-keyrec" data-rec-id="' + h.id + '" aria-label="Keys for ' + h.t + ': ' + h.k + '">' + keys(h.k).replace(/^<span class="k-keys">|<\/span>$/g, '') + '</button>' + tail + '</div>';
+      }).join('') + '</section>';
+    }).join('') || '<p class="k-empty">No hotkey matches.</p>';
+    if (mark != null) { var row = list.querySelector('[data-id="' + mark + '"]'); if (row) { row.scrollIntoView({ block: 'center' }); setTimeout(function () { row.removeAttribute('data-mark'); }, 1600); } }
+  }
+  function stop() { if (rec) { rec.removeAttribute('data-rec'); rec = null; } }
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-rec-id]'), r = e.target.closest('[data-reset]'), d = e.target.closest('[data-del]'), y = e.target.closest('[data-replace]'), n = e.target.closest('[data-cancel]');
+    if (b) { stop(); rec = b; b.setAttribute('data-rec', ''); return; }
+    if (r) { HK[+r.dataset.reset].k = HK_DEFAULT[+r.dataset.reset]; draw(); return; }
+    if (d) { HK = HK.filter(function (h) { return h.id !== +d.dataset.del; }); draw(); return; }
+    if (y) { var p = JSON.parse(y.dataset.replace); HK.forEach(function (h) { if (h.id === p[1]) h.k = 'None'; if (h.id === p[0]) h.k = p[2]; }); draw(p[0]); return; }
+    if (n) { draw(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!rec) return;
+    e.preventDefault();
+    if (e.key === 'Escape' && !e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey) { stop(); return; }
+    var c = combo(e); if (!c) return;
+    var id = +rec.dataset.recId, h = HK.filter(function (x) { return x.id === id; })[0], clash = HK.filter(function (x) { return x.k === c && x.id !== id; })[0];
+    stop();
+    if (clash) {
+      var row = list.querySelector('[data-id="' + id + '"]');
+      row.insertAdjacentHTML('beforeend', '<div class="k-hk-note">' + '<i class=\"k-icon\">' + Kit.icon('triangle-alert') + '</i>' + c + ' already does ' + clash.t + '.<button class="k-btn k-btn-sm" data-replace=\'' + JSON.stringify([id, clash.id, c]) + '\'><span>Use it here</span></button><button class="k-btn k-btn-sm k-btn-quiet" data-cancel><span>Keep the old</span></button></div>');
+      Kit.hydrate(row);
+    } else { h.k = c; draw(id); }
+  }, true);
+  q.addEventListener('input', function () { draw(); });
+  // a new hotkey: a name, what it runs, and its keys
+  var form = root.querySelector('#hknew'), add = root.querySelector('#hkadd');
+  add.addEventListener('click', function () { form.hidden = false; form.querySelector('input').focus(); });
+  form.querySelector('[data-cancel-new]').addEventListener('click', function () { form.hidden = true; });
+  form.querySelector('[data-save-new]').addEventListener('click', function () {
+    var name = form.querySelector('#hkname').value.trim() || 'My hotkey', cmd = form.querySelector('#hkcmd').value.trim() || 'notify-send hello';
+    var id = HK.reduce(function (m, h) { return Math.max(m, h.id); }, 0) + 1;
+    HK.push({ g: 'Your hotkeys', t: name, k: 'None', w: cmd, id: id, own: true }); HK_DEFAULT[id] = 'None';
+    form.hidden = true; q.value = ''; draw(id);
+    var b = list.querySelector('[data-rec-id="' + id + '"]'); rec = b; b.setAttribute('data-rec', '');
+  });
+  if (onClose) root.querySelector('[data-close]').addEventListener('click', onClose);
+  return { draw: draw };
+}
+
+(function () { var S = Settings(document.getElementById('settings')); S.draw(); })();
+</script>
+</body>
+</html>

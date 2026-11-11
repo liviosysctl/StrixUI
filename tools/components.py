@@ -439,7 +439,7 @@ SEARCH_JS = r'''
     {k: 'action', t: 'Hibernate', p: ['System'], i: 'moon-star', w: 'sleep disk', g: 'system'},
     {k: 'action', t: 'Restart', p: ['System'], i: 'rotate-cw', w: 'reboot', g: 'system'},
     {k: 'action', t: 'Shut down', p: ['System'], i: 'power', w: 'power off', g: 'system'},
-    {k: 'action', t: 'Keybindings', p: ['Learn'], i: 'keyboard', w: 'shortcuts hotkeys keys', key: 'Super K', g: 'learn'},
+    {k: 'action', t: 'All hotkeys', p: ['Learn'], i: 'keyboard', w: 'cheat sheet shortcuts keybindings keys', key: 'Super K', g: 'learn'},
     {k: 'action', t: 'Manual', p: ['Learn'], i: 'book-open', w: 'help documentation', g: 'learn'},
 
     {k: 'setting', t: 'Appearance', p: ['Settings'], i: 'swatch-book', w: 'theme look', g: 'settings', page: 1},
@@ -449,6 +449,7 @@ SEARCH_JS = r'''
     {k: 'setting', t: 'Network', p: ['Settings'], i: 'wifi', w: 'wi-fi wifi internet', g: 'settings', page: 1},
     {k: 'setting', t: 'Bluetooth', p: ['Settings'], i: 'bluetooth', w: 'devices pair', g: 'settings', page: 1},
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
+    {k: 'setting', t: 'Hotkeys', p: ['Settings'], i: 'command', w: 'shortcuts keybindings keys bind change add', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
     {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Strix', w: 'colours look'},
     {k: 'setting', t: 'God', p: ['Settings', 'Appearance'], i: 'swatch-book', v: 'Saturnus', w: 'aspect accent colour pantheon'},
@@ -572,7 +573,7 @@ comp('Search', 'Shell', 560, r'''
       <div class="k-search-head">''' + I('search') + r'''<span class="k-crumb" id="crumb"></span><input aria-label="Search" autocomplete="off" spellcheck="false"><span class="k-kbd">Esc</span></div>
       <div class="k-search-filter"><div class="k-seg" id="filter" aria-label="Show"><button aria-selected="true">All</button><button>Apps</button><button>Actions</button><button>Settings</button><button>Commands</button></div><span class="k-plate">one field for everything</span></div>
       <ul class="k-hits" id="hits" role="listbox"></ul>
-      <div class="k-search-foot"><span><span class="k-kbd">Enter</span>open</span><span><span class="k-kbd">Tab</span>filter</span><span><span class="k-kbd">Backspace</span>back</span><output id="said"></output></div>
+      <div class="k-search-foot"><output id="said"></output></div>
     </div>
   </div>
 </div>''', r'''
@@ -586,7 +587,7 @@ One field finds everything: apps, the actions of the system menu, settings down 
 - Tab and Shift Tab cycle the filter (All, Apps, Actions, Settings, Commands). Up and Down move, Esc clears the field, a second Esc closes.
 - Rows: 40px, symbol, title in mono with the matched letters in `text` and semibold, the place in `aside` style, kind in `micro`. The chosen row has the raised ground and the red caret, as in List.
 - Motion: the panel drops 8px into place over `dur-base`; entering a group slides the list in from the right, going back from the left; results update in place without animation while typing.
-- Markup: `.k-search.k-surface` > `.k-search-head` (symbol, `.k-crumb`, `input`, key hint), `.k-search-filter` (a Segmented), `ul.k-hits` > `li.k-hit[data-kind]`, `.k-search-foot`. `Kit.fuzzy(query, text)` and `Kit.mark(text, hits)` do the matching and the highlighting.
+- Markup: `.k-search.k-surface` > `.k-search-head` (symbol, `.k-crumb`, `input`, the Esc chip), `.k-search-filter` (a Segmented), `ul.k-hits` > `li.k-hit[data-kind]`, `.k-search-foot` (only the result line, hidden while empty; the keys are on the cheat sheet). `Kit.fuzzy(query, text)` and `Kit.mark(text, hits)` do the matching and the highlighting.
 ''', js=SEARCH_JS)
 
 
@@ -711,7 +712,7 @@ DOCK_JS = r'''
 '''
 comp('EdgeDock', 'Shell', 380, r'''
 <div style="position:relative;height:380px;overflow:hidden">''' + WALL(NEPTUNUS, pos='center 30%') + r'''
-  <div class="k-plate" style="position:absolute;left:16px;top:12px">Move the pointer to the bottom edge. Move it away and the dock sinks back.</div>
+  <div class="micro" style="position:absolute;right:16px;top:12px;color:var(--text-faint)">Preview only: move the pointer to the bottom edge</div>
   <div class="k-dockbar">''' + DOCK + r'''</div>
 </div>''', r'''
 The dock is part of the bottom edge of the screen, not a floating bar. At rest it is a tab 5px high and 132px wide with a short red line, flush with the edge, its corners flaring into it. When the pointer reaches the bottom edge it rises to 28px and widens to fit its content. When the pointer leaves, it sinks back after a short wait.
@@ -814,7 +815,7 @@ screen('LockScreen', 720, r'''
     <div class="foot caption k-muted"><b>3 notifications</b><br><b>CPU</b> <i>::</i> 8%&emsp;<b>RAM</b> <i>::</i> 24%&emsp;<b>GPU</b> <i>::</i> 3%</div>
     <div class="mark"><div class="k-wordmark">Strix</div><div class="k-rule" style="margin:4px 0 2px"><i></i></div><div class="k-motto">nocte vigilat</div></div>
     <div class="plate k-plate" id="lplate">Janus opens the door of the year. Robert van Audenaerd after Carlo Maratta</div>
-    <div class="hint micro">Demo password :: strix</div>
+    <div class="hint micro">Preview only: the password is strix</div>
   </div>
   <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
 </div>''', r'''
@@ -953,7 +954,6 @@ screen('ThemePicker', 720, r'''
       <span class="k-tip"><button class="k-iconbtn k-iconbtn-sm" aria-label="Search themes">''' + I('search') + r'''</button><span role="tooltip">Search themes</span></span>
     </div></div>
     <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
-    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card applies&emsp;<span class="k-kbd">Esc</span> closes</div>
   </div>
   <button class="k-btn" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Open theme picker</span></button>
 </div>''', r'''
@@ -1077,7 +1077,6 @@ screen('Pantheon', 720, r'''
     <div class="k-carousel" id="car" tabindex="-1" aria-label="Gods"><div class="k-carousel-track" id="track"></div></div>
     <div class="k-plate" id="plate"></div>
     <div class="cycle"><label class="k-switch"><input type="checkbox" id="keep"><span></span>Keep this god</label><span class="k-kbd">K</span><span class="caption k-muted" id="next"></span></div>
-    <div class="hint micro k-muted"><span class="k-kbd">Left</span> <span class="k-kbd">Right</span> browse&emsp;<span class="k-kbd">Enter</span> or a click on the middle card calls the god&emsp;<span class="k-kbd">K</span> keeps the god&emsp;<span class="k-kbd">Esc</span> closes</div>
     <label class="k-switch micro demo"><input type="checkbox" id="fast"><span></span>Preview only: one minute in one second</label>
   </div>
   <button class="k-btn k-btn-primary" id="reopen" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Choose another god</span></button>
@@ -1104,6 +1103,218 @@ The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no s
 #picker .demo { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
 .k-slant-name .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
 ''', js=WP_JS)
+
+
+# ------------------------------------------------------------------ Hotkeys: cheat sheet and settings
+# group, action, keys, where it comes from (shown in Settings)
+HOTKEYS = [
+    ('Learn', 'All hotkeys', 'Super K', 'This sheet'),
+    ('Learn', 'Search', 'Super Space', 'Apps, actions, settings and commands'),
+    ('Apps', 'Terminal', 'Super Return', 'Ghostty'),
+    ('Apps', 'Browser', 'Super Shift Return', 'Firefox'),
+    ('Apps', 'Files', 'Super Shift F', 'File manager'),
+    ('Apps', 'Text editor', 'Super Shift N', 'Editor'),
+    ('Apps', 'Music', 'Super Shift M', 'Music player'),
+    ('Windows', 'Close window', 'Super W', 'Window'),
+    ('Windows', 'Full screen', 'Super F', 'Window'),
+    ('Windows', 'Float or tile', 'Super T', 'Window'),
+    ('Windows', 'Split direction', 'Super J', 'Window'),
+    ('Windows', 'Move focus', 'Super Arrows', 'Window'),
+    ('Windows', 'Swap windows', 'Super Shift Arrows', 'Window'),
+    ('Windows', 'Grow or shrink', 'Super = -', 'Window'),
+    ('Workspaces', 'Go to workspace', 'Super 1–9', 'Workspace'),
+    ('Workspaces', 'Move window there', 'Super Shift 1–9', 'Workspace'),
+    ('Workspaces', 'Next workspace', 'Super Tab', 'Workspace'),
+    ('Workspaces', 'Scratchpad', 'Super S', 'Special workspace'),
+    ('Style', 'Pantheon', 'Super Ctrl Space', 'Wallpaper and god'),
+    ('Style', 'Theme', 'Super Ctrl Shift Space', 'Theme picker'),
+    ('Style', 'Toggle the top bar', 'Super Shift Space', 'Bar'),
+    ('Capture', 'Region screenshot', 'Print', 'Capture'),
+    ('Capture', 'Window screenshot', 'Shift Print', 'Capture'),
+    ('Capture', 'Screen screenshot', 'Ctrl Print', 'Capture'),
+    ('Capture', 'Record a region', 'Alt Print', 'Capture'),
+    ('Capture', 'Colour picker', 'Super Print', 'Capture'),
+    ('Clipboard', 'Clipboard history', 'Super V', 'Clipboard'),
+    ('System', 'Lock', 'Super Escape', 'Session'),
+    ('System', 'Session menu', 'Super Shift Escape', 'Log out, suspend, restart, shut down'),
+    ('System', 'Notifications', 'Super N', 'Panel'),
+    ('System', 'Do not disturb', 'Super Shift N', 'Notifications'),
+]
+HK_JS = 'var HK = ' + json.dumps([dict(g=g, t=t, k=k, w=w, id=i) for i, (g, t, k, w) in enumerate(HOTKEYS)]) + ';\n' + r"""
+var HK_DEFAULT = HK.map(function (h) { return h.k; });
+function keys(k) { return '<span class="k-keys">' + k.split(' ').map(function (p) { return '<span class="k-kbd">' + p + '</span>'; }).join('') + '</span>'; }
+function groups(list) { var o = [], m = {}; list.forEach(function (h) { if (!m[h.g]) { m[h.g] = []; o.push(h.g); } m[h.g].push(h); }); return o.map(function (g) { return [g, m[g]]; }); }
+
+// Settings › Hotkeys: every action can get new keys; own hotkeys can be added and removed
+function Settings(root, onClose) {
+  var main = root.querySelector('.k-settings-main'), list = root.querySelector('#hklist'), q = root.querySelector('#hkq'), rec = null;
+  function combo(e) {
+    var m = [], k = e.key;
+    if (e.metaKey) m.push('Super'); if (e.ctrlKey) m.push('Ctrl'); if (e.altKey) m.push('Alt'); if (e.shiftKey) m.push('Shift');
+    if (['Meta', 'Control', 'Alt', 'Shift', 'OS'].indexOf(k) >= 0) return null;
+    k = { ' ': 'Space', Enter: 'Return', Escape: 'Escape', ArrowLeft: 'Left', ArrowRight: 'Right', ArrowUp: 'Up', ArrowDown: 'Down', PrintScreen: 'Print' }[k] || (k.length === 1 ? k.toUpperCase() : k);
+    return m.concat([k]).join(' ');
+  }
+  function draw(mark) {
+    var f = q.value.trim().toLowerCase();
+    var shown = HK.filter(function (h) { return !f || (h.t + ' ' + h.k + ' ' + h.g + ' ' + h.w).toLowerCase().indexOf(f) >= 0; });
+    list.innerHTML = groups(shown).map(function (gr) {
+      return '<section class="k-hk-group"><h3>' + gr[0] + '</h3>' + gr[1].map(function (h) {
+        var changed = !h.own && h.k !== HK_DEFAULT[h.id];
+        var tail = h.own ? '<button class="k-iconbtn" data-del="' + h.id + '" aria-label="Remove ' + h.t + '">' + '<i class=\"k-icon\">' + Kit.icon('trash-2') + '</i>' + '</button>'
+          : changed ? '<button class="k-iconbtn" data-reset="' + h.id + '" aria-label="Back to ' + HK_DEFAULT[h.id] + '">' + '<i class=\"k-icon\">' + Kit.icon('undo-2') + '</i>' + '</button>' : '<span></span>';
+        return '<div class="k-hk" data-id="' + h.id + '"' + (mark === h.id ? ' data-mark' : '') + '><div><b>' + h.t + '</b><small>' + h.w + '</small></div><button class="k-keyrec" data-rec-id="' + h.id + '" aria-label="Keys for ' + h.t + ': ' + h.k + '">' + keys(h.k).replace(/^<span class="k-keys">|<\/span>$/g, '') + '</button>' + tail + '</div>';
+      }).join('') + '</section>';
+    }).join('') || '<p class="k-empty">No hotkey matches.</p>';
+    if (mark != null) { var row = list.querySelector('[data-id="' + mark + '"]'); if (row) { row.scrollIntoView({ block: 'center' }); setTimeout(function () { row.removeAttribute('data-mark'); }, 1600); } }
+  }
+  function stop() { if (rec) { rec.removeAttribute('data-rec'); rec = null; } }
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-rec-id]'), r = e.target.closest('[data-reset]'), d = e.target.closest('[data-del]'), y = e.target.closest('[data-replace]'), n = e.target.closest('[data-cancel]');
+    if (b) { stop(); rec = b; b.setAttribute('data-rec', ''); return; }
+    if (r) { HK[+r.dataset.reset].k = HK_DEFAULT[+r.dataset.reset]; draw(); return; }
+    if (d) { HK = HK.filter(function (h) { return h.id !== +d.dataset.del; }); draw(); return; }
+    if (y) { var p = JSON.parse(y.dataset.replace); HK.forEach(function (h) { if (h.id === p[1]) h.k = 'None'; if (h.id === p[0]) h.k = p[2]; }); draw(p[0]); return; }
+    if (n) { draw(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!rec) return;
+    e.preventDefault();
+    if (e.key === 'Escape' && !e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey) { stop(); return; }
+    var c = combo(e); if (!c) return;
+    var id = +rec.dataset.recId, h = HK.filter(function (x) { return x.id === id; })[0], clash = HK.filter(function (x) { return x.k === c && x.id !== id; })[0];
+    stop();
+    if (clash) {
+      var row = list.querySelector('[data-id="' + id + '"]');
+      row.insertAdjacentHTML('beforeend', '<div class="k-hk-note">' + '<i class=\"k-icon\">' + Kit.icon('triangle-alert') + '</i>' + c + ' already does ' + clash.t + '.<button class="k-btn k-btn-sm" data-replace=\'' + JSON.stringify([id, clash.id, c]) + '\'><span>Use it here</span></button><button class="k-btn k-btn-sm k-btn-quiet" data-cancel><span>Keep the old</span></button></div>');
+      Kit.hydrate(row);
+    } else { h.k = c; draw(id); }
+  }, true);
+  q.addEventListener('input', function () { draw(); });
+  // a new hotkey: a name, what it runs, and its keys
+  var form = root.querySelector('#hknew'), add = root.querySelector('#hkadd');
+  add.addEventListener('click', function () { form.hidden = false; form.querySelector('input').focus(); });
+  form.querySelector('[data-cancel-new]').addEventListener('click', function () { form.hidden = true; });
+  form.querySelector('[data-save-new]').addEventListener('click', function () {
+    var name = form.querySelector('#hkname').value.trim() || 'My hotkey', cmd = form.querySelector('#hkcmd').value.trim() || 'notify-send hello';
+    var id = HK.reduce(function (m, h) { return Math.max(m, h.id); }, 0) + 1;
+    HK.push({ g: 'Your hotkeys', t: name, k: 'None', w: cmd, id: id, own: true }); HK_DEFAULT[id] = 'None';
+    form.hidden = true; q.value = ''; draw(id);
+    var b = list.querySelector('[data-rec-id="' + id + '"]'); rec = b; b.setAttribute('data-rec', '');
+  });
+  if (onClose) root.querySelector('[data-close]').addEventListener('click', onClose);
+  return { draw: draw };
+}
+"""
+
+def SETTINGS_HTML(close=True):
+    nav = [('swatch-book', 'Appearance'), ('lock', 'Lock screen'), ('monitor', 'Display'), ('volume-2', 'Sound'), ('wifi', 'Network'),
+           ('bluetooth', 'Bluetooth'), ('keyboard', 'Keyboard'), ('command', 'Hotkeys'), ('bell', 'Notifications')]
+    return r'''
+<div class="k-win" data-active id="settings" style="position:absolute;left:150px;right:150px;top:64px;bottom:64px">
+  <div class="k-settings">
+    <nav class="k-settings-nav" aria-label="Settings">
+      <div class="who"><i>L</i><span>Livio</span></div>
+      ''' + ''.join('<button%s>%s%s</button>' % (' aria-current="page"' if t == 'Hotkeys' else '', I(i), t) for i, t in nav) + r'''
+    </nav>
+    <div class="k-settings-main">
+      <header><h2>Hotkeys</h2>
+        <div class="k-input" style="width:220px;height:28px">''' + I('search') + r'''<input id="hkq" aria-label="Filter hotkeys" placeholder="Filter" autocomplete="off"></div>
+        <button class="k-btn k-btn-primary" id="hkadd">''' + I('plus') + r'''<span>Add hotkey</span></button>''' + ('''
+        <button class="k-iconbtn" data-close aria-label="Close settings">''' + I('x') + '''</button>''' if close else '<span data-close hidden></span>') + r'''
+      </header>
+      <div class="k-hk-new" id="hknew" hidden>
+        <div class="row"><div class="k-input" style="width:200px"><input id="hkname" aria-label="Name" placeholder="Name"></div><div class="k-input" style="flex:1"><input id="hkcmd" aria-label="Command" placeholder="Command, app or action"></div></div>
+        <div class="row"><button class="k-btn k-btn-quiet" data-cancel-new><span>Cancel</span></button><button class="k-btn k-btn-primary" data-save-new><span>Next: the keys</span></button></div>
+      </div>
+      <div id="hklist"></div>
+    </div>
+  </div>
+</div>'''
+
+CHEAT_JS = HK_JS + r"""
+(function () {
+  var body = document.getElementById('cheat-body'), input = document.getElementById('cheat-q'), sheet = document.getElementById('cheat'), out = document.getElementById('said');
+  var setWin = document.getElementById('settings'), sel = 0, shown = [];
+  var S = Settings(setWin, function () { setWin.hidden = true; sheet.hidden = false; input.focus({ preventScroll: true }); });
+  setWin.hidden = true;
+  function draw() {
+    var q = input.value.trim(), i = 0;
+    shown = [];
+    var html = groups(HK).map(function (gr) {
+      var rows = gr[1].map(function (h) {
+        var mt = q ? Kit.fuzzy(q, h.t) : null, mk = q ? Kit.fuzzy(q, h.k) : null;
+        if (q && !mt && !mk) return '';
+        shown.push(h);
+        var t = mt ? Kit.mark(h.t, mt.hits) : h.t;
+        return '<div class="k-cheat-row" role="option" data-n="' + (i++) + '"><span class="t">' + t + '</span>' + keys(h.k) + '<button class="edit" data-edit="' + h.id + '" aria-label="Change the keys for ' + h.t + '">' + '<i class=\"k-icon\">' + Kit.icon('pencil') + '</i>' + '</button></div>';
+      }).join('');
+      return rows ? '<section class="k-cheat-group"><h3>' + gr[0] + '</h3>' + rows + '</section>' : '';
+    }).join('');
+    body.innerHTML = html || '<p class="k-empty">No hotkey matches.</p>';
+    sel = Math.min(sel, Math.max(0, shown.length - 1)); mark();
+  }
+  function mark() { Array.prototype.forEach.call(body.querySelectorAll('.k-cheat-row'), function (r) { r.setAttribute('aria-selected', +r.dataset.n === sel && input.value.trim() !== ''); }); }
+  function edit(id) { sheet.hidden = true; setWin.hidden = false; S.draw(id); }
+  body.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-edit]'); if (b) { edit(+b.dataset.edit); return; }
+    var r = e.target.closest('.k-cheat-row'); if (r) out.textContent = 'Runs ' + shown[+r.dataset.n].t;
+  });
+  document.getElementById('cheat-edit').addEventListener('click', function () { edit(null); });
+  input.addEventListener('input', function () { sel = 0; out.textContent = ''; draw(); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(shown.length - 1, sel + 1); mark(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(0, sel - 1); mark(); }
+    else if (e.key === 'Enter' && shown[sel]) { e.preventDefault(); out.textContent = 'Runs ' + shown[sel].t; }
+    else if (e.key === 'Escape') { e.preventDefault(); if (input.value) { input.value = ''; draw(); } else out.textContent = 'Closes'; }
+  });
+  draw();
+  try { input.focus({ preventScroll: true }); } catch (e) {}
+})();
+"""
+
+screen('Cheatsheet', 720, r'''
+<div class="k-screen" data-theme="saturnus">
+  ''' + WALL(SATURNUS, ' data-dim') + r'''
+  <div class="k-grain"></div>
+  <div class="k-scrim" style="animation:none;place-items:start center;padding-top:44px">
+    <div class="k-cheat k-surface" id="cheat" role="dialog" aria-label="Hotkeys">
+      <div class="k-cheat-head"><span class="title">Hotkeys</span>''' + I('search') + r'''<input id="cheat-q" aria-label="Filter hotkeys" placeholder="Filter by action or keys" autocomplete="off" spellcheck="false"><output id="said" class="caption k-muted"></output><button class="k-btn k-btn-quiet" id="cheat-edit">''' + I('pencil') + r'''<span>Edit</span></button><span class="k-kbd">Esc</span></div>
+      <div class="k-cheat-body" id="cheat-body" role="listbox"></div>
+    </div>
+  </div>
+  ''' + SETTINGS_HTML() + r'''
+</div>''', r'''
+The cheat sheet (Super K) is the one place that explains the keys. Components carry no instructions of their own; at most a single key chip stands next to a control where one key matters (Esc in Search, K in the pantheon). Everything else is learned here.
+
+- Over the dimmed desktop, a wide panel lists every hotkey of the system in groups: Learn, Apps, Windows, Workspaces, Style, Capture, Clipboard, System. Group names in the serif italic, actions in mono, keys as chips at the right.
+- Typing filters by action or by keys, fuzzy as in Search: "shot" finds the screenshots, "super shift" every binding with both. Up and Down move, Enter runs the action, Esc clears the field and a second Esc closes.
+- Edit opens Settings › Hotkeys. The pencil next to a row opens Settings at that very row, marked for a moment, ready to take new keys.
+- The list is read from the live bindings, so a hotkey changed or added in Settings shows here at once.
+''', css=r'''
+#settings[hidden], #cheat[hidden] { display: none; }
+#settings { animation: k-win-in var(--dur-slow) var(--ease-out) both; }
+#said { margin-right: var(--space-2); white-space: nowrap; }
+''', js=CHEAT_JS)
+
+screen('SettingsHotkeys', 720, r'''
+<div class="k-screen" data-theme="saturnus">
+  ''' + WALL(SATURNUS) + r'''
+  <div class="k-grain"></div>
+  ''' + SETTINGS_HTML(close=False) + r'''
+</div>''', r'''
+Settings › Hotkeys: every action of the cheat sheet in the same groups, each with its keys at the right.
+
+- A click on the keys starts recording: the field turns to the accent and waits. Press the new combination; Esc alone cancels. Super, Ctrl, Alt and Shift count as modifiers.
+- If the keys already belong to another action, the row says so in `warning` and offers "Use it here" (the other action loses its keys) or "Keep the old".
+- A changed hotkey gets a reset button that brings back the default. Own hotkeys get a remove button instead.
+- Add hotkey asks for a name and what it runs (a command, an app or an action), then records the keys. Own hotkeys collect in the group "Your hotkeys".
+- The filter field narrows the list by action, keys or group. Changes apply at once; Hyprland reloads its bindings, and the cheat sheet shows them the next time it opens.
+''', css=r'''
+#settings { left: 120px; right: 120px; top: 48px; bottom: 48px; }
+''', js=HK_JS + r"""
+(function () { var S = Settings(document.getElementById('settings')); S.draw(); })();
+""")
 
 def sw(n):
     return '<span class="k-swatch" style="background:var(--term-%s)" title="%s"></span>' % (n, n)

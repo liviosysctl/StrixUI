@@ -100,6 +100,13 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 - Add further gods only as engravings or etchings in the public domain from a collection that says so, with an aspect of their own whose accent is far enough in hue from the others, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
 - `Kit.wallpaper()` still returns the plain star chart drawn with the tokens (cream lines and the disc, no picture). It is the fallback where a picture cannot be shipped: the boot splash and the installer.
 
+## Help and hotkeys
+
+- The interface does not explain itself in sentences. No component carries a line such as "Enter applies, Esc closes" or "drag to move".
+- The cheat sheet explains the keys, all in one place: Super K opens it over the desktop, with every hotkey in groups, a filter, and a direct way into Settings › Hotkeys, where every binding can be changed and new ones added.
+- A single key chip (`.k-kbd`) may stand next to a control where one key matters and is not obvious: Esc in Search, K for "Keep this god" in the pantheon. Never more than one or two in a view, and never with a sentence around them.
+- In the design system's own previews, a note that only exists to try the preview (a demo password, a faster clock) starts with "Preview only" and sits small and faint in a corner. It is not part of the design.
+
 ## Symbols
 
 - Symbols are Lucide (ISC licence), bundled in the script: 24px grid, drawn thin at a 1.25 stroke, round caps, in the current text colour. Use `<i class="k-icon" data-icon="wifi"></i>`; `Kit.icons` lists the names.

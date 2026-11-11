@@ -61,12 +61,13 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 | ![Desktop](docs/renders/Desktop.png) | ![Pantheon](docs/renders/Pantheon.png) |
 | ![Theme picker](docs/renders/ThemePicker.png) | ![Lock screen, another god at every lock](docs/renders/LockScreen.png) |
 | ![Dock](docs/renders/EdgeDock.png) | ![Search](docs/renders/Search.png) |
+| ![Cheat sheet](docs/renders/Cheatsheet.png) | ![Settings, hotkeys](docs/renders/SettingsHotkeys.png) |
 | ![Terminal](docs/renders/Terminal.png) | ![Boot splash](docs/renders/BootSplash.png) |
 
 ## Not done yet
 
 - QML components for Quickshell, a QML gallery, and a test that compares the QML and web renderings.
-- Screens: clipboard history, screenshot tool, greeter, session menu, settings, text installer, store, bootstick app.
+- Screens: clipboard history, screenshot tool, greeter, session menu, the other settings pages (Hotkeys is done), text installer, store, bootstick app.
 - The search service behind Search (the component and its behaviour are done; the plan is in StrixOS-Plan, `10-search.md`).
 - The light variant.
 - The Hyprland block in `motion.md` is not yet tested on a real Hyprland.

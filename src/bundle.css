@@ -428,4 +428,62 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 .k-hit .r .k-icon { width: 12px; height: 12px; }
 .k-search-foot { display: flex; align-items: center; gap: var(--space-4); height: 30px; padding: 0 var(--space-4); border-top: var(--line-hair) solid var(--border); font: 400 10px/14px var(--font-mono); color: var(--text-faint); }
 .k-search-foot span { display: inline-flex; align-items: center; gap: 5px; }
+.k-search-foot:has(output:empty) { display: none; }
 .k-search-foot output { margin-left: auto; font: italic 400 12px/16px var(--font-serif); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Hotkeys: the cheat sheet (Super K) and Settings › Hotkeys */
+.k-keys { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+.k-keys .k-kbd { color: var(--text-muted); }
+.k-cheat { width: 1100px; max-width: 100%; padding: 0; overflow: hidden; animation: k-drop var(--dur-base) var(--ease-out) both; }
+.k-cheat-head { display: flex; align-items: center; gap: var(--space-2); height: 44px; padding: 0 var(--space-2) 0 var(--space-4); border-bottom: var(--line-hair) solid var(--border); }
+.k-cheat-head > .k-icon { color: var(--text-muted); }
+.k-cheat-head input { flex: 1; min-width: 0; height: 100%; border: 0; outline: 0; background: transparent; color: var(--text); font: 400 13px/18px var(--font-mono); }
+.k-cheat-head input::placeholder { color: var(--text-faint); }
+.k-cheat-head .title { font: 400 18px/22px var(--font-fraktur); font-weight: 300; color: var(--text); margin-right: var(--space-3); }
+.k-cheat-body { columns: 3; column-gap: var(--space-5); padding: var(--space-4) var(--space-5) var(--space-3); max-height: 486px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+.k-cheat-group { break-inside: avoid; margin: 0 0 var(--space-4); }
+.k-cheat-group h3 { margin: 0 0 4px; padding-left: 6px; font: italic 400 15px/20px var(--font-serif); color: var(--text-muted); letter-spacing: 0.01em; }
+.k-cheat-row { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); height: 24px; padding: 0 6px; border-radius: var(--radius-xs); cursor: pointer; color: var(--text-muted); transition: background-color var(--dur-instant) var(--ease-out), color var(--dur-instant) var(--ease-out); }
+.k-cheat-row .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.k-cheat-row .t b { color: var(--text); font-weight: 600; }
+.k-cheat-row:hover, .k-cheat-row[aria-selected="true"] { background: var(--surface-raised); color: var(--text); }
+.k-cheat-row .edit { position: absolute; right: -22px; width: 20px; height: 20px; display: grid; place-items: center; border: 0; background: transparent; color: var(--text-faint); cursor: pointer; opacity: 0; transition: opacity var(--dur-fast) var(--ease-out); }
+.k-cheat-row .edit .k-icon { width: 12px; height: 12px; }
+.k-cheat-row:hover .edit, .k-cheat-row[aria-selected="true"] .edit { opacity: 1; }
+.k-cheat-row .edit:hover { color: var(--accent-text); }
+.k-cheat-group { padding-right: 22px; }
+
+.k-settings { display: grid; grid-template-columns: 188px 1fr; height: 100%; }
+.k-settings-nav { border-right: var(--line-hair) solid var(--border); padding: var(--space-4) var(--space-2); display: flex; flex-direction: column; gap: 2px; }
+.k-settings-nav .who { display: flex; align-items: center; gap: var(--space-2); padding: 0 var(--space-2) var(--space-4); margin-bottom: var(--space-2); border-bottom: var(--line-hair) solid var(--border); }
+.k-settings-nav .who i { width: 28px; height: 28px; border-radius: 50%; border: var(--line-hair) solid var(--border-strong); display: grid; place-items: center; font: italic 400 15px/1 var(--font-serif); color: var(--text); }
+.k-settings-nav .who span { font: 400 15px/18px var(--font-serif); }
+.k-settings-nav button { position: relative; display: flex; align-items: center; gap: var(--space-2); height: 28px; padding: 0 var(--space-2) 0 22px; border: 0; border-radius: var(--radius-xs); background: transparent; color: var(--text-muted); font: 400 12px/18px var(--font-mono); text-align: left; cursor: pointer; }
+.k-settings-nav button .k-icon { width: 14px; height: 14px; }
+.k-settings-nav button:hover { color: var(--text); background: var(--surface-raised); }
+.k-settings-nav button[aria-current="page"] { color: var(--text); background: var(--surface-raised); }
+.k-settings-nav button[aria-current="page"]::before { content: ">"; position: absolute; left: 8px; font-weight: 600; color: var(--accent-text); }
+.k-settings-main { padding: var(--space-5) var(--space-6) var(--space-4); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+.k-settings-main header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-4); }
+.k-settings-main header h2 { flex: 1; margin: 0; font: 400 22px/26px var(--font-serif); }
+.k-hk-group { margin-bottom: var(--space-5); }
+.k-hk-group h3 { margin: 0 0 2px; font: italic 400 15px/20px var(--font-serif); color: var(--text-muted); }
+.k-hk { display: grid; grid-template-columns: 1fr auto 28px; align-items: center; gap: var(--space-3); min-height: 36px; border-bottom: var(--line-hair) solid var(--border); transition: background-color var(--dur-slow) var(--ease-out); }
+.k-hk:last-child { border-bottom: 0; }
+.k-hk > div:first-child { min-width: 0; }
+.k-hk b { display: block; font: 400 12px/18px var(--font-mono); color: var(--text); }
+.k-hk small { display: block; font: italic 400 12px/16px var(--font-serif); color: var(--text-muted); }
+.k-hk[data-mark] { background: var(--accent-soft); }
+.k-hk .k-iconbtn { width: 24px; height: 24px; }
+.k-keyrec { position: relative; min-width: 132px; height: 24px; display: inline-flex; align-items: center; justify-content: flex-end; gap: 3px; padding: 0 var(--space-2); border: var(--line-hair) solid transparent; border-radius: var(--radius-sm); background: transparent; cursor: pointer; transition: border-color var(--dur-fast) var(--ease-out); }
+.k-keyrec:hover { border-color: var(--border-strong); }
+.k-keyrec .k-kbd { color: var(--text-muted); }
+.k-keyrec[data-rec] { border-color: var(--accent); justify-content: center; }
+.k-keyrec[data-rec]::after { content: "Press the new keys"; font: 400 11px/16px var(--font-mono); color: var(--accent-text); animation: k-pulse 0.9s var(--ease-in-out) infinite alternate; }
+.k-keyrec[data-rec] .k-kbd { display: none; }
+.k-hk-note { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--space-2); padding: 0 0 var(--space-2); font: 400 11px/16px var(--font-mono); color: var(--warning); }
+.k-hk-note .k-btn { margin-left: auto; }
+.k-hk-new[hidden] { display: none; }
+.k-hk-new { display: grid; grid-template-columns: 1fr auto; gap: var(--space-2) var(--space-3); align-items: center; padding: var(--space-3) 0 var(--space-3); margin-bottom: var(--space-4); border-bottom: var(--line-hair) solid var(--border-strong); animation: k-enter var(--dur-base) var(--ease-out) both; }
+.k-hk-new .k-input { height: 28px; }
+.k-hk-new .row { display: flex; gap: var(--space-2); align-items: center; }

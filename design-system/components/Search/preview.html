@@ -10,7 +10,7 @@
       <div class="k-search-head"><i class="k-icon" data-icon="search"></i><span class="k-crumb" id="crumb"></span><input aria-label="Search" autocomplete="off" spellcheck="false"><span class="k-kbd">Esc</span></div>
       <div class="k-search-filter"><div class="k-seg" id="filter" aria-label="Show"><button aria-selected="true">All</button><button>Apps</button><button>Actions</button><button>Settings</button><button>Commands</button></div><span class="k-plate">one field for everything</span></div>
       <ul class="k-hits" id="hits" role="listbox"></ul>
-      <div class="k-search-foot"><span><span class="k-kbd">Enter</span>open</span><span><span class="k-kbd">Tab</span>filter</span><span><span class="k-kbd">Backspace</span>back</span><output id="said"></output></div>
+      <div class="k-search-foot"><output id="said"></output></div>
     </div>
   </div>
 </div>
@@ -69,7 +69,7 @@ Kit.hydrate(document);
     {k: 'action', t: 'Hibernate', p: ['System'], i: 'moon-star', w: 'sleep disk', g: 'system'},
     {k: 'action', t: 'Restart', p: ['System'], i: 'rotate-cw', w: 'reboot', g: 'system'},
     {k: 'action', t: 'Shut down', p: ['System'], i: 'power', w: 'power off', g: 'system'},
-    {k: 'action', t: 'Keybindings', p: ['Learn'], i: 'keyboard', w: 'shortcuts hotkeys keys', key: 'Super K', g: 'learn'},
+    {k: 'action', t: 'All hotkeys', p: ['Learn'], i: 'keyboard', w: 'cheat sheet shortcuts keybindings keys', key: 'Super K', g: 'learn'},
     {k: 'action', t: 'Manual', p: ['Learn'], i: 'book-open', w: 'help documentation', g: 'learn'},
 
     {k: 'setting', t: 'Appearance', p: ['Settings'], i: 'swatch-book', w: 'theme look', g: 'settings', page: 1},
@@ -79,6 +79,7 @@ Kit.hydrate(document);
     {k: 'setting', t: 'Network', p: ['Settings'], i: 'wifi', w: 'wi-fi wifi internet', g: 'settings', page: 1},
     {k: 'setting', t: 'Bluetooth', p: ['Settings'], i: 'bluetooth', w: 'devices pair', g: 'settings', page: 1},
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
+    {k: 'setting', t: 'Hotkeys', p: ['Settings'], i: 'command', w: 'shortcuts keybindings keys bind change add', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
     {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Strix', w: 'colours look'},
     {k: 'setting', t: 'God', p: ['Settings', 'Appearance'], i: 'swatch-book', v: 'Saturnus', w: 'aspect accent colour pantheon'},
