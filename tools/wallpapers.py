@@ -62,7 +62,8 @@ def fetch(source):
 def rgb(h):
     return np.array(themes.hex2rgb(h), float)
 
-def make(src, box, disc, out, bg='#0b0a09', accent='#c8102e', paper=0.46, vig=0.92, seed=3):
+def make(src, box, disc, out, bg='#0b0a09', accent='#c8102e', paper=0.46, vig=0.92, seed=3, more=()):
+    """more: further discs as (cx, cy, r, colour), for a theme with a second colour."""
     BG, ACC = rgb(bg), rgb(accent)
     im = Image.open(src).convert('L'); w, h = im.size
     x0, y0, x1 = box
@@ -76,26 +77,32 @@ def make(src, box, disc, out, bg='#0b0a09', accent='#c8102e', paper=0.46, vig=0.
     cx, cy, r = disc
     d = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2)
     m = np.clip((r - d) / 1.5 + 0.5, 0, 1)[..., None]       # antialiased disc mask
+    extra = [(np.clip((rr - np.sqrt((xx - x) ** 2 + (yy - y) ** 2)) / 1.5 + 0.5, 0, 1)[..., None], rgb(col)) for x, y, rr, col in more]
     # outside the disc: dark ink on dim cream paper. Inside: the paper takes the accent and the ink
     # stays dark, so light accents (gold, olive) keep the engraving readable as well as red does
     ink = BG
     # the disc is printed like ink on old paper: the accent, a little dulled by the cream under it
     pap = CREAM * paper * (1 - m) + (ACC * 0.90 + CREAM * paper * 0.12) * m
+    for mk, col in extra:
+        pap = pap * (1 - mk) + (col * 0.90 + CREAM * paper * 0.12) * mk
     img = ink * (1 - l[..., None]) + pap * l[..., None]
     dv = np.sqrt(((xx - cx) / (W * 0.62)) ** 2 + ((yy - cy) / (H * 0.78)) ** 2)
     v = 1 - vig * np.clip((dv - 0.25) / 0.75, 0, 1) ** 1.4
     top = np.clip(yy / 110, 0.35, 1); bot = np.clip((H - yy) / 90, 0.45, 1)
     f = np.maximum(v * top * bot, m[..., 0] * 0.9)
+    for mk, _ in extra:
+        f = np.maximum(f, mk[..., 0] * 0.9)
     img = BG + (img - BG) * f[..., None]
     img += np.random.default_rng(seed).normal(0, 3.2, (H, W, 1))
     img = Image.fromarray(np.clip(img, 0, 255).astype('uint8'))
     # hair lines around the disc: two circles, a graduated ring, a meridian
     S = 2; ov = Image.new('RGBA', (W * S, H * S), (0, 0, 0, 0)); dr = ImageDraw.Draw(ov); c = (0xd8, 0xd0, 0xc0)
-    for rr, a in ((r + 56, 120), (r + 64, 70), (r + 260, 60)):
-        dr.ellipse(((cx - rr) * S, (cy - rr) * S, (cx + rr) * S, (cy + rr) * S), outline=c + (a,), width=2)
-    for i in range(0, 360, 3):
-        a = math.radians(i); r1 = r + 64; r2 = r + 64 + (18 if i % 15 == 0 else 9)
-        dr.line(((cx + r1 * math.cos(a)) * S, (cy + r1 * math.sin(a)) * S, (cx + r2 * math.cos(a)) * S, (cy + r2 * math.sin(a)) * S), fill=c + (70,), width=2)
+    for k, (dx, dy, dr_) in enumerate([(cx, cy, r)] + [(x, y, rr) for x, y, rr, _ in more]):
+        for rr, a in ((dr_ + 56, 120), (dr_ + 64, 70)) + (((dr_ + 260, 60),) if k == 0 else ()):
+            dr.ellipse(((dx - rr) * S, (dy - rr) * S, (dx + rr) * S, (dy + rr) * S), outline=c + (a,), width=2)
+        for i in range(0, 360, 3):
+            a = math.radians(i); r1 = dr_ + 64; r2 = dr_ + 64 + (18 if i % 15 == 0 else 9)
+            dr.line(((dx + r1 * math.cos(a)) * S, (dy + r1 * math.sin(a)) * S, (dx + r2 * math.cos(a)) * S, (dy + r2 * math.sin(a)) * S), fill=c + (70,), width=2)
     dr.line((cx * S, 0, cx * S, H * S), fill=c + (40,), width=2)
     ov = ov.resize((W, H), Image.LANCZOS)
     img = Image.alpha_composite(img.convert('RGBA'), ov).convert('RGB')

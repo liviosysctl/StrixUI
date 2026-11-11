@@ -14,10 +14,15 @@ is the recipe this tool reads:
     name = "Lucifer"
     description = "One line about the colour."
     accent = [0.55, 0.10, 32]            # OKLCH lightness, chroma, hue; or "#rrggbb"
+    accent2 = [0.74, 0.10, 85]           # optional second colour: lines and letters (accent-text, focus) and discs2
     [theme.plate]
     source = "rijks:Tgakd:3200"          # rijks:<Micrio id>:<width>, aic:<IIIF id>, or file:<path in the repository>
     crop = [0.05, 0.42, 0.95]            # x0, y0, x1 of the scan; the height follows from 16:9
+    # or, for a scene taller than 16:9, set it whole on a ground of ink instead of crop:
+    # fit = [0.04, 0.03, 0.95, 0.86]     # x0, y0, x1, y1 of the scan
+    # place = [1500, 0.96]               # centre x on the 2560 by 1440 picture, height as a share of 1440
     disc = [1330, 520, 260]              # centre and radius of the accent disc on the 2560 by 1440 picture
+    discs2 = [[900, 300, 120]]           # optional, with accent2: discs in the second colour
     caption = "What it shows and who made it."
     credit = "Maker, title, date. Collection, number, licence"
     licence = "public domain"            # public domain or CC0 only
@@ -41,15 +46,24 @@ def colours(accent):
 
 
 def table(spec, t):
-    """Every colour token of the design system for this theme: the derived ones, the rest as in the default theme."""
+    """Every colour token of the design system for this theme: the derived ones, the rest as in the default theme.
+    With accent2, a dual-colour theme: accent fills everything that is filled (buttons, progress, the first disc),
+    the second colour takes everything that is a line or a letter (accent-text, focus) and the second disc."""
     derived = colours(spec['accent'])
+    if 'accent2' in spec:
+        second = colours(spec['accent2'])
+        derived['accent-text'] = themes._lighten_to(None, max(derived['surface-raised'], derived['accent-soft'], key=themes.luminance), 5.0,
+                                                    *(lambda L, C, H: (H, min(C, 0.16), max(L, 0.70)))(*themes.to_oklch(second['accent'])))
+        derived['focus'] = themes._lighten_to(None, derived['surface-raised'], 4.0,
+                                              *(lambda L, C, H: (H, C, L + 0.06))(*themes.to_oklch(second['accent'])))
+        derived['accent-2'] = second['accent']
     one = targets.theme_table(t, [{'id': 'saturnus'}])['saturnus']
     cols = dict(one['colors'])
     term = dict(one['terminal'])
     for k, v in derived.items():
         if k in ('cursor', 'selection'):
             term[k] = v
-        elif k in cols:
+        elif k in cols or k == 'accent-2':
             cols[k] = v
     term['background'] = cols['background']
     return {'colors': cols, 'terminal': term}
@@ -105,6 +119,28 @@ def source_path(repo, src):
     raise SystemExit('unknown plate source: ' + src)
 
 
+def fitted(scan, fit, place):
+    """A whole scene that is taller than 16:9: the part `fit` (x0, y0, x1, y1 of the scan) is set whole on a
+    2560 by 1440 ground of ink, `place` = [centre x, height as a share of 1440], its edges fading into the ink."""
+    from PIL import Image, ImageFilter
+    import numpy as np
+    im = Image.open(scan).convert('L'); w, h = im.size
+    part = im.crop((int(fit[0] * w), int(fit[1] * h), int(fit[2] * w), int(fit[3] * h)))
+    ph = int(1440 * place[1]); pw = int(part.width * ph / part.height)
+    part = part.resize((pw, ph), Image.LANCZOS)
+    ground = Image.new('L', (2560, 1440), 0)
+    x, y = int(place[0] - pw / 2), (1440 - ph) // 2
+    # fade the edges of the picture into the ink over 120 px
+    yy, xx = np.mgrid[0:ph, 0:pw]
+    edge = np.minimum(np.minimum(xx, pw - 1 - xx), np.minimum(yy, ph - 1 - yy))
+    mask = np.clip(edge / 120, 0, 1) ** 1.5
+    faded = Image.fromarray((np.asarray(part, float) * mask).astype('uint8'))
+    ground.paste(faded, (x, y))
+    out = os.path.join(ROOT, 'build', 'engravings', 'fitted-%s.png' % os.path.basename(scan).rsplit('.', 1)[0])
+    ground.save(out)
+    return out
+
+
 def build(repo, only_check=False):
     src = tomllib.load(open(os.path.join(repo, 'source.toml'), 'rb'))
     t = json.load(open(TOKENS, encoding='utf-8'))
@@ -124,8 +160,12 @@ def build(repo, only_check=False):
         open(os.path.join(d, 'theme.toml'), 'w').write(theme_toml(spec, tab))
         open(os.path.join(d, 'wallpaper.toml'), 'w').write(wallpaper_toml(plate))
         import wallpapers
-        wallpapers.make(source_path(repo, plate['source']), tuple(plate['crop']), tuple(plate['disc']), os.path.join(d, 'wallpaper.jpg'),
-                        bg=tab['colors']['background'], accent=tab['colors']['accent'], **({'paper': plate['paper']} if 'paper' in plate else {}))
+        scan = source_path(repo, plate['source'])
+        more = [tuple(x) + (tab['colors']['accent-2'],) for x in plate.get('discs2', [])] if 'accent-2' in tab['colors'] else []
+        if 'fit' in plate:
+            scan = fitted(scan, plate['fit'], plate.get('place', [1280, 0.96]))
+        wallpapers.make(scan, tuple(plate.get('crop', (0, 0, 1))), tuple(plate['disc']), os.path.join(d, 'wallpaper.jpg'),
+                        bg=tab['colors']['background'], accent=tab['colors']['accent'], more=more, **{k: plate[k] for k in ('paper', 'vig') if k in plate})
         print('%s  accent %s on %s' % (spec['id'], tab['colors']['accent'], tab['colors']['background']))
     for f in fails:
         print('FAIL ' + f)
