@@ -85,7 +85,7 @@ __GODS_TABLE__
 ## Wallpaper and imagery
 
 - Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
-- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus (the lock screen: he keeps the doors), Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
+- Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. The desktop shows the god chosen in the pantheon; the lock screen shows another god at every lock, in that god's aspect, never the same twice in a row. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
 - Under the lock screen, the theme picker and the pantheon the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
 - Add further gods only as engravings or etchings in the public domain from a collection that says so, with an aspect of their own whose accent is far enough in hue from the others, treated the same way, with source and licence written into the README. No photographs, no paintings in colour, no characters, no artwork of other projects.
@@ -194,7 +194,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |
-| Lock screen | lock | wallpaper dims and softens; column slides in from the left | `dur-reveal`, `dur-slow` | `ease-out` | finishes |
+| Lock screen | lock | another god's plate and aspect; wallpaper dims and softens; column slides in from the left | `dur-reveal`, `dur-slow` | `ease-out` | finishes |
 | Lock screen | unlock | column fades and moves 24px left; wallpaper sharpens | `dur-slow`, `dur-reveal` | `ease-in`, `ease-out` | finishes |
 | Lock screen | wrong password | field shakes; message appears | `dur-slow` | `ease-out` | restarts |
 | Visualizer | sound | bar heights | `dur-fast` | linear | follows |
@@ -274,7 +274,7 @@ The pantheon of the default theme: eight Roman gods, each an engraving printed i
 
 def _plates():
     import pantheon, wallpapers
-    role = {'saturnus': ' The default desktop.', 'janus': ' The lock screen.'}
+    role = {'saturnus': ' The default desktop.'}
     rows = []
     for g in pantheon.GODS:
         credit = wallpapers.PLATES[g[0]][3]

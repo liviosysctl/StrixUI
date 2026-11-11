@@ -456,6 +456,7 @@ SEARCH_JS = r'''
     {k: 'setting', t: '24-hour clock', p: ['Settings', 'Lock screen'], i: 'clock', v: 'On', w: 'time format'},
     {k: 'setting', t: 'Password field', p: ['Settings', 'Lock screen'], i: 'lock', v: 'Line', w: 'input shape'},
     {k: 'setting', t: 'Background blur', p: ['Settings', 'Lock screen'], i: 'image', v: '6', w: 'wallpaper soft'},
+    {k: 'setting', t: 'Wallpaper', p: ['Settings', 'Lock screen'], i: 'images', v: 'Another god at each lock', w: 'god pantheon change rotate random'},
     {k: 'setting', t: 'Scale', p: ['Settings', 'Display'], i: 'monitor', v: '100%', w: 'resolution hidpi zoom'},
     {k: 'setting', t: 'Night light', p: ['Settings', 'Display'], i: 'moon', v: 'Off', w: 'warm blue light colour temperature'},
     {k: 'setting', t: 'Output device', p: ['Settings', 'Sound'], i: 'volume-2', v: 'Headphones', w: 'speaker audio'},
@@ -810,16 +811,17 @@ screen('LockScreen', 720, r'''
     </div>
     <div class="foot caption k-muted"><b>3 notifications</b><br><b>CPU</b> <i>::</i> 8%&emsp;<b>RAM</b> <i>::</i> 24%&emsp;<b>GPU</b> <i>::</i> 3%</div>
     <div class="mark"><div class="k-wordmark">Strix</div><div class="k-rule" style="margin:4px 0 2px"><i></i></div><div class="k-motto">nocte vigilat</div></div>
-    <div class="plate k-plate">Janus opens the door of the year. Robert van Audenaerd after Carlo Maratta</div>
+    <div class="plate k-plate" id="lplate">Janus opens the door of the year. Robert van Audenaerd after Carlo Maratta</div>
     <div class="hint micro">Demo password :: strix</div>
   </div>
   <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
 </div>''', r'''
-The lock screen, left layout. A narrow column on the left over the dimmed engraving: a very light clock with hours stacked over minutes, the date, a greeting in spaced italic, the password as a single hair line, and four session buttons. Bottom left: notifications and load. Bottom right: the blackletter wordmark, a lozenge rule and the motto. Bottom centre: the plate caption of the engraving.
+The lock screen, left layout. Every time the screen locks, it shows another god of the pantheon in that god's aspect: the plate, the accent and the tinted grounds change together, and the same god never comes twice in a row. The desktop keeps the god chosen in the pantheon; after unlocking, its aspect comes back. A narrow column on the left over the dimmed engraving: a very light clock with hours stacked over minutes, the date, a greeting in spaced italic, the password as a single hair line, and four session buttons. Bottom left: notifications and load. Bottom right: the blackletter wordmark, a lozenge rule and the motto. Bottom centre: the plate caption of the engraving.
 
 - States, all in this preview: empty, typing (dots), wrong password (the line turns to `error`, shakes once, and says "Wrong password"), Caps Lock ("Caps Lock is on"), locked out after three tries with a countdown, unlocking.
 - Unlock: the column fades and slides left while the engraving sharpens and brightens over `dur-reveal`.
-- The demo password is `strix`. Type anything else to see the error.
+- The demo password is `strix`. Type anything else to see the error. "Lock again" locks with the next god.
+- Settings › Lock screen › Wallpaper turns the change off and keeps one god instead.
 - Text: date as "Tuesday, 10 November"; greeting lowercase by time of day with the user name.
 - The centred layout and the greeter use the same parts, centred, with the wordmark above the field.
 ''', css=r'''
@@ -861,7 +863,15 @@ The lock screen, left layout. A narrow column on the left over the dimmed engrav
       } else err('Wrong password');
     }
   });
-  document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
+  // a different god at every lock, never the same twice in a row
+  var GODS = __LOCK_GODS__, scr = document.getElementById('scr'), plate = document.getElementById('lplate'), last = -1;
+  function pick() {
+    var i; do { i = Math.floor(Math.random() * GODS.length); } while (i === last && GODS.length > 1);
+    last = i; var g = GODS[i];
+    scr.setAttribute('data-theme', g[0]); wall.style.backgroundImage = 'url(' + g[1] + ')'; plate.textContent = g[2];
+  }
+  pick();
+  document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; pick(); lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
 })();
 ''')
 
@@ -1002,6 +1012,9 @@ _CAP = {
 }
 _URL = dict(zip([g[0] for g in _pan.GODS], [SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS]))
 PLATES = [(g[0], _URL[g[0]], g[1], _CAP[g[0]][0], _CAP[g[0]][1], _pan.aspect(g[0])['accent']) for g in _pan.GODS]
+for _s in SCREENS:
+    if _s['name'] == 'LockScreen':
+        _s['js'] = _s['js'].replace('__LOCK_GODS__', json.dumps([[p[0], p[1], p[4]] for p in PLATES]))
 WP_JS = 'var P = ' + json.dumps(PLATES) + ';\n' + r"""
 (function () {
   var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
@@ -1045,7 +1058,7 @@ screen('Pantheon', 720, r'''
 </div>''', r'''
 The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no single wallpaper but eight Roman gods. Each god is a plate and an aspect: the plate is the wallpaper, the aspect recolours the system to match it. Calling a god sets both at once.
 
-- The gods, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Vulcanus (olive), Neptunus (slate blue), Pluto (heather), Bacchus (claret). All but Saturnus are muted, as in dark academia: deep, warm, never bright. Janus keeps the doors and so the lock screen; in Ovid it is his gift that keeps the striges out of the house.
+- The gods, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Vulcanus (olive), Neptunus (slate blue), Pluto (heather), Bacchus (claret). All but Saturnus are muted, as in dark academia: deep, warm, never bright. Janus keeps the doors; in Ovid it is his gift that keeps the striges out of the house. The lock screen shows another god at every lock.
 - An aspect changes only the accent and its family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, terminal cursor and selection) and tints the grounds (`background`, the surfaces, `border`) a little toward the god's hue. Text, `line`, the status colours and syntax stay the same in every aspect, so readability never depends on the god.
 - In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo and Vulcanus) put dark text on their fills, the others white; `on-accent` says which.
 - Every plate is an engraving printed in two inks of its aspect: dark ink on dim cream, and inside the disc the paper takes the god's colour.

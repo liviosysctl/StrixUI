@@ -59,7 +59,7 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 | | |
 |---|---|
 | ![Desktop](docs/renders/Desktop.png) | ![Pantheon](docs/renders/Pantheon.png) |
-| ![Theme picker](docs/renders/ThemePicker.png) | ![Lock screen in the Janus aspect](docs/renders/LockScreen.png) |
+| ![Theme picker](docs/renders/ThemePicker.png) | ![Lock screen, another god at every lock](docs/renders/LockScreen.png) |
 | ![Dock](docs/renders/EdgeDock.png) | ![Search](docs/renders/Search.png) |
 | ![Terminal](docs/renders/Terminal.png) | ![Boot splash](docs/renders/BootSplash.png) |
 

@@ -77,7 +77,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |
-| Lock screen | lock | wallpaper dims and softens; column slides in from the left | `dur-reveal`, `dur-slow` | `ease-out` | finishes |
+| Lock screen | lock | another god's plate and aspect; wallpaper dims and softens; column slides in from the left | `dur-reveal`, `dur-slow` | `ease-out` | finishes |
 | Lock screen | unlock | column fades and moves 24px left; wallpaper sharpens | `dur-slow`, `dur-reveal` | `ease-in`, `ease-out` | finishes |
 | Lock screen | wrong password | field shakes; message appears | `dur-slow` | `ease-out` | restarts |
 | Visualizer | sound | bar heights | `dur-fast` | linear | follows |

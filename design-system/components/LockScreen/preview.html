@@ -33,7 +33,7 @@
     </div>
     <div class="foot caption k-muted"><b>3 notifications</b><br><b>CPU</b> <i>::</i> 8%&emsp;<b>RAM</b> <i>::</i> 24%&emsp;<b>GPU</b> <i>::</i> 3%</div>
     <div class="mark"><div class="k-wordmark">Strix</div><div class="k-rule" style="margin:4px 0 2px"><i></i></div><div class="k-motto">nocte vigilat</div></div>
-    <div class="plate k-plate">Janus opens the door of the year. Robert van Audenaerd after Carlo Maratta</div>
+    <div class="plate k-plate" id="lplate">Janus opens the door of the year. Robert van Audenaerd after Carlo Maratta</div>
     <div class="hint micro">Demo password :: strix</div>
   </div>
   <button class="k-btn" id="relock" style="position:absolute;left:50%;bottom:40px;transform:translateX(-50%);display:none"><span>Lock again</span></button>
@@ -66,7 +66,15 @@ Kit.hydrate(document);
       } else err('Wrong password');
     }
   });
-  document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
+  // a different god at every lock, never the same twice in a row
+  var GODS = [["saturnus", "../../assets/Wallpapers/saturnus.jpg", "Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592"], ["janus", "../../assets/Wallpapers/janus.jpg", "Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta"], ["apollo", "../../assets/Wallpapers/apollo.jpg", "Apollo as Sol, the sun, with lyre and quiver in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592"], ["mars", "../../assets/Wallpapers/mars.jpg", "Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655"], ["vulcanus", "../../assets/Wallpapers/vulcanus.jpg", "Vulcanus, the smith of the gods, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592"], ["neptunus", "../../assets/Wallpapers/neptunus.jpg", "Neptunus with his crown and trident, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592"], ["pluto", "../../assets/Wallpapers/pluto.jpg", "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592"], ["bacchus", "../../assets/Wallpapers/bacchus.jpg", "Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592"]], scr = document.getElementById('scr'), plate = document.getElementById('lplate'), last = -1;
+  function pick() {
+    var i; do { i = Math.floor(Math.random() * GODS.length); } while (i === last && GODS.length > 1);
+    last = i; var g = GODS[i];
+    scr.setAttribute('data-theme', g[0]); wall.style.backgroundImage = 'url(' + g[1] + ')'; plate.textContent = g[2];
+  }
+  pick();
+  document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; pick(); lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
 })();
 </script>
 </body>
