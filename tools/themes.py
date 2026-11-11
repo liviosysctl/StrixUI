@@ -115,9 +115,19 @@ def colours(name):
     return t
 
 def _colours(name):
-    acc = dict((g[0], g[2]) for g in GODS)[name]
     if name == DEFAULT:
         return dict(BASE)
+    return derive(dict((g[0], g[2]) for g in GODS)[name])
+
+def derive_all(acc):
+    """Every theme token for an accent that is not a god's: the same derivation, plus border-active.
+    Used by tools/pack.py for theme repositories outside the eight gods."""
+    t = derive(acc)
+    t['border-active'] = _border_active(t)
+    return t
+
+def derive(acc):
+    """The theme tokens that follow an accent: grounds tinted to its hue, the accent family, focus, cursor, selection."""
     La, Ca, Ha = to_oklch(acc)
     t = {}
     # grounds: the default's lightness, a faint tint of the god's hue

@@ -11,7 +11,7 @@ Facts as label and value, framed by double-line brackets with open corners. The 
 `import Strix`, then `InfoBlock`.
 
 ```qml
-InfoBlock { title: "strix"; model: [["OS", "Strix 0.1"], ["Theme", Theme.gods[Theme.current].name + ", dark"]] }
+InfoBlock { title: "strix"; model: [["OS", "Strix 0.1"], ["Theme", Theme.about.name + ", dark"]] }
 ```
 
 ## In Tauri (Windows app)

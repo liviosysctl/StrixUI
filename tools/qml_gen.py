@@ -132,7 +132,16 @@ QtObject {
     })
     /// Folder of the wallpapers, with a trailing slash. The shell may point it elsewhere.
     property url wallpapers: Qt.resolvedUrl("../../assets/Wallpapers/")
-    function wallpaper(id) { return wallpapers + gods[id || current].wallpaper }
+    /// A theme from a connected theme repository: id, name, description, dir (its folder), plate. Set by apply().
+    property var external: null
+    /// Name, description and plate of the theme in use, built in or external.
+    readonly property var about: gods[current] || (external && external.id === current ? external : gods["%(default)s"])
+    function wallpaper(id) {
+        id = id || current
+        if (gods[id]) return wallpapers + gods[id].wallpaper
+        if (external && external.id === id) return "file://" + external.dir + "/wallpaper.jpg"
+        return wallpapers + gods["%(default)s"].wallpaper
+    }
 
     /// Colours read from the engine's tokens.json; empty until apply() ran.
     property var live: null
@@ -141,7 +150,9 @@ QtObject {
     /// Takes the engine's tokens.json (already parsed). Unknown or missing colours fall back to the built-in theme.
     function apply(tokens) {
         if (!tokens || !tokens.colors) return
-        if (tokens.theme && themes[tokens.theme]) current = tokens.theme
+        if (tokens.theme && !themes[tokens.theme])
+            external = { id: tokens.theme, name: tokens.name || tokens.theme, description: tokens.description || "", dir: tokens.dir || "", plate: tokens.plate || "", wallpaper: "wallpaper.jpg" }
+        if (tokens.theme) current = tokens.theme
         const base = themes[current] || themes["%(default)s"]
         const merged = Object.assign({}, base)
         for (const k in tokens.colors) if (k in base) merged[k] = tokens.colors[k]

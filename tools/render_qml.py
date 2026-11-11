@@ -70,6 +70,10 @@ def main():
         bad = 0
         if args.tokens:
             tokens = json.load(open(args.tokens))
+            wt = os.path.join(tokens.get('dir', ''), 'wallpaper.toml')
+            if os.path.isfile(wt):                       # what ThemeFile reads for a theme from a theme repository
+                import tomllib
+                tokens['plate'] = tomllib.load(open(wt, 'rb')).get('caption', '')
             jobs = [(tokens.get('theme', 'tokens'), tokens)]
         else:
             jobs = [(t, None) for t in (args.themes or GODS)]

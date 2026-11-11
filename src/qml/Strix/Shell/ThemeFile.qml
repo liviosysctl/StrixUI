@@ -16,11 +16,22 @@ FileView {
     onFileChanged: reload()
     onLoaded: {
         try {
-            Theme.apply(JSON.parse(text()))
+            const tokens = JSON.parse(text())
+            Theme.apply(tokens)
+            plate.path = Theme.external && Theme.external.id === tokens.theme ? tokens.dir + "/wallpaper.toml" : ""
         } catch (e) {
             console.warn("Strix: cannot read " + path + ": " + e)
         }
     }
     // no engine (a nested session, a test): the built-in default theme stays
     onLoadFailed: error => Theme.preview(Theme.current)
+
+    // a theme from a theme repository brings its plate caption in wallpaper.toml
+    property FileView plate: FileView {
+        printErrors: false
+        onLoaded: {
+            const m = /^caption\s*=\s*"((?:[^"\\]|\\.)*)"/m.exec(text())
+            if (m && Theme.external) Theme.external = Object.assign({}, Theme.external, { plate: JSON.parse('"' + m[1] + '"') })
+        }
+    }
 }

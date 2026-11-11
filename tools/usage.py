@@ -20,7 +20,7 @@ QML = {
     'Dialog': ('Dialog', 'Dialog { id: ask; title: "Erase the stick?"; text: "Everything on it is lost."; acceptText: "Erase"; danger: true; onAccepted: backend.call("erase") }\n// ask.open()'),
     'List': ('ListRow', 'ListView {\n    model: apps\n    delegate: ListRow { width: ListView.view.width; text: name; iconName: icon; detail: keys; selected: ListView.isCurrentItem }\n}'),
     'SettingRow': ('SettingRow', 'SettingRow { title: "Change theme"; text: "Another god every 10 minutes"; Switch { checked: true } }'),
-    'InfoBlock': ('InfoBlock', 'InfoBlock { title: "strix"; model: [["OS", "Strix 0.1"], ["Theme", Theme.gods[Theme.current].name + ", dark"]] }'),
+    'InfoBlock': ('InfoBlock', 'InfoBlock { title: "strix"; model: [["OS", "Strix 0.1"], ["Theme", Theme.about.name + ", dark"]] }'),
     'Card': ('Card', 'Card { title: "Firefox"; text: "Web browser"; interactive: true; onClicked: ... }'),
     'Calendar': ('Calendar', 'Calendar { onPicked: day => ... }'),
     'ContextMenu': ('Menu, MenuItem, MenuSeparator', 'Menu {\n    id: menu\n    MenuItem { text: "Copy"; iconName: "copy"; shortcut: "Ctrl C" }\n    MenuSeparator {}\n    MenuItem { text: "Delete"; iconName: "trash-2"; danger: true }\n}\n// menu.popup()'),

@@ -8,7 +8,7 @@ Strix has one theme per Roman god: Saturnus (Strix red, the default), Janus, Apo
 
 ![Lock screen](docs/renders/LockScreen.png)
 
-The same system is published as a Claude Design System artifact, where every component can be clicked and tried: [Strix design system](https://claude.ai/artifact/1hVsjYsQa8J26ydqaEeWZn). Both are built from this repository.
+The same system is published as a Claude Design System artifact, where every component can be clicked and tried, and every preview follows the theme chosen there: [Strix design system](https://claude.ai/artifact/1hVsjYsQa8J26ydqaEeWZn). Both are built from this repository.
 
 ## What is here
 
@@ -26,7 +26,7 @@ The same system is published as a Claude Design System artifact, where every com
 | `design-system/fonts/` | JetBrains Mono, IM Fell English, Grenze Gotisch (all SIL Open Font License) |
 | `design-system/assets/Wallpapers/` | The eight god plates and the star chart, with sources and licences |
 | `src/` | Sources: `bundle.css`, `bundle.js`, the QML components (`src/qml/`), the hand-written Rust (`src/rust/`), fonts, the Lucide symbols in use (ISC), the wallpapers |
-| `tools/` | `build.py` (builds the system), `targets.py` and `qml_gen.py` (the Rust crate, the theme files and the QML module), `usage.py` (QML and HTML use per component), `palette.py` (colours and the contrast check), `themes.py` (the god themes and the contrast check of every theme), `components.py` and `docs.py` (previews and texts), `wallpapers.py`, `render.py`, `render_qml.py`, `artifact.json` |
+| `tools/` | `build.py` (builds the system), `pack.py` (a theme repository outside the eight gods: colours from one accent, the plate from one engraving), `targets.py` and `qml_gen.py` (the Rust crate, the theme files and the QML module), `usage.py` (QML and HTML use per component), `palette.py` (colours and the contrast check), `themes.py` (the god themes and the contrast check of every theme), `components.py` and `docs.py` (previews and texts), `wallpapers.py`, `render.py`, `render_qml.py`, `artifact.json` |
 | `docs/renders/` | Renderings of the screens and of the QML gallery |
 
 ## Build
@@ -59,6 +59,7 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 - Windows, the bootstick app (Tauri): load `tokens.css`, `components/bundle.css` and `components/bundle.js`, write the markup from a component's README, and call `Kit.hydrate(root)`.
 - Every back end (Rust): `strix-design = { git = "https://github.com/liviosysctl/strixui" }`.
 - StrixOS theme engine: copy `design-system/themes/*` into `themes/` of the strixos repository; `strix-theme check` passes on all eight.
+- Themes from outside: a theme repository in layout 1 ([strix-theme-template](https://github.com/liviosysctl/strix-theme-template), the first one is [strix-theme-lucifer](https://github.com/liviosysctl/strix-theme-lucifer)), made with `python3 tools/pack.py <repository>`.
 - Hyprland, Ghostty, Plymouth, the installer: take the values from `tokens.json` or the theme engine; `surfaces.md` says what each one reads.
 - The colour names match the theme engine of Strix: the ten required colours of `theme.toml` have the same names, and the `term-` colours map to its `terminal` table.
 

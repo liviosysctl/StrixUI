@@ -1,3 +1,4 @@
 build/
 __pycache__/
 *.pyc
+design-system/rust/strix-design/Cargo.lock

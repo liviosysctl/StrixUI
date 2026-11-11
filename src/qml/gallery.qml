@@ -24,7 +24,7 @@ Rectangle {
         x: 900; y: 20
         spacing: 6
         Wordmark { }
-        Plate { width: 360; wrapMode: Text.WordWrap; text: Theme.gods[Theme.current].plate }
+        Plate { width: 360; wrapMode: Text.WordWrap; text: Theme.about.plate }
     }
 
     Row {
@@ -135,7 +135,7 @@ Rectangle {
             Osd { value: 0.62 }
 
             Caption { text: "Info and settings" }
-            InfoBlock { title: "strix"; model: [["OS", "Strix 0.1"], ["Theme", Theme.gods[Theme.current].name + ", dark"], ["Shell", "Quickshell"]] }
+            InfoBlock { title: "strix"; model: [["OS", "Strix 0.1"], ["Theme", Theme.about.name + ", dark"], ["Shell", "Quickshell"]] }
             SettingRow { width: 400; title: "Change theme"; text: "Another god every 10 minutes"; Switch { checked: true } }
             SettingRow { width: 400; title: "Wallpaper"; text: "Lock screen"; last: true; Button { small: true; text: "Choose" } }
         }
@@ -188,7 +188,7 @@ Rectangle {
             Row {
                 spacing: -37
                 SlantCard { source: Theme.wallpaper("janus"); name: "Janus" }
-                SlantCard { source: Theme.wallpaper(); name: Theme.gods[Theme.current].name; caption: "dark"; selected: true }
+                SlantCard { source: Theme.wallpaper(); name: Theme.about.name; caption: "dark"; selected: true }
                 SlantCard { source: Theme.wallpaper("mars"); name: "Mars" }
             }
             HotkeyRow { width: 480; action: "Theme picker"; target: "Themes and wallpapers"; keys: "Super Ctrl Space"; tail: "reset" }
