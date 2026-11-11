@@ -57,8 +57,9 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 | Bacchus | `#b23472` | `#0e090a` | Wine. |
 
 - An aspect sets only `background`, `surface`, `surface-raised`, `surface-sunken`, `border`, the accent family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`) and `term-background`, `term-cursor`, `term-selection`. Grounds keep Carna's lightness and take only a faint tint of the god's hue. Everything else is shared, so text, status and syntax read the same under every god.
+- The colours follow dark academia: deep, muted and warm, like leather, brass, ink and old bindings. Every accent but Carna's has an OKLCH chroma between 0.05 and 0.11, so none is pure or bright; only the Strix red stays at full strength, as the colour of the brand.
 - The accent of each god is chosen by hand; the rest is derived in OKLCH by `tools/pantheon.py`, which also checks every pair: text 4.5:1 on all grounds, `accent-text` 4.5:1 on grounds and `accent-soft`, `on-accent` 4.5:1 on all three fills, `focus` and the accent fill 3:1.
-- Light accents (Janus, Apollo, Mars, Minerva, Mercurius) carry near-black text; dark ones (Carna, Pluto, Bacchus) carry white. Use `on-accent`, never a fixed white.
+- Light accents (Janus, Apollo and Minerva) carry near-black text; dark ones (Carna, Mars, Mercurius, Pluto and Bacchus) carry white. Use `on-accent`, never a fixed white.
 - `error` stays red under every god. Under Carna the error and the accent are both red; that is why status is always a word first.
 
 ## Type
@@ -92,7 +93,7 @@ The default theme has eight aspects, one for each god of its wallpapers. Choosin
 
 ## Wallpaper and imagery
 
-- Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
+- Wallpapers are engravings of Roman gods, printed in two inks of the god's aspect: dim cream for the paper and the aspect's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
 - Eight plates are in the Wallpapers asset group, one per god: Carna (the default desktop), Janus (the lock screen: he keeps the doors), Apollo, Mars, Minerva, Mercurius, Pluto and Bacchus. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). No ancient likeness of Carna survives; her plate is a veiled vestal and its caption says so. The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
 - Under the lock screen, the theme picker and the pantheon the wallpaper is dimmed to `dim-wallpaper` and softened slightly.
@@ -290,7 +291,7 @@ The pantheon of the default theme: eight Roman gods, each an engraving printed i
 
 No ancient likeness of Carna survives. Her plate is a veiled vestal, chosen for the veil and the watchful face, and its caption says so.
 
-Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent`; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
+Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
 
 Add further gods only from collections that state public-domain status, give each an aspect in `tools/pantheon.py`, treat it the same way, and list title, engraver, date, source and licence here.
 '''

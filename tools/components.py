@@ -3,7 +3,7 @@ import json
 def I(n, cls=''):
     return '<i class="k-icon%s" data-icon="%s"></i>' % ((' ' + cls) if cls else '', n)
 
-BLOBS = {'51715aa263d5282e4cec311a9f1d2420': 'carna.jpg', '7ed521400d732c1cc38d2e13b61c5ad9': 'janus.jpg', 'bac5ff39649ac8fd3737c97c6dac7c71': 'apollo.jpg', '065083b2c7a87538a08d92c856112267': 'mars.jpg', '273e21040159cfb4f067cbd709dd2816': 'minerva.jpg', 'f4b6dc959e13984e7fb492379db986fc': 'mercurius.jpg', '40405f53f4aa051da1637bc6bfc40b67': 'pluto.jpg', 'dbba75815bb406d07480dfab4b749400': 'bacchus.jpg'}
+BLOBS = {'c2fed1a6ff87b9c51e1417c413bd869d': 'carna.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', 'd735047cea0ba70ed7848aa9bc72824e': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', 'b4ec8e071ce499247b7f5574f8ea26c2': 'minerva.jpg', 'f23de46dea7fe1908c7bd773b98dd1ae': 'mercurius.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
 CARNA, JANUS, APOLLO, MARS, MINERVA, MERCURIUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
 def WALL(url, extra='', pos='center'):
     return '<div class="k-wall"%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
@@ -412,13 +412,13 @@ SEARCH_JS = r'''
     {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours', key: 'Super Ctrl Shift Space', g: 'style'},
     {k: 'action', t: 'Pantheon', p: ['Style'], i: 'wallpaper', w: 'wallpaper gods aspect background picture engraving', key: 'Super Ctrl Space', g: 'style'},
     {k: 'action', t: 'Carna', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper red default strix threshold', g: 'style'},
-    {k: 'action', t: 'Janus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper verdigris green door', g: 'style'},
-    {k: 'action', t: 'Apollo', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper gold sun', g: 'style'},
-    {k: 'action', t: 'Mars', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper ember orange war', g: 'style'},
-    {k: 'action', t: 'Minerva', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper olive owl', g: 'style'},
-    {k: 'action', t: 'Mercurius', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper mercury blue quicksilver', g: 'style'},
-    {k: 'action', t: 'Pluto', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper violet underworld', g: 'style'},
-    {k: 'action', t: 'Bacchus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper wine', g: 'style'},
+    {k: 'action', t: 'Janus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper patina green door', g: 'style'},
+    {k: 'action', t: 'Apollo', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper antique gold brass sun', g: 'style'},
+    {k: 'action', t: 'Mars', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper rust war', g: 'style'},
+    {k: 'action', t: 'Minerva', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper olive owl moss', g: 'style'},
+    {k: 'action', t: 'Mercurius', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper mercury slate blue ink', g: 'style'},
+    {k: 'action', t: 'Pluto', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper heather plum violet underworld', g: 'style'},
+    {k: 'action', t: 'Bacchus', p: ['Style', 'Pantheon'], i: 'swatch-book', w: 'god aspect wallpaper claret wine', g: 'style'},
     {k: 'action', t: 'Switch to light', p: ['Style'], i: 'sun', w: 'variant light dark appearance', g: 'style'},
     {k: 'action', t: 'Next wallpaper', p: ['Style'], i: 'images', w: 'background cycle', g: 'style'},
     {k: 'action', t: 'Region screenshot', p: ['Capture'], i: 'crop', w: 'screenshot area select snip', key: 'Print', g: 'capture'},
@@ -1045,9 +1045,9 @@ screen('Pantheon', 720, r'''
 </div>''', r'''
 The pantheon (Style › Wallpaper, Super Ctrl Space). The default theme has no single wallpaper but eight Roman gods. Each god is a plate and an aspect: the plate is the wallpaper, the aspect recolours the system to match it. Calling a god sets both at once.
 
-- The gods, in order: Carna (Strix red, the default), Janus (verdigris), Apollo (gold), Mars (ember), Minerva (olive), Mercurius (quicksilver blue), Pluto (violet), Bacchus (wine). Carna and Janus belong to the strix: Carna keeps the striges from the cradle, Janus gave her the power over the door.
+- The gods, in order: Carna (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Minerva (olive leaf), Mercurius (slate blue), Pluto (heather), Bacchus (claret). All but Carna are muted, as in dark academia: deep, warm, never bright. Carna and Janus belong to the strix: Carna keeps the striges from the cradle, Janus gave her the power over the door.
 - An aspect changes only the accent and its family (`accent`, `accent-hover`, `accent-pressed`, `accent-soft`, `accent-text`, `on-accent`, `focus`, terminal cursor and selection) and tints the grounds (`background`, the surfaces, `border`) a little toward the god's hue. Text, `line`, the status colours and syntax stay the same in every aspect, so readability never depends on the god.
-- In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo, Minerva, Mercurius, Mars) put dark text on their fills; `on-accent` says which.
+- In code the aspect is a theme: `data-theme="mars"` on the root, or on any element to scope it. Light accents (Janus, Apollo and Minerva) put dark text on their fills, the others white; `on-accent` says which.
 - Every plate is an engraving printed in two inks of its aspect: dark ink on dim cream, and inside the disc the paper takes the god's colour.
 - Browse with the arrow keys, the wheel or a click on a neighbour; the small dot under the name is the god's colour. Enter or a click on the middle card spreads the plate as a growing circle from the click point over `dur-reveal`; then the aspect switches and the picker fades.
 - Other themes bring their own wallpapers and keep one accent.

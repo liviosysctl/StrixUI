@@ -14,6 +14,6 @@ The pantheon of the default theme: eight Roman gods, each an engraving printed i
 
 No ancient likeness of Carna survives. Her plate is a veiled vestal, chosen for the veil and the watchful face, and its caption says so.
 
-Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent`; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
+Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `line` at 46%, ink becomes the aspect's `background`; inside the disc the paper becomes the aspect's `accent` at 90% with a little of the cream under it; darken toward the edges, hardest along the top 110px and the bottom 90px; add fine grain.
 
 Add further gods only from collections that state public-domain status, give each an aspect in `tools/pantheon.py`, treat it the same way, and list title, engraver, date, source and licence here.

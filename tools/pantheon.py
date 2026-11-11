@@ -12,16 +12,21 @@ the same lightness steps as Carna, the default.
 """
 import math
 
-# name, Latin name, accent fill, short note on the colour
-GODS = [
-    ('carna',     'Carna',     '#c8102e', 'Strix red. Carna keeps the striges from the cradle; the default.'),
-    ('janus',     'Janus',     '#2e9a84', 'Verdigris, the green of old bronze doors and keys.'),
-    ('apollo',    'Apollo',    '#d4a21a', 'Sun gold.'),
-    ('mars',      'Mars',      '#e0641f', 'Ember, iron in the forge.'),
-    ('minerva',   'Minerva',   '#8f9b2c', 'Olive, her tree.'),
-    ('mercurius', 'Mercurius', '#3f86c8', 'Quicksilver blue.'),
-    ('pluto',     'Pluto',     '#7d52d4', 'Violet of the underworld.'),
-    ('bacchus',   'Bacchus',   '#b23472', 'Wine.'),
+# name, Latin name, accent fill, short note on the colour.
+# Dark academia: every accent is muted (OKLCH chroma 0.05 to 0.10, against 0.2 for a pure colour) and
+# leans warm, like leather, brass, ink and old bindings. Only Carna keeps the full Strix red.
+def _acc(L, C, H):
+    return oklch(L, C, H)
+
+GODS_SPEC = [
+    ('carna',     'Carna',     '#c8102e',               'Strix red. Carna keeps the striges from the cradle; the default.'),
+    ('janus',     'Janus',     (0.59, 0.048, 168),      'Patina, the green of old bronze doors and keys.'),
+    ('apollo',    'Apollo',    (0.68, 0.085, 78),       'Antique gold, worn brass.'),
+    ('mars',      'Mars',      (0.57, 0.105, 45),       'Rust, iron and burnt sienna.'),
+    ('minerva',   'Minerva',   (0.60, 0.065, 112),      'Olive leaf, moss on stone.'),
+    ('mercurius', 'Mercurius', (0.57, 0.048, 248),      'Slate and ink blue.'),
+    ('pluto',     'Pluto',     (0.55, 0.060, 305),      'Heather, faded plum.'),
+    ('bacchus',   'Bacchus',   (0.52, 0.085, 10),      'Claret, old wine.'),
 ]
 DEFAULT = 'carna'
 
@@ -87,6 +92,8 @@ def contrast(a, b):
     la, lb = sorted((luminance(a), luminance(b)), reverse=True)
     return (la + 0.05) / (lb + 0.05)
 
+
+GODS = [(n, l, a if isinstance(a, str) else oklch(*a), d) for n, l, a, d in GODS_SPEC]
 
 # ---------------------------------------------------------------- aspects
 def _lighten_to(fg, bg, minimum, H, C, L):

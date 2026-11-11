@@ -4,43 +4,43 @@
  "created": "2026-11-10T20:24:30Z",
  "wallpapers": {
   "carna.jpg": {
-   "blob": "51715aa263d5282e4cec311a9f1d2420",
-   "size": 488498,
+   "blob": "c2fed1a6ff87b9c51e1417c413bd869d",
+   "size": 491032,
    "type": "image/jpeg"
   },
   "janus.jpg": {
-   "blob": "7ed521400d732c1cc38d2e13b61c5ad9",
-   "size": 947227,
+   "blob": "e6dec074eb9b7a654bf95f13d282f2c2",
+   "size": 944650,
    "type": "image/jpeg"
   },
   "apollo.jpg": {
-   "blob": "bac5ff39649ac8fd3737c97c6dac7c71",
-   "size": 783904,
+   "blob": "d735047cea0ba70ed7848aa9bc72824e",
+   "size": 769583,
    "type": "image/jpeg"
   },
   "mars.jpg": {
-   "blob": "065083b2c7a87538a08d92c856112267",
-   "size": 641605,
+   "blob": "3ce42143088aadf856d6c3ff5e29859e",
+   "size": 631553,
    "type": "image/jpeg"
   },
   "minerva.jpg": {
-   "blob": "273e21040159cfb4f067cbd709dd2816",
-   "size": 702921,
+   "blob": "b4ec8e071ce499247b7f5574f8ea26c2",
+   "size": 697329,
    "type": "image/jpeg"
   },
   "mercurius.jpg": {
-   "blob": "f4b6dc959e13984e7fb492379db986fc",
-   "size": 748903,
+   "blob": "f23de46dea7fe1908c7bd773b98dd1ae",
+   "size": 736383,
    "type": "image/jpeg"
   },
   "pluto.jpg": {
-   "blob": "40405f53f4aa051da1637bc6bfc40b67",
-   "size": 745358,
+   "blob": "29b44e5ca900dac5a146387c59ae71a1",
+   "size": 740885,
    "type": "image/jpeg"
   },
   "bacchus.jpg": {
-   "blob": "dbba75815bb406d07480dfab4b749400",
-   "size": 739672,
+   "blob": "0b1aff047346223424503ef8f1b62a91",
+   "size": 739263,
    "type": "image/jpeg"
   },
   "star-chart.svg": {

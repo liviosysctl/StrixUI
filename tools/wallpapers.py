@@ -79,7 +79,8 @@ def make(src, box, disc, out, bg='#0b0a09', accent='#c8102e', paper=0.46, vig=0.
     # outside the disc: dark ink on dim cream paper. Inside: the paper takes the accent and the ink
     # stays dark, so light accents (gold, olive) keep the engraving readable as well as red does
     ink = BG
-    pap = CREAM * paper * (1 - m) + ACC * 0.95 * m
+    # the disc is printed like ink on old paper: the accent, a little dulled by the cream under it
+    pap = CREAM * paper * (1 - m) + (ACC * 0.90 + CREAM * paper * 0.12) * m
     img = ink * (1 - l[..., None]) + pap * l[..., None]
     dv = np.sqrt(((xx - cx) / (W * 0.62)) ** 2 + ((yy - cy) / (H * 0.78)) ** 2)
     v = 1 - vig * np.clip((dv - 0.25) / 0.75, 0, 1) ** 1.4
