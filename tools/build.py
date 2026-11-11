@@ -289,7 +289,7 @@ def main():
     ap.add_argument('--artifact', metavar='DIR', help='write the artifact layout (DIR/project/...) instead of design-system/')
     args = ap.parse_args()
     artifact = bool(args.artifact)
-    import components, docs, usage
+    import components, docs, usage, wallpapers
     if artifact:
         OUT = os.path.join(os.path.abspath(args.artifact), 'project')
     if os.path.exists(OUT):
@@ -317,7 +317,12 @@ def main():
     names = [c['name'] for c in components.COMPONENTS]
     header = '/* @ds-bundle: %s */\n' % json.dumps({'format': 4, 'namespace': NS, 'components': [{'name': n} for n in names]})
     js = open(os.path.join(SRC, 'bundle.js'), encoding='utf-8').read()
+    # wallpapers: the upload in the artifact, else relative to bundle.js (the script resolves them against its own URL)
+    gods = [dict(id=g[0], name=g[1], wall='/_blob/' + bid if artifact else '../assets/Wallpapers/' + fn, plate=components._CAP[g[0]][1],
+                 disc=list(wallpapers.PLATES[g[0]][2]))
+            for g in themes.GODS for bid, fn in components.BLOBS.items() if fn == g[0] + '.jpg']
     js = js.replace('__ICONS__', json.dumps(icons(), ensure_ascii=False)).replace('__WALL__', json.dumps(wallpaper(True)))
+    js = js.replace('__GODS__', json.dumps(gods, ensure_ascii=False))
     assert '</script' not in js and '<!--' not in js
     w('components/bundle.js', header + js)
     w('components/bundle.css', open(os.path.join(SRC, 'bundle.css'), encoding='utf-8').read())

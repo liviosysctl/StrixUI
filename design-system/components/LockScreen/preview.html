@@ -15,8 +15,8 @@
 .k-wall[data-clear] { filter: none; transform: none; }
 </style></head>
 <body>
-<div class="k-screen" id="scr" data-theme="saturnus">
-  <div class="k-wall" data-dim id="wall" style="background-image:url(../../assets/Wallpapers/saturnus.jpg);background-position:center"></div>
+<div class="k-screen" id="scr">
+  <div class="k-wall" data-follow data-dim id="wall" style="background-image:url(../../assets/Wallpapers/saturnus.jpg);background-position:center"></div>
   <div class="k-grain"></div>
   <div id="lock">
     <div class="col">
@@ -73,7 +73,11 @@ Kit.hydrate(document);
     last = i; var g = GODS[i];
     scr.setAttribute('data-theme', g[0]); wall.style.backgroundImage = 'url(' + g[1] + ')'; plate.textContent = g[2];
   }
-  try { pick(); } catch (e) {}
+  // the first lock shows the theme the page shows; the page switching theme starts over from there
+  Kit.onTheme(function (id) {
+    scr.removeAttribute('data-theme');
+    for (var i = 0; i < GODS.length; i++) if (GODS[i][0] === id) { last = i; plate.textContent = GODS[i][2]; }
+  });
   document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; pick(); lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
 })();
 </script>

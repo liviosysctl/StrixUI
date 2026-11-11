@@ -126,9 +126,9 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 ## Using the system in code
 
 - Linux, the shell and every app: Quickshell. Add the `qml/` folder of the repository to the import path and `import Strix`. Every component has a QML type of the same purpose (its README says which), every token is a property of the `Theme` singleton in camelCase (`Theme.textMuted`, `Theme.space3`, `Theme.durBase` with `Theme.easeOut` as `easing.bezierCurve`), and `Label { textStyle: "caption" }` sets a type style. One `ThemeFile {}` from `Strix.Shell` keeps `Theme` on the theme the engine applied.
-- Windows, the bootstick app: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup.
+- Windows, the bootstick app: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup. `Kit.theme()` is the theme on `<html data-theme>`, `Kit.onTheme(fn)` follows it, `Kit.god(id)` gives a god's name, plate caption and wallpaper; a `.k-wall[data-follow]` shows the wallpaper of the theme in use.
 - Every back end: Rust, with the crate `strix-design` (`rust/strix-design/` in the repository): the tokens, the eight themes, the theme cycle, the lock screen rotation and the default hotkeys, without dependencies.
-- The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`.
+- The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`. Themes from outside the eight gods live in their own repositories (layout 1, see `strix-theme-template`), made with `tools/pack.py` from one accent and one public domain engraving; the QML `Theme` shows them with their own wallpaper.
 - Read a component's README before using it. Do not restyle a component from outside and do not add colours, radii, durations or curves that are not tokens.
 - Hyprland, Ghostty, the splash and the installer take their values from `tokens.json` or from the theme engine; Surfaces says which.
 - To reduce motion, set `Theme.reducedMotion` in QML or `data-motion="reduced"` on the root element in HTML; in HTML the system setting is respected without it.

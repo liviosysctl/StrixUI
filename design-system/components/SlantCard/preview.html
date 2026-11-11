@@ -6,11 +6,13 @@
 <div class="k-carousel" style="height:320px" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
 <script>
 Kit.hydrate(document);
-var GODS = [["Saturnus", "../../assets/Wallpapers/saturnus.jpg"], ["Janus", "../../assets/Wallpapers/janus.jpg"], ["Apollo", "../../assets/Wallpapers/apollo.jpg"], ["Mars", "../../assets/Wallpapers/mars.jpg"], ["Vulcanus", "../../assets/Wallpapers/vulcanus.jpg"], ["Neptunus", "../../assets/Wallpapers/neptunus.jpg"], ["Pluto", "../../assets/Wallpapers/pluto.jpg"], ["Bacchus", "../../assets/Wallpapers/bacchus.jpg"]];
-document.getElementById('track').innerHTML = GODS.map(function (g, i) {
-  return '<button class="k-slant" aria-selected="' + (i === 0) + '" aria-label="' + g[0] + '"><span class="k-slant-art"><img alt="" src="' + g[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + g[0] + '</span></button>';
+function at(id) { return Math.max(0, Kit.gods.findIndex(function (g) { return g.id === id; })); }
+document.getElementById('track').innerHTML = Kit.gods.map(function (g, i) {
+  return '<button class="k-slant" aria-selected="' + (i === at(Kit.theme())) + '" aria-label="' + g.name + '"><span class="k-slant-art"><img alt="" src="' + g.wall + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + g.name + '</span></button>';
 }).join('');
 Kit.hydrate(document);
+var car = document.querySelector('.k-carousel');
+Kit.onTheme(function (id) { car._k.select(at(id)); });
 </script>
 </body>
 </html>

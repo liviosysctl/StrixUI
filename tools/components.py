@@ -6,7 +6,8 @@ def I(n, cls=''):
 BLOBS = {'0d757135df30d2bf6652f3c0a18483d5': 'saturnus.jpg', 'e6dec074eb9b7a654bf95f13d282f2c2': 'janus.jpg', 'b41733760ffae9de3f6f5d88682af092': 'apollo.jpg', '3ce42143088aadf856d6c3ff5e29859e': 'mars.jpg', '3b21996e74bfecb14fcb2f68061b8c3d': 'vulcanus.jpg', '479cdcb0b9c5173af68ab78ad369c814': 'neptunus.jpg', '29b44e5ca900dac5a146387c59ae71a1': 'pluto.jpg', '0b1aff047346223424503ef8f1b62a91': 'bacchus.jpg'}
 SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS = ['/_blob/' + k for k in BLOBS]
 def WALL(url, extra='', pos='center'):
-    return '<div class="k-wall"%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
+    # data-follow: the wallpaper follows the theme the page shows (Kit.onTheme); url is the first paint
+    return '<div class="k-wall" data-follow%s style="background-image:url(%s);background-position:%s"></div>' % (extra, url, pos)
 COMPONENTS = []
 def comp(name, group, height, html, doc, js='', css='', width=None):
     COMPONENTS.append(dict(name=name, group=group, height=height, html=html, doc=doc, js=js, css=css, width=width))
@@ -335,7 +336,7 @@ comp('InfoBlock', 'Data', 215, r'''
     <dt>OS</dt><i>::</i><dd>Strix 0.1.0</dd>
     <dt>Kernel</dt><i>::</i><dd>6.18.2</dd>
     <dt>Shell</dt><i>::</i><dd>Quickshell on Hyprland</dd>
-    <dt>Theme</dt><i>::</i><dd>Saturnus, dark</dd>
+    <dt>Theme</dt><i>::</i><dd><span data-follow-name>Saturnus</span>, dark</dd>
     <dt>Memory</dt><i>::</i><dd>7.4 GiB of 32 GiB</dd>
     <dt>Disk</dt><i>::</i><dd>162 GiB of 952 GiB, btrfs</dd>
     <dt>Uptime</dt><i>::</i><dd>3 hours, 19 minutes</dd>
@@ -451,7 +452,7 @@ SEARCH_JS = r'''
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
     {k: 'setting', t: 'Hotkeys', p: ['Settings'], i: 'command', w: 'shortcuts keybindings keys bind change add', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
-    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Saturnus', w: 'colours look god'},
+    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: Kit.god().name, w: 'colours look god'},
     {k: 'setting', t: 'Variant', p: ['Settings', 'Appearance'], i: 'sun', v: 'Dark', w: 'light dark'},
     {k: 'setting', t: 'Text size', p: ['Settings', 'Appearance'], i: 'type', v: '100%', w: 'font scale'},
     {k: 'setting', t: 'Clock style', p: ['Settings', 'Lock screen'], i: 'clock', v: 'Stacked', w: 'time'},
@@ -557,6 +558,7 @@ SEARCH_JS = r'''
   list.addEventListener('mousemove', function (ev) { var li = ev.target.closest('.k-hit'); if (li && +li.dataset.n !== sel) { sel = +li.dataset.n; Array.prototype.forEach.call(list.children, function (c) { c.setAttribute('aria-selected', +c.dataset.n === sel); }); } });
   list.addEventListener('click', function (ev) { var li = ev.target.closest('.k-hit'); if (li) { sel = +li.dataset.n; run(shown[sel]); input.focus({preventScroll: true}); } });
   seg.addEventListener('change', function (ev) { filter = KINDS[ev.detail.index]; sel = 0; draw(); input.focus({preventScroll: true}); });
+  Kit.onTheme(function () { var h = root.closest('[data-wall-host]'); if (h) h.removeAttribute('data-theme'); });
   input.value = root.getAttribute('data-query') || '';
   draw();
   try { input.focus({preventScroll: true}); } catch (e) {}
@@ -564,7 +566,7 @@ SEARCH_JS = r'''
 '''
 
 comp('Search', 'Shell', 560, r'''
-<div data-wall-host data-theme="saturnus" style="position:relative;height:560px;overflow:hidden;background:var(--background)">''' + WALL(SATURNUS, ' data-dim', pos='center 30%') + r'''
+<div data-wall-host style="position:relative;height:560px;overflow:hidden;background:var(--background)">''' + WALL(SATURNUS, ' data-dim', pos='center 30%') + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;padding-top:56px">
     <div class="k-search k-surface" id="srch" data-query="theme" data-gods=''' + "'" + json.dumps(dict(zip(['saturnus', 'janus', 'apollo', 'mars', 'vulcanus', 'neptunus', 'pluto', 'bacchus'], [SATURNUS, JANUS, APOLLO, MARS, VULCANUS, NEPTUNUS, PLUTO, BACCHUS]))) + "'" + r''' role="dialog" aria-label="Search">
@@ -753,11 +755,13 @@ The tall slanted card of the theme picker, and the carousel that holds a row of 
 - A click on the middle card fires `apply` with the pointer position, which is where the circular reveal starts (`Kit.reveal`).
 - The art is the theme's or the god's own engraving, never a screenshot of somebody else's work.
 ''', js=r'''
-var GODS = ''' + json.dumps([['Saturnus', SATURNUS], ['Janus', JANUS], ['Apollo', APOLLO], ['Mars', MARS], ['Vulcanus', VULCANUS], ['Neptunus', NEPTUNUS], ['Pluto', PLUTO], ['Bacchus', BACCHUS]]) + r''';
-document.getElementById('track').innerHTML = GODS.map(function (g, i) {
-  return '<button class="k-slant" aria-selected="' + (i === 0) + '" aria-label="' + g[0] + '"><span class="k-slant-art"><img alt="" src="' + g[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + g[0] + '</span></button>';
+function at(id) { return Math.max(0, Kit.gods.findIndex(function (g) { return g.id === id; })); }
+document.getElementById('track').innerHTML = Kit.gods.map(function (g, i) {
+  return '<button class="k-slant" aria-selected="' + (i === at(Kit.theme())) + '" aria-label="' + g.name + '"><span class="k-slant-art"><img alt="" src="' + g.wall + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + g.name + '</span></button>';
 }).join('');
 Kit.hydrate(document);
+var car = document.querySelector('.k-carousel');
+Kit.onTheme(function (id) { car._k.select(at(id)); });
 ''')
 
 comp('WindowFrame', 'Shell', 260, r'''
@@ -784,7 +788,7 @@ def screen(name, height, html, doc, js='', css='', width=1280):
     SCREENS.append(dict(name=name, group='Screens', height=height, html=html, doc=doc, js=js, css=css, width=width))
 
 screen('LockScreen', 720, r'''
-<div class="k-screen" id="scr" data-theme="saturnus">
+<div class="k-screen" id="scr">
   ''' + WALL(SATURNUS, ' data-dim id="wall"') + r'''
   <div class="k-grain"></div>
   <div id="lock">
@@ -861,7 +865,11 @@ The lock screen, left layout. Every time the screen locks, it shows another god 
     last = i; var g = GODS[i];
     scr.setAttribute('data-theme', g[0]); wall.style.backgroundImage = 'url(' + g[1] + ')'; plate.textContent = g[2];
   }
-  try { pick(); } catch (e) {}
+  // the first lock shows the theme the page shows; the page switching theme starts over from there
+  Kit.onTheme(function (id) {
+    scr.removeAttribute('data-theme');
+    for (var i = 0; i < GODS.length; i++) if (GODS[i][0] === id) { last = i; plate.textContent = GODS[i][2]; }
+  });
   document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; pick(); lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
 })();
 ''')
@@ -890,7 +898,7 @@ screen('Desktop', 720, r'''
   ''' + WALL(SATURNUS) + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0 0 auto 0">''' + BAR + r'''</div>
-  <div class="k-plate" id="plate">Saturnus with his sickle. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592</div>
+  <div class="k-plate" id="plate" data-follow-plate>Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592</div>
   <div id="tiles" data-hidden>
     <div class="k-win" data-active><div class="k-win-body"><pre class="k-code">''' + CODE + r'''</pre></div></div>
     <div class="k-win"><div class="k-win-body"><div style="display:flex;gap:20px;align-items:center"><div style="text-align:center"><div class="k-wordmark">Strix</div><div class="k-motto" style="font-size:11px">nocte vigilat</div></div>
@@ -950,13 +958,18 @@ WP_JS = 'var P = ' + json.dumps(THEMES) + ';\n' + r"""
   var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
   var picker = document.getElementById('picker'), reopen = document.getElementById('reopen'), plate = document.getElementById('plate');
   track.innerHTML = P.map(function (p, i) {
-    return '<button class="k-slant" aria-selected="' + (i === 0) + '" aria-label="' + p[2] + '"><span class="k-slant-art"><img alt="" src="' + p[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + p[2] + '<small><i class="dot" style="background:' + p[5] + '"></i>' + p[3] + '</small></span></button>';
+    return '<button class="k-slant" aria-selected="' + (p[0] === Kit.theme()) + '" aria-label="' + p[2] + '"><span class="k-slant-art"><img alt="" src="' + p[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + p[2] + '<small><i class="dot" style="background:' + p[5] + '"></i>' + p[3] + '</small></span></button>';
   }).join('');
   Kit.hydrate(document);
   function caption() { plate.textContent = P[car._k.index][4]; }
   car.addEventListener('change', caption); caption();
   // the theme on the desktop: set by hand, or by the cycle every 10 minutes
   var cur = 0, PERIOD = 10 * 60 * 1000, speed = 1, last = Date.now(), virt = 0, prev = Date.now();
+  // the picker opens on the theme the page shows, and follows the page when it switches
+  Kit.onTheme(function (id) {
+    for (var i = 0; i < P.length; i++) if (P[i][0] === id) { cur = i; car._k.select(i, true); }
+    scr.removeAttribute('data-theme'); rev.removeAttribute('data-on'); virt = 0; caption();
+  });
   var keep = document.getElementById('keep'), fast = document.getElementById('fast'), next = document.getElementById('next');
   function show(i, x, y, close) {
     var p = P[i]; cur = i;
@@ -996,7 +1009,7 @@ WP_JS = 'var P = ' + json.dumps(THEMES) + ';\n' + r"""
 """
 
 screen('ThemePicker', 720, r'''
-<div class="k-screen" id="scr" data-theme="saturnus">
+<div class="k-screen" id="scr">
   ''' + WALL(SATURNUS, ' id="base"') + r'''
   <div class="k-reveal" id="rev" style="background:var(--background) center / cover no-repeat"></div>
   <div class="k-grain"></div>
@@ -1202,7 +1215,7 @@ CHEAT_JS = HK_JS + r"""
 """
 
 screen('Cheatsheet', 720, r'''
-<div class="k-screen" data-theme="saturnus">
+<div class="k-screen">
   ''' + WALL(SATURNUS, ' data-dim') + r'''
   <div class="k-grain"></div>
   <div class="k-scrim" style="animation:none;place-items:start center;padding-top:44px">
@@ -1226,7 +1239,7 @@ The cheat sheet (Super K) is the one place that explains the keys. Components ca
 ''', js=CHEAT_JS)
 
 screen('SettingsHotkeys', 720, r'''
-<div class="k-screen" data-theme="saturnus">
+<div class="k-screen">
   ''' + WALL(SATURNUS) + r'''
   <div class="k-grain"></div>
   ''' + SETTINGS_HTML(close=False) + r'''
@@ -1248,19 +1261,19 @@ def sw(n):
     return '<span class="k-swatch" style="background:var(--term-%s)" title="%s"></span>' % (n, n)
 ANSI = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
 screen('Terminal', 720, r'''
-<div class="k-screen" data-theme="saturnus">
+<div class="k-screen">
   ''' + WALL(SATURNUS) + r'''
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0 0 auto 0">''' + BAR + r'''</div>
   <div class="k-win term" data-active>
     <div class="k-win-body">
-      <img class="ghost" alt="" src="''' + SATURNUS + r'''">
+      <img class="ghost" data-follow alt="" src="''' + SATURNUS + r'''">
 <pre class="k-code" style="color:var(--term-foreground)"><span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> strix-info
 <span class="m">╓</span>                                        <span class="m">╖</span>
   <span class="p">larp</span>   <span class="i">Strix 0.1.0</span>
   <span class="b">Kernel</span>  <span class="m">::</span> 6.18.2
   <span class="b">Shell</span>   <span class="m">::</span> Quickshell on Hyprland
-  <span class="b">Theme</span>   <span class="m">::</span> <span class="pc">Saturnus</span>, dark, 4 more min
+  <span class="b">Theme</span>   <span class="m">::</span> <span class="pc" data-follow-name>Saturnus</span>, dark, 4 more min
   <span class="b">Disk</span>    <span class="m">::</span> 162 GiB of 952 GiB
   <span class="sw">''' + ''.join('<i style="background:var(--term-%s)"></i>' % a for a in ANSI) + r'''</span>
   <span class="sw">''' + ''.join('<i style="background:var(--term-bright-%s)"></i>' % a for a in ANSI) + r'''</span>

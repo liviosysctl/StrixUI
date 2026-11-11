@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"><title>Search — preview</title></head>
 <body>
-<div data-wall-host data-theme="saturnus" style="position:relative;height:560px;overflow:hidden;background:var(--background)"><div class="k-wall" data-dim style="background-image:url(../../assets/Wallpapers/saturnus.jpg);background-position:center 30%"></div>
+<div data-wall-host style="position:relative;height:560px;overflow:hidden;background:var(--background)"><div class="k-wall" data-follow data-dim style="background-image:url(../../assets/Wallpapers/saturnus.jpg);background-position:center 30%"></div>
   <div class="k-grain"></div>
   <div style="position:absolute;inset:0;display:flex;justify-content:center;align-items:flex-start;padding-top:56px">
     <div class="k-search k-surface" id="srch" data-query="theme" data-gods='{"saturnus": "../../assets/Wallpapers/saturnus.jpg", "janus": "../../assets/Wallpapers/janus.jpg", "apollo": "../../assets/Wallpapers/apollo.jpg", "mars": "../../assets/Wallpapers/mars.jpg", "vulcanus": "../../assets/Wallpapers/vulcanus.jpg", "neptunus": "../../assets/Wallpapers/neptunus.jpg", "pluto": "../../assets/Wallpapers/pluto.jpg", "bacchus": "../../assets/Wallpapers/bacchus.jpg"}' role="dialog" aria-label="Search">
@@ -80,7 +80,7 @@ Kit.hydrate(document);
     {k: 'setting', t: 'Keyboard', p: ['Settings'], i: 'keyboard', w: 'layout input', g: 'settings', page: 1},
     {k: 'setting', t: 'Hotkeys', p: ['Settings'], i: 'command', w: 'shortcuts keybindings keys bind change add', g: 'settings', page: 1},
     {k: 'setting', t: 'Notifications', p: ['Settings'], i: 'bell', w: 'alerts', g: 'settings', page: 1},
-    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: 'Saturnus', w: 'colours look god'},
+    {k: 'setting', t: 'Theme', p: ['Settings', 'Appearance'], i: 'palette', v: Kit.god().name, w: 'colours look god'},
     {k: 'setting', t: 'Variant', p: ['Settings', 'Appearance'], i: 'sun', v: 'Dark', w: 'light dark'},
     {k: 'setting', t: 'Text size', p: ['Settings', 'Appearance'], i: 'type', v: '100%', w: 'font scale'},
     {k: 'setting', t: 'Clock style', p: ['Settings', 'Lock screen'], i: 'clock', v: 'Stacked', w: 'time'},
@@ -186,6 +186,7 @@ Kit.hydrate(document);
   list.addEventListener('mousemove', function (ev) { var li = ev.target.closest('.k-hit'); if (li && +li.dataset.n !== sel) { sel = +li.dataset.n; Array.prototype.forEach.call(list.children, function (c) { c.setAttribute('aria-selected', +c.dataset.n === sel); }); } });
   list.addEventListener('click', function (ev) { var li = ev.target.closest('.k-hit'); if (li) { sel = +li.dataset.n; run(shown[sel]); input.focus({preventScroll: true}); } });
   seg.addEventListener('change', function (ev) { filter = KINDS[ev.detail.index]; sel = 0; draw(); input.focus({preventScroll: true}); });
+  Kit.onTheme(function () { var h = root.closest('[data-wall-host]'); if (h) h.removeAttribute('data-theme'); });
   input.value = root.getAttribute('data-query') || '';
   draw();
   try { input.focus({preventScroll: true}); } catch (e) {}

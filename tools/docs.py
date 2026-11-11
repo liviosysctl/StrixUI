@@ -117,9 +117,9 @@ __GODS_TABLE__
 ## Using the system in code
 
 - Linux, the shell and every app: Quickshell. Add the `qml/` folder of the repository to the import path and `import Strix`. Every component has a QML type of the same purpose (its README says which), every token is a property of the `Theme` singleton in camelCase (`Theme.textMuted`, `Theme.space3`, `Theme.durBase` with `Theme.easeOut` as `easing.bezierCurve`), and `Label { textStyle: "caption" }` sets a type style. One `ThemeFile {}` from `Strix.Shell` keeps `Theme` on the theme the engine applied.
-- Windows, the bootstick app: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup.
+- Windows, the bootstick app: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup. `Kit.theme()` is the theme on `<html data-theme>`, `Kit.onTheme(fn)` follows it, `Kit.god(id)` gives a god's name, plate caption and wallpaper; a `.k-wall[data-follow]` shows the wallpaper of the theme in use.
 - Every back end: Rust, with the crate `strix-design` (`rust/strix-design/` in the repository): the tokens, the eight themes, the theme cycle, the lock screen rotation and the default hotkeys, without dependencies.
-- The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`.
+- The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`. Themes from outside the eight gods live in their own repositories (layout 1, see `strix-theme-template`), made with `tools/pack.py` from one accent and one public domain engraving; the QML `Theme` shows them with their own wallpaper.
 - Read a component's README before using it. Do not restyle a component from outside and do not add colours, radii, durations or curves that are not tokens.
 - Hyprland, Ghostty, the splash and the installer take their values from `tokens.json` or from the theme engine; Surfaces says which.
 - To reduce motion, set `Theme.reducedMotion` in QML or `data-motion="reduced"` on the root element in HTML; in HTML the system setting is respected without it.
@@ -337,7 +337,7 @@ Treatment of a plate: crop to the head and upper body at 16:9; paper becomes `li
 Add further gods only from collections that state public-domain status, give each a theme in `tools/themes.py`, treat it the same way, and list title, engraver, date, source and licence here.
 '''
 
-COVER = r'''<!-- @dsCard height=288 -->
+COVER = r"""<!-- @dsCard height=288 -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -346,15 +346,13 @@ COVER = r'''<!-- @dsCard height=288 -->
 <style>
   html, body { margin: 0; height: 100%; }
   body { background: var(--background); color: var(--text); overflow: hidden; }
-  .cover { position: relative; height: 288px; overflow: hidden; }
-  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
-  .art svg { display: block; width: 480px; height: 288px; }
-  .red { fill: var(--accent); }
-  .cream { fill: var(--line); }
-  .deep { fill: var(--surface-raised); }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 0; width: 960px; height: 288px; }
+  .art svg { display: block; }
+  .acc { fill: var(--accent); }
   .soft { fill: var(--accent-soft); }
-  .blk { rx: var(--radius-md); }
-  .arc { fill: none; stroke: var(--line); stroke-width: var(--line-hair); opacity: 0.6; }
+  .deep { fill: var(--surface-raised); }
+  .edge { fill: none; stroke: var(--line); stroke-width: var(--line-hair); opacity: 0.7; }
   .words { position: absolute; left: var(--space-6); bottom: var(--space-6); max-width: 440px; }
   .name { margin: 0; font-family: var(--font-fraktur); font-weight: 300; font-size: 120px; line-height: 0.95; color: var(--text); }
   .tag { margin: var(--space-2) 0 0 4px; font-family: var(--font-serif); font-style: italic; font-size: 14px; line-height: 20px; letter-spacing: 0.04em; color: var(--text-muted); }
@@ -363,21 +361,21 @@ COVER = r'''<!-- @dsCard height=288 -->
 <body>
 <div class="cover">
 <div class="art" aria-hidden="true">
-<svg viewBox="0 0 480 288" width="480" height="288">
+<svg viewBox="0 0 960 288" width="960" height="288">
 <!--
-  blocks      accent disc, 176 across (rx = half the side), the one hue the system is known by · line (cream) slab 96×208 bled off the top · surface-raised 168×200 bleeding off the right edge · accent-soft 96×48 once, for relief — about a third of 960×288
-  arrangement one disc between two slabs, bottoms on a line space-5 above the edge, space-5 gutters; the disc sits high, as on the wallpaper
-  pattern     the literal motif: "a star chart drawn in a few fine line strokes" — three concentric arcs and a meridian in line at line-hair, centred under the disc, crossing the blocks
-  scales      sides in space-2 multiples; gutters space-5; arcs space-7 apart; corners radius-md; disc rx 88
+  blocks      the theme picker in three cards, skew 40: the god's plate in the wide card (240), then accent and accent-soft as narrow cards (96), 3 apart, the last bleeding off the right
+  arrangement the wide card centred at x 640, its plate placed so the god's head and his accent disc sit in its middle; bled off top and bottom; everything right of x 480
+  pattern     the wallpaper's own mark, carried by the plate: the hair rings and the graduated ring around the head; the cream edge of the chosen card
+  scales      card widths 240 and 96 as in SlantCard, gap 3; the disc drawn at radius 78; square corners like the cards
 -->
-<rect class="cream blk" x="24" y="-16" width="96" height="208" rx="4"/>
-<rect class="soft blk" x="24" y="216" width="96" height="48" rx="4"/>
-<rect class="deep blk" x="336" y="64" width="168" height="200" rx="4"/>
-<circle class="red" cx="232" cy="124" r="88"/>
-<circle class="arc" cx="232" cy="264" r="96"/>
-<circle class="arc" cx="232" cy="264" r="144"/>
-<circle class="arc" cx="232" cy="264" r="192"/>
-<path class="arc" d="M232 0V288"/>
+<defs><clipPath id="slant"><path d="M560 -8H800L760 296H520Z"/></clipPath></defs>
+<path class="acc" d="M803 -8H899L859 296H763Z"/>
+<path class="soft" d="M902 -8H998L958 296H862Z"/>
+<g clip-path="url(#slant)">
+  <rect class="deep" x="500" y="-8" width="320" height="304"/>
+  <image id="plate" href="" preserveAspectRatio="none"/>
+</g>
+<path class="edge" d="M560.5 -8H800L760 296H520.5Z"/>
 </svg>
 </div>
 <div class="words">
@@ -385,9 +383,23 @@ COVER = r'''<!-- @dsCard height=288 -->
 <p class="tag">Old engravings, fine lines, one colour per god.</p>
 </div>
 </div>
+<script>
+(function () {
+  var plate = document.getElementById('plate');
+  // place the plate so the god's disc (on the 2560 by 1440 picture) lands in the ring at 640, 144
+  function show(id) {
+    var g = Kit.god(id), d = g.disc || [1280, 720, 250];
+    var w = 2560 * 78 / d[2], h = w * 9 / 16;
+    plate.setAttribute('href', g.wall);
+    plate.setAttribute('width', w); plate.setAttribute('height', h);
+    plate.setAttribute('x', 640 - d[0] / 2560 * w); plate.setAttribute('y', 144 - d[1] / 1440 * h);
+  }
+  if (window.Kit) Kit.onTheme(show);
+})();
+</script>
 </body>
 </html>
-'''
+"""
 
 
 def _fill():

@@ -2,6 +2,9 @@
   'use strict';
   var ICONS = __ICONS__;
   var WALL = __WALL__;
+  var GODS = __GODS__;   // [{id, name, wall, plate}] in the order of the theme picker, the default first
+  var BASE = (document.currentScript && document.currentScript.src) || location.href;
+  GODS.forEach(function (g) { try { g.wall = new URL(g.wall, BASE).href; } catch (e) {} });
   var K = {};
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -318,6 +321,41 @@
     setTimeout(end, 500);
   };
 
+  /* The theme the page shows: data-theme on <html> (the design system page sets it), else the default */
+  K.gods = GODS;
+  K.theme = function () {
+    var id = document.documentElement.getAttribute('data-theme');
+    return GODS.some(function (g) { return g.id === id; }) ? id : GODS[0].id;
+  };
+  K.god = function (id) {
+    id = id || K.theme();
+    for (var i = 0; i < GODS.length; i++) if (GODS[i].id === id) return GODS[i];
+    return GODS[0];
+  };
+  /* Calls fn(id) now and every time the page switches theme */
+  K.onTheme = function (fn) {
+    fn(K.theme());
+    var last = K.theme();
+    new MutationObserver(function () { var id = K.theme(); if (id !== last) { last = id; fn(id); } })
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  };
+  /* Wallpapers that follow the theme: .k-wall[data-follow] and img[data-follow] */
+  function follow(root) {
+    var walls = [], imgs = [], names = [], plates = [];
+    each(root, '.k-wall[data-follow]', function (w) { walls.push(w); });
+    each(root, 'img[data-follow]', function (i) { imgs.push(i); });
+    each(root, '[data-follow-name]', function (n) { names.push(n); });
+    each(root, '[data-follow-plate]', function (n) { plates.push(n); });
+    if (!walls.length && !imgs.length && !names.length && !plates.length) return;
+    K.onTheme(function (id) {
+      var g = K.god(id);
+      walls.forEach(function (w) { w.style.backgroundImage = 'url("' + g.wall + '")'; });
+      imgs.forEach(function (i) { i.src = g.wall; });
+      names.forEach(function (n) { n.textContent = g.name; });
+      plates.forEach(function (n) { n.textContent = g.plate; });
+    });
+  }
+
   K.hydrate = function (root) {
     root = root || document;
     each(root, '.k-icon[data-icon]', function (i) { if (!i.firstChild) i.innerHTML = K.icon(i.getAttribute('data-icon')); });
@@ -330,6 +368,7 @@
     each(root, '.k-viz', K.visualizer);
     each(root, '.k-carousel', K.carousel);
     each(root, '.k-dock', K.dock);
+    if (!root.__kFollow) { root.__kFollow = true; follow(root); }
   };
 
   window.Kit = K;
