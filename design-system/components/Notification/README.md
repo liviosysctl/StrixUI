@@ -15,6 +15,6 @@ A message from the system or an app, top right under the bar.
 Notification { title: n.summary; body: n.body; time: "now"; urgency: n.urgency === NotificationUrgency.Critical ? "critical" : "normal"; actions: ["Restart", "Later"] }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

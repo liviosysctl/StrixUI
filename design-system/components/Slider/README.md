@@ -14,6 +14,6 @@ A value on a range: volume, brightness, blur, timeouts.
 Slider { iconName: "volume-2"; value: 0.62; onMoved: audio.volume = value }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

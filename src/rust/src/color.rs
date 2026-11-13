@@ -40,7 +40,7 @@ impl Color {
         }
     }
 
-    /// The four channels, for APIs that take a tuple, such as Tauri's window background colour.
+    /// The four channels, for APIs that take a tuple, such as a window's background colour.
     pub const fn to_tuple(self) -> (u8, u8, u8, u8) {
         (self.r, self.g, self.b, self.a)
     }

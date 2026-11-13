@@ -1,6 +1,6 @@
 """Writes the design system for the code that uses it, from the finished tokens.json.
 
-    rust/strix-design/   Rust crate: tokens, themes, cycle, hotkeys (Linux back ends and the Tauri app)
+    rust/strix-design/   Rust crate: tokens, themes, cycle, hotkeys (every back end)
     themes/<god>/        theme.toml in format 1 for the theme engine of StrixOS
     qml/Strix/           QML module for Quickshell (the shell and the Linux apps)
 

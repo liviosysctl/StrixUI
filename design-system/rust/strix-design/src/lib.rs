@@ -2,7 +2,7 @@
 //! default hotkeys.
 //!
 //! The same values as `tokens.json`, the QML module and the web bundle, generated from one source.
-//! It has no dependencies, so it builds for the Linux back ends and for the Windows app (Tauri) alike.
+//! It has no dependencies, so every back end can take it.
 //!
 //! ```
 //! let theme = strix_design::default_theme();

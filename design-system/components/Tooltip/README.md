@@ -14,6 +14,6 @@ The name of a control that shows only a symbol, or one extra fact about it.
 ToolTip { text: "Shut down"; visible: parent.hovered }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

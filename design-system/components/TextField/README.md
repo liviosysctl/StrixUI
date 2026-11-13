@@ -16,6 +16,6 @@ TextField { label: "Name"; help: "Lowercase letters and digits"; placeholderText
 TextField { id: pw; shape: "line"; echoMode: TextInput.Password; error: wrong ? "Wrong password" : "" }  // pw.shake()
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

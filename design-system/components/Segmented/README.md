@@ -15,6 +15,6 @@ Two to four short options, one always chosen. Also the tab switch at the top of 
 Segmented { model: ["Dark", { text: "Light", enabled: false }]; currentIndex: 0; onActivated: i => ... }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

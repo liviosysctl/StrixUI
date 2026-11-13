@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Renders every preview to PNG with a real headless Chromium (the engine of WebView2).
+"""Renders every preview to PNG with a real headless Chromium.
 
     python3 tools/build.py && python3 tools/render.py              # all previews at scale 1 into build/renders/
     python3 tools/render.py LockScreen Desktop --scale 2           # some, at scale 2

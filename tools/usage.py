@@ -30,7 +30,7 @@ QML = {
     'MediaPlayer': ('MediaPlayer', 'MediaPlayer { property var p: Mpris.players.values[0]; title: p.trackTitle; artist: p.trackArtist; cover: p.trackArtUrl; playing: p.isPlaying; position: p.position; length: p.length; onToggle: p.togglePlaying() }'),
     'Visualizer': ('Visualizer', 'Visualizer { values: cava.bars }  // numbers from 0 to 1, from a cava Process'),
     'SlantCard': ('SlantCard', 'Row {\n    spacing: -37\n    Repeater {\n        model: Theme.order\n        SlantCard { source: Theme.wallpaper(modelData); name: Theme.gods[modelData].name; caption: "dark"; selected: index === picker.index }\n    }\n}'),
-    'WindowFrame': ('WindowFrame', 'WindowFrame { title: "Bootstick"; subtitle: "Strix 0.1"; active: true; Label { text: "The stick is ready." } }'),
+    'WindowFrame': ('WindowFrame', 'WindowFrame { title: "Store"; subtitle: "Apps from nixpkgs"; active: true; Label { text: "Firefox is installed." } }'),
 }
 
 SCREENS = {
@@ -43,7 +43,7 @@ SCREENS = {
     'BootSplash': 'Not Quickshell: Plymouth, rendered by the theme engine from the theme; see surfaces.md.',
 }
 
-TAURI = 'The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.'
+TAURI = 'The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.'
 
 
 def section(name, screen=False):
@@ -53,5 +53,5 @@ def section(name, screen=False):
     if name not in QML:
         return ''
     types, example = QML[name]
-    return ('\n## In Quickshell (Linux shell and apps)\n\n`import Strix`, then %s.\n\n```qml\n%s\n```\n\n## In Tauri (Windows app)\n\n%s\n'
+    return ('\n## In Quickshell (Linux shell and apps)\n\n`import Strix`, then %s.\n\n```qml\n%s\n```\n\n## In HTML (the previews)\n\n%s\n'
             % (', '.join('`%s`' % t.strip() for t in types.split(',')), example, TAURI))

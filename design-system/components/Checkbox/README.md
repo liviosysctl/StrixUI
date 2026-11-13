@@ -13,6 +13,6 @@ A choice that is confirmed later, with the form's button. Several may be on at o
 CheckBox { text: "Wi-Fi"; checked: true }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

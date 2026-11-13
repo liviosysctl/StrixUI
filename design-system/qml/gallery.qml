@@ -176,8 +176,8 @@ Rectangle {
             spacing: 10
             Caption { text: "Window" }
             WindowFrame {
-                width: 360; height: 150; title: "Bootstick"; subtitle: "Strix 0.1"
-                Label { text: "The stick is ready."; color: Theme.textMuted }
+                width: 360; height: 150; title: "Store"; subtitle: "Apps from nixpkgs"
+                Label { text: "Firefox is installed."; color: Theme.textMuted }
             }
             MediaPlayer { title: "Nocturne in E-flat"; artist: "Chopin, op. 9 no. 2"; position: 74; length: 271; playing: true }
         }

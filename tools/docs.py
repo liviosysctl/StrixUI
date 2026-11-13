@@ -1,6 +1,6 @@
 README = r'''Strix is a NixOS-based system with its own desktop. Its default look is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace. It should feel like a terminal kept in a library. Everything is small, thin and exact; nothing is chunky.
 
-This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, search, notifications), the Linux apps (settings, the store, the graphical installer), the terminal, the boot splash and the text installer. Every own program has its back end in Rust and its front end in Quickshell (QML). The HTML bundle exists for the bootstick app of the M245 proof of concept (Tauri), the one program outside Linux. Surfaces lists what each one takes.
+This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, search, notifications), the Linux apps (settings, the store, the graphical installer), the terminal, the boot splash and the text installer. Every own program has its back end in Rust and its front end in Quickshell (QML); an HTML bundle of the same components draws the previews. Surfaces lists what each one takes.
 
 ## Principles
 
@@ -56,7 +56,7 @@ __GODS_TABLE__
 ## Type
 
 - Three families, three jobs. `mono` (JetBrains Mono) is the interface: data, labels, controls, the terminal. `serif` (IM Fell English, cut from the Fell types of the 17th century) is the voice: titles, dates, italic asides, the motto, plate captions. `fraktur` (Grenze Gotisch, a light blackletter that stays readable) is for names only: the wordmark and theme names.
-- All three are licensed under the SIL Open Font License and are shipped with every surface, so Linux and Windows render the same.
+- All three are licensed under the SIL Open Font License and are shipped with every surface, so every surface renders the same.
 - Use the styles by name. Blackletter: `display` (wordmark on lock screen and splash), `emblem` (theme names, the name in About). Serif: `title-lg`, `title`, `subtitle`, `aside`, `motto`. Mono: `clock`, `heading`, `body`, `label`, `value`, `caption`, `micro`.
 - Blackletter is for one or two words that are a name. Never a sentence, never a label, never below 36px.
 - The serif has one weight. Emphasis in the serif is italic; emphasis in mono is weight 600. Do not underline and do not colour text for emphasis.
@@ -117,7 +117,7 @@ __GODS_TABLE__
 ## Using the system in code
 
 - Linux, the shell and every app: Quickshell. Add the `qml/` folder of the repository to the import path and `import Strix`. Every component has a QML type of the same purpose (its README says which), every token is a property of the `Theme` singleton in camelCase (`Theme.textMuted`, `Theme.space3`, `Theme.durBase` with `Theme.easeOut` as `easing.bezierCurve`), and `Label { textStyle: "caption" }` sets a type style. One `ThemeFile {}` from `Strix.Shell` keeps `Theme` on the theme the engine applied.
-- The bootstick app of the proof of concept: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup. `Kit.theme()` is the theme on `<html data-theme>`, `Kit.onTheme(fn)` follows it, `Kit.god(id)` gives a god's name, plate caption and wallpaper; a `.k-wall[data-follow]` shows the wallpaper of the theme in use.
+- HTML, the previews: load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup. `Kit.theme()` is the theme on `<html data-theme>`, `Kit.onTheme(fn)` follows it, `Kit.god(id)` gives a god's name, plate caption and wallpaper; a `.k-wall[data-follow]` shows the wallpaper of the theme in use.
 - Every back end: Rust, with the crate `strix-design` (`rust/strix-design/` in the repository): the tokens, the eight themes, the theme cycle, the lock screen rotation and the default hotkeys, without dependencies.
 - The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`. Themes from outside the eight gods live in their own repositories (layout 1, see `strix-theme-template`), made with `tools/pack.py` from one accent and one public domain engraving; the QML `Theme` shows them with their own wallpaper.
 - Read a component's README before using it. Do not restyle a component from outside and do not add colours, radii, durations or curves that are not tokens.
@@ -256,13 +256,12 @@ Shell layers only fade at the compositor level, because the shell animates its o
 
 SURFACES = r'''# Surfaces
 
-Every own program of Strix has its back end in Rust and its front end in Quickshell (QML), for the shell and for every app. The one exception is the bootstick app of the M245 proof of concept, which runs on Windows with Tauri (HTML). Component names, states and measurements stay the same in both; only the technology differs.
+Every own program of Strix has its back end in Rust and its front end in Quickshell (QML), for the shell and for every app. The previews draw the same components in HTML; names, states and measurements are the same in both.
 
 | Surface | Front end | Back end | Takes |
 |---|---|---|---|
 | Desktop shell: bar, dock, lock screen, greeter, theme picker, search, cheat sheet, notifications, OSD | Quickshell, QML module `Strix` | Rust services: theme, search, settings | Every token from `Theme`; the colours at runtime from the theme engine through `ThemeFile`; the components by the same name |
 | Linux apps: settings, store, graphical installer | Quickshell, a `FloatingWindow` per app, QML module `Strix` | Rust, one service per app | The same module; Hyprland frames the window like any other |
-| Windows bootstick app | Tauri 2, HTML | Rust (the app's core) with `strix-design` | `tokens.css`, `bundle.css`, `bundle.js` as they are; WindowFrame's title bar |
 | Theme engine | none | Rust (`strix-theme`) | `themes/<god>/theme.toml`, one per god |
 | Compositor | Hyprland | | Window geometry, `border-active` and the animation block in the Motion section |
 | Terminal | Ghostty | | `term-` colours, `mono` at 13px with 20px line height, a block cursor in `term-cursor`, the god's plate as `background-image` at `background-image-opacity = 0.06`, the prompt `›` in the accent |
@@ -295,13 +294,12 @@ Quickshell has no general D-Bus client in QML, so a front end talks to its Rust 
 - Holds every token (`tokens::SPACE_3`, `tokens::DUR_BASE`, `tokens::EASE_OUT`, `tokens::text::BODY`), the eight themes (`THEMES`, `theme("janus")`, every colour as `Color` with `hex()` and `contrast()`), the theme cycle (`Cycle`: 10 minutes, Keep, the count goes on while kept) and the lock screen rotation (`LockRotation`), and the default hotkeys (`HOTKEYS`).
 - Its tests check every theme against the contrast rules of the theme engine and that no two hotkeys share keys.
 
-## Tauri: the bootstick app of the proof of concept
+## HTML: the previews
 
-- Put `tokens.css`, `components/` and `fonts/` into the app's `frontendDist`; nothing loads from the network, the fonts are local files.
-- `<html data-theme="saturnus">`: the app has the default theme. Set the window's `backgroundColor` in `tauri.conf.json` to the theme's `background` (`#0b0a09`), so no white shows before the page is drawn; from Rust, `strix_design::default_theme().colors.background.hex()` gives it.
-- Title bar: `decorations: false` and WindowFrame's `.k-titlebar`, with `data-tauri-drag-region` on the bar and on its title (the attribute does not reach children). The buttons call `getCurrentWindow().minimize()`, `toggleMaximize()` and `close()` from `@tauri-apps/api/window`; the capability needs `core:window:allow-start-dragging`, `allow-minimize`, `allow-toggle-maximize` and `allow-close`.
+- `tokens.css`, `components/bundle.css` and `components/bundle.js` with the fonts next to them; nothing loads from the network.
+- `<html data-theme="saturnus">` sets the theme; `Kit.theme()`, `Kit.onTheme(fn)` and `Kit.god(id)` follow and describe it.
 - `bundle.js` uses no `eval` and no inline event handlers, so a content security policy without `'unsafe-eval'` works.
-- WebView2 follows the Windows setting "Animation effects" through `prefers-reduced-motion`.
+- Motion follows `prefers-reduced-motion`.
 
 ## Sizes on a 2560 by 1440 screen at scale 1
 

@@ -13,6 +13,6 @@ The answer to a hardware key: volume, brightness, mute. A pill at the bottom cen
 Osd { iconName: "volume-2"; value: Pipewire.defaultAudioSink.audio.volume }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

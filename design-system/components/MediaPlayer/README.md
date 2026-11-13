@@ -14,6 +14,6 @@ What is playing, with the three transport buttons. Opens from the music symbol i
 MediaPlayer { property var p: Mpris.players.values[0]; title: p.trackTitle; artist: p.trackArtist; cover: p.trackArtUrl; playing: p.isPlaying; position: p.position; length: p.length; onToggle: p.togglePlaying() }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.

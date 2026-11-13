@@ -14,6 +14,6 @@ A bordered box for one self-contained thing: an app in the store, a state with i
 Card { title: "Firefox"; text: "Web browser"; interactive: true; onClicked: ... }
 ```
 
-## In Tauri (Windows app)
+## In HTML (the previews)
 
-The markup above with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
+The markup of the preview with `tokens.css`, `components/bundle.css` and `components/bundle.js`; call `Kit.hydrate(root)` after adding it.
