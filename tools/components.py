@@ -769,7 +769,7 @@ comp('WindowFrame', 'Shell', 260, r'''
   <div class="k-win" data-active id="w1"><div class="k-win-body"><span class="k-muted">Active window :: quiet accent border</span></div></div>
   <div style="display:grid;grid-template-rows:1fr 1fr;gap:12px;min-height:0">
     <div class="k-win" id="w2" style="opacity:var(--dim-inactive)"><div class="k-win-body"><span class="k-muted">Inactive :: grey border</span></div></div>
-    <div class="k-win"><div class="k-titlebar"><b>Store</b><span>Apps from nixpkgs</span><button aria-label="Minimize">''' + I('minus') + r'''</button><button aria-label="Maximize">''' + I('square') + r'''</button><button aria-label="Close" data-close>''' + I('x') + r'''</button></div><div class="k-win-body"><span class="k-muted">App title bar on Windows</span></div></div>
+    <div class="k-win"><div class="k-titlebar"><b>Store</b><span>Apps from nixpkgs</span><button aria-label="Minimize">''' + I('minus') + r'''</button><button aria-label="Maximize">''' + I('square') + r'''</button><button aria-label="Close" data-close>''' + I('x') + r'''</button></div><div class="k-win-body"><span class="k-muted">An own title bar</span></div></div>
   </div>
 </div>''', r'''
 How a window looks. Under Hyprland the compositor draws it: 1px border, 4px corners (`radius-md`), `shadow-window`, 12px (`space-3`) between windows and to the screen edge. The focused window has a quiet border in the accent (`border-active`, the accent quietened toward `border`), all others the grey one and are a touch dimmer. The border eases over `dur-slow`; focus never flashes.
