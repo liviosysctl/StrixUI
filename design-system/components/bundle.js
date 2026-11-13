@@ -11,7 +11,7 @@
 
   K.icons = Object.keys(ICONS);
   K.icon = function (name) {
-    return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" data-icon="' + name + '">' + (ICONS[name] || '') + '</svg>';
   };
   K.wallpaper = function () { return WALL; };
   K.reduced = function () {
@@ -370,7 +370,33 @@
     each(root, '.k-carousel', K.carousel);
     each(root, '.k-dock', K.dock);
     if (!root.__kFollow) { root.__kFollow = true; follow(root); }
+    if (!root.__kSwap) { root.__kSwap = true; swaps(root); }
   };
+
+  // A symbol replaced in place pops in; a count that changes bumps. Restarting a CSS animation needs the class
+  // removed, a reflow, and the class back.
+  function replay(el, cls) {
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+  }
+  function swaps(root) {
+    if (!window.MutationObserver) return;
+    var node = root.nodeType === 9 ? root.documentElement : root;
+    new MutationObserver(function (list) {
+      if (K.reduced()) return;
+      list.forEach(function (m) {
+        var t = m.target.nodeType === 3 ? m.target.parentNode : m.target;
+        if (!t || !t.classList) return;
+        if (t.classList.contains('k-icon') && m.type === 'childList' && m.removedNodes.length) {
+          var svg = t.querySelector('svg');
+          if (svg) replay(svg, 'k-symbol-pop');
+        }
+        var badge = t.closest && t.closest('.k-badge-count');
+        if (badge) replay(badge, 'k-count-bump');
+      });
+    }).observe(node, { childList: true, characterData: true, subtree: true });
+  }
 
   window.Kit = K;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { K.hydrate(document); });

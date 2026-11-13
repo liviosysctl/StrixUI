@@ -32,6 +32,7 @@ T.Button {
             visible: control.iconName !== ""
             name: control.iconName
             color: control.ink
+            hovered: control.hovered
             anchors.verticalCenter: parent.verticalCenter
         }
         Label {

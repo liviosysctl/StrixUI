@@ -17,7 +17,7 @@ Row {
     Repeater {
         model: root.count
         Rectangle {
-            width: index === root.current ? 18 : 5
+            width: index === root.current ? 18 : hh.hovered ? 9 : 5
             height: 5
             radius: 2.5
             anchors.verticalCenter: parent.verticalCenter

@@ -64,12 +64,14 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | OSD | show, hide | fade and 8px rise | `dur-base` | `ease-out`, `ease-in` | stays while keys repeat |
 | Top bar meter | new value | bar height; digits roll | `dur-slow` | `ease-out` | retargets |
 | Workspace dots | switch | active pill moves by changing widths | `dur-base` | `ease-in-out` | retargets |
+| Workspace dot | hover | stretches from 5px to 9px | `dur-base` | `ease-in-out` | reverses |
 | Top bar track | new title | old fades out, new fades in | `dur-base` | `ease-out` | new title wins |
 | Dock | pointer reaches the bottom edge | rises from `dock-rest` to `dock-height` and widens; content fades in `dur-fast` later | height `dur-base`, width `dur-slow` | `ease-out` | reverses from position |
 | Dock | pointer leaves, after 420ms | content fades, then it sinks and narrows | `dur-base`, `dur-slow` | `ease-out` | rises again |
 | Dock panel | open | scales up from the symbol that opened it; content fades in `dur-fast` later | `dur-slow` | `ease-out` | reverses from position |
 | Dock panel | close | reverse | `dur-base` | `ease-in` | reverses |
 | Dock symbol | active | fills with the accent | `dur-fast` | `ease-out` | reverses |
+| Dock symbols | dock opens | each rises 4px into place, `stagger` apart after `dur-fast`, at most eight steps | `dur-base` | `ease-spring` | finishes |
 | Search | open (Super Space) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
 | Search | close | reverse | `dur-fast` | `ease-in` | finishes |
 | Search | enter a group, go back | the list slides 12px in from the right, going back from the left | `dur-base` | `ease-out` | the newer level wins |
@@ -85,6 +87,9 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Lock screen | wrong password | field shakes; message appears | `dur-slow` | `ease-out` | restarts |
 | Visualizer | sound | bar heights | `dur-fast` | linear | follows |
 | Cursor in a terminal | idle | blink | 1.1s | steps | none |
+| Badge, count | new number | bumps to 125% and settles | `dur-slow` | `ease-spring` | restarts |
+| Symbol | name changes in place (play to pause, copy to check) | pops from 60% and fades in | `dur-base` | `ease-spring` | restarts |
+| Notification symbol | arrived | plays its symbol motion once, after the slide | see Symbols | see Symbols | finishes |
 | Recording dot | recording | breathes between 100% and 35% | `dur-loop` | `ease-in-out` | stops with recording |
 | Window | open | pops from 86% and fades in | `dur-slow` | `ease-out` | closes |
 | Window | close | shrinks to 86% and fades out | `dur-base` | `ease-in` | finishes |
@@ -94,6 +99,27 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Special workspace | toggle | slides vertically with a fade | `dur-slow` | `ease-out` | reverses |
 | Shell layers | appear, disappear | fade | `dur-fast` | `ease-out` | reverses |
 | Boot splash | start, shut down | the piece in the accent runs along the line | `dur-loop`, repeating | `ease-in-out` | none |
+
+## Symbols
+
+A symbol plays a small motion of its own when the pointer reaches the control that holds it (IconButton, Button, list row, menu item, search hit, segment), and when a keyboard focuses an IconButton. It plays once per arrival and never loops. Turns end on a symmetry of the shape (the gear by two teeth, the sun by one ray, plus and x by a quarter), so the symbol never turns back and a second hover keeps turning from where it stands. Under reduced motion symbols stand still.
+
+| Motion | Symbols | What moves | Duration | Curve |
+|---|---|---|---|---|
+| turn | `settings` 120°, `sun` 45°, `plus` `x` 90°, `refresh-cw` 180°, `rotate-cw` `disc-3` 360° | rotation, adding up | `dur-slow`, 180° and more `dur-reveal` | `ease-spring` |
+| ring | `bell` | swings from its top: 14°, -11°, 6°, rest | `dur-slow` | in-out |
+| shake | `lock`, `triangle-alert`, `circle-alert` | three swings sideways, 1.5px | `dur-slow` | `ease-out` |
+| rock back | `undo-2`, `history`, `moon`, `moon-star`, `trash-2` | tips back 18° and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| sway | `palette`, `pipette`, `pencil`, `swatch-book`, `wallpaper`, `gauge`, `cloud-sun` | tilts 10° and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| zoom | `search`, `camera`, `scan`, `scan-line` | grows to 114% with a -8° tilt and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| blink | `eye`, `eye-off` | closes to 10% height and opens | `dur-instant`, then `dur-fast` | in, then out |
+| nudge | arrows, chevrons, `skip-*`, `log-out`, `download`, `thermometer` | 2px the way it points and back | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| press | `power`, `play`, `pause`, `square` | presses in to 84% and springs back | `dur-instant`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| flicker | `zap` | the line flickers twice | `dur-base` | linear |
+| pulse | `wifi`, `bluetooth`, `volume-2`, `music` | breathes out to 112% once | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| lift | every other symbol | rises 1.5px and settles | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+
+In QML bind `hovered` of the Icon to its control (`Icon { hovered: control.hovered }`); the components here already do. In HTML the bundle plays them on `:hover` of `.k-iconbtn`, `.k-btn`, `.k-row`, `.k-hit`, menu items and segments.
 
 ## Compositor
 

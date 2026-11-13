@@ -17,6 +17,16 @@ Rectangle {
     border.width: Theme.lineHair
     border.color: kind === "accent" || kind === "count" ? Theme.accent : kind === "error" ? Theme.error : Theme.borderStrong
 
+    // A count that changes pops, so a new notification is noticed without a sound.
+    property bool _ready: false
+    Component.onCompleted: _ready = true
+    onTextChanged: if (_ready && kind === "count" && !Theme.reducedMotion) bump.restart()
+    SequentialAnimation {
+        id: bump
+        NumberAnimation { target: root; property: "scale"; to: 1.25; duration: Theme.durInstant; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut }
+        NumberAnimation { target: root; property: "scale"; to: 1; duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeSpring }
+    }
+
     Row {
         id: row
         anchors.centerIn: parent

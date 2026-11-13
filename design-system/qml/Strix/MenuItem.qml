@@ -18,7 +18,7 @@ T.MenuItem {
 
     contentItem: Row {
         spacing: Theme.space2
-        Icon { visible: control.iconName !== ""; name: control.iconName; size: 12; color: control.danger ? Theme.error : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
+        Icon { visible: control.iconName !== ""; name: control.iconName; size: 12; hovered: control.hovered || control.highlighted; color: control.danger ? Theme.error : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
         Label {
             width: parent.width - (control.iconName !== "" ? 12 + parent.spacing : 0) - (k.visible ? k.implicitWidth + parent.spacing : 0)
             text: control.text

@@ -23,6 +23,7 @@ T.Button {
         Icon {
             anchors.centerIn: parent
             name: control.iconName
+            hovered: control.hovered || control.visualFocus
             size: control.small ? 12 : 14
             color: control.danger || control.checked ? Theme.accentText : control.hovered ? Theme.text : Theme.textMuted
         }

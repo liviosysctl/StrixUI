@@ -25,6 +25,7 @@ T.ItemDelegate {
             visible: control.iconName !== ""
             name: control.iconName
             color: control.selected || control.hovered ? Theme.text : Theme.textMuted
+            hovered: control.hovered
             anchors.verticalCenter: parent.verticalCenter
         }
         Label {

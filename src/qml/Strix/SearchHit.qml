@@ -33,7 +33,7 @@ T.ItemDelegate {
 
     contentItem: Row {
         spacing: Theme.space3
-        Icon { name: control.iconName; size: 16; color: control.selected || control.hovered ? Theme.text : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
+        Icon { name: control.iconName; size: 16; hovered: control.hovered || control.selected; color: control.selected || control.hovered ? Theme.text : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
         Column {
             width: parent.width - 16 - tailRow.width - 2 * parent.spacing
             anchors.verticalCenter: parent.verticalCenter

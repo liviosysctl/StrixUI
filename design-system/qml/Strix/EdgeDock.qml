@@ -71,4 +71,30 @@ Item {
             Behavior on opacity { NumberAnimation { duration: root.out ? Theme.durBase : Theme.durFast } }
         }
     }
+
+    // Opening, the symbols rise 4px into place one after another, `stagger` apart and at most eight steps,
+    // after the content has started to fade in.
+    onOutChanged: {
+        if (!out || Theme.reducedMotion)
+            return
+        for (var i = 0; i < row.children.length; i++) {
+            var c = row.children[i]
+            if (!c.visible)
+                continue
+            rise.createObject(root, { target: c, delay: Theme.durFast + Math.min(i, 7) * Theme.stagger }).start()
+        }
+    }
+
+    Component {
+        id: rise
+        SequentialAnimation {
+            id: a
+            property Item target
+            property int delay
+            PropertyAction { target: a.target; property: "y"; value: 4 }
+            PauseAnimation { duration: a.delay }
+            NumberAnimation { target: a.target; property: "y"; to: 0; duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeSpring }
+            onFinished: a.destroy()
+        }
+    }
 }

@@ -24,13 +24,19 @@ Surface {
     borderColor: urgency === "critical" ? Theme.accent : Theme.border
     clip: true
 
+    // The symbol plays its motion once when the message has slid in (the bell rings), and again under the pointer.
     Icon {
+        id: symbol
         x: Theme.space3
         y: Theme.space2 + 3
         name: root.iconName
+        hovered: here.hovered
         size: 12
         color: root.urgency === "critical" ? Theme.accentText : Theme.textMuted
     }
+
+    HoverHandler { id: here }
+    Timer { interval: Theme.durSlow; running: true; onTriggered: if (!Theme.reducedMotion) symbol.play() }
 
     Column {
         id: col
