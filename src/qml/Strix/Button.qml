@@ -33,6 +33,7 @@ T.Button {
             name: control.iconName
             color: control.ink
             hovered: control.hovered
+            tinted: !control.primary
             anchors.verticalCenter: parent.verticalCenter
         }
         Label {

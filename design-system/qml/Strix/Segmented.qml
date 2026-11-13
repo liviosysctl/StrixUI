@@ -56,7 +56,7 @@ Rectangle {
                 Keys.onRightPressed: if (index < rep.count - 1) { root.currentIndex = index + 1; root.activated(index + 1) }
                 contentItem: Row {
                     spacing: 6
-                    Icon { visible: !!seg.e.icon; name: seg.e.icon || ""; size: 12; hovered: seg.hovered; color: label.color; anchors.verticalCenter: parent.verticalCenter }
+                    Icon { visible: !!seg.e.icon; name: seg.e.icon || ""; size: 12; hovered: seg.hovered; tinted: !seg.selected; color: label.color; anchors.verticalCenter: parent.verticalCenter }
                     Label {
                         id: label
                         text: seg.e.text

@@ -229,24 +229,34 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 
 ## Symbols
 
-A symbol plays a small motion of its own when the pointer reaches the control that holds it (IconButton, Button, list row, menu item, search hit, segment), and when a keyboard focuses an IconButton. It plays once per arrival and never loops. Turns end on a symmetry of the shape (the gear by two teeth, the sun by one ray, plus and x by a quarter), so the symbol never turns back and a second hover keeps turning from where it stands. Under reduced motion symbols stand still.
+A symbol plays a small motion of its own when the pointer reaches the control that holds it (IconButton, Button, list row, menu item, search hit, segment), and when a keyboard focuses an IconButton. It plays once per arrival and never loops. Turns end on a symmetry of the shape (the gear by three teeth, the sun by two rays, plus and x by a quarter), so the symbol never turns back and a second hover keeps turning from where it stands. Under reduced motion symbols stand still.
 
 | Motion | Symbols | What moves | Duration | Curve |
 |---|---|---|---|---|
-| turn | `settings` 120°, `sun` 45°, `plus` `x` 90°, `refresh-cw` 180°, `rotate-cw` `disc-3` 360° | rotation, adding up | `dur-slow`, 180° and more `dur-reveal` | `ease-spring` |
-| ring | `bell` | swings from its top: 14°, -11°, 6°, rest | `dur-slow` | in-out |
-| shake | `lock`, `triangle-alert`, `circle-alert` | three swings sideways, 1.5px | `dur-slow` | `ease-out` |
-| rock back | `undo-2`, `history`, `moon`, `moon-star`, `trash-2` | tips back 18° and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
-| sway | `palette`, `pipette`, `pencil`, `swatch-book`, `wallpaper`, `gauge`, `cloud-sun` | tilts 10° and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
-| zoom | `search`, `camera`, `scan`, `scan-line` | grows to 114% with a -8° tilt and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| turn | `settings` 180°, `sun` `plus` `x` 90°, `refresh-cw` 180°, `rotate-cw` `disc-3` 360° | rotation, adding up | `dur-slow`, 180° and more `dur-reveal` | `ease-spring` |
+| ring | `bell` | swings from its top: 20°, -15°, 8°, rest | `dur-slow` | in-out |
+| shake | `lock`, `triangle-alert`, `circle-alert` | three swings sideways, 2.5px | `dur-slow` | `ease-out` |
+| rock back | `undo-2`, `history`, `moon`, `moon-star`, `trash-2` | tips back 26° and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| sway | `palette`, `pipette`, `pencil`, `swatch-book`, `wallpaper`, `gauge`, `cloud-sun` | tilts 16° and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| zoom | `search`, `camera`, `scan`, `scan-line` | grows to 122% with a -12° tilt and returns | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
 | blink | `eye`, `eye-off` | closes to 10% height and opens | `dur-instant`, then `dur-fast` | in, then out |
-| nudge | arrows, chevrons, `skip-*`, `log-out`, `download`, `thermometer` | 2px the way it points and back | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
-| press | `power`, `play`, `pause`, `square` | presses in to 84% and springs back | `dur-instant`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| nudge | arrows, chevrons, `skip-*`, `log-out`, `download`, `thermometer` | 3px the way it points and back | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| press | `power`, `play`, `pause`, `square` | presses in to 78% and springs back | `dur-instant`, then `dur-slow` | `ease-out`, then `ease-spring` |
 | flicker | `zap` | the line flickers twice | `dur-base` | linear |
-| pulse | `wifi`, `bluetooth`, `volume-2`, `music` | breathes out to 112% once | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
-| lift | every other symbol | rises 1.5px and settles | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| pulse | `wifi`, `bluetooth`, `volume-2`, `music` | breathes out to 120% once | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
+| lift | every other symbol | rises 2.5px and settles | `dur-fast`, then `dur-slow` | `ease-out`, then `ease-spring` |
 
-In QML bind `hovered` of the Icon to its control (`Icon { hovered: control.hovered }`); the components here already do. In HTML the bundle plays them on `:hover` of `.k-iconbtn`, `.k-btn`, `.k-row`, `.k-hit`, menu items and segments.
+Under the pointer a symbol also takes a colour, in `dur-fast` with `ease-out`: the colour of what it means where it has a meaning, otherwise `accent-text`. Not where it sits on the accent (a primary button, a chosen segment), there it keeps `on-accent`.
+
+| Colour | Symbols |
+|---|---|
+| `error` | `power`, `log-out`, `trash-2`, `x`, `circle-alert` |
+| `warning` | `zap`, `triangle-alert`, `bell`, `sun`, `cloud-sun`, `thermometer`, `lock` |
+| `success` | `plus`, `check`, `download`, `hard-drive-download`, `play`, `refresh-cw`, `rotate-cw`, `arrow-right` |
+| `info` | `wifi`, `bluetooth`, `info`, `search`, `eye`, `eye-off`, `moon`, `moon-star`, `cloud`, `volume-2`, `music` |
+| `accent-text` | every other symbol |
+
+In QML bind `hovered` of the Icon to its control (`Icon { hovered: control.hovered }`) and set `tinted: false` on the accent; the components here already do. In HTML the bundle plays them on `:hover` of `.k-iconbtn`, `.k-btn`, `.k-row`, `.k-hit`, menu items and segments.
 
 ## Compositor
 
