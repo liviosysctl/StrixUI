@@ -1,6 +1,6 @@
 README = r'''Strix is a NixOS-based system with its own desktop. Its default look is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace. It should feel like a terminal kept in a library. Everything is small, thin and exact; nothing is chunky.
 
-This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, search, notifications), the Linux apps (settings, the store, the graphical installer), the terminal, the boot splash, the text installer and the Windows bootstick app. Every own program has its back end in Rust; the front end is Quickshell (QML) on Linux and Tauri (HTML) in the one Windows app. Surfaces lists what each one takes.
+This system is the single source for that look on every surface: the desktop shell (bar, dock, lock screen, greeter, theme picker, search, notifications), the Linux apps (settings, the store, the graphical installer), the terminal, the boot splash and the text installer. Every own program has its back end in Rust and its front end in Quickshell (QML). The HTML bundle exists for the bootstick app of the M245 proof of concept (Tauri), the one program outside Linux. Surfaces lists what each one takes.
 
 ## Principles
 
@@ -117,7 +117,7 @@ __GODS_TABLE__
 ## Using the system in code
 
 - Linux, the shell and every app: Quickshell. Add the `qml/` folder of the repository to the import path and `import Strix`. Every component has a QML type of the same purpose (its README says which), every token is a property of the `Theme` singleton in camelCase (`Theme.textMuted`, `Theme.space3`, `Theme.durBase` with `Theme.easeOut` as `easing.bezierCurve`), and `Label { textStyle: "caption" }` sets a type style. One `ThemeFile {}` from `Strix.Shell` keeps `Theme` on the theme the engine applied.
-- Windows, the bootstick app: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup. `Kit.theme()` is the theme on `<html data-theme>`, `Kit.onTheme(fn)` follows it, `Kit.god(id)` gives a god's name, plate caption and wallpaper; a `.k-wall[data-follow]` shows the wallpaper of the theme in use.
+- The bootstick app of the proof of concept: Tauri. Load `tokens.css`, then `components/bundle.css`, then `components/bundle.js`. Components are plain HTML with `k-` classes; `Kit.hydrate(root)` wires behaviour and is safe to call again after adding markup. `Kit.theme()` is the theme on `<html data-theme>`, `Kit.onTheme(fn)` follows it, `Kit.god(id)` gives a god's name, plate caption and wallpaper; a `.k-wall[data-follow]` shows the wallpaper of the theme in use.
 - Every back end: Rust, with the crate `strix-design` (`rust/strix-design/` in the repository): the tokens, the eight themes, the theme cycle, the lock screen rotation and the default hotkeys, without dependencies.
 - The theme engine of StrixOS takes the themes as `themes/<god>/theme.toml`. Themes from outside the eight gods live in their own repositories (layout 1, see `strix-theme-template`), made with `tools/pack.py` from one accent and one public domain engraving; the QML `Theme` shows them with their own wallpaper.
 - Read a component's README before using it. Do not restyle a component from outside and do not add colours, radii, durations or curves that are not tokens.
@@ -256,7 +256,7 @@ Shell layers only fade at the compositor level, because the shell animates its o
 
 SURFACES = r'''# Surfaces
 
-Strix has two stacks. Every own program has its back end in Rust. The front end is Quickshell (QML) on Linux, for the shell and for every app, and Tauri (HTML) in the one Windows program. Component names, states and measurements stay the same in both; only the technology differs.
+Every own program of Strix has its back end in Rust and its front end in Quickshell (QML), for the shell and for every app. The one exception is the bootstick app of the M245 proof of concept, which runs on Windows with Tauri (HTML). Component names, states and measurements stay the same in both; only the technology differs.
 
 | Surface | Front end | Back end | Takes |
 |---|---|---|---|
@@ -295,7 +295,7 @@ Quickshell has no general D-Bus client in QML, so a front end talks to its Rust 
 - Holds every token (`tokens::SPACE_3`, `tokens::DUR_BASE`, `tokens::EASE_OUT`, `tokens::text::BODY`), the eight themes (`THEMES`, `theme("janus")`, every colour as `Color` with `hex()` and `contrast()`), the theme cycle (`Cycle`: 10 minutes, Keep, the count goes on while kept) and the lock screen rotation (`LockRotation`), and the default hotkeys (`HOTKEYS`).
 - Its tests check every theme against the contrast rules of the theme engine and that no two hotkeys share keys.
 
-## Tauri: the Windows app
+## Tauri: the bootstick app of the proof of concept
 
 - Put `tokens.css`, `components/` and `fonts/` into the app's `frontendDist`; nothing loads from the network, the fonts are local files.
 - `<html data-theme="saturnus">`: the app has the default theme. Set the window's `backgroundColor` in `tauri.conf.json` to the theme's `background` (`#0b0a09`), so no white shows before the page is drawn; from Rust, `strix_design::default_theme().colors.background.hex()` gives it.

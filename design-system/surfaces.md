@@ -1,6 +1,6 @@
 # Surfaces
 
-Strix has two stacks. Every own program has its back end in Rust. The front end is Quickshell (QML) on Linux, for the shell and for every app, and Tauri (HTML) in the one Windows program. Component names, states and measurements stay the same in both; only the technology differs.
+Every own program of Strix has its back end in Rust and its front end in Quickshell (QML), for the shell and for every app. The one exception is the bootstick app of the M245 proof of concept, which runs on Windows with Tauri (HTML). Component names, states and measurements stay the same in both; only the technology differs.
 
 | Surface | Front end | Back end | Takes |
 |---|---|---|---|
@@ -39,7 +39,7 @@ Quickshell has no general D-Bus client in QML, so a front end talks to its Rust 
 - Holds every token (`tokens::SPACE_3`, `tokens::DUR_BASE`, `tokens::EASE_OUT`, `tokens::text::BODY`), the eight themes (`THEMES`, `theme("janus")`, every colour as `Color` with `hex()` and `contrast()`), the theme cycle (`Cycle`: 10 minutes, Keep, the count goes on while kept) and the lock screen rotation (`LockRotation`), and the default hotkeys (`HOTKEYS`).
 - Its tests check every theme against the contrast rules of the theme engine and that no two hotkeys share keys.
 
-## Tauri: the Windows app
+## Tauri: the bootstick app of the proof of concept
 
 - Put `tokens.css`, `components/` and `fonts/` into the app's `frontendDist`; nothing loads from the network, the fonts are local files.
 - `<html data-theme="saturnus">`: the app has the default theme. Set the window's `backgroundColor` in `tauri.conf.json` to the theme's `background` (`#0b0a09`), so no white shows before the page is drawn; from Rust, `strix_design::default_theme().colors.background.hex()` gives it.

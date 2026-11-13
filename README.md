@@ -1,6 +1,6 @@
 # StrixUI
 
-The design system of Strix: tokens, components, screens and motion for every surface of the system, ready for both stacks of Strix: Quickshell (QML) with Rust behind it for the Linux shell and every Linux app, and Tauri (HTML) with Rust behind it for the Windows app. Its default theme is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace.
+The design system of Strix: tokens, components, screens and motion for every surface of the system, built for Quickshell (QML) with Rust behind it: the shell and every app of Strix. An HTML bundle of the same components serves the one program outside Linux, the bootstick app of the M245 proof of concept (Tauri). Its default theme is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, type from an old printing house beside a quiet monospace.
 
 ![The eight god themes](docs/renders/Themes-plates.jpg)
 
@@ -56,7 +56,7 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 ## Use it
 
 - Linux, the shell and every app (Quickshell): put `design-system/qml` on the import path, `import Strix`, and one `ThemeFile {}` from `Strix.Shell` so the colours follow the theme engine. Each component's README has its QML example.
-- Windows, the bootstick app (Tauri): load `tokens.css`, `components/bundle.css` and `components/bundle.js`, write the markup from a component's README, and call `Kit.hydrate(root)`.
+- The bootstick app of the proof of concept (Tauri, HTML): load `tokens.css`, `components/bundle.css` and `components/bundle.js`, write the markup from a component's README, and call `Kit.hydrate(root)`.
 - Every back end (Rust): `strix-design = { git = "https://github.com/liviosysctl/strixui" }`.
 - StrixOS theme engine: copy `design-system/themes/*` into `themes/` of the strixos repository; `strix-theme check` passes on all eight.
 - Themes from outside: a theme repository in layout 1 ([strix-theme-template](https://github.com/liviosysctl/strix-theme-template), the first one is [strix-theme-lucifer](https://github.com/liviosysctl/strix-theme-lucifer)), made with `python3 tools/pack.py <repository>`.
