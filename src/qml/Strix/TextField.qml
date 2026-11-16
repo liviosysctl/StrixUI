@@ -46,12 +46,23 @@ Column {
 
         HoverHandler { id: hover }
 
-        // the line style: only the bottom edge
+        // the line style: only the bottom edge; focus draws a second line out from the middle
         Rectangle {
             visible: root.shape === "line"
             anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
             height: Theme.lineHair
-            color: root.error !== "" ? Theme.error : field.activeFocus ? Theme.focus : hover.hovered ? Theme.textMuted : Theme.borderStrong
+            color: hover.hovered ? Theme.textMuted : Theme.borderStrong
+            Behavior on color { ColorAnimation { duration: Theme.durFast } }
+            Rectangle {
+                readonly property bool lit: field.activeFocus || root.error !== ""
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: lit ? parent.width : 0
+                height: lit ? 2 : 1
+                anchors.bottom: parent.bottom
+                color: root.error !== "" ? Theme.error : Theme.focus
+                Behavior on width { NumberAnimation { duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
+                Behavior on color { ColorAnimation { duration: Theme.durFast } }
+            }
         }
 
         // the focus ring of box and pill
