@@ -17,6 +17,8 @@ T.ItemDelegate {
     property string keys
     property string enterText
     property bool selected: highlighted
+    /// The selected look comes from a Glide that moves between the rows
+    property bool glide: false
 
     function marked(t, h) {
         const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
@@ -67,7 +69,7 @@ T.ItemDelegate {
 
     background: Rectangle {
         radius: Theme.radiusXs
-        color: control.selected || control.hovered ? Theme.surfaceRaised : "transparent"
+        color: control.hovered && !(control.glide && control.selected) || control.selected && !control.glide ? Theme.surfaceRaised : "transparent"
         Behavior on color { ColorAnimation { duration: Theme.durFast } }
         Label {
             x: control.selected ? 9 : 5
@@ -75,7 +77,7 @@ T.ItemDelegate {
             text: ">"
             font.weight: Font.DemiBold
             color: Theme.accentText
-            opacity: control.selected ? 1 : 0
+            opacity: control.selected && !control.glide ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: Theme.durFast } }
             Behavior on x { NumberAnimation { duration: Theme.durFast } }
         }

@@ -103,11 +103,17 @@ Rectangle {
             }
 
             Caption { text: "List" }
-            Column {
+            Item {
                 width: 320
-                ListRow { width: 320; text: "Ghostty"; iconName: "terminal"; detail: "Super Return"; selected: true }
-                ListRow { width: 320; text: "Files"; iconName: "folder"; detail: "Super Shift F" }
-                ListRow { width: 320; text: "Settings"; iconName: "settings" }
+                height: rows.height
+                Glide { target: first; caretX: 7 }
+                Column {
+                    id: rows
+                    width: 320
+                    ListRow { id: first; width: 320; text: "Ghostty"; iconName: "terminal"; detail: "Super Return"; selected: true; glide: true }
+                    ListRow { width: 320; text: "Files"; iconName: "folder"; detail: "Super Shift F"; glide: true }
+                    ListRow { width: 320; text: "Settings"; iconName: "settings"; glide: true; Entrance { delay: Theme.stagger } }
+                }
             }
 
             Caption { text: "Search" }
@@ -152,8 +158,12 @@ Rectangle {
             Row {
                 spacing: 16
                 Workspaces { count: 5; current: 1; used: [0, 3]; anchors.verticalCenter: parent.verticalCenter }
-                Meter { label: "CPU"; value: 0.08 }
-                Meter { label: "RAM"; value: 0.24 }
+                MeterGroup {
+                    anchors.verticalCenter: parent.verticalCenter
+                    Meter { label: "CPU"; value: 0.08 }
+                    Meter { label: "MEM"; value: 0.24 }
+                }
+                Ticker { text: "09:41"; textStyle: "label"; anchors.verticalCenter: parent.verticalCenter }
             }
             Caption { text: "Dock" }
             Item {

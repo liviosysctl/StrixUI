@@ -122,6 +122,85 @@
     el.setAttribute('aria-label', text);
   };
 
+  /* Text that rolls when it changes: the new text comes up, the old leaves (down when `down`) */
+  K.tick = function (el, text, down) {
+    text = String(text);
+    var now = el.querySelector('.k-tick-now');
+    if (!now) { el.classList.add('k-tick'); el.innerHTML = '<span class="k-tick-now"></span>'; now = el.firstChild; now.textContent = text; return; }
+    if (now.textContent === text) return;
+    Array.prototype.forEach.call(el.querySelectorAll('.k-tick-out'), function (o) { o.remove(); });
+    var old = now.cloneNode(true);
+    old.className = 'k-tick-out';
+    el.insertBefore(old, now);
+    now.textContent = text;
+    if (down) el.setAttribute('data-down', ''); else el.removeAttribute('data-down');
+    now.classList.remove('k-tick-in'); void now.offsetWidth; now.classList.add('k-tick-in');
+    setTimeout(function () { old.remove(); }, 500);
+  };
+
+  /* The accent bar of the workspaces: one element, the leading edge moves first */
+  K.ws = function (el) {
+    if (el._ws) return el._ws;
+    var pill = document.createElement('i');
+    pill.className = 'k-ws-pill';
+    el.appendChild(pill);
+    el.setAttribute('data-pill', '');
+    var last = -1, l = 0, r = 0, raf = 0;
+    function target() {
+      var b = el.querySelectorAll('button'), cur = 0;
+      for (var i = 0; i < b.length; i++) if (b[i].getAttribute('aria-current') === 'true') cur = i;
+      return { i: cur, l: cur * 10, r: cur * 10 + 18 };
+    }
+    function place() { pill.style.left = l + 'px'; pill.style.width = Math.max(5, r - l) + 'px'; }
+    function move() {
+      var t = target();
+      if (last < 0 || K.reduced()) { l = t.l; r = t.r; last = t.i; place(); return; }
+      var forward = t.i > last, l0 = l, r0 = r, start = performance.now();
+      last = t.i;
+      var fast = 140, slow = 220;
+      function ease(x) { return 1 - Math.pow(1 - x, 3); }
+      cancelAnimationFrame(raf);
+      (function frame(now) {
+        var a = Math.min(1, (now - start) / (forward ? slow : fast)), b = Math.min(1, (now - start) / (forward ? fast : slow));
+        l = l0 + (t.l - l0) * ease(a);
+        r = r0 + (t.r - r0) * ease(b);
+        place();
+        if (a < 1 || b < 1) raf = requestAnimationFrame(frame);
+      })(start);
+    }
+    move();
+    new MutationObserver(move).observe(el, { attributes: true, subtree: true, attributeFilter: ['aria-current'] });
+    el._ws = { move: move };
+    return el._ws;
+  };
+
+  /* The selection of a list glides from row to row: list[data-glide], rows with aria-selected or aria-current */
+  K.glide = function (list) {
+    var g = list.querySelector(':scope > .k-glide');
+    if (!g) { g = document.createElement('i'); g.className = 'k-glide'; list.insertBefore(g, list.firstChild); }
+    var lastTop = null;
+    function place() {
+      var row = list.querySelector(':scope > [aria-selected="true"], :scope > [aria-current="page"]');
+      if (!row) { g.style.opacity = 0; return; }
+      g.style.opacity = 1;
+      var top = row.offsetTop;
+      if (lastTop === null) { g.style.transition = 'none'; }
+      g.style.transform = 'translateY(' + top + 'px)';
+      g.style.height = row.offsetHeight + 'px';
+      g.style.left = row.offsetLeft + 'px';
+      g.style.width = row.offsetWidth + 'px';
+      if (lastTop === null) { void g.offsetWidth; g.style.transition = ''; }
+      else if (top !== lastTop) { g.classList.remove('k-nudge'); void g.offsetWidth; g.classList.add('k-nudge'); }
+      lastTop = top;
+    }
+    if (!list._glide) {
+      list._glide = true;
+      new MutationObserver(function () { place(); }).observe(list, { attributes: true, subtree: true, childList: true, attributeFilter: ['aria-selected', 'aria-current'] });
+    }
+    place();
+    return place;
+  };
+
   /* Calendar: one month, Monday first */
   K.calendar = function (el, date) {
     var today = date || (el.getAttribute('data-date') ? new Date(el.getAttribute('data-date')) : new Date());
@@ -364,6 +443,8 @@
     each(root, '.k-slider input', K.slider);
     each(root, '.k-ring[data-value]', function (r) { K.ring(r); });
     each(root, '.k-roll[data-value]', function (r) { K.roll(r); });
+    each(root, '.k-ws', K.ws);
+    each(root, '[data-glide]', K.glide);
     each(root, '.k-cal', function (c) { if (!c.firstChild) K.calendar(c); });
     each(root, '.k-viz', K.visualizer);
     each(root, '.k-carousel', K.carousel);

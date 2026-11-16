@@ -71,7 +71,11 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 .k-input-pill { border-radius: var(--radius-pill); padding: 0 var(--space-3); }
 .k-input-line { border-color: transparent; border-bottom-color: var(--border-strong); border-radius: 0; background: transparent; padding: 0; }
 .k-input-line:hover { border-color: transparent; border-bottom-color: var(--text-muted); }
-.k-input-line:focus-within { border-color: transparent; border-bottom-color: var(--focus); box-shadow: none; }
+.k-input-line:focus-within { border-color: transparent; border-bottom-color: var(--border-strong); box-shadow: none; }
+.k-input-line { position: relative; }
+.k-input-line::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--focus); transform: scaleX(0); transition: transform var(--dur-base) var(--ease-out), background-color var(--dur-fast) var(--ease-out); }
+.k-input-line:focus-within::after { transform: none; }
+.k-field[data-state="error"] .k-input-line::after { background: var(--error); transform: none; }
 .k-input input[type="password"]:not(:placeholder-shown) { letter-spacing: 0.3em; }
 .k-field[data-state="error"] .k-input { border-color: var(--error); }
 .k-field[data-state="error"] .k-input-line { border-color: transparent; border-bottom-color: var(--error); }
@@ -265,14 +269,48 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 .k-bar b { color: var(--text); font-weight: 500; }
 .k-bar .k-icon { width: 12px; height: 12px; }
 .k-meter { display: inline-flex; align-items: center; gap: 5px; }
+/* Load figures as one button (MeterGroup): one hover, one press; the bars fill again and take the accent */
+.k-meters { display: inline-flex; align-items: center; gap: var(--space-4); height: var(--control-sm, 24px); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-sm); background: transparent; color: inherit; font: inherit; cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+.k-meters:hover, .k-meters:focus-visible { background: var(--surface-raised); }
+.k-meters:active { transform: scale(0.97); transition-duration: var(--dur-instant); }
+.k-meters:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.k-meters .k-meter > span:first-of-type { color: var(--text-muted); transition: color var(--dur-fast) var(--ease-out); }
+.k-meters:hover .k-meter > span:first-of-type { color: var(--text); }
+.k-meters:hover .k-meter > u::after { background: var(--accent); animation: k-refill var(--dur-slow) var(--ease-out) both; }
+.k-meters:hover .k-meter + .k-meter > u::after { animation-delay: var(--stagger); }
+@keyframes k-refill { from { height: 0; } }
+/* Text that rolls when it changes (Ticker): Kit.tick(el, text) */
+.k-tick { display: inline-grid; overflow: hidden; vertical-align: bottom; }
+.k-tick > span { grid-area: 1 / 1; white-space: pre; }
+.k-tick > .k-tick-out { animation: k-tick-out var(--dur-slow) var(--ease-out) both; }
+.k-tick > .k-tick-in { animation: k-tick-in var(--dur-slow) var(--ease-out) both; }
+.k-tick[data-down] > .k-tick-out { animation-name: k-tick-out-down; }
+.k-tick[data-down] > .k-tick-in { animation-name: k-tick-in-down; }
+@keyframes k-tick-out { to { opacity: 0; transform: translateY(-80%); } }
+@keyframes k-tick-in { from { opacity: 0; transform: translateY(80%); } }
+@keyframes k-tick-out-down { to { opacity: 0; transform: translateY(80%); } }
+@keyframes k-tick-in-down { from { opacity: 0; transform: translateY(-80%); } }
+/* The selection that glides from row to row (Glide): Kit.glide(list) under [aria-selected] or [aria-current] */
+[data-glide] { position: relative; }
+[data-glide] > .k-glide { position: absolute; left: 0; top: 0; border-radius: var(--radius-xs); background: var(--surface-raised); pointer-events: none; z-index: 0; transition: transform var(--dur-base) var(--ease-out), height var(--dur-base) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
+[data-glide] > .k-glide::before { content: ">"; position: absolute; left: var(--caret, 9px); top: 50%; margin-top: -9px; font: 600 12px/18px var(--font-mono); color: var(--accent-text); }
+[data-glide] > .k-glide.k-nudge::before { animation: k-nudge var(--dur-base) var(--ease-spring) both; }
+@keyframes k-nudge { 0% { transform: translateX(-3px); } 100% { transform: none; } }
+[data-glide] > :not(.k-glide) { position: relative; z-index: 1; }
+[data-glide] .k-hit[aria-selected="true"], [data-glide] button[aria-current="page"] { background: transparent; }
+[data-glide] .k-hit[aria-selected="true"]::before, [data-glide] button[aria-current="page"]::before { opacity: 0; }
+[data-glide].k-settings-nav { --caret: 8px; }
 .k-meter > u { width: 2px; height: 10px; background: var(--border-strong); position: relative; display: block; overflow: hidden; }
 .k-meter > u::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: var(--p, 30%); background: var(--text); transition: height var(--dur-slow) var(--ease-out); }
-.k-ws { display: inline-flex; align-items: center; gap: 5px; }
-.k-ws button { width: 5px; height: 5px; padding: 0; border-radius: var(--radius-pill); background: var(--border-strong); transition: width var(--dur-base) var(--ease-in-out), background-color var(--dur-base) var(--ease-out); }
+.k-ws { display: inline-flex; align-items: center; gap: 5px; position: relative; }
+.k-ws button { width: 5px; height: 5px; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--border-strong); cursor: pointer; transition: width var(--dur-base) var(--ease-in-out), background-color var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-spring); }
 .k-ws button[data-used] { background: var(--text-muted); }
 .k-ws button[aria-current="true"] { width: 18px; background: var(--accent); }
 .k-ws button:hover { background: var(--text); }
-.k-ws button:not([aria-current="true"]):hover { width: 9px; }
+.k-ws button:not([aria-current="true"]):hover { transform: scale(1.6); }
+/* With JS the accent bar is one element whose edges move apart: the leading edge first, the trailing one after */
+.k-ws[data-pill] button[aria-current="true"] { background: transparent; }
+.k-ws > .k-ws-pill { position: absolute; top: 50%; height: 5px; margin-top: -2.5px; border-radius: var(--radius-pill); background: var(--accent); pointer-events: none; }
 .k-bar .k-track { max-width: 260px; font: italic 400 13px/16px var(--font-serif); letter-spacing: 0.02em; }
 .k-bar .k-track span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .k-bar .k-power { color: var(--accent-text); }
@@ -494,25 +532,25 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
    Turns end on a symmetry of the shape, so nothing turns back. See motion.md, "Symbols". */
 svg[data-icon] { transform-box: fill-box; transform-origin: center; }
 svg[data-icon="bell"] { transform-origin: 50% 8%; }
-@keyframes k-turn45 { to { transform: rotate(45deg); } }
-@keyframes k-turn90 { to { transform: rotate(90deg); } }
-@keyframes k-turn120 { to { transform: rotate(120deg); } }
-@keyframes k-turn180 { to { transform: rotate(180deg); } }
-@keyframes k-turn360 { to { transform: rotate(360deg); } }
-@keyframes k-ring { 25% { transform: rotate(20deg); } 50% { transform: rotate(-15deg); } 75% { transform: rotate(8deg); } }
-@keyframes k-shake { 17% { transform: translateX(2.5px); } 50% { transform: translateX(-2.5px); } 75% { transform: translateX(1.5px); } }
-@keyframes k-rock { 30% { transform: rotate(-26deg); } }
-@keyframes k-sway { 30% { transform: rotate(16deg); } }
-@keyframes k-zoom { 30% { transform: scale(1.22) rotate(-12deg); } }
-@keyframes k-blink { 35% { transform: scaleY(0.1); } }
-@keyframes k-nudge-right { 30% { transform: translateX(3px); } }
-@keyframes k-nudge-left { 30% { transform: translateX(-3px); } }
-@keyframes k-nudge-up { 30% { transform: translateY(-3px); } }
-@keyframes k-nudge-down { 30% { transform: translateY(3px); } }
-@keyframes k-lift { 30% { transform: translateY(-2.5px); } }
-@keyframes k-press { 20% { transform: scale(0.78); } }
-@keyframes k-flicker { 10% { opacity: 0.2; } 20% { opacity: 1; } 30% { opacity: 0.55; } }
-@keyframes k-pulse { 30% { transform: scale(1.2); } }
+@keyframes k-sym-turn45 { to { transform: rotate(45deg); } }
+@keyframes k-sym-turn90 { to { transform: rotate(90deg); } }
+@keyframes k-sym-turn120 { to { transform: rotate(120deg); } }
+@keyframes k-sym-turn180 { to { transform: rotate(180deg); } }
+@keyframes k-sym-turn360 { to { transform: rotate(360deg); } }
+@keyframes k-sym-ring { 25% { transform: rotate(20deg); } 50% { transform: rotate(-15deg); } 75% { transform: rotate(8deg); } }
+@keyframes k-sym-shake { 17% { transform: translateX(2.5px); } 50% { transform: translateX(-2.5px); } 75% { transform: translateX(1.5px); } }
+@keyframes k-sym-rock { 30% { transform: rotate(-26deg); } }
+@keyframes k-sym-sway { 30% { transform: rotate(16deg); } }
+@keyframes k-sym-zoom { 30% { transform: scale(1.22) rotate(-12deg); } }
+@keyframes k-sym-blink { 35% { transform: scaleY(0.1); } }
+@keyframes k-sym-nudge-right { 30% { transform: translateX(3px); } }
+@keyframes k-sym-nudge-left { 30% { transform: translateX(-3px); } }
+@keyframes k-sym-nudge-up { 30% { transform: translateY(-3px); } }
+@keyframes k-sym-nudge-down { 30% { transform: translateY(3px); } }
+@keyframes k-sym-lift { 30% { transform: translateY(-2.5px); } }
+@keyframes k-sym-press { 20% { transform: scale(0.78); } }
+@keyframes k-sym-flicker { 10% { opacity: 0.2; } 20% { opacity: 1; } 30% { opacity: 0.55; } }
+@keyframes k-sym-pulse { 30% { transform: scale(1.2); } }
 @keyframes k-symbol-pop { from { transform: scale(0.6); opacity: 0; } }
 @keyframes k-count-bump { 20% { transform: scale(1.25); } }
 .k-iconbtn:hover svg[data-icon],
@@ -521,21 +559,21 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon],
 .k-menu button:hover svg[data-icon],
 .k-seg button:hover svg[data-icon],
-.k-hit:hover svg[data-icon] { animation: k-lift var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon] { animation: k-sym-lift var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="settings"],
 .k-iconbtn:focus-visible svg[data-icon="settings"],
 .k-btn:hover svg[data-icon="settings"],
 .k-row:hover svg[data-icon="settings"],
 .k-menu button:hover svg[data-icon="settings"],
 .k-seg button:hover svg[data-icon="settings"],
-.k-hit:hover svg[data-icon="settings"] { animation: k-turn180 var(--dur-reveal) var(--ease-spring); }
+.k-hit:hover svg[data-icon="settings"] { animation: k-sym-turn180 var(--dur-reveal) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="sun"],
 .k-iconbtn:focus-visible svg[data-icon="sun"],
 .k-btn:hover svg[data-icon="sun"],
 .k-row:hover svg[data-icon="sun"],
 .k-menu button:hover svg[data-icon="sun"],
 .k-seg button:hover svg[data-icon="sun"],
-.k-hit:hover svg[data-icon="sun"] { animation: k-turn90 var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="sun"] { animation: k-sym-turn90 var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="plus"],
 .k-iconbtn:focus-visible svg[data-icon="plus"],
 .k-btn:hover svg[data-icon="plus"],
@@ -549,14 +587,14 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="x"],
 .k-menu button:hover svg[data-icon="x"],
 .k-seg button:hover svg[data-icon="x"],
-.k-hit:hover svg[data-icon="x"] { animation: k-turn90 var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="x"] { animation: k-sym-turn90 var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="refresh-cw"],
 .k-iconbtn:focus-visible svg[data-icon="refresh-cw"],
 .k-btn:hover svg[data-icon="refresh-cw"],
 .k-row:hover svg[data-icon="refresh-cw"],
 .k-menu button:hover svg[data-icon="refresh-cw"],
 .k-seg button:hover svg[data-icon="refresh-cw"],
-.k-hit:hover svg[data-icon="refresh-cw"] { animation: k-turn180 var(--dur-reveal) var(--ease-spring); }
+.k-hit:hover svg[data-icon="refresh-cw"] { animation: k-sym-turn180 var(--dur-reveal) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="rotate-cw"],
 .k-iconbtn:focus-visible svg[data-icon="rotate-cw"],
 .k-btn:hover svg[data-icon="rotate-cw"],
@@ -570,14 +608,14 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="disc-3"],
 .k-menu button:hover svg[data-icon="disc-3"],
 .k-seg button:hover svg[data-icon="disc-3"],
-.k-hit:hover svg[data-icon="disc-3"] { animation: k-turn360 var(--dur-reveal) var(--ease-spring); }
+.k-hit:hover svg[data-icon="disc-3"] { animation: k-sym-turn360 var(--dur-reveal) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="bell"],
 .k-iconbtn:focus-visible svg[data-icon="bell"],
 .k-btn:hover svg[data-icon="bell"],
 .k-row:hover svg[data-icon="bell"],
 .k-menu button:hover svg[data-icon="bell"],
 .k-seg button:hover svg[data-icon="bell"],
-.k-hit:hover svg[data-icon="bell"] { animation: k-ring var(--dur-slow) ease-in-out; }
+.k-hit:hover svg[data-icon="bell"] { animation: k-sym-ring var(--dur-slow) ease-in-out; }
 .k-iconbtn:hover svg[data-icon="lock"],
 .k-iconbtn:focus-visible svg[data-icon="lock"],
 .k-btn:hover svg[data-icon="lock"],
@@ -598,7 +636,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="circle-alert"],
 .k-menu button:hover svg[data-icon="circle-alert"],
 .k-seg button:hover svg[data-icon="circle-alert"],
-.k-hit:hover svg[data-icon="circle-alert"] { animation: k-shake var(--dur-slow) ease-out; }
+.k-hit:hover svg[data-icon="circle-alert"] { animation: k-sym-shake var(--dur-slow) ease-out; }
 .k-iconbtn:hover svg[data-icon="undo-2"],
 .k-iconbtn:focus-visible svg[data-icon="undo-2"],
 .k-btn:hover svg[data-icon="undo-2"],
@@ -633,7 +671,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="trash-2"],
 .k-menu button:hover svg[data-icon="trash-2"],
 .k-seg button:hover svg[data-icon="trash-2"],
-.k-hit:hover svg[data-icon="trash-2"] { animation: k-rock var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="trash-2"] { animation: k-sym-rock var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="cloud-sun"],
 .k-iconbtn:focus-visible svg[data-icon="cloud-sun"],
 .k-btn:hover svg[data-icon="cloud-sun"],
@@ -682,7 +720,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="gauge"],
 .k-menu button:hover svg[data-icon="gauge"],
 .k-seg button:hover svg[data-icon="gauge"],
-.k-hit:hover svg[data-icon="gauge"] { animation: k-sway var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="gauge"] { animation: k-sym-sway var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="search"],
 .k-iconbtn:focus-visible svg[data-icon="search"],
 .k-btn:hover svg[data-icon="search"],
@@ -710,7 +748,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="scan-line"],
 .k-menu button:hover svg[data-icon="scan-line"],
 .k-seg button:hover svg[data-icon="scan-line"],
-.k-hit:hover svg[data-icon="scan-line"] { animation: k-zoom var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="scan-line"] { animation: k-sym-zoom var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="eye"],
 .k-iconbtn:focus-visible svg[data-icon="eye"],
 .k-btn:hover svg[data-icon="eye"],
@@ -724,7 +762,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="eye-off"],
 .k-menu button:hover svg[data-icon="eye-off"],
 .k-seg button:hover svg[data-icon="eye-off"],
-.k-hit:hover svg[data-icon="eye-off"] { animation: k-blink var(--dur-base) ease-in-out; }
+.k-hit:hover svg[data-icon="eye-off"] { animation: k-sym-blink var(--dur-base) ease-in-out; }
 .k-iconbtn:hover svg[data-icon="arrow-right"],
 .k-iconbtn:focus-visible svg[data-icon="arrow-right"],
 .k-btn:hover svg[data-icon="arrow-right"],
@@ -752,7 +790,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="log-out"],
 .k-menu button:hover svg[data-icon="log-out"],
 .k-seg button:hover svg[data-icon="log-out"],
-.k-hit:hover svg[data-icon="log-out"] { animation: k-nudge-right var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="log-out"] { animation: k-sym-nudge-right var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="corner-down-left"],
 .k-iconbtn:focus-visible svg[data-icon="corner-down-left"],
 .k-btn:hover svg[data-icon="corner-down-left"],
@@ -773,7 +811,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="skip-back"],
 .k-menu button:hover svg[data-icon="skip-back"],
 .k-seg button:hover svg[data-icon="skip-back"],
-.k-hit:hover svg[data-icon="skip-back"] { animation: k-nudge-left var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="skip-back"] { animation: k-sym-nudge-left var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="arrow-up"],
 .k-iconbtn:focus-visible svg[data-icon="arrow-up"],
 .k-btn:hover svg[data-icon="arrow-up"],
@@ -787,7 +825,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="thermometer"],
 .k-menu button:hover svg[data-icon="thermometer"],
 .k-seg button:hover svg[data-icon="thermometer"],
-.k-hit:hover svg[data-icon="thermometer"] { animation: k-nudge-up var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="thermometer"] { animation: k-sym-nudge-up var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="download"],
 .k-iconbtn:focus-visible svg[data-icon="download"],
 .k-btn:hover svg[data-icon="download"],
@@ -801,7 +839,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="hard-drive-download"],
 .k-menu button:hover svg[data-icon="hard-drive-download"],
 .k-seg button:hover svg[data-icon="hard-drive-download"],
-.k-hit:hover svg[data-icon="hard-drive-download"] { animation: k-nudge-down var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="hard-drive-download"] { animation: k-sym-nudge-down var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="power"],
 .k-iconbtn:focus-visible svg[data-icon="power"],
 .k-btn:hover svg[data-icon="power"],
@@ -829,14 +867,14 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="square"],
 .k-menu button:hover svg[data-icon="square"],
 .k-seg button:hover svg[data-icon="square"],
-.k-hit:hover svg[data-icon="square"] { animation: k-press var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="square"] { animation: k-sym-press var(--dur-slow) var(--ease-spring); }
 .k-iconbtn:hover svg[data-icon="zap"],
 .k-iconbtn:focus-visible svg[data-icon="zap"],
 .k-btn:hover svg[data-icon="zap"],
 .k-row:hover svg[data-icon="zap"],
 .k-menu button:hover svg[data-icon="zap"],
 .k-seg button:hover svg[data-icon="zap"],
-.k-hit:hover svg[data-icon="zap"] { animation: k-flicker var(--dur-base) linear; }
+.k-hit:hover svg[data-icon="zap"] { animation: k-sym-flicker var(--dur-base) linear; }
 .k-iconbtn:hover svg[data-icon="wifi"],
 .k-iconbtn:focus-visible svg[data-icon="wifi"],
 .k-btn:hover svg[data-icon="wifi"],
@@ -864,7 +902,7 @@ svg[data-icon="bell"] { transform-origin: 50% 8%; }
 .k-row:hover svg[data-icon="music"],
 .k-menu button:hover svg[data-icon="music"],
 .k-seg button:hover svg[data-icon="music"],
-.k-hit:hover svg[data-icon="music"] { animation: k-pulse var(--dur-slow) var(--ease-spring); }
+.k-hit:hover svg[data-icon="music"] { animation: k-sym-pulse var(--dur-slow) var(--ease-spring); }
 /* Under the pointer a symbol takes its colour: what it means where it has a meaning, otherwise the accent.
    Not on the accent itself (a primary button, a chosen segment). */
 svg[data-icon] { transition: color var(--dur-fast) var(--ease-out); }
@@ -1104,8 +1142,8 @@ svg[data-icon] { transition: color var(--dur-fast) var(--ease-out); }
 .k-dock[data-out] .k-edge-in > :nth-child(6) { animation-delay: calc(var(--dur-fast) + 5 * var(--stagger)); }
 .k-dock[data-out] .k-edge-in > :nth-child(7) { animation-delay: calc(var(--dur-fast) + 6 * var(--stagger)); }
 /* A notification's symbol plays its motion once it has slid in: the bell rings. */
-.k-notif > .k-icon svg[data-icon] { animation: k-lift var(--dur-slow) var(--ease-spring) var(--dur-slow) backwards; }
-.k-notif > .k-icon svg[data-icon="bell"] { animation: k-ring var(--dur-slow) ease-in-out var(--dur-slow) backwards; }
+.k-notif > .k-icon svg[data-icon] { animation: k-sym-lift var(--dur-slow) var(--ease-spring) var(--dur-slow) backwards; }
+.k-notif > .k-icon svg[data-icon="bell"] { animation: k-sym-ring var(--dur-slow) ease-in-out var(--dur-slow) backwards; }
 /* A symbol swapped in place (play to pause, copy to check) pops in; a changing count bumps. Both are started by
    bundle.js, which restarts the animation by re-adding the class. */
 .k-symbol-pop { animation: k-symbol-pop var(--dur-base) var(--ease-spring); }

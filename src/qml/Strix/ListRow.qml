@@ -10,6 +10,8 @@ T.ItemDelegate {
     /// Small text at the right: a size, a time, a state.
     property string detail
     property bool selected: highlighted
+    /// The selected look comes from a Glide that moves between the rows
+    property bool glide: false
 
     implicitWidth: 320
     implicitHeight: Theme.controlMd
@@ -48,7 +50,7 @@ T.ItemDelegate {
 
     background: Rectangle {
         radius: Theme.radiusXs
-        color: control.selected || control.hovered ? Theme.surfaceRaised : "transparent"
+        color: control.hovered && !(control.glide && control.selected) || control.selected && !control.glide ? Theme.surfaceRaised : "transparent"
         Behavior on color { ColorAnimation { duration: Theme.durFast } }
 
         Label {
@@ -57,7 +59,7 @@ T.ItemDelegate {
             text: ">"
             font.weight: Font.DemiBold
             color: Theme.accentText
-            opacity: control.selected ? 1 : 0
+            opacity: control.selected && !control.glide ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: Theme.durFast } }
             Behavior on x { NumberAnimation { duration: Theme.durFast; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
         }
