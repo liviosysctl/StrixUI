@@ -62,7 +62,7 @@ __GODS_TABLE__
 - The serif has one weight. Emphasis in the serif is italic; emphasis in mono is weight 600. Do not underline and do not colour text for emphasis.
 - Never set the serif below 12px, and never use it for controls, values or list rows.
 - The serif has old-style figures only. Set dates and anything with digits in its italic, where the figures read clearly, and keep bare numbers (the clock, values, versions) in mono.
-- The wordmark is the name in `display` or as `.k-wordmark`. There is no logo symbol and no monogram; do not draw one.
+- The wordmark is the name in `display` or as `.k-wordmark`. The symbol is the owl: frontal, wings spread, in a double ring, white eyes with the pupils in the accent (`assets/Logo/strix-owl.svg` in Strix red; the system draws it in the accent of every theme). Use it as it is; do not draw another symbol or a monogram.
 - The motto "nocte vigilat" sits under the wordmark in `motto`: lowercase, italic, widely spaced. It appears on the lock screen, the greeter, the splash, About and system info, nowhere else.
 
 ## Ornament

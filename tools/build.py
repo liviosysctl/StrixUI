@@ -309,6 +309,10 @@ def main():
         for fn in walls:
             shutil.copy(os.path.join(SRC, 'wallpapers', fn), os.path.join(wd, fn))
         open(os.path.join(wd, 'star-chart.svg'), 'w').write(wallpaper(False))
+        # the owl, for documents, posters and pages outside the system (the system draws its own per theme)
+        ld = os.path.join(OUT, 'assets', 'Logo'); os.makedirs(ld, exist_ok=True)
+        for f in sorted(os.listdir(os.path.join(SRC, 'logo'))):
+            shutil.copy(os.path.join(SRC, 'logo', f), os.path.join(ld, f))
     def fix(html):
         for fn, url in walls.items():
             html = html.replace(url, url if artifact else '../../assets/Wallpapers/' + fn)
