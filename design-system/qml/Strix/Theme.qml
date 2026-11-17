@@ -73,69 +73,72 @@ QtObject {
     function mix(a, b, t) { return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, a.a + (b.a - a.a) * t) }
     /// The colour with another opacity.
     function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+    /// A colour of the tokens as QML reads it: CSS writes the opacity last (#rrggbbaa), QML first
+    /// (#aarrggbb), so the scrim would turn into a clear blue.
+    function css(v) { return typeof v === "string" && v.length === 9 ? "#" + v.slice(7) + v.slice(1, 7) : v }
 
     readonly property var c: live || themes[current] || themes["saturnus"]
     readonly property var tc: liveTerminal || terminals[current] || terminals["saturnus"]
 
     // ------------------------------------------------------------ colours
-    readonly property color background: c["background"]
-    readonly property color surface: c["surface"]
-    readonly property color surfaceRaised: c["surface-raised"]
-    readonly property color surfaceSunken: c["surface-sunken"]
-    readonly property color border: c["border"]
-    readonly property color borderStrong: c["border-strong"]
-    readonly property color borderActive: c["border-active"]
-    readonly property color line: c["line"]
-    readonly property color scrim: c["scrim"]
-    readonly property color text: c["text"]
-    readonly property color textMuted: c["text-muted"]
-    readonly property color textFaint: c["text-faint"]
-    readonly property color accent: c["accent"]
-    readonly property color accentHover: c["accent-hover"]
-    readonly property color accentPressed: c["accent-pressed"]
-    readonly property color accentSoft: c["accent-soft"]
-    readonly property color accentText: c["accent-text"]
-    readonly property color onAccent: c["on-accent"]
-    readonly property color focus: c["focus"]
-    readonly property color error: c["error"]
-    readonly property color warning: c["warning"]
-    readonly property color success: c["success"]
-    readonly property color info: c["info"]
-    readonly property color syntaxKeyword: c["syntax-keyword"]
-    readonly property color syntaxString: c["syntax-string"]
-    readonly property color syntaxNumber: c["syntax-number"]
-    readonly property color syntaxFunction: c["syntax-function"]
-    readonly property color syntaxType: c["syntax-type"]
-    readonly property color syntaxConstant: c["syntax-constant"]
-    readonly property color syntaxComment: c["syntax-comment"]
-    readonly property color syntaxOperator: c["syntax-operator"]
-    readonly property color chart1: c["chart-1"]
-    readonly property color chart2: c["chart-2"]
-    readonly property color chart3: c["chart-3"]
-    readonly property color chart4: c["chart-4"]
-    readonly property color chart5: c["chart-5"]
+    readonly property color background: css(c["background"])
+    readonly property color surface: css(c["surface"])
+    readonly property color surfaceRaised: css(c["surface-raised"])
+    readonly property color surfaceSunken: css(c["surface-sunken"])
+    readonly property color border: css(c["border"])
+    readonly property color borderStrong: css(c["border-strong"])
+    readonly property color borderActive: css(c["border-active"])
+    readonly property color line: css(c["line"])
+    readonly property color scrim: css(c["scrim"])
+    readonly property color text: css(c["text"])
+    readonly property color textMuted: css(c["text-muted"])
+    readonly property color textFaint: css(c["text-faint"])
+    readonly property color accent: css(c["accent"])
+    readonly property color accentHover: css(c["accent-hover"])
+    readonly property color accentPressed: css(c["accent-pressed"])
+    readonly property color accentSoft: css(c["accent-soft"])
+    readonly property color accentText: css(c["accent-text"])
+    readonly property color onAccent: css(c["on-accent"])
+    readonly property color focus: css(c["focus"])
+    readonly property color error: css(c["error"])
+    readonly property color warning: css(c["warning"])
+    readonly property color success: css(c["success"])
+    readonly property color info: css(c["info"])
+    readonly property color syntaxKeyword: css(c["syntax-keyword"])
+    readonly property color syntaxString: css(c["syntax-string"])
+    readonly property color syntaxNumber: css(c["syntax-number"])
+    readonly property color syntaxFunction: css(c["syntax-function"])
+    readonly property color syntaxType: css(c["syntax-type"])
+    readonly property color syntaxConstant: css(c["syntax-constant"])
+    readonly property color syntaxComment: css(c["syntax-comment"])
+    readonly property color syntaxOperator: css(c["syntax-operator"])
+    readonly property color chart1: css(c["chart-1"])
+    readonly property color chart2: css(c["chart-2"])
+    readonly property color chart3: css(c["chart-3"])
+    readonly property color chart4: css(c["chart-4"])
+    readonly property color chart5: css(c["chart-5"])
 
     // terminal
-    readonly property color termBackground: tc["background"]
-    readonly property color termForeground: tc["foreground"]
-    readonly property color termCursor: tc["cursor"]
-    readonly property color termSelection: tc["selection"]
-    readonly property color termBlack: tc["black"]
-    readonly property color termRed: tc["red"]
-    readonly property color termGreen: tc["green"]
-    readonly property color termYellow: tc["yellow"]
-    readonly property color termBlue: tc["blue"]
-    readonly property color termMagenta: tc["magenta"]
-    readonly property color termCyan: tc["cyan"]
-    readonly property color termWhite: tc["white"]
-    readonly property color termBrightBlack: tc["bright-black"]
-    readonly property color termBrightRed: tc["bright-red"]
-    readonly property color termBrightGreen: tc["bright-green"]
-    readonly property color termBrightYellow: tc["bright-yellow"]
-    readonly property color termBrightBlue: tc["bright-blue"]
-    readonly property color termBrightMagenta: tc["bright-magenta"]
-    readonly property color termBrightCyan: tc["bright-cyan"]
-    readonly property color termBrightWhite: tc["bright-white"]
+    readonly property color termBackground: css(tc["background"])
+    readonly property color termForeground: css(tc["foreground"])
+    readonly property color termCursor: css(tc["cursor"])
+    readonly property color termSelection: css(tc["selection"])
+    readonly property color termBlack: css(tc["black"])
+    readonly property color termRed: css(tc["red"])
+    readonly property color termGreen: css(tc["green"])
+    readonly property color termYellow: css(tc["yellow"])
+    readonly property color termBlue: css(tc["blue"])
+    readonly property color termMagenta: css(tc["magenta"])
+    readonly property color termCyan: css(tc["cyan"])
+    readonly property color termWhite: css(tc["white"])
+    readonly property color termBrightBlack: css(tc["bright-black"])
+    readonly property color termBrightRed: css(tc["bright-red"])
+    readonly property color termBrightGreen: css(tc["bright-green"])
+    readonly property color termBrightYellow: css(tc["bright-yellow"])
+    readonly property color termBrightBlue: css(tc["bright-blue"])
+    readonly property color termBrightMagenta: css(tc["bright-magenta"])
+    readonly property color termBrightCyan: css(tc["bright-cyan"])
+    readonly property color termBrightWhite: css(tc["bright-white"])
 
     // ------------------------------------------------------------ sizes in pixels at scale 1
     readonly property int space1: 4  // Gap between an icon and its value; padding inside the pill.

@@ -81,8 +81,8 @@ def theme_qml(t, table, gods, plates):
     terms = ',\n'.join('        %s: { %s }' % (g['id'], ', '.join('%s: "%s"' % (_js(n), table[g['id']]['terminal'][n]) for n in TERMINAL)) for g in gods)
     info = ',\n'.join('        %s: { name: %s, description: %s, wallpaper: "%s.jpg", plate: %s }' % (
         g['id'], _js(g['name']), _js(g['description']), g['id'], _js(plates[g['id']])) for g in gods)
-    colour_props = '\n'.join('    readonly property color %s: c[%s]' % (camel(n), _js(n)) for n in names)
-    term_props = '\n'.join('    readonly property color %s: tc[%s]' % (camel('term-' + n), _js(n)) for n in TERMINAL)
+    colour_props = '\n'.join('    readonly property color %s: css(c[%s])' % (camel(n), _js(n)) for n in names)
+    term_props = '\n'.join('    readonly property color %s: css(tc[%s])' % (camel('term-' + n), _js(n)) for n in TERMINAL)
 
     dims = []
     for group in ['spacing', 'radius', 'line', 'size']:
@@ -178,6 +178,9 @@ QtObject {
     function mix(a, b, t) { return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, a.a + (b.a - a.a) * t) }
     /// The colour with another opacity.
     function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+    /// A colour of the tokens as QML reads it: CSS writes the opacity last (#rrggbbaa), QML first
+    /// (#aarrggbb), so the scrim would turn into a clear blue.
+    function css(v) { return typeof v === "string" && v.length === 9 ? "#" + v.slice(7) + v.slice(1, 7) : v }
 
     readonly property var c: live || themes[current] || themes["%(default)s"]
     readonly property var tc: liveTerminal || terminals[current] || terminals["%(default)s"]
