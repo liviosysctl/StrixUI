@@ -203,15 +203,20 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Search | close | reverse | `dur-fast` | `ease-in` | finishes |
 | Search | enter a group, go back | the list slides 12px in from the right, going back from the left | `dur-base` | `ease-out` | the newer level wins |
 | Cheat sheet | open (Super K) | panel drops 8px and fades in; scrim fades | `dur-base` | `ease-out` | closes from position |
+| Cheat sheet | close | reverse | `dur-fast` | `ease-in` | finishes |
+| Clipboard | open (Super V), close | like the cheat sheet | `dur-base`, `dur-fast` | `ease-out`, `ease-in` | reverses from position |
 | Cheat sheet | edit a row | the sheet closes, Settings opens at the row; the row is marked in `accent-soft` and fades back | `dur-slow` | `ease-out` | finishes |
 | Hotkeys | record keys | the key field turns to the accent and its prompt pulses until keys are pressed | `0.9s` per pulse | `ease-in-out` | Esc cancels |
 | Search | typing | results update in place, no motion; the caret follows the chosen row | none | none | none |
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
+| Theme picker | open, close | fades; the plates rise 12px into place | `dur-base` | `ease-out`, `ease-in` | reverses from position |
 | Theme | apply | new wallpaper grows as a circle from the click point; then the picker fades | `dur-reveal`, then `dur-base` | `ease-in-out`, `ease-in` | finishes |
+| Wallpaper | the theme changes by itself (the cycle, a command) | the new engraving grows as a circle from the middle of the screen, the caption fades over; while the lock screen or the picker covers the desktop it changes at once | `dur-reveal`; caption `dur-fast` out, `dur-base` in | `ease-in-out` | finishes, the next change waits |
 | Lock screen | lock | another god theme, plate and colours; wallpaper dims and softens; column slides in from the left | `dur-reveal`, `dur-slow` | `ease-out` | finishes |
 | Lock screen | unlock | column fades and moves 24px left; wallpaper sharpens | `dur-slow`, `dur-reveal` | `ease-in`, `ease-out` | finishes |
 | Lock screen | wrong password | field shakes; message appears | `dur-slow` | `ease-out` | restarts |
+| Owl on the lock screen | after the column arrives, then every 6 to 12 s, and at a wrong password | blinks: half closed, closed, half closed | 40ms, `dur-instant` + 40ms, 40ms | steps | finishes |
 | Visualizer | sound | bar heights | `dur-fast` | linear | follows |
 | Cursor in a terminal | idle | blink | 1.1s | steps | none |
 | Badge, count | new number | bumps to 125% and settles | `dur-slow` | `ease-spring` | restarts |
@@ -226,6 +231,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Special workspace | toggle | slides vertically with a fade | `dur-slow` | `ease-out` | reverses |
 | Shell layers | appear, disappear | fade | `dur-fast` | `ease-out` | reverses |
 | Boot splash | start, shut down | the piece in the accent runs along the line | `dur-loop`, repeating | `ease-in-out` | none |
+| Boot splash owl | start, shut down | fades in, blinks after 1.4s and then every 8s | 0.6s fade, 180ms blink | `ease-out`, steps | none |
 
 ## Symbols
 
