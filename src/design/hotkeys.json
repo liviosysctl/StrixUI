@@ -21,19 +21,19 @@
   "group": "Apps",
   "action": "Browser",
   "keys": "Super Shift Return",
-  "target": "Firefox"
+  "target": "Zen"
  },
  {
   "group": "Apps",
   "action": "Files",
-  "keys": "Super Shift F",
-  "target": "File manager"
+  "keys": "Super E",
+  "target": "Nautilus"
  },
  {
   "group": "Apps",
   "action": "Text editor",
   "keys": "Super Shift E",
-  "target": "Editor"
+  "target": "Neovim"
  },
  {
   "group": "Apps",

@@ -78,7 +78,7 @@
   ],
   "Card": [
    "Card",
-   "Card { title: \"Firefox\"; text: \"Web browser\"; interactive: true; onClicked: ... }"
+   "Card { title: \"Zen\"; text: \"Web browser\"; interactive: true; onClicked: ... }"
   ],
   "Calendar": [
    "Calendar",
@@ -114,7 +114,7 @@
   ],
   "WindowFrame": [
    "WindowFrame",
-   "WindowFrame { title: \"Store\"; subtitle: \"Apps from nixpkgs\"; active: true; Label { text: \"Firefox is installed.\" } }"
+   "WindowFrame { title: \"Store\"; subtitle: \"Apps from nixpkgs\"; active: true; Label { text: \"Zen is installed.\" } }"
   ]
  },
  "screens": {

@@ -11,7 +11,7 @@ How a window looks. Under Hyprland the compositor draws it: 1px border, 4px corn
 `import Strix`, then `WindowFrame`.
 
 ```qml
-WindowFrame { title: "Store"; subtitle: "Apps from nixpkgs"; active: true; Label { text: "Firefox is installed." } }
+WindowFrame { title: "Store"; subtitle: "Apps from nixpkgs"; active: true; Label { text: "Zen is installed." } }
 ```
 
 ## In HTML (the previews)

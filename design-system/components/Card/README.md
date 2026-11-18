@@ -11,7 +11,7 @@ A bordered box for one self-contained thing: an app in the store, a state with i
 `import Strix`, then `Card`.
 
 ```qml
-Card { title: "Firefox"; text: "Web browser"; interactive: true; onClicked: ... }
+Card { title: "Zen"; text: "Web browser"; interactive: true; onClicked: ... }
 ```
 
 ## In HTML (the previews)

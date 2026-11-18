@@ -111,7 +111,7 @@ Rectangle {
                     id: rows
                     width: 320
                     ListRow { id: first; width: 320; text: "Ghostty"; iconName: "terminal"; detail: "Super Return"; selected: true; glide: true }
-                    ListRow { width: 320; text: "Files"; iconName: "folder"; detail: "Super Shift F"; glide: true }
+                    ListRow { width: 320; text: "Files"; iconName: "folder"; detail: "Super E"; glide: true }
                     ListRow { width: 320; text: "Settings"; iconName: "settings"; glide: true; Entrance { delay: Theme.stagger } }
                 }
             }
@@ -187,7 +187,7 @@ Rectangle {
             Caption { text: "Window" }
             WindowFrame {
                 width: 360; height: 150; title: "Store"; subtitle: "Apps from nixpkgs"
-                Label { text: "Firefox is installed."; color: Theme.textMuted }
+                Label { text: "Zen is installed."; color: Theme.textMuted }
             }
             MediaPlayer { title: "Nocturne in E-flat"; artist: "Chopin, op. 9 no. 2"; position: 74; length: 271; playing: true }
         }
