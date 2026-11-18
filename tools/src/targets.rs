@@ -756,6 +756,7 @@ fn write_rust(
 // ---------------------------------------------------------------- theme.toml for the theme engine
 
 fn write_theme_toml(src: &Src, out: &Path, tables: &[(String, Table)], gods: &Gods) {
+    let plates = crate::read_json(&src.root.join("design/plates.json"));
     for g in &gods.gods {
         let tab = &tables
             .iter()
@@ -793,6 +794,18 @@ fn write_theme_toml(src: &Src, out: &Path, tables: &[(String, Table)], gods: &Go
         }
         let dir = out.join("themes").join(&g.id);
         write(&dir.join("theme.toml"), &(o.join("\n") + "\n"));
+        // The caption of the plate, for every theme that takes this one's picture (strix-theme complete)
+        let p = &plates[&g.id];
+        let credit = p["credit"].as_str().expect("credit");
+        let licence = if credit.ends_with("CC0") {
+            "CC0"
+        } else {
+            "public domain"
+        };
+        write(
+            &dir.join("wallpaper.toml"),
+            &crate::pack::wallpaper_toml(p["caption"].as_str().expect("caption"), credit, licence),
+        );
     }
     let rows: Vec<String> = gods
         .gods
