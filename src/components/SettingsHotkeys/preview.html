@@ -1,0 +1,25 @@
+
+<div class="k-screen">
+  <div class="k-wall" data-follow style="background-image:url(/_blob/0d757135df30d2bf6652f3c0a18483d5);background-position:center"></div>
+  <div class="k-grain"></div>
+  
+<div class="k-win" data-active id="settings" style="position:absolute;left:150px;right:150px;top:64px;bottom:64px">
+  <div class="k-settings">
+    <nav class="k-settings-nav" aria-label="Settings">
+      <div class="who"><i>L</i><span>Livio</span></div>
+      <button><i class="k-icon" data-icon="swatch-book"></i>Appearance</button><button><i class="k-icon" data-icon="lock"></i>Lock screen</button><button><i class="k-icon" data-icon="monitor"></i>Display</button><button><i class="k-icon" data-icon="volume-2"></i>Sound</button><button><i class="k-icon" data-icon="wifi"></i>Network</button><button><i class="k-icon" data-icon="bluetooth"></i>Bluetooth</button><button><i class="k-icon" data-icon="keyboard"></i>Keyboard</button><button aria-current="page"><i class="k-icon" data-icon="command"></i>Hotkeys</button><button><i class="k-icon" data-icon="bell"></i>Notifications</button>
+    </nav>
+    <div class="k-settings-main">
+      <header><h2>Hotkeys</h2>
+        <div class="k-input" style="width:220px;height:28px"><i class="k-icon" data-icon="search"></i><input id="hkq" aria-label="Filter hotkeys" placeholder="Filter" autocomplete="off"></div>
+        <button class="k-btn k-btn-primary" id="hkadd"><i class="k-icon" data-icon="plus"></i><span>Add hotkey</span></button><span data-close hidden></span>
+      </header>
+      <div class="k-hk-new" id="hknew" hidden>
+        <div class="row"><div class="k-input" style="width:200px"><input id="hkname" aria-label="Name" placeholder="Name"></div><div class="k-input" style="flex:1"><input id="hkcmd" aria-label="Command" placeholder="Command, app or action"></div></div>
+        <div class="row"><button class="k-btn k-btn-quiet" data-cancel-new><span>Cancel</span></button><button class="k-btn k-btn-primary" data-save-new><span>Next: the keys</span></button></div>
+      </div>
+      <div id="hklist"></div>
+    </div>
+  </div>
+</div>
+</div>

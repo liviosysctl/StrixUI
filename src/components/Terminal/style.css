@@ -1,0 +1,11 @@
+
+.term { position: absolute; left: 12px; right: 12px; top: 38px; bottom: 12px; }
+.term .k-win-body { position: relative; background: var(--term-background); padding: 16px 20px; }
+.term .ghost { position: absolute; right: -40px; bottom: -60px; width: 760px; opacity: 0.06; filter: grayscale(1); pointer-events: none; }
+.term pre { position: relative; margin: 0; font-size: 13px; line-height: 20px; }
+.k-code .p { color: var(--term-bright-white); font-weight: 600; } .k-code .i { color: var(--term-white); }
+.k-code .d { color: var(--term-blue); } .k-code .g { color: var(--term-green); } .k-code .pc { color: var(--term-cursor); }
+.k-code .m { color: var(--term-bright-black); } .k-code .y { color: var(--term-yellow); } .k-code .c { color: var(--term-cyan); } .k-code .v { color: var(--term-magenta); }
+.k-code .r { color: var(--term-red); } .k-code .rb { color: var(--term-bright-red); font-weight: 600; } .k-code .yb { color: var(--term-bright-yellow); font-weight: 600; }
+.k-code .bl { color: var(--term-blue); font-weight: 600; } .k-code .b { font-weight: 600; color: var(--term-bright-white); }
+.k-code .sw { display: inline-flex; vertical-align: -2px; } .k-code .sw i { display: inline-block; width: 26px; height: 12px; }

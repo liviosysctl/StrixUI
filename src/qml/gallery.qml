@@ -1,6 +1,6 @@
 // Every QML component on one board, for a look and for the render test.
 //   qml -I design-system/qml design-system/qml/gallery.qml        (Qt's qml tool)
-//   python3 tools/render_qml.py                                    (PNG of every theme into build/renders/)
+//   cargo strixui render-qml                                       (PNG of every theme into build/renders/)
 // Another theme: qml -I design-system/qml design-system/qml/gallery.qml -- --theme=janus
 import QtQuick
 import Strix

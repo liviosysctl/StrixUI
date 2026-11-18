@@ -26,5 +26,5 @@ Each component's README in `components/` has its QML example. `gallery.qml` show
 
 ```sh
 qml -I design-system/qml design-system/qml/gallery.qml
-python3 tools/render_qml.py          # PNG per theme into build/renders/, fails on any QML error
+cargo strixui render-qml             # PNG per theme into build/renders/, fails on any QML error
 ```

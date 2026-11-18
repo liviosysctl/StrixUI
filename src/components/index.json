@@ -1,0 +1,225 @@
+[
+ {
+  "name": "Button",
+  "kind": "component",
+  "group": "Actions",
+  "height": 110
+ },
+ {
+  "name": "IconButton",
+  "kind": "component",
+  "group": "Actions",
+  "height": 90
+ },
+ {
+  "name": "TextField",
+  "kind": "component",
+  "group": "Inputs",
+  "height": 210
+ },
+ {
+  "name": "SearchField",
+  "kind": "component",
+  "group": "Inputs",
+  "height": 90
+ },
+ {
+  "name": "Switch",
+  "kind": "component",
+  "group": "Inputs",
+  "height": 80
+ },
+ {
+  "name": "Checkbox",
+  "kind": "component",
+  "group": "Inputs",
+  "height": 80
+ },
+ {
+  "name": "Radio",
+  "kind": "component",
+  "group": "Inputs",
+  "height": 80
+ },
+ {
+  "name": "Segmented",
+  "kind": "component",
+  "group": "Inputs",
+  "height": 90
+ },
+ {
+  "name": "Slider",
+  "kind": "component",
+  "group": "Inputs",
+  "height": 110
+ },
+ {
+  "name": "Progress",
+  "kind": "component",
+  "group": "Feedback",
+  "height": 100
+ },
+ {
+  "name": "Ring",
+  "kind": "component",
+  "group": "Feedback",
+  "height": 130
+ },
+ {
+  "name": "Badge",
+  "kind": "component",
+  "group": "Feedback",
+  "height": 80
+ },
+ {
+  "name": "Tooltip",
+  "kind": "component",
+  "group": "Feedback",
+  "height": 110
+ },
+ {
+  "name": "Notification",
+  "kind": "component",
+  "group": "Feedback",
+  "height": 230
+ },
+ {
+  "name": "Osd",
+  "kind": "component",
+  "group": "Feedback",
+  "height": 90
+ },
+ {
+  "name": "Dialog",
+  "kind": "component",
+  "group": "Feedback",
+  "height": 260
+ },
+ {
+  "name": "List",
+  "kind": "component",
+  "group": "Data",
+  "height": 230
+ },
+ {
+  "name": "SettingRow",
+  "kind": "component",
+  "group": "Data",
+  "height": 260
+ },
+ {
+  "name": "InfoBlock",
+  "kind": "component",
+  "group": "Data",
+  "height": 215
+ },
+ {
+  "name": "Card",
+  "kind": "component",
+  "group": "Data",
+  "height": 150
+ },
+ {
+  "name": "Calendar",
+  "kind": "component",
+  "group": "Data",
+  "height": 220
+ },
+ {
+  "name": "ContextMenu",
+  "kind": "component",
+  "group": "Data",
+  "height": 170
+ },
+ {
+  "name": "Search",
+  "kind": "component",
+  "group": "Shell",
+  "height": 560
+ },
+ {
+  "name": "TopBar",
+  "kind": "component",
+  "group": "Shell",
+  "height": 120
+ },
+ {
+  "name": "EdgeDock",
+  "kind": "component",
+  "group": "Shell",
+  "height": 380
+ },
+ {
+  "name": "MediaPlayer",
+  "kind": "component",
+  "group": "Shell",
+  "height": 130
+ },
+ {
+  "name": "Visualizer",
+  "kind": "component",
+  "group": "Shell",
+  "height": 150
+ },
+ {
+  "name": "SlantCard",
+  "kind": "component",
+  "group": "Shell",
+  "height": 320
+ },
+ {
+  "name": "WindowFrame",
+  "kind": "component",
+  "group": "Shell",
+  "height": 260
+ },
+ {
+  "name": "LockScreen",
+  "kind": "screen",
+  "group": "Screens",
+  "height": 720,
+  "width": 1280
+ },
+ {
+  "name": "Desktop",
+  "kind": "screen",
+  "group": "Screens",
+  "height": 720,
+  "width": 1280
+ },
+ {
+  "name": "ThemePicker",
+  "kind": "screen",
+  "group": "Screens",
+  "height": 720,
+  "width": 1280
+ },
+ {
+  "name": "Cheatsheet",
+  "kind": "screen",
+  "group": "Screens",
+  "height": 720,
+  "width": 1280
+ },
+ {
+  "name": "SettingsHotkeys",
+  "kind": "screen",
+  "group": "Screens",
+  "height": 720,
+  "width": 1280
+ },
+ {
+  "name": "Terminal",
+  "kind": "screen",
+  "group": "Screens",
+  "height": 720,
+  "width": 1280
+ },
+ {
+  "name": "BootSplash",
+  "kind": "screen",
+  "group": "Screens",
+  "height": 540,
+  "width": 960
+ }
+]

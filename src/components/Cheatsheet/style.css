@@ -1,0 +1,4 @@
+
+#settings[hidden], #cheat[hidden] { display: none; }
+#settings { animation: k-win-in var(--dur-slow) var(--ease-out) both; }
+#said { margin-right: var(--space-2); white-space: nowrap; }

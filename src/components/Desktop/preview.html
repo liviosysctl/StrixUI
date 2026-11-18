@@ -1,0 +1,105 @@
+
+<div class="k-screen">
+  <div class="k-wall" data-follow style="background-image:url(/_blob/0d757135df30d2bf6652f3c0a18483d5);background-position:center"></div>
+  <div class="k-grain"></div>
+  <div style="position:absolute;inset:0 0 auto 0">
+<div class="k-bar" role="toolbar" aria-label="Status">
+  <div>
+    <button aria-label="Search apps"><i class="k-icon" data-icon="search"></i><b id="clock">21:04</b></button>
+    <span class="k-meter" title="CPU"><i class="k-icon" data-icon="cpu"></i><u style="--p:17%"></u><span class="k-roll" data-value="17%" id="m-cpu"></span></span>
+    <span class="k-meter" title="Memory"><i class="k-icon" data-icon="memory-stick"></i><u style="--p:24%"></u><span>7.4 GiB</span></span>
+    <span class="k-meter" title="Temperature"><i class="k-icon" data-icon="thermometer"></i><u style="--p:46%"></u><span class="k-roll" data-value="46°" id="m-tmp"></span></span>
+  </div>
+  <div>
+    <span class="k-ws" role="tablist" aria-label="Workspaces"><button aria-label="Workspace 1" data-used></button><button aria-label="Workspace 2" data-used aria-current="true"></button><button aria-label="Workspace 3" data-used></button><button aria-label="Workspace 4"></button><button aria-label="Workspace 5"></button></span>
+    <button class="k-track" aria-label="Now playing"><i class="k-icon" data-icon="music"></i><span>Nocturne in E-flat major</span></button>
+  </div>
+  <div>
+    <button class="k-rec" aria-label="Recording"><i class="k-icon" data-icon="video"></i><span class="k-dot k-dot-live"></span></button>
+    <button aria-label="Notifications, 3 new"><i class="k-icon" data-icon="bell"></i><b>3</b></button>
+    <button class="k-power" aria-label="Session"><i class="k-icon" data-icon="power"></i></button>
+  </div>
+</div></div>
+  <div class="k-plate" id="plate" data-follow-plate>Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592</div>
+  <div id="tiles" data-hidden>
+    <div class="k-win" data-active><div class="k-win-body"><pre class="k-code"><span class="ln"> 1</span>  <span class="cm">// Reads a theme and checks its contrast rules.</span>
+<span class="ln"> 2</span>  <span class="kw">use</span> <span class="ty">std::path::Path</span><span class="op">;</span>
+<span class="ln"> 3</span>
+<span class="ln"> 4</span>  <span class="co">#[derive(Debug)]</span>
+<span class="ln"> 5</span>  <span class="kw">pub struct</span> <span class="ty">Variant</span> <span class="op">{</span>
+<span class="ln"> 6</span>      <span class="kw">pub</span> name<span class="op">:</span> <span class="ty">String</span><span class="op">,</span>
+<span class="ln"> 7</span>      <span class="kw">pub</span> colors<span class="op">:</span> <span class="ty">Colors</span><span class="op">,</span>
+<span class="ln"> 8</span>  <span class="op">}</span>
+<span class="ln"> 9</span>
+<span class="ln">10</span>  <span class="kw">pub fn</span> <span class="fn">check</span><span class="op">(</span>path<span class="op">:</span> <span class="op">&amp;</span><span class="ty">Path</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="ty">Result</span><span class="op">&lt;</span><span class="ty">Variant</span><span class="op">&gt;</span> <span class="op">{</span>
+<span class="ln">11</span>      <span class="kw">let</span> text <span class="op">=</span> <span class="fn">read</span><span class="op">(</span>path<span class="op">)?;</span>
+<span class="ln">12</span>      <span class="kw">let</span> v<span class="op">:</span> <span class="ty">Variant</span> <span class="op">=</span> toml<span class="op">::</span><span class="fn">from_str</span><span class="op">(&amp;</span>text<span class="op">)?;</span>
+<span class="ln">13</span>      <span class="kw">if</span> <span class="fn">ratio</span><span class="op">(</span>v<span class="op">.</span>colors<span class="op">.</span>text<span class="op">,</span> v<span class="op">.</span>colors<span class="op">.</span>surface<span class="op">)</span> <span class="op">&lt;</span> <span class="nu">4.5</span> <span class="op">{</span>
+<span class="ln">14</span>          <span class="kw">return</span> <span class="fn">fail</span><span class="op">(</span><span class="st">"text needs 4.5:1 on surface"</span><span class="op">);</span>
+<span class="ln">15</span>      <span class="op">}</span>
+<span class="ln">16</span>      <span class="co">Ok</span><span class="op">(</span>v<span class="op">)</span><span class="k-caret"></span>
+<span class="ln">17</span>  <span class="op">}</span></pre></div></div>
+    <div class="k-win"><div class="k-win-body"><div style="display:flex;gap:20px;align-items:center"><div style="text-align:center"><div class="k-wordmark">Strix</div><div class="k-motto" style="font-size:11px">nocte vigilat</div></div>
+      <dl class="k-info"><dt>OS</dt><i>::</i><dd>Strix 0.1.0</dd><dt>Kernel</dt><i>::</i><dd>6.18.2</dd><dt>Shell</dt><i>::</i><dd>Quickshell</dd><dt>Memory</dt><i>::</i><dd>7.4 of 32 GiB</dd><dt>Uptime</dt><i>::</i><dd>3 h 19 min</dd></dl></div>
+      <pre class="k-code" style="margin-top:12px"><b>livio@larp</b> <span class="ty">~</span> <span class="op">&gt;</span> <span class="k-caret"></span></pre></div></div>
+    <div class="k-win"><div class="k-win-body" style="display:flex;align-items:flex-end"><div class="k-viz" data-bars="120" style="height:100%"></div></div></div>
+  </div>
+  <div class="k-dockbar">
+<div class="k-dock" id="dock">
+  <div class="k-panel k-surface" id="p-main">
+    <div class="k-panel-head"><div class="k-seg" data-for="#tabs" aria-label="Section"><button aria-selected="true"><i class="k-icon" data-icon="calendar"></i>Today</button><button><i class="k-icon" data-icon="gauge"></i>System</button><button><i class="k-icon" data-icon="info"></i>About</button></div></div>
+    <div class="k-tabs" id="tabs">
+      <section data-active>
+        <div class="k-today">
+          <div><span class="k-plate" id="dow">Tuesday</span><h3 id="dmy">10 November</h3>
+            <div class="k-rule"><i></i></div>
+            <div class="k-wx"><i class="k-icon" data-icon="cloud-sun"></i><div><b>8°</b>Partly cloudy :: Basel</div></div>
+            <div class="k-progress-row k-day" style="width:100%"><div><b>Day</b><span id="dayp">88%</span></div><div class="k-progress" id="dayl" style="width:100%"><i></i></div></div>
+          </div>
+          <div class="k-cal"></div>
+        </div>
+      </section>
+      <section>
+        <div class="k-sys">
+          <div class="k-ringset"><div class="k-ring" data-target="17"></div>CPU</div>
+          <div class="k-ringset"><div class="k-ring" data-target="6"></div>GPU</div>
+          <div class="k-ringset"><div class="k-ring" data-target="24"></div>RAM</div>
+        </div>
+        <div class="k-progress-row"><div><b>Disk /</b><span>162 GiB of 952 GiB</span></div><div class="k-progress" style="--p:17%"><i></i></div></div>
+      </section>
+      <section>
+        <div class="k-about">
+          <div><h3>Strix<small>0.1.0</small></h3><span class="k-motto">nocte vigilat</span></div>
+          <div class="k-rule"><i></i></div>
+          <div class="k-up"><i class="k-icon" data-icon="check" id="up-i"></i><div><b id="up-t">You are up to date</b><small id="up-s">Channel :: stable. Checked just now</small><div class="k-progress" id="up-p" data-indeterminate style="width:100%;margin-top:6px;display:none"><i></i></div></div><button class="k-btn k-btn-sm" id="up-b"><span>Check</span></button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-wifi">
+    <h4>Wi-Fi<label class="k-switch"><input type="checkbox" checked aria-label="Wi-Fi"><span></span></label></h4>
+    <ul class="k-list" role="listbox"><li class="k-row" role="option" aria-selected="true"><i class="k-icon" data-icon="wifi"></i><span class="k-grow">Fibernet</span><small>Connected</small></li><li class="k-row" role="option"><i class="k-icon" data-icon="wifi"></i><span class="k-grow">Atelier</span><i class="k-icon" data-icon="lock"></i></li><li class="k-row" role="option"><i class="k-icon" data-icon="wifi"></i><span class="k-grow">Guest</span></li></ul>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-bt">
+    <h4>Bluetooth<label class="k-switch"><input type="checkbox" checked aria-label="Bluetooth"><span></span></label></h4>
+    <ul class="k-list" role="listbox"><li class="k-row" role="option" aria-selected="true"><i class="k-icon" data-icon="bluetooth"></i><span class="k-grow">Headphones</span><small>80%</small></li><li class="k-row" role="option"><i class="k-icon" data-icon="keyboard"></i><span class="k-grow">Keyboard</span><small>Paired</small></li></ul>
+  </div>
+  <div class="k-panel k-surface" data-size="sm" id="p-vol">
+    <h4>Sound</h4>
+    <label class="k-slider" style="width:100%"><i class="k-icon" data-icon="volume-2"></i><input type="range" min="0" max="100" value="62" data-unit="%" aria-label="Volume"><output></output></label>
+  </div>
+  <div class="k-panel k-surface" id="p-media" style="width:344px;padding:0">
+    <div class="k-media"><div class="k-cover"><i class="k-icon" data-icon="disc-3"></i></div><div style="min-width:0"><b>Nocturne in E-flat major</b><small>Sample artist</small></div>
+      <div class="k-ctl"><span>1:12</span><div class="k-progress" style="--p:27%"><i></i></div><span>4:31</span><button class="k-iconbtn k-iconbtn-sm" aria-label="Previous"><i class="k-icon" data-icon="skip-back"></i></button><button class="k-iconbtn k-iconbtn-sm" aria-label="Pause"><i class="k-icon" data-icon="pause"></i></button><button class="k-iconbtn k-iconbtn-sm" aria-label="Next"><i class="k-icon" data-icon="skip-forward"></i></button></div></div>
+  </div>
+  <div class="k-edge" role="toolbar" aria-label="Dock"><u></u><div class="k-edge-in">
+    <button aria-label="Settings"><i class="k-icon" data-icon="settings"></i></button><s></s>
+    <button data-panel="#p-main" data-tab="0" aria-label="Today"><i class="k-icon" data-icon="cloud-sun"></i><b>8°</b><span id="pdate">Tue 10 Nov</span></button><s></s>
+    <button data-panel="#p-media" aria-label="Media"><i class="k-icon" data-icon="music"></i></button>
+    <button data-panel="#p-wifi" aria-label="Wi-Fi"><i class="k-icon" data-icon="wifi"></i></button>
+    <button data-panel="#p-bt" aria-label="Bluetooth"><i class="k-icon" data-icon="bluetooth"></i></button>
+    <button data-panel="#p-vol" aria-label="Sound"><i class="k-icon" data-icon="volume-2"></i></button><s></s>
+    <button data-panel="#p-main" data-tab="2" aria-label="About"><i class="k-icon" data-icon="info"></i></button>
+  </div></div>
+</div></div>
+</div>

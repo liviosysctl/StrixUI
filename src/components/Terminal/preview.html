@@ -1,0 +1,56 @@
+
+<div class="k-screen">
+  <div class="k-wall" data-follow style="background-image:url(/_blob/0d757135df30d2bf6652f3c0a18483d5);background-position:center"></div>
+  <div class="k-grain"></div>
+  <div style="position:absolute;inset:0 0 auto 0">
+<div class="k-bar" role="toolbar" aria-label="Status">
+  <div>
+    <button aria-label="Search apps"><i class="k-icon" data-icon="search"></i><b id="clock">21:04</b></button>
+    <span class="k-meter" title="CPU"><i class="k-icon" data-icon="cpu"></i><u style="--p:17%"></u><span class="k-roll" data-value="17%" id="m-cpu"></span></span>
+    <span class="k-meter" title="Memory"><i class="k-icon" data-icon="memory-stick"></i><u style="--p:24%"></u><span>7.4 GiB</span></span>
+    <span class="k-meter" title="Temperature"><i class="k-icon" data-icon="thermometer"></i><u style="--p:46%"></u><span class="k-roll" data-value="46°" id="m-tmp"></span></span>
+  </div>
+  <div>
+    <span class="k-ws" role="tablist" aria-label="Workspaces"><button aria-label="Workspace 1" data-used></button><button aria-label="Workspace 2" data-used aria-current="true"></button><button aria-label="Workspace 3" data-used></button><button aria-label="Workspace 4"></button><button aria-label="Workspace 5"></button></span>
+    <button class="k-track" aria-label="Now playing"><i class="k-icon" data-icon="music"></i><span>Nocturne in E-flat major</span></button>
+  </div>
+  <div>
+    <button class="k-rec" aria-label="Recording"><i class="k-icon" data-icon="video"></i><span class="k-dot k-dot-live"></span></button>
+    <button aria-label="Notifications, 3 new"><i class="k-icon" data-icon="bell"></i><b>3</b></button>
+    <button class="k-power" aria-label="Session"><i class="k-icon" data-icon="power"></i></button>
+  </div>
+</div></div>
+  <div class="k-win term" data-active>
+    <div class="k-win-body">
+      <img class="ghost" data-follow alt="" src="/_blob/0d757135df30d2bf6652f3c0a18483d5">
+<pre class="k-code" style="color:var(--term-foreground)"><span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> strix-info
+<span class="m">╓</span>                                        <span class="m">╖</span>
+  <span class="p">larp</span>   <span class="i">Strix 0.1.0</span>
+  <span class="b">Kernel</span>  <span class="m">::</span> 6.18.2
+  <span class="b">Shell</span>   <span class="m">::</span> Quickshell on Hyprland
+  <span class="b">Theme</span>   <span class="m">::</span> <span class="pc" data-follow-name>Saturnus</span>, dark, 4 more min
+  <span class="b">Disk</span>    <span class="m">::</span> 162 GiB of 952 GiB
+  <span class="sw"><i style="background:var(--term-black)"></i><i style="background:var(--term-red)"></i><i style="background:var(--term-green)"></i><i style="background:var(--term-yellow)"></i><i style="background:var(--term-blue)"></i><i style="background:var(--term-magenta)"></i><i style="background:var(--term-cyan)"></i><i style="background:var(--term-white)"></i></span>
+  <span class="sw"><i style="background:var(--term-bright-black)"></i><i style="background:var(--term-bright-red)"></i><i style="background:var(--term-bright-green)"></i><i style="background:var(--term-bright-yellow)"></i><i style="background:var(--term-bright-blue)"></i><i style="background:var(--term-bright-magenta)"></i><i style="background:var(--term-bright-cyan)"></i><i style="background:var(--term-bright-white)"></i></span>
+<span class="m">╙</span>                                        <span class="m">╜</span>
+
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> git log --oneline -3
+<span class="y">d207083</span> <span class="m">(</span><span class="c">HEAD</span> <span class="m">→</span> <span class="g">main</span><span class="m">,</span> <span class="v">origin/main</span><span class="m">)</span> ci: update flake inputs and crates every week
+<span class="y">952d81c</span> <span class="m">(</span><span class="y">tag: v0.1.0</span><span class="m">,</span> <span class="v">origin/stable</span><span class="m">)</span> release: 0.1.0
+<span class="y">7c1e0aa</span> feat(installer): ask for the language first
+
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> cargo build
+<span class="g">   Compiling</span> theme-engine v0.1.0
+<span class="rb">error[E0308]</span><span class="b">: mismatched types</span>
+  <span class="m">--&gt;</span> src/check.rs:14:16
+<span class="m">14 |</span>         return fail(4.5);
+   <span class="m">|</span>                     <span class="r">^^^ expected `&amp;str`, found floating-point number</span>
+<span class="yb">warning</span><span class="b">: unused variable: `text`</span>
+
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> ls
+<span class="bl">hosts</span>  <span class="bl">installer</span>  <span class="bl">modules</span>  <span class="bl">packages</span>  <span class="bl">themes</span>  <span class="g">build.sh</span>  flake.lock  flake.nix  README.md
+
+<span class="d">~/strixos</span> <span class="g">main</span> <span class="pc">›</span> <span class="k-caret" style="background:var(--term-cursor)"></span></pre>
+    </div>
+  </div>
+</div>

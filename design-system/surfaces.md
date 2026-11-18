@@ -20,7 +20,7 @@ Every own program of Strix has its back end in Rust and its front end in Quicksh
 - Type: `Label { textStyle: "caption" }`; the fonts ship inside the module.
 - Components build on `QtQuick.Templates`, so keyboard focus, accessibility and Popup handling are Qt's own. Needs Qt 6.8 or newer (QtQuick.Shapes with `fillItem` and the curve renderer, QtQuick.Effects).
 - Screens are assembled in the shell from the components with Quickshell's own types: `PanelWindow` for the bar, dock, notifications and OSD; an overlay layer for search, the theme picker and the cheat sheet; `WlSessionLock` for the lock screen. Each screen's README says how.
-- `qml/gallery.qml` shows every QML component; `tools/render_qml.py` renders it for every theme and fails on any QML error.
+- `qml/gallery.qml` shows every QML component; `cargo strixui render-qml` renders it for every theme and fails on any QML error.
 
 ## Front end and back end
 

@@ -1,0 +1,7 @@
+
+.splash { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.splash .slot { height: 60px; margin-top: 36px; display: flex; flex-direction: column; align-items: center; }
+.splash[data-state="boot"] #pass, .splash[data-state="off"] #pass { display: none; }
+.splash[data-state="pass"] #run, .splash[data-state="wrong"] #run { display: none; }
+.splash #run { width: 180px; }
+.splash .k-help { text-align: center; }

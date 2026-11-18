@@ -1,0 +1,103 @@
+{
+ "default": "saturnus",
+ "gods": [
+  {
+   "id": "saturnus",
+   "name": "Saturnus",
+   "accent": "#c8102e",
+   "description": "Strix red. Saturn, lord of time and of the night hours; the default."
+  },
+  {
+   "id": "janus",
+   "name": "Janus",
+   "accent": [
+    0.59,
+    0.048,
+    168
+   ],
+   "description": "Patina, the green of old bronze doors and keys."
+  },
+  {
+   "id": "apollo",
+   "name": "Apollo",
+   "accent": [
+    0.68,
+    0.085,
+    78
+   ],
+   "description": "Antique gold, worn brass."
+  },
+  {
+   "id": "mars",
+   "name": "Mars",
+   "accent": [
+    0.57,
+    0.105,
+    45
+   ],
+   "description": "Rust, iron and burnt sienna."
+  },
+  {
+   "id": "vulcanus",
+   "name": "Vulcanus",
+   "accent": [
+    0.6,
+    0.065,
+    112
+   ],
+   "description": "Olive, the patina on old bronze from the forge."
+  },
+  {
+   "id": "neptunus",
+   "name": "Neptunus",
+   "accent": [
+    0.57,
+    0.048,
+    248
+   ],
+   "description": "Deep water, slate and ink blue."
+  },
+  {
+   "id": "pluto",
+   "name": "Pluto",
+   "accent": [
+    0.55,
+    0.06,
+    305
+   ],
+   "description": "Heather, faded plum."
+  },
+  {
+   "id": "bacchus",
+   "name": "Bacchus",
+   "accent": [
+    0.52,
+    0.085,
+    10
+   ],
+   "description": "Claret, old wine."
+  }
+ ],
+ "base": {
+  "background": "#0b0a09",
+  "surface": "#131211",
+  "surface-raised": "#1b1917",
+  "surface-sunken": "#070606",
+  "border": "#2f2c28",
+  "accent": "#c8102e",
+  "accent-hover": "#dc1f3d",
+  "accent-pressed": "#a50d26",
+  "accent-soft": "#2a0c12",
+  "accent-text": "#f2556a",
+  "on-accent": "#ffffff",
+  "focus": "#e8324a",
+  "cursor": "#c8102e",
+  "selection": "#3a1219"
+ },
+ "fixed": {
+  "text": "#ece6da",
+  "text-muted": "#a09a8f",
+  "text-faint": "#77726a",
+  "border-strong": "#6e6a63"
+ }
+}

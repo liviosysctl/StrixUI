@@ -26,29 +26,30 @@ The same system is published as a Claude Design System artifact, where every com
 | `design-system/fonts/` | JetBrains Mono, IM Fell English, Grenze Gotisch (all SIL Open Font License) |
 | `design-system/assets/Wallpapers/` | The eight god plates and the star chart, with sources and licences |
 | `src/` | Sources: `bundle.css`, `bundle.js`, the QML components (`src/qml/`), the hand-written Rust (`src/rust/`), fonts, the Lucide symbols in use (ISC), the wallpapers |
-| `tools/` | `build.py` (builds the system), `pack.py` (a theme repository outside the eight gods: colours from one accent, the plate from one engraving), `targets.py` and `qml_gen.py` (the Rust crate, the theme files and the QML module), `usage.py` (QML and HTML use per component), `palette.py` (colours and the contrast check), `themes.py` (the god themes and the contrast check of every theme), `components.py` and `docs.py` (previews and texts), `wallpapers.py`, `render.py`, `render_qml.py`, `artifact.json` |
+| `src/design/`, `src/components/`, `src/docs/`, `src/templates/` | The data the build reads: gods and their accents, the palette, every other token, the plates, the hotkeys; each component's preview, style and script; the texts; the templates of the generated Rust and QML |
+| `tools/` | `strixui`, the tools of the design system in Rust (`cargo strixui` from the repository): build, contrast check, wallpapers, theme repositories, renders; and `artifact.json` |
 | `docs/renders/` | Renderings of the screens and of the QML gallery |
 
 ## Build
 
 ```sh
-python3 tools/palette.py                      # contrast check of every colour pair, ends with FAILS 0
-python3 tools/themes.py                       # the same for every god theme, ends with FAILS 0
-python3 tools/wallpapers.py                   # remakes the eight plates in src/wallpapers/ (python3 tools/wallpapers.py mars: one)
-python3 tools/build.py                        # writes design-system/ and build/preview/
-xdg-open build/preview/index.html             # every preview in the browser
-python3 tools/render.py                       # PNG of every preview into build/renders/ (needs playwright)
-python3 tools/render.py LockScreen --scale 2  # one preview at scale 2
-python3 tools/render_qml.py                   # the QML gallery for every theme into build/renders/, fails on any QML error
+cargo strixui check                         # contrast of every colour pair and of every god theme, ends with FAILS 0
+cargo strixui wallpapers                    # remakes the eight plates in src/wallpapers/ (cargo strixui wallpapers mars: one)
+cargo strixui build                         # writes design-system/ and build/preview/
+xdg-open build/preview/index.html           # every preview in the browser
+cargo strixui render                        # PNG of every preview into build/renders/ (headless Chromium)
+cargo strixui render LockScreen --scale 2   # one preview at scale 2
+cargo strixui render-qml                    # the QML gallery for every theme into build/renders/, fails on any QML error
 (cd design-system/rust/strix-design && cargo test && cargo clippy --all-targets -- -D warnings)
+(cd tools && cargo test && cargo clippy --all-targets -- -D warnings)
 ```
 
-The build needs only Python 3 (with `rustfmt` on the path it also formats the generated Rust). `render.py` needs `playwright` with Chromium; set `CHROME` to use an installed Chrome instead. `render_qml.py` needs PySide6 (Qt 6.8 or newer) and a display, or Xvfb for one. `wallpapers.py` needs Pillow and numpy and downloads the engravings from the Art Institute of Chicago and the Rijksmuseum into `build/engravings/` the first time.
+`cargo strixui` is an alias in `.cargo/config.toml` for the `strixui` binary in `tools/`; the build needs only Rust (with `rustfmt` on the path it also formats the generated Rust). `render` needs Chromium or Chrome on the path, or `CHROME` set to one. `render-qml` needs Qt's `qml` tool (Qt 6.8 or newer) on the path or in `QML`; without a display Qt draws in software and shadows and blur are missing. `wallpapers` and `pack` download the engravings with `curl` from the Art Institute of Chicago and the Rijksmuseum into `build/engravings/` the first time.
 
 ## Publish to the artifact
 
 ```sh
-python3 tools/build.py --artifact build/artifact   # build/artifact/project/... in the layout the artifact expects
+cargo strixui build --artifact build/artifact   # build/artifact/project/... in the layout the artifact expects
 ```
 
 Then publish `build/artifact/project/` to the artifact listed in `tools/artifact.json`. The wallpapers are uploads there; their ids are in `tools/artifact.json`. A new or changed wallpaper is uploaded first and its id and size are written into that file.
@@ -59,7 +60,7 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 - HTML, the previews: load `tokens.css`, `components/bundle.css` and `components/bundle.js`, write the markup from a component's README, and call `Kit.hydrate(root)`.
 - Every back end (Rust): `strix-design = { git = "https://github.com/liviosysctl/strixui" }`.
 - StrixOS theme engine: copy `design-system/themes/*` into `themes/` of the strixos repository; `strix-theme check` passes on all eight.
-- Themes from outside: a theme repository in layout 1 ([strix-theme-template](https://github.com/liviosysctl/strix-theme-template), the first one is [strix-theme-lucifer](https://github.com/liviosysctl/strix-theme-lucifer)), made with `python3 tools/pack.py <repository>`.
+- Themes from outside: a theme repository in layout 1 ([strix-theme-template](https://github.com/liviosysctl/strix-theme-template), the first one is [strix-theme-lucifer](https://github.com/liviosysctl/strix-theme-lucifer)), made with `cargo strixui pack <repository>`.
 - Hyprland, Ghostty, Plymouth, the installer: take the values from `tokens.json` or the theme engine; `surfaces.md` says what each one reads.
 - The colour names match the theme engine of Strix: the ten required colours of `theme.toml` have the same names, and the `term-` colours map to its `terminal` table.
 

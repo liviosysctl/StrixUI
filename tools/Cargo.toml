@@ -1,0 +1,20 @@
+[package]
+name = "strixui-tools"
+version = "0.1.0"
+edition = "2024"
+description = "Builds the Strix design system: tokens, themes, the QML module, the Rust crate, the previews and the plates"
+license = "MIT"
+publish = false
+
+[[bin]]
+name = "strixui"
+path = "src/main.rs"
+
+[dependencies]
+serde_json = { version = "1", features = ["preserve_order"] }
+regex = "1"
+toml = "0.9"
+image = { version = "0.25", default-features = false, features = ["jpeg", "png"] }
+
+[profile.release]
+opt-level = 3

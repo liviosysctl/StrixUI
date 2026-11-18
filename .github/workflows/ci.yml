@@ -1,0 +1,41 @@
+# Builds the design system from src/ and fails when design-system/ in the commit is not what the
+# build writes, when a colour pair loses its contrast, or when a crate does not test clean.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Tools
+        working-directory: tools
+        run: |
+          cargo fmt --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test
+
+      - name: Contrast
+        run: cargo strixui check
+
+      - name: design-system/ is what the build writes
+        run: |
+          cargo strixui build
+          git status --porcelain -- design-system
+          test -z "$(git status --porcelain -- design-system)"
+
+      - name: Rust crate
+        working-directory: design-system/rust/strix-design
+        run: |
+          cargo fmt --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test

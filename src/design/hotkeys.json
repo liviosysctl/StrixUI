@@ -1,0 +1,188 @@
+[
+ {
+  "group": "Learn",
+  "action": "All hotkeys",
+  "keys": "Super K",
+  "target": "This sheet"
+ },
+ {
+  "group": "Learn",
+  "action": "Search",
+  "keys": "Super Space",
+  "target": "Apps, actions, settings and commands"
+ },
+ {
+  "group": "Apps",
+  "action": "Terminal",
+  "keys": "Super Return",
+  "target": "Ghostty"
+ },
+ {
+  "group": "Apps",
+  "action": "Browser",
+  "keys": "Super Shift Return",
+  "target": "Firefox"
+ },
+ {
+  "group": "Apps",
+  "action": "Files",
+  "keys": "Super Shift F",
+  "target": "File manager"
+ },
+ {
+  "group": "Apps",
+  "action": "Text editor",
+  "keys": "Super Shift E",
+  "target": "Editor"
+ },
+ {
+  "group": "Apps",
+  "action": "Music",
+  "keys": "Super Shift M",
+  "target": "Music player"
+ },
+ {
+  "group": "Windows",
+  "action": "Close window",
+  "keys": "Super W",
+  "target": "Window"
+ },
+ {
+  "group": "Windows",
+  "action": "Full screen",
+  "keys": "Super F",
+  "target": "Window"
+ },
+ {
+  "group": "Windows",
+  "action": "Float or tile",
+  "keys": "Super T",
+  "target": "Window"
+ },
+ {
+  "group": "Windows",
+  "action": "Split direction",
+  "keys": "Super J",
+  "target": "Window"
+ },
+ {
+  "group": "Windows",
+  "action": "Move focus",
+  "keys": "Super Arrows",
+  "target": "Window"
+ },
+ {
+  "group": "Windows",
+  "action": "Swap windows",
+  "keys": "Super Shift Arrows",
+  "target": "Window"
+ },
+ {
+  "group": "Windows",
+  "action": "Grow or shrink",
+  "keys": "Super = -",
+  "target": "Window"
+ },
+ {
+  "group": "Workspaces",
+  "action": "Go to workspace",
+  "keys": "Super 1–9",
+  "target": "Workspace"
+ },
+ {
+  "group": "Workspaces",
+  "action": "Move window there",
+  "keys": "Super Shift 1–9",
+  "target": "Workspace"
+ },
+ {
+  "group": "Workspaces",
+  "action": "Next workspace",
+  "keys": "Super Tab",
+  "target": "Workspace"
+ },
+ {
+  "group": "Workspaces",
+  "action": "Scratchpad",
+  "keys": "Super S",
+  "target": "Special workspace"
+ },
+ {
+  "group": "Style",
+  "action": "Theme picker",
+  "keys": "Super Ctrl Space",
+  "target": "Themes and wallpapers"
+ },
+ {
+  "group": "Style",
+  "action": "Keep this theme",
+  "keys": "K",
+  "target": "In the theme picker"
+ },
+ {
+  "group": "Style",
+  "action": "Toggle the top bar",
+  "keys": "Super Shift Space",
+  "target": "Bar"
+ },
+ {
+  "group": "Capture",
+  "action": "Region screenshot",
+  "keys": "Print",
+  "target": "Capture"
+ },
+ {
+  "group": "Capture",
+  "action": "Window screenshot",
+  "keys": "Shift Print",
+  "target": "Capture"
+ },
+ {
+  "group": "Capture",
+  "action": "Screen screenshot",
+  "keys": "Ctrl Print",
+  "target": "Capture"
+ },
+ {
+  "group": "Capture",
+  "action": "Record a region",
+  "keys": "Alt Print",
+  "target": "Capture"
+ },
+ {
+  "group": "Capture",
+  "action": "Colour picker",
+  "keys": "Super Print",
+  "target": "Capture"
+ },
+ {
+  "group": "Clipboard",
+  "action": "Clipboard history",
+  "keys": "Super V",
+  "target": "Clipboard"
+ },
+ {
+  "group": "System",
+  "action": "Lock",
+  "keys": "Super Escape",
+  "target": "Session"
+ },
+ {
+  "group": "System",
+  "action": "Session menu",
+  "keys": "Super Shift Escape",
+  "target": "Log out, suspend, restart, shut down"
+ },
+ {
+  "group": "System",
+  "action": "Notifications",
+  "keys": "Super N",
+  "target": "Panel"
+ },
+ {
+  "group": "System",
+  "action": "Do not disturb",
+  "keys": "Super Shift N",
+  "target": "Notifications"
+ }
+]

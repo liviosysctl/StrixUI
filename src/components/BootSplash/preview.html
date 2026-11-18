@@ -1,0 +1,13 @@
+
+<div style="height:540px;background:var(--background);display:flex;flex-direction:column">
+  <div class="splash" id="splash" data-state="boot">
+    <div class="display" style="color:var(--text)">Strix</div>
+    <div class="k-rule" style="width:150px;margin:6px 0 4px"><i></i></div>
+    <div class="motto k-muted">nocte vigilat</div>
+    <div class="slot">
+      <div class="k-progress" data-indeterminate id="run"><i></i></div>
+      <div class="k-field" id="pass" style="width:220px"><div class="k-input k-input-line"><input type="password" aria-label="Passphrase" placeholder="Passphrase" id="pp"></div><span class="k-help" id="msg">Enter the passphrase for this disk</span></div>
+    </div>
+  </div>
+  <div style="display:flex;justify-content:center;padding:16px"><div class="k-seg" id="state" aria-label="State"><button aria-selected="true">Start</button><button>Passphrase</button><button>Wrong passphrase</button><button>Shut down</button></div></div>
+</div>

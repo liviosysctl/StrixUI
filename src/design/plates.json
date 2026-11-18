@@ -1,0 +1,130 @@
+{
+ "saturnus": {
+  "short": "Goltzius, 1592",
+  "caption": "Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
+  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Saturnus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.968, CC0",
+  "source": "aic:2e6b4b94-95de-045f-2826-7f76c23b6a17",
+  "crop": [
+   0.15,
+   0.15,
+   0.85
+  ],
+  "disc": [
+   1320,
+   610,
+   250
+  ]
+ },
+ "janus": {
+  "short": "Audenaerd, about 1700",
+  "caption": "Janus with both faces opens the door of the year. Engraved by Robert van Audenaerd after Carlo Maratta",
+  "credit": "Janus opens the door of the year, engraved by Robert van Audenaerd after Carlo Maratta, 1685 to 1723. Rijksmuseum RP-P-OB-67.432, public domain",
+  "source": "rijks:jGPOs:6098",
+  "crop": [
+   0.36,
+   0.23,
+   0.74
+  ],
+  "disc": [
+   1110,
+   450,
+   300
+  ]
+ },
+ "apollo": {
+  "short": "Goltzius, 1592",
+  "caption": "Apollo as Sol, the sun, with lyre and quiver in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
+  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Sol, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.972, CC0",
+  "source": "aic:f9b4ca78-b118-0595-7e4d-ea082b618d9d",
+  "crop": [
+   0.1,
+   0.12,
+   0.9
+  ],
+  "disc": [
+   1297,
+   585,
+   250
+  ]
+ },
+ "mars": {
+  "short": "Quellinus, 1655",
+  "caption": "Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655",
+  "credit": "Hubert Quellinus after Artus Quellinus, Mars in the west gallery of the Amsterdam town hall, 1655. Rijksmuseum RP-P-AO-22-1Q-1, public domain",
+  "source": "rijks:yzhwS:3064",
+  "crop": [
+   0.22,
+   0.17,
+   0.84
+  ],
+  "disc": [
+   1060,
+   560,
+   260
+  ]
+ },
+ "vulcanus": {
+  "short": "Goltzius, 1592",
+  "caption": "Vulcanus, the smith of the gods, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
+  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Vulcanus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.971, CC0",
+  "source": "aic:2e3e8684-cef2-9f95-cbd1-707884e5261d",
+  "crop": [
+   0.15,
+   0.15,
+   0.85
+  ],
+  "disc": [
+   1320,
+   560,
+   250
+  ]
+ },
+ "neptunus": {
+  "short": "Goltzius, 1592",
+  "caption": "Neptunus with his crown and trident, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
+  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Neptunus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.969, CC0",
+  "source": "aic:03acd0e7-0cf5-7fc7-60c7-6fb1097a143f",
+  "crop": [
+   0.15,
+   0.15,
+   0.85
+  ],
+  "disc": [
+   1420,
+   660,
+   250
+  ]
+ },
+ "pluto": {
+  "short": "Goltzius, 1592",
+  "caption": "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
+  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Pluto, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.970, CC0",
+  "source": "aic:875c8e28-faf6-4991-b34a-e9e991476d81",
+  "crop": [
+   0.15,
+   0.15,
+   0.85
+  ],
+  "disc": [
+   1335,
+   475,
+   260
+  ]
+ },
+ "bacchus": {
+  "short": "Goltzius, 1592",
+  "caption": "Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
+  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Bacchus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.974, CC0",
+  "source": "aic:b87ec199-aa10-e7a7-2301-74c18b845d5d",
+  "crop": [
+   0.15,
+   0.15,
+   0.85
+  ],
+  "disc": [
+   1330,
+   490,
+   260
+  ]
+ }
+}
