@@ -20,12 +20,21 @@ Item {
     Behavior on width { NumberAnimation { duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeInOut } }
     Behavior on height { NumberAnimation { duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeInOut } }
 
-    Image {
+    // The engraving cropped to the card around its middle, where the god stands. The shape fills
+    // with this layer: an Image alone would hand over its whole picture unscaled, and a narrow
+    // card would show only its dark corner.
+    Item {
         id: art
         anchors.fill: parent
-        source: root.source
-        fillMode: Image.PreserveAspectCrop
         visible: false
+        layer.enabled: true
+        layer.smooth: true
+        Image {
+            anchors.fill: parent
+            source: root.source
+            fillMode: Image.PreserveAspectCrop
+            asynchronous: true
+        }
     }
 
     Shape {
@@ -43,9 +52,9 @@ Item {
             strokeWidth: Theme.lineHair
             PathPolyline { path: [Qt.point(root.skew + 0.5, 0.5), Qt.point(root.width - 0.5, 0.5), Qt.point(root.width - root.skew - 0.5, root.height - 0.5), Qt.point(0.5, root.height - 0.5), Qt.point(root.skew + 0.5, 0.5)] }
         }
-        // the dark veil of cards that are not chosen
+        // the veil of cards that are not chosen: darker, but the god stays to be seen
         ShapePath {
-            fillColor: Qt.rgba(0, 0, 0, root.selected ? 0 : hover.hovered ? 0.4 : 0.6)
+            fillColor: Qt.rgba(0, 0, 0, root.selected ? 0 : hover.hovered ? 0.2 : 0.4)
             strokeColor: "transparent"
             PathPolyline { path: [Qt.point(root.skew, 0), Qt.point(root.width, 0), Qt.point(root.width - root.skew, root.height), Qt.point(0, root.height), Qt.point(root.skew, 0)] }
         }
