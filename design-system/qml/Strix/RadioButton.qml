@@ -5,7 +5,8 @@ import QtQuick.Templates as T
 T.RadioButton {
     id: control
 
-    implicitWidth: implicitIndicatorWidth + (text !== "" ? spacing + implicitContentWidth : 0)
+    // The text already leaves room for the indicator at its left (leftPadding of contentItem)
+    implicitWidth: text !== "" ? implicitContentWidth : implicitIndicatorWidth
     implicitHeight: 18
     spacing: Theme.space2
     padding: 0

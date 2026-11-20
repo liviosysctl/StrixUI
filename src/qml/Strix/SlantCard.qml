@@ -74,7 +74,9 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 6
             Rectangle { width: 6; height: 6; radius: 3; color: root.accent; anchors.verticalCenter: parent.verticalCenter }
-            Label { text: root.caption; font.family: Theme.serif; font.italic: true; font.pixelSize: 13; font.letterSpacing: 1.8; lineHeight: 16; color: Theme.textMuted }
+            // Inside the slanted edges: a long caption ends in an ellipsis instead of running out of the card
+            Label { text: root.caption; font.family: Theme.serif; font.italic: true; font.pixelSize: 13; font.letterSpacing: 1.8; lineHeight: 16; color: Theme.textMuted
+                width: Math.min(implicitWidth, root.width - 2 * root.skew - 2 * Theme.space4); elide: Text.ElideRight }
         }
     }
 }

@@ -11,7 +11,9 @@ Item {
     default property alias control: slot.data
 
     implicitWidth: 480
-    implicitHeight: Math.max(words.implicitHeight, slot.childrenRect.height) + 20
+    // A multiple of 4: at a scale of 125 %, 150 % or 175 % the rows of a page then start on whole
+    // pixels of the screen, and the hairlines under them are all equally thin
+    implicitHeight: Math.ceil((Math.max(words.implicitHeight, slot.childrenRect.height) + 20) / 4) * 4
 
     Column {
         id: words

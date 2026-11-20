@@ -33,11 +33,15 @@ T.AbstractButton {
         }
     }
 
+    /// The gap between the parts: wide between meters, narrower between a symbol and its word
+    property alias gap: row.spacing
+
+    // The template already keeps the padding around this item: the row starts at its left edge,
+    // so what is in it stands in the middle of the hover
     contentItem: Item {
         Row {
             id: row
             anchors.verticalCenter: parent.verticalCenter
-            x: control.leftPadding
             spacing: Theme.space4
         }
     }
