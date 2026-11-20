@@ -1,5 +1,5 @@
 // The dock as part of the bottom edge: at rest a tab 5px high and 132px wide with a short accent line,
-// its corners flaring into the edge. out: it rises to 28px (openHeight) and widens to fit its content.
+// its corners flaring into the edge. out: it rises to 28px and widens to fit its content.
 // In Quickshell put it in a PanelWindow anchored to the bottom and set `out` from a HoverHandler.
 import QtQuick
 import QtQuick.Shapes
@@ -10,20 +10,18 @@ Item {
     property bool out: false
     default property alias content: row.data
 
-    /// How high it stands once it is out: the height of the tokens for symbols, more for the icons of apps
-    property int openHeight: Theme.dockHeight
     readonly property int restWidth: 132
     readonly property int openWidth: row.implicitWidth + 12
 
     implicitWidth: openWidth + 12
-    implicitHeight: openHeight
+    implicitHeight: Theme.dockHeight
 
     Item {
         id: tab
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         width: root.out ? root.openWidth : root.restWidth
-        height: root.out ? root.openHeight : Theme.dockRest
+        height: root.out ? Theme.dockHeight : Theme.dockRest
         Behavior on width { NumberAnimation { duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
         Behavior on height { NumberAnimation { duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
 
