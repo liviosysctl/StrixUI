@@ -1,5 +1,7 @@
 // A message from the system or an app, top right under the bar.
 // urgency "critical": the frame turns to the accent and a hair line drains along the bottom.
+// A click anywhere on it, except on one of its actions, sends it away (dismissed); under the pointer the
+// name of the app gives way to an x that says so.
 import QtQuick
 
 Surface {
@@ -35,7 +37,13 @@ Surface {
         color: root.urgency === "critical" ? Theme.accentText : Theme.textMuted
     }
 
-    HoverHandler { id: here }
+    HoverHandler { id: here; cursorShape: Qt.PointingHandCursor }
+    TapHandler {
+        onTapped: point => {
+            const at = buttons.mapFromItem(root, point.position)
+            if (!buttons.visible || !buttons.contains(at)) root.dismissed()
+        }
+    }
     Timer { interval: Theme.durSlow; running: true; onTriggered: if (!Theme.reducedMotion) symbol.play() }
 
     Column {
@@ -46,6 +54,7 @@ Surface {
         Label { width: parent.width; text: root.title; textStyle: "label"; elide: Text.ElideRight }
         Label { width: parent.width; text: root.body; textStyle: "caption"; color: Theme.textMuted; wrapMode: Text.WordWrap; maximumLineCount: 3; elide: Text.ElideRight }
         Row {
+            id: buttons
             visible: root.actions.length > 0
             spacing: Theme.space2
             topPadding: 6
@@ -65,6 +74,19 @@ Surface {
         text: root.time
         font.pixelSize: 10
         color: Theme.textFaint
+        opacity: here.hovered ? 0 : 1
+        Behavior on opacity { NumberAnimation { duration: Theme.durFast } }
+    }
+    Icon {
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.space3
+        y: Theme.space2 + 1
+        name: "x"
+        size: 12
+        tinted: false
+        color: Theme.text
+        opacity: here.hovered ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: Theme.durFast } }
     }
 
     Rectangle {
