@@ -64,6 +64,7 @@
   "app-window",
   "keyboard",
   "mouse",
+  "pin",
   "gauge",
   "disc-3",
   "circle-alert",
