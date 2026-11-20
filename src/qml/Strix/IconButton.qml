@@ -1,5 +1,5 @@
 // A control that shows only a symbol. Give it a ToolTip with its name.
-// checkable + checked shows the pressed state in accent-text; danger for the power symbol.
+// checkable + checked shows the pressed state in accent-text, and the cup ("coffee") steams; danger for the power symbol.
 import QtQuick
 import QtQuick.Templates as T
 
@@ -23,6 +23,7 @@ T.Button {
         Icon {
             anchors.centerIn: parent
             name: control.iconName
+            active: control.checked
             hovered: control.hovered || control.visualFocus
             size: control.small ? 12 : 14
             color: control.danger || control.checked ? Theme.accentText : control.hovered ? Theme.text : Theme.textMuted

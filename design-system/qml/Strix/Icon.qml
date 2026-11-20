@@ -1,6 +1,7 @@
 // A Lucide symbol as a vector path, drawn in a 1.25px line at any size: Icon { name: "power"; color: Theme.accentText }
 // Bind hovered to the control that holds it and the symbol plays its own small motion when the pointer arrives
 // (the gear turns, the bell swings, an arrow nudges the way it points). A new name pops in.
+// Bind active to what the symbol stands for: the cup is cold while that is off and steams without end while it is on.
 import QtQuick
 import QtQuick.Shapes
 
@@ -17,6 +18,14 @@ Item {
     property bool hovered: false
     /// Take the hover colour. Off where the symbol sits on the accent (a primary button, a chosen segment).
     property bool tinted: true
+    /// What the symbol stands for is on. Only the cup shows it by itself, with its steam; elsewhere the colour says it.
+    property bool active: false
+
+    // The steam of the cup is its three strokes on the top row of the grid. They are drawn apart from the cup, each
+    // as a wisp that rises and fades; with reduced motion they stand still, as Lucide drew them.
+    readonly property bool steams: name === "coffee"
+    readonly property string outline: !steams || (active && Theme.reducedMotion) ? Icons.path(name)
+                                                                                 : Icons.path(name).replace(/M\d+ 2v2 ?/g, "")
 
     /// The colour a symbol takes under the pointer: what it means where it has a meaning (power and delete in error,
     /// a warning or a spark in warning, adding and going ahead in success, signals in info), otherwise the accent.
@@ -104,7 +113,51 @@ Item {
                 fillColor: "transparent"
                 capStyle: ShapePath.RoundCap
                 joinStyle: ShapePath.RoundJoin
-                PathSvg { path: Icons.path(root.name) }
+                PathSvg { path: root.outline }
+            }
+        }
+
+        Loader {
+            active: root.steams && !Theme.reducedMotion
+            sourceComponent: Item {
+                id: steam
+
+                // One rise of a wisp, from the rim of the cup to above the symbol
+                property real rise: 0
+
+                width: 24
+                height: 24
+                scale: root.size / 24
+                transformOrigin: Item.TopLeft
+                opacity: root.active ? 1 : 0
+                visible: opacity > 0
+                Behavior on opacity { NumberAnimation { duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
+                NumberAnimation on rise { from: 0; to: 1; duration: Theme.durLoop * 2; loops: Animation.Infinite; running: steam.visible }
+
+                Repeater {
+                    // Where each wisp is in its rise when the first one starts: not one after the other, like a wave
+                    model: [0, 0.55, 0.25]
+
+                    Shape {
+                        required property int index
+                        required property real modelData
+                        readonly property real at: (steam.rise + modelData) % 1
+
+                        x: 6 + index * 4 + 0.5 * Math.sin((at * 1.5 + modelData) * 2 * Math.PI)
+                        y: 3 - 9 * at
+                        opacity: at < 0.2 ? at / 0.2 : (1 - at) / 0.8
+                        preferredRendererType: Shape.CurveRenderer
+
+                        ShapePath {
+                            strokeColor: root.ink
+                            strokeWidth: root.stroke * 24 / root.size
+                            fillColor: "transparent"
+                            capStyle: ShapePath.RoundCap
+                            joinStyle: ShapePath.RoundJoin
+                            PathSvg { path: "M0 4c-1.2-1.3 1.2-2.7 0-4" }
+                        }
+                    }
+                }
             }
         }
     }
