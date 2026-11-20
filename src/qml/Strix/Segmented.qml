@@ -41,6 +41,7 @@ Rectangle {
             model: root.model.length
             T.AbstractButton {
                 id: seg
+                HoverHandler { cursorShape: Qt.PointingHandCursor }
                 readonly property var e: root.entry(index)
                 readonly property bool selected: index === root.currentIndex
                 height: 22

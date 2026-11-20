@@ -6,6 +6,9 @@ import QtQuick.Templates as T
 T.Button {
     id: control
 
+    // The hand over what can be pressed, as on every clickable part of the shell
+    HoverHandler { cursorShape: Qt.PointingHandCursor }
+
     property string variant: "default"
     property bool small: false
     /// A short piece runs along the bottom edge. Keep the label, change its wording ("Checking").

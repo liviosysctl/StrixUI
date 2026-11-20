@@ -52,6 +52,7 @@ Column {
                 opacity: out ? 0.6 : 1
                 HoverHandler { id: tap }
                 TapHandler { onTapped: root.picked(modelData) }
+                HoverHandler { cursorShape: Qt.PointingHandCursor }
                 Label {
                     anchors.centerIn: parent
                     text: modelData.getDate()

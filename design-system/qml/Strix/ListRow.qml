@@ -6,6 +6,9 @@ import QtQuick.Templates as T
 T.ItemDelegate {
     id: control
 
+    // The hand over what can be pressed, as on every clickable part of the shell
+    HoverHandler { cursorShape: Qt.PointingHandCursor }
+
     property string iconName
     /// Small text at the right: a size, a time, a state.
     property string detail

@@ -6,6 +6,9 @@ import QtQuick.Templates as T
 T.Slider {
     id: control
 
+    // The hand over what can be pressed, as on every clickable part of the shell
+    HoverHandler { cursorShape: Qt.PointingHandCursor }
+
     property string iconName
     property string valueText: Math.round(value * (to > 1 ? 1 : 100)).toString()
 

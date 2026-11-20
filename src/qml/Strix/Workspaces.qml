@@ -51,7 +51,7 @@ Item {
             Behavior on x { NumberAnimation { duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeInOut } }
             Behavior on color { ColorAnimation { duration: Theme.durBase } }
             Behavior on scale { NumberAnimation { duration: Theme.durFast; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeSpring } }
-            HoverHandler { id: hh }
+            HoverHandler { id: hh; cursorShape: Qt.PointingHandCursor }
             TapHandler { onTapped: root.activated(index) }
         }
     }

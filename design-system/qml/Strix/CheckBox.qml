@@ -5,6 +5,9 @@ import QtQuick.Templates as T
 T.CheckBox {
     id: control
 
+    // The hand over what can be pressed, as on every clickable part of the shell
+    HoverHandler { cursorShape: Qt.PointingHandCursor }
+
     // The text already leaves room for the indicator at its left (leftPadding of contentItem)
     implicitWidth: text !== "" ? implicitContentWidth : implicitIndicatorWidth
     implicitHeight: 18

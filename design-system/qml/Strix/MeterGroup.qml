@@ -8,6 +8,9 @@ import QtQuick.Templates as T
 T.AbstractButton {
     id: control
 
+    // The hand over what can be pressed, as on every clickable part of the shell
+    HoverHandler { cursorShape: Qt.PointingHandCursor }
+
     default property alias meters: row.data
 
     implicitWidth: row.implicitWidth + leftPadding + rightPadding
