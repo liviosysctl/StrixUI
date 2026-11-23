@@ -36,7 +36,7 @@ Item {
         "plus": "success", "check": "success", "download": "success", "hard-drive-download": "success",
         "play": "success", "refresh-cw": "success", "rotate-cw": "success", "arrow-right": "success",
         "wifi": "info", "bluetooth": "info", "info": "info", "search": "info", "eye": "info", "eye-off": "info",
-        "moon": "info", "moon-star": "info", "cloud": "info", "volume-2": "info", "music": "info"
+        "moon": "info", "moon-star": "info", "cloud": "info", "volume-2": "info", "music": "info", "mic": "warning"
     })
     readonly property color tint: ({ "error": Theme.error, "warning": Theme.warning, "success": Theme.success,
                                      "info": Theme.info })[tints[name]] || Theme.accentText
