@@ -1138,6 +1138,18 @@ fn theme_qml(
         .iter()
         .map(|n| Value::String((*n).into()))
         .collect();
+    // Every font file the tokens name, so the module loads exactly what the design system ships
+    let fonts: Vec<String> = t["type"]["fonts"]
+        .as_array()
+        .expect("fonts")
+        .iter()
+        .map(|f| {
+            format!(
+                "        FontLoader {{ source: \"{}\" }}",
+                f["file"].as_str().expect("file")
+            )
+        })
+        .collect();
     let fills = [
         ("generated", GENERATED.to_string()),
         ("order", py::json(&Value::Array(order), None)),
@@ -1153,6 +1165,7 @@ fn theme_qml(
         ("styles", styles.join(",\n")),
         ("palette", py::json(&Value::Array(palette), None)),
         ("default", gods.gods[0].id.clone()),
+        ("fonts", fonts.join(",\n")),
         ("sans", family("sans").into()),
         ("serif", family("serif").into()),
         ("mono", family("mono").into()),

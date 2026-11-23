@@ -107,11 +107,7 @@ QtObject {
 
     /// The fonts ship with the module, so a gallery or a test needs nothing installed.
     readonly property list<FontLoader> fonts: [
-        FontLoader { source: "fonts/JetBrainsMono-Variable.woff2" },
-        FontLoader { source: "fonts/JetBrainsMono-Italic-Variable.woff2" },
-        FontLoader { source: "fonts/IMFellEnglish-Regular.woff2" },
-        FontLoader { source: "fonts/IMFellEnglish-Italic.woff2" },
-        FontLoader { source: "fonts/GrenzeGotisch-Variable.woff2" }
+{{fonts}}
     ]
 
     // ------------------------------------------------------------ the built-in themes
