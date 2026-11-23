@@ -1149,5 +1149,5 @@ svg[data-icon] { transition: color var(--dur-fast) var(--ease-out); }
 .k-symbol-pop { animation: k-symbol-pop var(--dur-base) var(--ease-spring); }
 .k-count-bump { animation: k-count-bump var(--dur-slow) var(--ease-spring); }
 
-/* Titles carry the colour of the god */
-.k-info h4, .k-card h3, .k-cal header b, .k-dialog h3, .k-panel h4, .k-today h3, .k-about h3, .k-media b, .k-wordmark, .k-slant > .k-slant-name, .k-cheat-head .title, .k-settings-nav .who span, .k-settings-main header h2 { color: var(--accent-text); }
+/* The one title of a surface carries the colour of the god; headings inside it stay in the text colour */
+.k-dialog h3, .k-about h3, .k-wordmark, .k-slant > .k-slant-name, .k-cheat-head .title, .k-settings-main header h2 { color: var(--accent-text); }

@@ -2,7 +2,7 @@
  "colors": {
   "background": "#080707",
   "surface": "#0e0d0c",
-  "border": "#5c252c",
+  "border": "#2a2724",
   "text": "#ece6da",
   "text-muted": "#a09a8f",
   "accent": "#c8102e",
@@ -12,7 +12,7 @@
   "warning": "#d9a441",
   "surface-raised": "#161412",
   "surface-sunken": "#050404",
-  "border-strong": "#b24150",
+  "border-strong": "#6e6a63",
   "text-faint": "#77726a",
   "accent-hover": "#dc1f3d",
   "accent-pressed": "#a50d26",

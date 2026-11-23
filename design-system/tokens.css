@@ -4,8 +4,8 @@
   --surface: #0e0d0c;
   --surface-raised: #161412;
   --surface-sunken: #050404;
-  --border: #5c252c;
-  --border-strong: #b24150;
+  --border: #2a2724;
+  --border-strong: #6e6a63;
   --border-active: #c8102e;
   --line: #d8d0c0;
   --scrim: #000000b8;
@@ -66,8 +66,7 @@
   --surface: #090f0c;
   --surface-raised: #0f1613;
   --surface-sunken: #030504;
-  --border: #32433c;
-  --border-strong: #5d7b6f;
+  --border: #202a26;
   --border-active: #678d7e;
   --accent: #678d7e;
   --accent-hover: #73998a;
@@ -85,8 +84,7 @@
   --surface: #100d08;
   --surface-raised: #17140e;
   --surface-sunken: #050402;
-  --border: #4a3c26;
-  --border-strong: #886e46;
+  --border: #2c271f;
   --border-active: #b5925a;
   --accent: #b5925a;
   --accent-hover: #c29e66;
@@ -104,8 +102,7 @@
   --surface: #110c09;
   --surface-raised: #191310;
   --surface-sunken: #060403;
-  --border: #543629;
-  --border-strong: #9a644a;
+  --border: #2f2521;
   --border-active: #9f5836;
   --accent: #9f5836;
   --accent-hover: #ac6341;
@@ -122,8 +119,7 @@
   --surface: #0d0e08;
   --surface-raised: #14150f;
   --surface-sunken: #040403;
-  --border: #3f412d;
-  --border-strong: #737654;
+  --border: #28281f;
   --border-active: #85895b;
   --accent: #85895b;
   --accent-hover: #919567;
@@ -141,8 +137,7 @@
   --surface: #0a0e12;
   --surface-raised: #10151a;
   --surface-sunken: #030406;
-  --border: #34404c;
-  --border-strong: #627689;
+  --border: #22282f;
   --border-active: #546d85;
   --accent: #546d85;
   --accent-hover: #607991;
@@ -159,8 +154,7 @@
   --surface: #0e0c11;
   --surface-raised: #161319;
   --surface-sunken: #050406;
-  --border: #423b4b;
-  --border-strong: #796c89;
+  --border: #29262e;
   --border-active: #746388;
   --accent: #746388;
   --accent-hover: #806f94;
@@ -177,8 +171,7 @@
   --surface: #120b0c;
   --surface-raised: #191213;
   --surface-sunken: #060404;
-  --border: #52363a;
-  --border-strong: #95626a;
+  --border: #2f2426;
   --border-active: #93535e;
   --accent: #93535e;
   --accent-hover: #a05e69;

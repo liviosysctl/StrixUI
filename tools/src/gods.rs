@@ -5,18 +5,20 @@
 //! line, the status colours and syntax stay as they are in every theme. The accent of each god is
 //! picked by hand; the rest is derived in OKLCH so every theme has the lightness steps of Saturnus.
 
-use crate::colour::{contrast, hex2rgb, luminance, oklch, rgb2hex, to_oklch};
+use crate::colour::{contrast, luminance, oklch, to_oklch};
 use serde_json::{Map, Value};
 
 /// A theme's colour tokens in the order they are derived
 pub type Tokens = Vec<(String, String)>;
 
 /// The grounds of the light variant: smoked glass on dark grey instead of black
-const LIGHT_GROUNDS: [(&str, &str); 4] = [
+const LIGHT_GROUNDS: [(&str, &str); 6] = [
     ("background", "#101011"),
     ("surface", "#1b1b1c"),
     ("surface-raised", "#242425"),
     ("surface-sunken", "#0c0c0d"),
+    ("border", "#3a3a3c"),
+    ("border-strong", "#7c7872"),
 ];
 
 pub fn get<'a>(t: &'a Tokens, name: &str) -> &'a str {
@@ -93,13 +95,14 @@ impl Gods {
             let god = self.gods.iter().find(|g| g.id == id).expect("a god");
             self.derive(&god.accent)
         };
-        lines(&mut t);
+        let ba = border_active(&t);
+        set(&mut t, "border-active", ba);
         t
     }
 
     /// The light variant of a god's theme: the same colours on neutral dark grey grounds, one step
-    /// lighter than the dark ones. The accent text, the focus ring and the lines are made again
-    /// for these grounds.
+    /// lighter than the dark ones. The accent text and the focus ring are made again for these
+    /// grounds.
     pub fn light(&self, id: &str) -> Tokens {
         let mut t = self.colours(id);
         for (k, v) in LIGHT_GROUNDS {
@@ -113,14 +116,16 @@ impl Gods {
             lighten_to(&raised, 5.0, ha, ca.min(0.16), la.max(0.70)),
         );
         set(&mut t, "focus", lighten_to(&raised, 4.0, ha, ca, la + 0.06));
-        lines(&mut t);
+        let ba = border_active(&t);
+        set(&mut t, "border-active", ba);
         t
     }
 
     /// Every theme token for an accent that is not a god's, border-active included (pack)
     pub fn derive_all(&self, accent: &str) -> Tokens {
         let mut t = self.derive(accent);
-        lines(&mut t);
+        let ba = border_active(&t);
+        set(&mut t, "border-active", ba);
         t
     }
 
@@ -134,6 +139,7 @@ impl Gods {
             ("surface", 0.011),
             ("surface-raised", 0.012),
             ("surface-sunken", 0.008),
+            ("border", 0.016),
         ] {
             let lb = to_oklch(get(&self.base, k)).0;
             set(&mut t, k, oklch(lb, c, ha));
@@ -199,7 +205,7 @@ impl Gods {
         chk("text", self.fixed("text"), &s, 4.5);
         chk("text-muted", self.fixed("text-muted"), &s, 4.5);
         chk("text-faint", self.fixed("text-faint"), &s, 3.0);
-        chk("border-strong", get(t, "border-strong"), &s, 3.0);
+        chk("border-strong", self.fixed("border-strong"), &s, 3.0);
         chk(
             "accent-text",
             get(t, "accent-text"),
@@ -260,21 +266,7 @@ pub fn lighten_to(bg: &str, minimum: f64, h: f64, c: f64, mut l: f64) -> String 
 }
 
 /// The border of the focused window: the accent, quietened toward the border
-/// The lines of a theme carry its colour: `border` and `border-strong` are the accent text laid
-/// over the surface (a third and three quarters of it), `border-active` is the accent itself.
-fn lines(t: &mut Tokens) {
-    let over = |ground: &str, k: f64| {
-        let (a, b) = (hex2rgb(ground), hex2rgb(get(t, "accent-text")));
-        rgb2hex([0, 1, 2].map(|i| f64::from(a[i]) + k * (f64::from(b[i]) - f64::from(a[i]))))
-    };
-    let border = over(get(t, "surface"), 0.34);
-    let mut k = 0.70;
-    while contrast(&over(get(t, "surface"), k), get(t, "surface-raised")) < 3.2 {
-        k += 0.02;
-    }
-    let strong = over(get(t, "surface"), k);
-    let active = get(t, "accent").to_string();
-    set(t, "border", border);
-    set(t, "border-strong", strong);
-    set(t, "border-active", active);
+/// The border of the focused window: the accent itself. Every other line stays quiet.
+fn border_active(t: &Tokens) -> String {
+    get(t, "accent").to_string()
 }

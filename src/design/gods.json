@@ -91,11 +91,13 @@
   "on-accent": "#ffffff",
   "focus": "#e8324a",
   "cursor": "#c8102e",
-  "selection": "#3a1219"
+  "selection": "#3a1219",
+  "border": "#2a2724"
  },
  "fixed": {
   "text": "#ece6da",
   "text-muted": "#a09a8f",
-  "text-faint": "#77726a"
+  "text-faint": "#77726a",
+  "border-strong": "#6e6a63"
  }
 }
