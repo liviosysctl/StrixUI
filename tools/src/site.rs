@@ -219,16 +219,32 @@ pub fn build(b: &Build, gods: &Gods, palette: &tokens::Palette) {
         for (f, _) in &walls {
             copy(&src.root.join("wallpapers").join(f), &wd.join(f));
         }
+        for g in &gods.gods {
+            let f = format!("{}-light.jpg", g.id);
+            copy(&src.root.join("wallpapers").join(&f), &wd.join(&f));
+        }
         write(
             &wd.join("star-chart.svg"),
             &star_chart(false, palette, &meta["stars"]),
         );
-        // the owl, for documents, posters and pages outside the system (the system draws its own)
+        // the owl, for documents, posters and pages outside the system
         for f in sorted(&src.root.join("logo")) {
             copy(
                 &src.root.join("logo").join(&f),
                 &out.join("assets/Logo").join(&f),
             );
+        }
+        // one owl per god, the drawing and the reduced one for small sizes: the eyes in the accent of the theme
+        let red = crate::gods::get(&gods.colours(&gods.default), "accent").to_string();
+        for stem in ["strix-owl", "strix-owl-small"] {
+            let owl = read(&src.root.join("logo").join(format!("{stem}.svg")));
+            for g in &gods.gods {
+                let accent = crate::gods::get(&gods.colours(&g.id), "accent").to_string();
+                write(
+                    &out.join("assets/Logo").join(format!("{stem}-{}.svg", g.id)),
+                    &owl.replace(&red, &accent),
+                );
+            }
         }
     }
     let fix = |html: &str| {
