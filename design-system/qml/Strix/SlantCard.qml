@@ -37,6 +37,11 @@ Item {
             source: root.source
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
+            // Decoded at twice the height of the card, not at the size of a wallpaper: a
+            // carousel of gods holds a few megabytes instead of one screen's worth for each
+            sourceSize: Qt.size(0, 500)
+            // The last picture stays until the next one is there (dark to light)
+            retainWhileLoading: true
         }
     }
 

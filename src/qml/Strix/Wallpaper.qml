@@ -1,5 +1,6 @@
 // The engraving of a god, filling its parent. dim: darker and a little blurred, as under the lock
 // screen and the theme picker. Without `source` it shows the wallpaper of the current theme.
+// sourceSize decodes it smaller than the file, for where it is only seen blurred.
 import QtQuick
 import QtQuick.Effects
 
@@ -8,6 +9,7 @@ Item {
 
     property url source: Theme.wallpaper()
     property bool dim: false
+    property alias sourceSize: img.sourceSize
 
     Rectangle { anchors.fill: parent; color: Theme.background }
 
