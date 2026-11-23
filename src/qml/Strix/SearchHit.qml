@@ -55,8 +55,8 @@ T.ItemDelegate {
                 text: control.path.join("  ›  ")
                 font.family: Theme.serif
                 font.italic: true
-                font.pixelSize: 12
-                lineHeight: 16
+                font.pixelSize: 14
+                lineHeight: 18
                 color: Theme.textMuted
                 elide: Text.ElideRight
             }

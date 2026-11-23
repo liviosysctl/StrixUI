@@ -2,11 +2,14 @@
  "title": "Strix",
  "namespace": "Kit",
  "fonts": [
-  "JetBrainsMono-Variable.woff2",
-  "JetBrainsMono-Italic-Variable.woff2",
-  "IMFellEnglish-Regular.woff2",
-  "IMFellEnglish-Italic.woff2",
-  "GrenzeGotisch-Variable.woff2"
+  "HankenGrotesk-Variable.woff2",
+  "HankenGrotesk-Italic-Variable.woff2",
+  "CormorantGaramond-Variable.woff2",
+  "CormorantGaramond-Italic-Variable.woff2",
+  "IBMPlexMono-Regular.woff2",
+  "IBMPlexMono-Medium.woff2",
+  "IBMPlexMono-SemiBold.woff2",
+  "IBMPlexMono-Italic.woff2"
  ],
  "icons": [
   "search",
@@ -150,13 +153,13 @@
   ]
  ],
  "blobs": {
-  "0d757135df30d2bf6652f3c0a18483d5": "saturnus.jpg",
-  "e6dec074eb9b7a654bf95f13d282f2c2": "janus.jpg",
-  "b41733760ffae9de3f6f5d88682af092": "apollo.jpg",
-  "3ce42143088aadf856d6c3ff5e29859e": "mars.jpg",
-  "3b21996e74bfecb14fcb2f68061b8c3d": "vulcanus.jpg",
-  "479cdcb0b9c5173af68ab78ad369c814": "neptunus.jpg",
-  "29b44e5ca900dac5a146387c59ae71a1": "pluto.jpg",
-  "0b1aff047346223424503ef8f1b62a91": "bacchus.jpg"
+  "dd31ff4bd01d9e334660de6d58d0c01c": "saturnus.jpg",
+  "a08ee358aaecaaa1e83a558e06db7211": "janus.jpg",
+  "f6cacf473b2ec5d72f3c0008eb60a714": "apollo.jpg",
+  "0abd3eb77e2c691217e2e590b4598e0c": "mars.jpg",
+  "424580acf3223749eeb338f1c0cd9bb5": "vulcanus.jpg",
+  "e63d2612418ddb9840b784745400a2ec": "neptunus.jpg",
+  "8746cfca181d7aec5ae49ac7013cfa8a": "pluto.jpg",
+  "24580846abcfbb98495a3ee4d02d1b3f": "bacchus.jpg"
  }
 }

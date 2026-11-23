@@ -99,8 +99,8 @@ Column {
                 placeholderTextColor: Theme.textFaint
                 selectionColor: Theme.accentSoft
                 selectedTextColor: Theme.text
-                font.family: Theme.mono
-                font.pixelSize: 12
+                font.family: Theme.sans
+                font.pixelSize: 13
                 font.letterSpacing: echoMode === TextInput.Password && length > 0 ? 3.6 : 0
                 passwordCharacter: "•"
                 padding: 0

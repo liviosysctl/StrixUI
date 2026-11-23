@@ -4,9 +4,9 @@ import QtQuick
 Label {
     font.family: Theme.serif
     font.italic: true
-    font.pixelSize: 12
+    font.pixelSize: 14
     font.weight: Font.Normal
     font.letterSpacing: 0.24
-    lineHeight: 16
+    lineHeight: 18
     color: Theme.textMuted
 }

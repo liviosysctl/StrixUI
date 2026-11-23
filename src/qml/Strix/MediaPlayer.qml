@@ -44,7 +44,7 @@ Surface {
         anchors.right: parent.right
         anchors.rightMargin: Theme.space3
         anchors.verticalCenter: art.verticalCenter
-        Label { width: parent.width; text: root.title; font.family: Theme.serif; font.italic: true; font.pixelSize: 17; lineHeight: 20; elide: Text.ElideRight }
+        Label { width: parent.width; text: root.title; font.family: Theme.serif; font.italic: true; font.pixelSize: 20; font.weight: Font.Medium; lineHeight: 23; color: Theme.accentText; elide: Text.ElideRight }
         Label { width: parent.width; text: root.artist; textStyle: "caption"; color: Theme.textMuted; elide: Text.ElideRight }
     }
 

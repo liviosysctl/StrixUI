@@ -49,9 +49,9 @@ pub const TERMINAL: [&str; 20] = [
     "bright-white",
 ];
 const FAMILY: [(&str, &str); 3] = [
-    ("mono", "JetBrains Mono"),
-    ("serif", "IM Fell English"),
-    ("fraktur", "Grenze Gotisch"),
+    ("sans", "Hanken Grotesk"),
+    ("serif", "Cormorant Garamond"),
+    ("mono", "IBM Plex Mono"),
 ];
 
 /// Every colour of one theme, resolved: (colours by name in token order, terminal by name)
@@ -367,9 +367,9 @@ fn rust_tokens(t: &Value) -> String {
             "/// The three families. The font files are in `fonts/` of the design system.",
             "#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]",
             "pub enum Family {",
-            "    Mono,",
+            "    Sans,",
             "    Serif,",
-            "    Fraktur,",
+            "    Mono,",
             "}",
             "",
             "impl Family {",
@@ -792,6 +792,43 @@ fn write_theme_toml(src: &Src, out: &Path, tables: &[(String, Table)], gods: &Go
         for n in TERMINAL {
             o.push(format!("{n} = \"{}\"", tab.t(n)));
         }
+        // The light variant: the god's colours on dark grey grounds, with the light plate
+        let light = gods.light(&g.id);
+        let lc = |n: &str| {
+            light
+                .iter()
+                .find(|(k, _)| k == n)
+                .map_or_else(|| tab.c(n), |(_, v)| v.as_str())
+        };
+        o.extend(
+            [
+                "",
+                "[variants.light]",
+                "name = \"Light\"",
+                "appearance = \"dark\"",
+                "",
+                "[variants.light.colors]",
+            ]
+            .map(String::from),
+        );
+        for n in REQUIRED {
+            o.push(format!("{n} = \"{}\"", lc(n)));
+        }
+        for (n, _) in &tab.colors {
+            if !REQUIRED.contains(&n.as_str()) {
+                o.push(format!("{n} = \"{}\"", lc(n)));
+            }
+        }
+        o.push(String::new());
+        o.push("[variants.light.terminal]".into());
+        for n in TERMINAL {
+            let v = if n == "background" {
+                lc("background")
+            } else {
+                tab.t(n)
+            };
+            o.push(format!("{n} = \"{v}\""));
+        }
         let dir = out.join("themes").join(&g.id);
         write(&dir.join("theme.toml"), &(o.join("\n") + "\n"));
         // The caption of the plate, for every theme that takes this one's picture (strix-theme complete)
@@ -1116,9 +1153,9 @@ fn theme_qml(
         ("styles", styles.join(",\n")),
         ("palette", py::json(&Value::Array(palette), None)),
         ("default", gods.gods[0].id.clone()),
-        ("mono", family("mono").into()),
+        ("sans", family("sans").into()),
         ("serif", family("serif").into()),
-        ("fraktur", family("fraktur").into()),
+        ("mono", family("mono").into()),
     ];
     // One pass, so a filled value is never read as a placeholder
     let re = Regex::new(r"\{\{(\w+)\}\}").expect("regex");

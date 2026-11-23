@@ -28,7 +28,7 @@ Rectangle {
         y: Theme.space3
         width: parent.width - 2 * Theme.space4
         spacing: 2
-        Label { visible: root.title !== ""; text: root.title; textStyle: "subtitle"; width: parent.width; elide: Text.ElideRight }
+        Label { visible: root.title !== ""; text: root.title; textStyle: "subtitle"; color: Theme.accentText; width: parent.width; elide: Text.ElideRight }
         Label { visible: root.text !== ""; text: root.text; textStyle: "caption"; color: Theme.textMuted; width: parent.width; wrapMode: Text.WordWrap }
         Item { id: extra; width: parent.width; implicitHeight: childrenRect.height; height: implicitHeight }
     }

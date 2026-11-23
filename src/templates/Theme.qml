@@ -12,6 +12,8 @@ QtObject {
     // ------------------------------------------------------------ which theme
     /// Id of the theme in use. Set it to preview a god; apply() sets it from the engine.
     property string current: "{{default}}"
+    /// Variant of the theme in use: dark or light. apply() sets it from the engine.
+    property string variant: "dark"
     /// Ids in the order of the theme picker, the default first.
     readonly property var order: {{order}}
     /// Name, description, wallpaper file and plate caption of every theme.
@@ -26,7 +28,8 @@ QtObject {
     readonly property var about: gods[current] || (external && external.id === current ? external : gods["{{default}}"])
     function wallpaper(id) {
         id = id || current
-        if (gods[id]) return wallpapers + gods[id].wallpaper
+        // Every god has two plates: the dark one and, for the light variant, <god>-light.jpg
+        if (gods[id]) return wallpapers + (variant === "light" ? gods[id].wallpaper.replace(".jpg", "-light.jpg") : gods[id].wallpaper)
         if (external && external.id === id) return "file://" + external.dir + "/wallpaper.jpg"
         return wallpapers + gods["{{default}}"].wallpaper
     }
@@ -41,6 +44,7 @@ QtObject {
         if (tokens.theme && !themes[tokens.theme])
             external = { id: tokens.theme, name: tokens.name || tokens.theme, description: tokens.description || "", dir: tokens.dir || "", plate: tokens.plate || "", wallpaper: "wallpaper.jpg" }
         if (tokens.theme) current = tokens.theme
+        if (tokens.variant) variant = tokens.variant
         const base = themes[current] || themes["{{default}}"]
         const merged = Object.assign({}, base)
         for (const k in tokens.colors) if (k in base) merged[k] = tokens.colors[k]
@@ -93,9 +97,9 @@ QtObject {
 {{opac}}
 
     // ------------------------------------------------------------ type
-    readonly property string mono: "{{mono}}"
+    readonly property string sans: "{{sans}}"
     readonly property string serif: "{{serif}}"
-    readonly property string fraktur: "{{fraktur}}"
+    readonly property string mono: "{{mono}}"
     /// Text styles of the brand book. Label { textStyle: "caption" } applies one.
     readonly property var styles: ({
 {{styles}}

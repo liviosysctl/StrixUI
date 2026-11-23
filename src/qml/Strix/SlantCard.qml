@@ -69,13 +69,13 @@ Item {
         anchors.bottomMargin: Theme.space5
         opacity: root.selected ? 1 : 0
         Behavior on opacity { NumberAnimation { duration: Theme.durBase } }
-        Label { anchors.horizontalCenter: parent.horizontalCenter; text: root.name; font.family: Theme.fraktur; font.pixelSize: 46; font.weight: Font.Light; lineHeight: 44 }
+        Label { anchors.horizontalCenter: parent.horizontalCenter; text: root.name; font.family: Theme.serif; font.italic: true; font.pixelSize: 46; font.weight: Font.Medium; lineHeight: 44; color: Theme.accentText }
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 6
             Rectangle { width: 6; height: 6; radius: 3; color: root.accent; anchors.verticalCenter: parent.verticalCenter }
             // Inside the slanted edges: a long caption ends in an ellipsis instead of running out of the card
-            Label { text: root.caption; font.family: Theme.serif; font.italic: true; font.pixelSize: 13; font.letterSpacing: 1.8; lineHeight: 16; color: Theme.textMuted
+            Label { text: root.caption; font.family: Theme.serif; font.italic: true; font.pixelSize: 16; font.letterSpacing: 1.8; lineHeight: 19; color: Theme.textMuted
                 width: Math.min(implicitWidth, root.width - 2 * root.skew - 2 * Theme.space4); elide: Text.ElideRight }
         }
     }
