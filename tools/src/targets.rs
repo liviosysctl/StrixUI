@@ -50,7 +50,9 @@ pub const TERMINAL: [&str; 20] = [
 ];
 const FAMILY: [(&str, &str); 3] = [
     ("sans", "Hanken Grotesk"),
-    ("serif", "Cormorant Garamond"),
+    // The variable files of Cormorant Garamond carry the name of their lightest cut as the name
+    // of the family; under the plain name fontconfig and Qt find nothing and take another font
+    ("serif", "Cormorant Garamond Light"),
     ("mono", "IBM Plex Mono"),
 ];
 

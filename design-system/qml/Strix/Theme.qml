@@ -194,19 +194,19 @@ QtObject {
 
     // ------------------------------------------------------------ type
     readonly property string sans: "Hanken Grotesk"
-    readonly property string serif: "Cormorant Garamond"
+    readonly property string serif: "Cormorant Garamond Light"
     readonly property string mono: "IBM Plex Mono"
     /// Text styles of the brand book. Label { textStyle: "caption" } applies one.
     readonly property var styles: ({
-        "display": { family: "Cormorant Garamond", pixelSize: 96, lineHeight: 96, weight: 500, italic: true, letterSpacing: 0 },
-        "emblem": { family: "Cormorant Garamond", pixelSize: 44, lineHeight: 44, weight: 500, italic: true, letterSpacing: 0 },
-        "clock": { family: "Cormorant Garamond", pixelSize: 112, lineHeight: 103.04, weight: 400, italic: false, letterSpacing: -0.04 },
-        "title-lg": { family: "Cormorant Garamond", pixelSize: 31, lineHeight: 34, weight: 500, italic: true, letterSpacing: 0 },
-        "title": { family: "Cormorant Garamond", pixelSize: 26, lineHeight: 30, weight: 500, italic: false, letterSpacing: 0 },
-        "subtitle": { family: "Cormorant Garamond", pixelSize: 22, lineHeight: 25, weight: 500, italic: false, letterSpacing: 0 },
-        "aside": { family: "Cormorant Garamond", pixelSize: 19, lineHeight: 23, weight: 500, italic: true, letterSpacing: 0 },
-        "note": { family: "Cormorant Garamond", pixelSize: 15, lineHeight: 18, weight: 500, italic: true, letterSpacing: 0 },
-        "motto": { family: "Cormorant Garamond", pixelSize: 16, lineHeight: 21, weight: 500, italic: true, letterSpacing: 0.22 },
+        "display": { family: "Cormorant Garamond Light", pixelSize: 96, lineHeight: 96, weight: 500, italic: true, letterSpacing: 0 },
+        "emblem": { family: "Cormorant Garamond Light", pixelSize: 44, lineHeight: 44, weight: 500, italic: true, letterSpacing: 0 },
+        "clock": { family: "Cormorant Garamond Light", pixelSize: 112, lineHeight: 103.04, weight: 400, italic: false, letterSpacing: -0.04 },
+        "title-lg": { family: "Cormorant Garamond Light", pixelSize: 31, lineHeight: 34, weight: 500, italic: true, letterSpacing: 0 },
+        "title": { family: "Cormorant Garamond Light", pixelSize: 26, lineHeight: 30, weight: 500, italic: false, letterSpacing: 0 },
+        "subtitle": { family: "Cormorant Garamond Light", pixelSize: 22, lineHeight: 25, weight: 500, italic: false, letterSpacing: 0 },
+        "aside": { family: "Cormorant Garamond Light", pixelSize: 19, lineHeight: 23, weight: 500, italic: true, letterSpacing: 0 },
+        "note": { family: "Cormorant Garamond Light", pixelSize: 15, lineHeight: 18, weight: 500, italic: true, letterSpacing: 0 },
+        "motto": { family: "Cormorant Garamond Light", pixelSize: 16, lineHeight: 21, weight: 500, italic: true, letterSpacing: 0.22 },
         "heading": { family: "Hanken Grotesk", pixelSize: 14, lineHeight: 20, weight: 600, italic: false, letterSpacing: 0 },
         "body": { family: "Hanken Grotesk", pixelSize: 13, lineHeight: 18, weight: 400, italic: false, letterSpacing: 0 },
         "label": { family: "Hanken Grotesk", pixelSize: 13, lineHeight: 18, weight: 600, italic: false, letterSpacing: 0 },

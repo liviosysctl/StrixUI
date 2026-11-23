@@ -119,7 +119,7 @@ impl Family {
     pub const fn name(self) -> &'static str {
         match self {
             Family::Sans => "Hanken Grotesk",
-            Family::Serif => "Cormorant Garamond",
+            Family::Serif => "Cormorant Garamond Light",
             Family::Mono => "IBM Plex Mono",
         }
     }
