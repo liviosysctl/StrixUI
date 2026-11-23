@@ -74,6 +74,8 @@ Item {
         opacity: Math.max(0, 2 * root.lift - 1)
         Label { anchors.horizontalCenter: parent.horizontalCenter; text: root.name; textStyle: "emblem"; color: Theme.accentText }
         Row {
+            // Only for a card that says something about its picture
+            visible: root.caption !== ""
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: Theme.space2
             Rectangle { width: Theme.space1; height: Theme.space1; radius: width / 2; color: root.accent; anchors.verticalCenter: parent.verticalCenter }
