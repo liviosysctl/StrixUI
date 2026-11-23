@@ -20,7 +20,7 @@ Item {
     signal remove()
 
     implicitWidth: 560
-    implicitHeight: 36
+    implicitHeight: Theme.control + Theme.space3
 
     Rectangle {
         anchors.fill: parent
@@ -30,22 +30,22 @@ Item {
 
     Column {
         anchors.verticalCenter: parent.verticalCenter
-        width: parent.width - rec.width - 28 - 2 * Theme.space3
+        width: parent.width - rec.width - Theme.control - 2 * Theme.space2
         Label { width: parent.width; text: root.action; elide: Text.ElideRight }
-        Label { width: parent.width; text: root.target; font.family: Theme.serif; font.italic: true; font.pixelSize: 14; lineHeight: 18; color: Theme.textMuted; elide: Text.ElideRight }
+        Label { width: parent.width; text: root.target; textStyle: "note"; color: Theme.textMuted; elide: Text.ElideRight }
     }
 
     T.AbstractButton {
         id: rec
         anchors.right: parent.right
-        anchors.rightMargin: 28 + Theme.space3
+        anchors.rightMargin: Theme.control + Theme.space2
         anchors.verticalCenter: parent.verticalCenter
-        width: Math.max(132, k.implicitWidth + 2 * Theme.space2)
-        height: 24
+        width: Math.max(4 * Theme.space6, k.implicitWidth + 2 * Theme.space2)
+        height: Theme.control
         hoverEnabled: true
         onClicked: root.record()
         background: Rectangle {
-            radius: Theme.radiusSm
+            radius: Theme.radiusMd
             color: "transparent"
             border.width: Theme.lineHair
             border.color: root.recording ? Theme.accent : rec.hovered ? Theme.borderStrong : "transparent"
@@ -73,8 +73,6 @@ Item {
         visible: root.tail !== ""
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        width: 24
-        height: 24
         iconName: root.tail === "remove" ? "trash-2" : "undo-2"
         onClicked: root.tail === "remove" ? root.remove() : root.reset()
     }

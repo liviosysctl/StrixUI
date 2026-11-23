@@ -12,7 +12,7 @@ T.ProgressBar {
     readonly property bool hasText: label !== "" || valueText !== ""
 
     implicitWidth: 240
-    implicitHeight: hasText ? 16 + 6 + Theme.lineBold : Theme.lineBold
+    implicitHeight: hasText ? Theme.styles.caption.lineHeight + Theme.space2 + Theme.lineBold : Theme.lineBold
 
     contentItem: Item {
         Row {

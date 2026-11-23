@@ -13,7 +13,7 @@ T.MenuItem {
     property bool danger: false
 
     implicitWidth: 184
-    implicitHeight: 24
+    implicitHeight: Theme.control
     leftPadding: Theme.space2
     rightPadding: Theme.space2
     hoverEnabled: true
@@ -21,19 +21,19 @@ T.MenuItem {
 
     contentItem: Row {
         spacing: Theme.space2
-        Icon { visible: control.iconName !== ""; name: control.iconName; size: 12; hovered: control.hovered || control.highlighted; color: control.danger ? Theme.error : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
+        Icon { visible: control.iconName !== ""; name: control.iconName; hovered: control.hovered || control.highlighted; color: control.danger ? Theme.error : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
         Label {
-            width: parent.width - (control.iconName !== "" ? 12 + parent.spacing : 0) - (k.visible ? k.implicitWidth + parent.spacing : 0)
+            width: parent.width - (control.iconName !== "" ? Theme.icon + parent.spacing : 0) - (k.visible ? k.implicitWidth + parent.spacing : 0)
             text: control.text
             color: control.danger ? Theme.error : Theme.text
             elide: Text.ElideRight
             anchors.verticalCenter: parent.verticalCenter
         }
-        Label { id: k; visible: control.shortcut !== ""; text: control.shortcut; font.pixelSize: 10; color: Theme.textFaint; anchors.verticalCenter: parent.verticalCenter }
+        Label { id: k; visible: control.shortcut !== ""; text: control.shortcut; textStyle: "micro"; color: Theme.textFaint; anchors.verticalCenter: parent.verticalCenter }
     }
 
     background: Rectangle {
-        radius: Theme.radiusXs
+        radius: Theme.radiusMd
         color: control.highlighted || control.hovered ? Theme.surfaceRaised : "transparent"
         Behavior on color { ColorAnimation { duration: Theme.durInstant } }
     }

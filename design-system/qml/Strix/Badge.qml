@@ -10,9 +10,9 @@ Rectangle {
 
     readonly property color ink: kind === "accent" || kind === "count" ? Theme.onAccent : kind === "error" ? Theme.error : Theme.textMuted
 
-    implicitWidth: Math.max(16, row.implicitWidth + (kind === "count" ? 8 : 10))
-    implicitHeight: 16
-    radius: kind === "count" ? 8 : Theme.radiusXs
+    implicitWidth: Math.max(Theme.mark, row.implicitWidth + 2 * Theme.space1)
+    implicitHeight: Theme.mark
+    radius: kind === "count" ? height / 2 : Theme.radiusSm
     color: kind === "accent" || kind === "count" ? Theme.accent : "transparent"
     border.width: Theme.lineHair
     border.color: kind === "accent" || kind === "count" ? Theme.accent : kind === "error" ? Theme.error : Theme.borderStrong
@@ -30,8 +30,8 @@ Rectangle {
     Row {
         id: row
         anchors.centerIn: parent
-        spacing: 4
-        Icon { visible: root.iconName !== ""; name: root.iconName; size: 10; color: root.ink; anchors.verticalCenter: parent.verticalCenter }
-        Label { text: root.text; textStyle: "micro"; color: root.ink; lineHeight: 14; anchors.verticalCenter: parent.verticalCenter }
+        spacing: Theme.space1
+        Icon { visible: root.iconName !== ""; name: root.iconName; size: Theme.space3; color: root.ink; anchors.verticalCenter: parent.verticalCenter }
+        Label { text: root.text; textStyle: "micro"; color: root.ink; anchors.verticalCenter: parent.verticalCenter }
     }
 }

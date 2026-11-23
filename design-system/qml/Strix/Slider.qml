@@ -13,9 +13,9 @@ T.Slider {
     property string valueText: Math.round(value * (to > 1 ? 1 : 100)).toString()
 
     implicitWidth: 240
-    implicitHeight: 16
-    leftPadding: iconName !== "" ? 14 + Theme.space2 : 0
-    rightPadding: valueText !== "" ? 4 * 7 + Theme.space2 : 0
+    implicitHeight: Theme.control
+    leftPadding: iconName !== "" ? Theme.icon + Theme.space2 : 0
+    rightPadding: valueText !== "" ? Theme.space6 + Theme.space2 : 0
     hoverEnabled: true
     opacity: enabled ? 1 : Theme.dimDisabled
 
@@ -41,14 +41,15 @@ T.Slider {
             text: control.valueText
             horizontalAlignment: Text.AlignRight
         }
-        FocusRing { target: control; targetRadius: Theme.radiusXs }
+        FocusRing { target: control }
     }
 
     handle: Rectangle {
         x: control.leftPadding + control.visualPosition * (control.availableWidth - width)
         y: (control.height - height) / 2
-        width: 3
-        height: 11
+        width: Theme.space1
+        height: Theme.space3
+        radius: width / 2
         color: Theme.text
         scale: control.pressed ? 1.3 : 1
         Behavior on scale { NumberAnimation { duration: Theme.durFast; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeSpring } }

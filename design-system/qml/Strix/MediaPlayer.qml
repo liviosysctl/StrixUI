@@ -20,22 +20,22 @@ Surface {
     function clock(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ":" + ("0" + s % 60).slice(-2) }
 
     implicitWidth: 320
-    implicitHeight: 2 * Theme.space3 + 44 + Theme.space2 + 22
+    implicitHeight: 2 * Theme.space3 + art.height + Theme.space2 + Theme.control
     elevation: "panel"
 
     Rectangle {
         id: art
         x: Theme.space3
         y: Theme.space3
-        width: 44
-        height: 44
-        radius: Theme.radiusSm
+        width: Theme.space7
+        height: Theme.space7
+        radius: Theme.radiusMd
         color: Theme.surfaceRaised
         border.width: Theme.lineHair
         border.color: Theme.border
         clip: true
-        Icon { anchors.centerIn: parent; visible: img.status !== Image.Ready; name: "music"; size: 20; color: Theme.textFaint }
-        Image { id: img; anchors.fill: parent; anchors.margins: 1; source: root.cover; fillMode: Image.PreserveAspectCrop }
+        Icon { anchors.centerIn: parent; visible: img.status !== Image.Ready; name: "music"; color: Theme.textFaint }
+        Image { id: img; anchors.fill: parent; anchors.margins: Theme.lineHair; source: root.cover; fillMode: Image.PreserveAspectCrop }
     }
 
     Column {
@@ -44,7 +44,7 @@ Surface {
         anchors.right: parent.right
         anchors.rightMargin: Theme.space3
         anchors.verticalCenter: art.verticalCenter
-        Label { width: parent.width; text: root.title; font.family: Theme.serif; font.italic: true; font.pixelSize: 20; font.weight: Font.Medium; lineHeight: 23; elide: Text.ElideRight }
+        Label { width: parent.width; text: root.title; textStyle: "aside"; elide: Text.ElideRight }
         Label { width: parent.width; text: root.artist; textStyle: "caption"; color: Theme.textMuted; elide: Text.ElideRight }
     }
 
@@ -52,18 +52,18 @@ Surface {
         x: Theme.space3
         y: art.y + art.height + Theme.space2
         width: parent.width - 2 * Theme.space3
-        spacing: 6
-        IconButton { small: true; iconName: "skip-back"; onClicked: root.previous() }
-        IconButton { small: true; iconName: root.playing ? "pause" : "play"; onClicked: root.toggle() }
-        IconButton { small: true; iconName: "skip-forward"; onClicked: root.next() }
-        Label { text: root.clock(root.position); font.pixelSize: 10; color: Theme.textFaint; anchors.verticalCenter: parent.verticalCenter }
+        spacing: Theme.space1
+        IconButton { iconName: "skip-back"; onClicked: root.previous() }
+        IconButton { iconName: root.playing ? "pause" : "play"; onClicked: root.toggle() }
+        IconButton { iconName: "skip-forward"; onClicked: root.next() }
+        Label { width: Theme.space6; horizontalAlignment: Text.AlignRight; text: root.clock(root.position); textStyle: "micro"; color: Theme.textFaint; anchors.verticalCenter: parent.verticalCenter }
         Item {
-            width: parent.width - 3 * Theme.controlSm - 2 * 40 - 5 * parent.spacing
+            width: parent.width - 3 * Theme.control - 2 * Theme.space6 - 5 * parent.spacing
             height: Theme.lineBold
             anchors.verticalCenter: parent.verticalCenter
             Rectangle { y: 0.5; width: parent.width; height: Theme.lineHair; color: Theme.border }
             Rectangle { width: root.length > 0 ? parent.width * root.position / root.length : 0; height: parent.height; color: Theme.accent }
         }
-        Label { text: root.clock(root.length); font.pixelSize: 10; color: Theme.textFaint; anchors.verticalCenter: parent.verticalCenter }
+        Label { width: Theme.space6; text: root.clock(root.length); textStyle: "micro"; color: Theme.textFaint; anchors.verticalCenter: parent.verticalCenter }
     }
 }

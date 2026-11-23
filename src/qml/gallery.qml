@@ -106,7 +106,7 @@ Rectangle {
             Item {
                 width: 320
                 height: rows.height
-                Glide { target: first; caretX: 7 }
+                Glide { target: first }
                 Column {
                     id: rows
                     width: 320
@@ -123,7 +123,7 @@ Rectangle {
                 elevation: "panel"
                 Column {
                     x: 4; y: 6
-                    SearchHit { width: 312; text: "Theme picker"; iconName: "palette"; hits: [0, 1, 2, 3, 4]; path: ["Style", "Theme"]; keys: "Super Ctrl Space"; selected: true }
+                    SearchHit { width: 312; text: "Theme picker"; iconName: "palette"; hits: [0, 1, 2, 3, 4]; path: ["Style", "Theme"]; keys: "Super G"; selected: true }
                     SearchHit { width: 312; text: "strix-theme set janus"; kind: "command"; iconName: "square-terminal"; path: ["Command"] }
                 }
             }
@@ -143,7 +143,7 @@ Rectangle {
             Caption { text: "Info and settings" }
             InfoBlock { title: "strix"; model: [["OS", "Strix 0.1"], ["Theme", Theme.about.name + ", dark"], ["Shell", "Quickshell"]] }
             SettingRow { width: 400; title: "Change theme"; text: "Another god every 10 minutes"; Switch { checked: true } }
-            SettingRow { width: 400; title: "Wallpaper"; text: "Lock screen"; last: true; Button { small: true; text: "Choose" } }
+            SettingRow { width: 400; title: "Wallpaper"; text: "Lock screen"; last: true; Button { text: "Choose" } }
         }
     }
 
@@ -156,26 +156,28 @@ Rectangle {
             spacing: 10
             Caption { text: "Top bar parts" }
             Row {
-                spacing: 16
+                spacing: Theme.space1
                 Workspaces { count: 5; current: 1; used: [0, 3]; anchors.verticalCenter: parent.verticalCenter }
-                MeterGroup {
-                    anchors.verticalCenter: parent.verticalCenter
-                    Meter { label: "CPU"; value: 0.08 }
-                    Meter { label: "MEM"; value: 0.24 }
+                Chip { iconName: "search" }
+                Chip { text: "Wed 11 Nov  09:41" }
+                Chip {
+                    Icon { name: "cpu"; anchors.verticalCenter: parent.verticalCenter }
+                    Label { text: "8%"; textStyle: "value"; anchors.verticalCenter: parent.verticalCenter }
+                    Icon { name: "memory-stick"; anchors.verticalCenter: parent.verticalCenter }
+                    Label { text: "24%"; textStyle: "value"; anchors.verticalCenter: parent.verticalCenter }
                 }
-                Ticker { text: "09:41"; textStyle: "label"; anchors.verticalCenter: parent.verticalCenter }
             }
             Caption { text: "Dock" }
             Item {
-                width: 300; height: 34
+                width: 300; height: Theme.control + 2 * Theme.space1
                 Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 1; color: Theme.border }
                 EdgeDock {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
                     out: true
-                    Button { small: true; variant: "quiet"; iconName: "layout-grid"; text: "Apps" }
-                    Button { small: true; variant: "quiet"; iconName: "music"; text: "Music" }
-                    Button { small: true; variant: "quiet"; iconName: "cpu"; text: "8%" }
+                    Chip { plate: false; iconName: "layout-grid"; text: "Apps" }
+                    Chip { plate: false; iconName: "music"; text: "Music" }
+                    Chip { plate: false; iconName: "cpu"; text: "8%" }
                 }
             }
             Caption { text: "Calendar" }
@@ -201,7 +203,7 @@ Rectangle {
                 SlantCard { source: Theme.wallpaper(); name: Theme.about.name; caption: "dark"; selected: true }
                 SlantCard { source: Theme.wallpaper("mars"); name: "Mars" }
             }
-            HotkeyRow { width: 480; action: "Theme picker"; target: "Themes and wallpapers"; keys: "Super Ctrl Space"; tail: "reset" }
+            HotkeyRow { width: 480; action: "Theme picker"; target: "Themes and wallpapers"; keys: "Super G"; tail: "reset" }
         }
     }
 }

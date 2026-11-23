@@ -4,8 +4,8 @@ import QtQuick
 Rectangle {
     property bool live: false
 
-    implicitWidth: 5
-    implicitHeight: 5
+    implicitWidth: Theme.space1
+    implicitHeight: Theme.space1
     radius: width / 2
     color: Theme.accent
 

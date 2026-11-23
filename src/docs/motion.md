@@ -49,7 +49,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Progress | unknown | an 18% piece runs along the line | `dur-loop`, repeating | `ease-in-out` | stops with the state |
 | Ring | value | arc length; digits roll | `dur-reveal` | `ease-out` | retargets |
 | Rolling number | value | each digit column slides | `dur-slow` | `ease-in-out` | retargets |
-| List row | hover, select | background; the caret in `accent-text` slides in 4px | `dur-fast` | `ease-out` | reverses |
+| List row | hover, select | background; the accent line on its left edge grows in | `dur-fast` | `ease-out` | reverses |
 | List row | enter | 6px rise and fade, staggered | `dur-base` + `stagger` | `ease-out` | finishes |
 | List row | remove | fade and collapse | `dur-base` | `ease-in` | finishes |
 | Card | hover | border colour, 2px lift | `dur-fast` | `ease-out` | reverses |
@@ -80,7 +80,7 @@ Everything that can move, moves. Nothing invents its own timing: every transitio
 | Clipboard | open (Super V), close | like the cheat sheet | `dur-base`, `dur-fast` | `ease-out`, `ease-in` | reverses from position |
 | Cheat sheet | edit a row | the sheet closes, Settings opens at the row; the row is marked in `accent-soft` and fades back | `dur-slow` | `ease-out` | finishes |
 | Hotkeys | record keys | the key field turns to the accent and its prompt pulses until keys are pressed | `0.9s` per pulse | `ease-in-out` | Esc cancels |
-| Search | typing | results update in place, no motion; the caret follows the chosen row | none | none | none |
+| Search | typing | results update in place, no motion; the accent line follows the chosen row | none | none | none |
 | Carousel | browse | row slides; old middle narrows, new one widens; name rises in | `dur-slow` | `ease-in-out` | retargets |
 | Theme card | hover | brightness | `dur-fast` | `ease-out` | reverses |
 | Theme picker | open, close | fades; the plates rise 12px into place | `dur-base` | `ease-out`, `ease-in` | reverses from position |

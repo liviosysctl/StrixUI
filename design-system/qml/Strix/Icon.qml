@@ -9,7 +9,7 @@ Item {
     id: root
 
     property string name
-    property int size: 14
+    property int size: Theme.icon
     property color color: Theme.textMuted
     /// Line width in pixels on screen.
     property real stroke: 1.25

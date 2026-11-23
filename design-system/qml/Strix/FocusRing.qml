@@ -6,7 +6,7 @@ Rectangle {
     id: ring
 
     property var target: parent
-    property real targetRadius: Theme.radiusSm
+    property real targetRadius: Theme.radiusMd
 
     anchors.fill: parent
     anchors.margins: -4

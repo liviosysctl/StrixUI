@@ -1,5 +1,6 @@
 // A field with its label above and one line of help or error below.
-// shape: "box" (default), "pill" (search), "line" (lock screen password).
+// shape: "box" (default) or "line" (lock screen password). While it is typed into, its line takes
+// the focus colour: a field needs no ring around it.
 import QtQuick
 import QtQuick.Templates as T
 
@@ -37,8 +38,8 @@ Column {
     Rectangle {
         id: box
         width: parent.width
-        height: Theme.controlMd
-        radius: root.shape === "pill" ? height / 2 : root.shape === "line" ? 0 : Theme.radiusSm
+        height: Theme.control
+        radius: root.shape === "line" ? 0 : Theme.radiusMd
         color: root.shape === "line" ? "transparent" : Theme.surfaceSunken
         border.width: root.shape === "line" ? 0 : Theme.lineHair
         border.color: root.error !== "" ? Theme.error : field.activeFocus ? Theme.focus : hover.hovered ? Theme.textMuted : Theme.borderStrong
@@ -57,7 +58,7 @@ Column {
                 readonly property bool lit: field.activeFocus || root.error !== ""
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: lit ? parent.width : 0
-                height: lit ? 2 : 1
+                height: lit ? Theme.lineBold : Theme.lineHair
                 anchors.bottom: parent.bottom
                 color: root.error !== "" ? Theme.error : Theme.focus
                 Behavior on width { NumberAnimation { duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
@@ -65,22 +66,10 @@ Column {
             }
         }
 
-        // the focus ring of box and pill
-        Rectangle {
-            visible: field.activeFocus && root.shape !== "line"
-            anchors.fill: parent
-            anchors.margins: -4
-            radius: parent.radius + 4
-            color: "transparent"
-            border.width: 2
-            border.color: Theme.focus
-            Rectangle { anchors.fill: parent; anchors.margins: 2; radius: Math.max(0, parent.radius - 2); color: "transparent"; border.width: 2; border.color: Theme.background }
-        }
-
         Row {
             id: inside
             anchors.fill: parent
-            anchors.leftMargin: root.shape === "line" ? 0 : root.shape === "pill" ? Theme.space3 : Theme.space2
+            anchors.leftMargin: root.shape === "line" ? 0 : Theme.space2
             anchors.rightMargin: anchors.leftMargin
             spacing: Theme.space2
 
@@ -92,7 +81,7 @@ Column {
 
             T.TextField {
                 id: field
-                width: inside.width - (root.iconName !== "" ? 14 + inside.spacing : 0) - (tail.width > 0 ? tail.width + inside.spacing : 0)
+                width: inside.width - (root.iconName !== "" ? Theme.icon + inside.spacing : 0) - (tail.width > 0 ? tail.width + inside.spacing : 0)
                 height: parent.height
                 verticalAlignment: TextInput.AlignVCenter
                 color: Theme.text
@@ -100,7 +89,7 @@ Column {
                 selectionColor: Theme.accentSoft
                 selectedTextColor: Theme.text
                 font.family: Theme.sans
-                font.pixelSize: 13
+                font.pixelSize: Theme.styles.body.pixelSize
                 font.letterSpacing: echoMode === TextInput.Password && length > 0 ? 3.6 : 0
                 passwordCharacter: "•"
                 padding: 0

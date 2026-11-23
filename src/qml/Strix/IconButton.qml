@@ -10,10 +10,9 @@ T.Button {
     HoverHandler { cursorShape: Qt.PointingHandCursor }
 
     property string iconName
-    property bool small: false
     property bool danger: false
 
-    implicitWidth: small ? Theme.controlSm : Theme.controlMd
+    implicitWidth: Theme.control
     implicitHeight: implicitWidth
     padding: 0
     hoverEnabled: true
@@ -28,13 +27,12 @@ T.Button {
             name: control.iconName
             active: control.checked
             hovered: control.hovered || control.visualFocus
-            size: control.small ? 12 : 14
             color: control.danger || control.checked ? Theme.accentText : control.hovered ? Theme.text : Theme.textMuted
         }
     }
 
     background: Rectangle {
-        radius: Theme.radiusSm
+        radius: Theme.radiusMd
         color: control.hovered ? Theme.surfaceRaised : "transparent"
         Behavior on color { ColorAnimation { duration: Theme.durFast } }
         FocusRing { target: control }

@@ -7,18 +7,18 @@ T.ToolTip {
     id: control
 
     x: parent ? (parent.width - implicitWidth) / 2 : 0
-    y: -implicitHeight - 6
+    y: -implicitHeight - Theme.space2
     delay: Theme.durSlow
     margins: Theme.space1
     padding: 0
-    leftPadding: 6
-    rightPadding: 6
+    leftPadding: Theme.space2
+    rightPadding: Theme.space2
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutsideParent | T.Popup.CloseOnReleaseOutsideParent
 
     enter: Transition {
         ParallelAnimation {
             NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Theme.durFast; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut }
-            NumberAnimation { property: "y"; from: -control.implicitHeight - 3; to: -control.implicitHeight - 6; duration: Theme.durFast }
+            NumberAnimation { property: "y"; from: -control.implicitHeight - Theme.space1; to: -control.implicitHeight - Theme.space2; duration: Theme.durFast }
         }
     }
     exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Theme.durFast } }
@@ -30,7 +30,7 @@ T.ToolTip {
     }
 
     background: Rectangle {
-        radius: Theme.radiusXs
+        radius: Theme.radiusMd
         color: Theme.surfaceRaised
         border.width: Theme.lineHair
         border.color: Theme.borderStrong

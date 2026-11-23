@@ -6,9 +6,9 @@ This system is the single source for that look on every surface: the desktop she
 
 - Old and exact. The mood comes from engravings, an old-style serif and small ornaments. The work is done in a plain grotesque. Never mix the roles: nothing you operate is set in the serif, and nothing that sets the mood is set in the grotesque.
 - One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, running progress, the cursor, and the disc on the wallpaper; the focused window shows it only quietened, as `border-active`. Its colour belongs to the god of the moment (Strix red under Saturnus, the default), but there is only ever one. If two things carry it, one of them is wrong.
-- Fine, not heavy. Text is 12px, controls are 28px high, lines are one pixel, corners are 2 to 4px. When in doubt, make it thinner and leave more room around it.
-- Flat and dark. Surfaces are one step lighter than the ground and carry a hair border. No glass, no blur behind panels.
-- Lines, not fills. State is shown with a line, a border, a caret or a word before it is shown with a filled box.
+- Fine, not heavy. Text is 13px, everything that is pressed is 30px high, lines are one pixel, corners are 6px. When in doubt, make it thinner and leave more room around it.
+- One plate. Whatever floats stands on smoked glass: the surface colour at `glass`, a little light on its upper edge, a hair line in the text colour at `glass-line`, and the compositor blurs what lies behind. Panels, dialogs, menus, windows of the shell and every button of the top bar are this plate; nothing gets a ground of another kind.
+- Lines, not fills. State is shown with a line, a border or a word before it is shown with a filled box.
 - Everything that can move, moves, and every motion uses the tokens in the Motion section.
 
 ## Content
@@ -43,7 +43,7 @@ The ten required colours of `theme.toml` have the same names here: `background`,
 
 ### Themes: one per god
 
-Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme is a plate and a set of colours; choosing it in the theme picker (Super Ctrl Space) sets both. In the tokens the god themes are the colour themes: `saturnus` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches to another. The theme changes by itself to another god every 10 minutes (`theme-cycle`) unless it is kept in the theme picker.
+Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme is a plate and a set of colours; choosing it in the theme picker (Super G) sets both. In the tokens the god themes are the colour themes: `saturnus` is the first and the default, and `data-theme="<god>"` on the root (or on any element) switches to another. The theme changes by itself to another god every 10 minutes (`theme-cycle`) unless it is kept in the theme picker.
 
 {{GODS_TABLE}}
 
@@ -75,12 +75,12 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 
 ## Space, shape and depth
 
-- Spacing steps are 4, 8, 12, 16, 24, 32, 48 and 64 (`space-1` to `space-8`). Panels and windows pad by `space-3` to `space-4`, dialogs by `space-5` at the sides.
-- Windows sit `space-3` apart and `space-3` from the screen edge. Keep the gaps even; the engraving should show between windows.
-- Corners are barely rounded: `radius-xs` (1px) for the smallest parts, `radius-sm` (2px) for controls, `radius-md` (4px) for windows, panels and the dock. `radius-pill` is only for the switch, radios, count badges, the search field and the active workspace.
+- One grid of 4. Spacing steps are 4, 8, 12, 16, 24, 32, 48 and 64 (`space-1` to `space-8`), and no measure lies between them. A plate stands `space-2` from the screen edge and from the next plate; buttons that belong together stand `space-1` apart. A plate pads by `space-2` around rows and controls, by `space-3` around text, and a window by `space-5`. A row or a button pads by `space-2` beside a symbol and `space-3` beside words alone; a symbol and its word stand `space-2` apart.
+- Windows sit `space-2` apart and `space-2` from the screen edge and the top bar. Keep the gaps even; the engraving should show between windows.
+- Two corners. `radius-md` (6px) for every plate and every control: windows, panels, cards, buttons, fields, list rows, the buttons of the top bar. `radius-sm` (4px) for the marks that stand inside them: key caps, badges, the checkbox, the thumb of a segmented control. `radius-pill` is only for the switch, radios, count badges and progress.
 - Every border and track is `line-hair` (1px). Only the filled part of a progress line or ring is `line-bold` (2px).
 - Shadows are soft and dark: `shadow-pop` under toolbars and tooltips, `shadow-window` under windows, `shadow-panel` under panels, dialogs and menus. A surface gets a shadow or nothing; never a glow.
-- Sizes: controls are `control-md` (28px) and `control-sm` (22px); the top bar is `bar-height` (26px); symbols are 14px, 12px in the bar and the dock.
+- Sizes: everything that is pressed or typed into is `control` (30px) high: buttons, fields, list rows, the buttons of the top bar. The marks are `mark` (18px): key caps, badges, the switch. A symbol is `icon` (16px), everywhere. The top bar takes `bar-height` (38px): one control and its margin to the screen edge.
 
 ## Wallpaper and imagery
 
@@ -102,14 +102,14 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 ## Symbols
 
 - Symbols are Lucide (ISC licence), bundled with the system: 24px grid, drawn thin at a 1.25 stroke, round caps, in the current text colour. In QML `Icon { name: "wifi" }` (the `Icons` singleton lists the names), in HTML `<i class="k-icon" data-icon="wifi"></i>` (`Kit.icons` lists them).
-- Sizes: 14px in controls and lists, 12px in the top bar, the dock and small buttons, 10px in badges and title bars.
+- Size: `icon` (16px) everywhere; only the symbol inside a badge is smaller.
 - A symbol stands alone only where its meaning is certain (power, search, close, Wi-Fi, sound). Otherwise it sits beside a word, or carries a Tooltip.
 - No emoji, no coloured symbols, no symbols as decoration.
 
 ## Layout of the shell
 
 - The top bar is for reading. It has no surface; small grey text and symbols sit on the engraving. Left: search and the clock, then CPU, memory, temperature. Middle: workspaces and the playing track in serif italic. Right: recording, the bell with its count, power.
-- The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short line in the accent. When the pointer reaches the bottom edge it rises to `dock-height` (28px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
+- The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short line in the accent. When the pointer reaches the bottom edge it rises to one row of controls and its margin (38px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
 - Search (Super Space) is the one way in to everything else: a single field over the dimmed desktop that finds apps, the actions of the system menu, settings down to a single row, and commands. With an empty field it is the system menu itself. There is no separate app launcher or system menu.
 - The clock, the bell and power exist only in the bar. Network, sound and updates exist only in the dock.
 - Notifications arrive top right under the bar. The OSD appears bottom centre.

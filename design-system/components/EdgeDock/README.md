@@ -1,6 +1,6 @@
 # EdgeDock
 
-The dock is part of the bottom edge of the screen, not a floating bar. At rest it is a tab 5px high and 132px wide with a short line in the accent, flush with the edge, its corners flaring into it. When the pointer reaches the bottom edge it rises to 28px and widens to fit its content. When the pointer leaves, it sinks back after a short wait.
+The dock is part of the bottom edge of the screen, not a floating bar. At rest it is a tab 5px high and 128px wide with a short line in the accent, flush with the edge, its corners flaring into it. When the pointer reaches the bottom edge it rises to 38px (one row of controls) and widens to fit its content. When the pointer leaves, it sinks back after a short wait.
 
 - Everything that can be adjusted starts here: settings, the date with the weather, media, Wi-Fi, Bluetooth, sound, about. A click on a symbol lets its panel grow upward out of that symbol; a second click, Escape or a click elsewhere folds it back.
 - Main panel: a Segmented with Today (date, weather, calendar, the day as a line), System (three rings and the disk) and About (name, version, channel, and "Check", which runs the update and shows its progress in place).

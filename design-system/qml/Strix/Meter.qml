@@ -1,5 +1,5 @@
 // A load figure in the top bar: a thin upright bar that fills, the name and the value. The value
-// rolls when it changes. Inside a MeterGroup it is part of one button.
+// rolls when it changes. Inside a Chip it is part of one button: bind `hot` to the chip's `lit`.
 //   Meter { label: "CPU"; value: 0.08 }
 import QtQuick
 
@@ -9,7 +9,7 @@ Row {
     property string label
     property real value: 0
     property string valueText: Math.round(value * 100) + "%"
-    /// Under the pointer (set by MeterGroup): the bar takes the accent
+    /// Under the pointer (bound to the button that holds it): the bar takes the accent
     property bool hot: false
 
     /// Empty the bar and fill it again, after `delay` milliseconds
@@ -21,11 +21,12 @@ Row {
     /// The share of the value drawn, 0 to 1, for sweep()
     property real fill: 1
 
-    spacing: 5
+    spacing: Theme.space1
 
     Rectangle {
-        width: 2
-        height: 10
+        width: Theme.lineBold
+        height: Theme.space3
+        radius: width / 2
         color: Theme.borderStrong
         anchors.verticalCenter: parent.verticalCenter
         Rectangle {

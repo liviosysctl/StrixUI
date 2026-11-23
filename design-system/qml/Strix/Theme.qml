@@ -77,6 +77,8 @@ QtObject {
     function mix(a, b, t) { return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, a.a + (b.a - a.a) * t) }
     /// The colour with another opacity.
     function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+    /// Smoked glass in the colour `c`: what lies behind shows through, the compositor blurs it
+    function smoke(c) { return alpha(c, glass) }
     /// A colour of the tokens as QML reads it: CSS writes the opacity last (#rrggbbaa), QML first
     /// (#aarrggbb), so the scrim would turn into a clear blue.
     function css(v) { return typeof v === "string" && v.length === 9 ? "#" + v.slice(7) + v.slice(1, 7) : v }
@@ -153,19 +155,16 @@ QtObject {
     readonly property int space6: 32  // Gap between sections.
     readonly property int space7: 48  // Outer margin of full-screen layouts.
     readonly property int space8: 64  // Left inset of the lock screen column.
-    readonly property int radiusXs: 2  // Checkbox, list rows, segmented thumb, tooltip, calendar day.
-    readonly property int radiusSm: 4  // Buttons, fields, segmented track.
-    readonly property int radiusMd: 6  // Windows, panels, cards, dialogs, notifications.
-    readonly property int radiusLg: 8  // Large media: theme previews in the store and settings.
-    readonly property int radiusPill: 999  // Switch, radio, count badges, the active workspace, the search field.
+    readonly property int radiusSm: 4  // Marks: key caps, badges, the checkbox, a calendar day.
+    readonly property int radiusMd: 6  // Every plate and every control: windows, panels, cards, notifications, buttons, fields, list rows, the buttons of the top bar.
+    readonly property int radiusPill: 999  // Switch, radio, count badges, progress.
     readonly property int lineHair: 1  // Every border and divider.
     readonly property int lineBold: 2  // The filled part of a progress line and of a ring. Tracks stay at one pixel.
-    readonly property int barHeight: 30  // Height of the top bar.
-    readonly property int controlSm: 26  // Small buttons and icon buttons inside panels.
-    readonly property int controlMd: 32  // Buttons, fields, list rows.
+    readonly property int control: 30  // Height of everything that is pressed or typed into: buttons, fields, list rows, the buttons of the top bar.
+    readonly property int mark: 18  // Height of the small marks: key caps, badges, the switch.
+    readonly property int icon: 16  // Edge of an icon, of the checkbox and of the radio button.
+    readonly property int barHeight: 38  // What the top bar takes from the screen: the margin to the edge and one control.
     readonly property int dockRest: 5  // Height of the dock at rest: a thin tab on the bottom edge.
-    readonly property int dockHeight: 32  // Height of the dock once the pointer reaches the bottom edge.
-    readonly property int osdHeight: 32  // Height of the OSD.
 
     // ------------------------------------------------------------ motion
     /// True when the person asked for less motion; every duration but the theme cycle becomes 1 ms.
@@ -189,6 +188,9 @@ QtObject {
     readonly property real dimInactive: 0.92  // Inactive windows.
     readonly property real dimWallpaper: 0.55  // Wallpaper brightness under the lock screen and the theme picker.
     readonly property real glass: 0.72  // How much of a floating surface covers what is behind it: panels, dialogs, menus, the search. The compositor blurs the rest.
+    readonly property real glassLine: 0.14  // The hair line around smoked glass: the text colour at this opacity, so the edge reads on the dark and on the lit part of a plate.
+    /// The hair line around smoked glass
+    readonly property color glassEdge: alpha(text, glassLine)
 
     // ------------------------------------------------------------ type
     readonly property string sans: "Hanken Grotesk"
@@ -203,6 +205,7 @@ QtObject {
         "title": { family: "Cormorant Garamond", pixelSize: 26, lineHeight: 30, weight: 500, italic: false, letterSpacing: 0 },
         "subtitle": { family: "Cormorant Garamond", pixelSize: 22, lineHeight: 25, weight: 500, italic: false, letterSpacing: 0 },
         "aside": { family: "Cormorant Garamond", pixelSize: 19, lineHeight: 23, weight: 500, italic: true, letterSpacing: 0 },
+        "note": { family: "Cormorant Garamond", pixelSize: 15, lineHeight: 18, weight: 500, italic: true, letterSpacing: 0 },
         "motto": { family: "Cormorant Garamond", pixelSize: 16, lineHeight: 21, weight: 500, italic: true, letterSpacing: 0.22 },
         "heading": { family: "Hanken Grotesk", pixelSize: 14, lineHeight: 20, weight: 600, italic: false, letterSpacing: 0 },
         "body": { family: "Hanken Grotesk", pixelSize: 13, lineHeight: 18, weight: 400, italic: false, letterSpacing: 0 },

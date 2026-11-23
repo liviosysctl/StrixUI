@@ -38,7 +38,7 @@ Item {
         id: col
         x: Theme.space4
         y: Theme.space2
-        Label { id: head; visible: root.title !== ""; text: root.title; textStyle: "subtitle"; font.italic: true; bottomPadding: 2 }
+        Label { id: head; visible: root.title !== ""; text: root.title; textStyle: "subtitle"; font.italic: true; bottomPadding: Theme.space1 }
         Grid {
             id: grid
             columns: 3

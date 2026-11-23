@@ -70,6 +70,8 @@ QtObject {
     function mix(a, b, t) { return Qt.rgba(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t, a.a + (b.a - a.a) * t) }
     /// The colour with another opacity.
     function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+    /// Smoked glass in the colour `c`: what lies behind shows through, the compositor blurs it
+    function smoke(c) { return alpha(c, glass) }
     /// A colour of the tokens as QML reads it: CSS writes the opacity last (#rrggbbaa), QML first
     /// (#aarrggbb), so the scrim would turn into a clear blue.
     function css(v) { return typeof v === "string" && v.length === 9 ? "#" + v.slice(7) + v.slice(1, 7) : v }
@@ -95,6 +97,8 @@ QtObject {
 
     // ------------------------------------------------------------ opacity
 {{opac}}
+    /// The hair line around smoked glass
+    readonly property color glassEdge: alpha(text, glassLine)
 
     // ------------------------------------------------------------ type
     readonly property string sans: "{{sans}}"

@@ -10,26 +10,26 @@ T.RadioButton {
 
     // The text already leaves room for the indicator at its left (leftPadding of contentItem)
     implicitWidth: text !== "" ? implicitContentWidth : implicitIndicatorWidth
-    implicitHeight: 18
+    implicitHeight: Theme.mark
     spacing: Theme.space2
     padding: 0
     hoverEnabled: true
     opacity: enabled ? 1 : Theme.dimDisabled
 
     indicator: Rectangle {
-        implicitWidth: 12
-        implicitHeight: 12
+        implicitWidth: Theme.icon
+        implicitHeight: Theme.icon
         y: (control.height - height) / 2
-        radius: 6
+        radius: height / 2
         color: Theme.surfaceSunken
         border.width: Theme.lineHair
         border.color: control.checked ? Theme.accentText : Theme.borderStrong
 
         Rectangle {
             anchors.centerIn: parent
-            width: 6
-            height: 6
-            radius: 3
+            width: Theme.space2
+            height: Theme.space2
+            radius: width / 2
             color: Theme.accent
             scale: control.checked ? 1 : 0
             Behavior on scale { NumberAnimation { duration: Theme.durFast; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeSpring } }

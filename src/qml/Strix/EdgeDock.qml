@@ -1,5 +1,6 @@
-// The dock as part of the bottom edge: at rest a tab 5px high and 132px wide with a short accent line,
-// its corners flaring into the edge. out: it rises to 28px and widens to fit its content.
+// The dock as part of the bottom edge, of smoked glass: at rest a tab 5px high with a short accent
+// line, its corners flaring into the edge. out: it rises to hold one row of controls and widens to
+// fit them.
 // In Quickshell put it in a PanelWindow anchored to the bottom and set `out` from a HoverHandler.
 import QtQuick
 import QtQuick.Shapes
@@ -10,51 +11,55 @@ Item {
     property bool out: false
     default property alias content: row.data
 
-    readonly property int restWidth: 132
-    readonly property int openWidth: row.implicitWidth + 12
+    readonly property int restWidth: 4 * Theme.space6
+    readonly property int openWidth: row.implicitWidth + 2 * Theme.space1
+    /// One row of controls and a step above and below it
+    readonly property int openHeight: Theme.control + 2 * Theme.space1
+    /// How far the corners flare into the screen edge
+    readonly property int flare: Theme.radiusMd
 
-    implicitWidth: openWidth + 12
-    implicitHeight: Theme.dockHeight
+    implicitWidth: openWidth + 2 * flare
+    implicitHeight: openHeight
 
     Item {
         id: tab
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         width: root.out ? root.openWidth : root.restWidth
-        height: root.out ? Theme.dockHeight : Theme.dockRest
+        height: root.out ? root.openHeight : Theme.dockRest
         Behavior on width { NumberAnimation { duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
         Behavior on height { NumberAnimation { duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
 
         // the tab with open bottom, and the two flares into the screen edge
         Shape {
             anchors.fill: parent
-            anchors.leftMargin: -6
-            anchors.rightMargin: -6
+            anchors.leftMargin: -root.flare
+            anchors.rightMargin: -root.flare
             preferredRendererType: Shape.CurveRenderer
-            readonly property real w: width
-            readonly property real h: height
-            readonly property real r: Math.min(Theme.radiusMd, h)
             ShapePath {
-                fillColor: Theme.surface
-                strokeColor: Theme.border
+                id: path
+                readonly property real f: root.flare
+                readonly property real r: Math.min(Theme.radiusMd, tab.height)
+                fillColor: Theme.smoke(Theme.surface)
+                strokeColor: Theme.glassEdge
                 strokeWidth: Theme.lineHair
                 startX: 0; startY: tab.height
-                PathArc { x: 6; y: tab.height - 6; radiusX: 6; radiusY: 6; direction: PathArc.Counterclockwise }
-                PathLine { x: 6; y: Math.min(tab.height - 6, 4) }
-                PathLine { x: 6; y: 4 }
-                PathArc { x: 10; y: 0; radiusX: 4; radiusY: 4 }
-                PathLine { x: tab.width + 2; y: 0 }
-                PathArc { x: tab.width + 6; y: 4; radiusX: 4; radiusY: 4 }
-                PathLine { x: tab.width + 6; y: Math.max(4, tab.height - 6) }
-                PathArc { x: tab.width + 12; y: tab.height; radiusX: 6; radiusY: 6; direction: PathArc.Counterclockwise }
+                PathArc { x: path.f; y: tab.height - path.f; radiusX: path.f; radiusY: path.f; direction: PathArc.Counterclockwise }
+                PathLine { x: path.f; y: Math.min(tab.height - path.f, path.r) }
+                PathLine { x: path.f; y: path.r }
+                PathArc { x: path.f + path.r; y: 0; radiusX: path.r; radiusY: path.r }
+                PathLine { x: tab.width + path.f - path.r; y: 0 }
+                PathArc { x: tab.width + path.f; y: path.r; radiusX: path.r; radiusY: path.r }
+                PathLine { x: tab.width + path.f; y: Math.max(path.r, tab.height - path.f) }
+                PathArc { x: tab.width + 2 * path.f; y: tab.height; radiusX: path.f; radiusY: path.f; direction: PathArc.Counterclockwise }
             }
         }
 
         Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
-            y: 1
-            width: 24
-            height: 1
+            y: Theme.lineHair
+            width: Theme.space5
+            height: Theme.lineHair
             color: Theme.accent
             opacity: root.out ? 0 : 1
             Behavior on opacity { NumberAnimation { duration: Theme.durFast } }
@@ -63,8 +68,8 @@ Item {
         Row {
             id: row
             anchors.verticalCenter: parent.verticalCenter
-            x: 6
-            spacing: 1
+            x: Theme.space1
+            spacing: Theme.space1
             clip: true
             opacity: root.out ? 1 : 0
             visible: opacity > 0
@@ -91,7 +96,7 @@ Item {
             id: a
             property Item target
             property int delay
-            PropertyAction { target: a.target; property: "y"; value: 4 }
+            PropertyAction { target: a.target; property: "y"; value: Theme.space1 }
             PauseAnimation { duration: a.delay }
             NumberAnimation { target: a.target; property: "y"; to: 0; duration: Theme.durBase; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeSpring }
             onFinished: a.destroy()

@@ -4,7 +4,7 @@ import QtQuick.Templates as T
 
 T.MenuSeparator {
     implicitWidth: 184
-    implicitHeight: 7
+    implicitHeight: Theme.space2 + Theme.lineHair
     padding: 0
     contentItem: Rectangle { implicitHeight: Theme.lineHair; color: Theme.border }
 }

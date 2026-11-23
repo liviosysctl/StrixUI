@@ -19,17 +19,18 @@ Column {
         return out
     }
 
-    width: 196
+    width: 7 * Theme.control
+    spacing: Theme.space1
 
     Item {
         width: parent.width
-        height: 24
+        height: Theme.control
         Label { text: root.names[root.month.getMonth()] + " " + root.month.getFullYear(); textStyle: "aside"; anchors.verticalCenter: parent.verticalCenter }
         Row {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            IconButton { small: true; iconName: "chevron-left"; onClicked: root.month = new Date(root.month.getFullYear(), root.month.getMonth() - 1, 1) }
-            IconButton { small: true; iconName: "chevron-right"; onClicked: root.month = new Date(root.month.getFullYear(), root.month.getMonth() + 1, 1) }
+            IconButton { iconName: "chevron-left"; onClicked: root.month = new Date(root.month.getFullYear(), root.month.getMonth() - 1, 1) }
+            IconButton { iconName: "chevron-right"; onClicked: root.month = new Date(root.month.getFullYear(), root.month.getMonth() + 1, 1) }
         }
     }
 
@@ -37,7 +38,7 @@ Column {
         columns: 7
         Repeater {
             model: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
-            Label { width: 28; height: 20; text: modelData; textStyle: "caption"; font.weight: Font.Medium; color: Theme.textFaint; horizontalAlignment: Text.AlignHCenter }
+            Label { width: Theme.control; height: Theme.space5; text: modelData; textStyle: "micro"; color: Theme.textFaint; horizontalAlignment: Text.AlignHCenter }
         }
         Repeater {
             model: root.days
@@ -45,9 +46,9 @@ Column {
                 id: cell
                 readonly property bool out: modelData.getMonth() !== root.month.getMonth()
                 readonly property bool isToday: modelData.toDateString() === root.today.toDateString()
-                width: 28
-                height: 22
-                radius: Theme.radiusXs
+                width: Theme.control
+                height: Theme.control
+                radius: Theme.radiusMd
                 color: isToday ? Theme.accent : tap.hovered ? Theme.surfaceRaised : "transparent"
                 opacity: out ? 0.6 : 1
                 HoverHandler { id: tap }

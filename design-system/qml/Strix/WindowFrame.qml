@@ -23,7 +23,7 @@ Item {
     Surface {
         anchors.fill: parent
         elevation: "window"
-        borderColor: root.active ? Theme.borderActive : Theme.border
+        borderColor: root.active ? Theme.borderActive : Theme.glassEdge
         Behavior on borderColor { ColorAnimation { duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeInOut } }
         clip: true
 
@@ -31,28 +31,30 @@ Item {
             id: bar
             visible: root.titleBar
             width: parent.width
-            height: visible ? 26 : 0
+            height: visible ? Theme.control + 2 * Theme.space1 : 0
             Row {
                 x: Theme.space3
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.space2
-                Label { text: root.title; font.family: Theme.serif; font.pixelSize: 18; font.weight: Font.Medium; lineHeight: 21; color: Theme.accentText; anchors.verticalCenter: parent.verticalCenter }
+                Label { text: root.title; textStyle: "subtitle"; color: Theme.accentText; anchors.verticalCenter: parent.verticalCenter }
                 Label { text: root.subtitle; textStyle: "caption"; color: Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
             }
             Row {
                 anchors.right: parent.right
+                anchors.rightMargin: Theme.space1
+                anchors.verticalCenter: parent.verticalCenter
                 Repeater {
                     model: [["minus", "minimise"], ["square", "maximise"], ["x", "close"]]
                     Rectangle {
-                        width: 40
-                        height: 26
+                        width: Theme.control
+                        height: Theme.control
+                        radius: Theme.radiusMd
                         color: hh.hovered ? (modelData[1] === "close" ? Theme.accent : Theme.surfaceRaised) : "transparent"
                         HoverHandler { id: hh }
                         TapHandler { onTapped: root[modelData[1]]() }
                         Icon {
                             anchors.centerIn: parent
                             name: modelData[0]
-                            size: 10
                             color: hh.hovered ? (modelData[1] === "close" ? Theme.onAccent : Theme.text) : Theme.textMuted
                         }
                     }
@@ -68,8 +70,6 @@ Item {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.margins: Theme.space3
-            anchors.leftMargin: Theme.space4
-            anchors.rightMargin: Theme.space4
         }
     }
 }

@@ -209,7 +209,7 @@
       var y = shown.getFullYear(), m = shown.getMonth();
       var first = (new Date(y, m, 1).getDay() + 6) % 7;
       var days = new Date(y, m + 1, 0).getDate(), prev = new Date(y, m, 0).getDate();
-      var h = '<header><b>' + MONTHS[m] + ' ' + y + '</b><span><button class="k-iconbtn k-iconbtn-sm" aria-label="Previous month" data-step="-1"><i class="k-icon">' + K.icon('chevron-left') + '</i></button><button class="k-iconbtn k-iconbtn-sm" aria-label="Next month" data-step="1"><i class="k-icon">' + K.icon('chevron-right') + '</i></button></span></header><div class="k-cal-grid">';
+      var h = '<header><b>' + MONTHS[m] + ' ' + y + '</b><span><button class="k-iconbtn" aria-label="Previous month" data-step="-1"><i class="k-icon">' + K.icon('chevron-left') + '</i></button><button class="k-iconbtn" aria-label="Next month" data-step="1"><i class="k-icon">' + K.icon('chevron-right') + '</i></button></span></header><div class="k-cal-grid">';
       'Mo Tu We Th Fr Sa Su'.split(' ').forEach(function (d) { h += '<span>' + d + '</span>'; });
       for (var i = 0; i < 42; i++) {
         var d = i - first + 1, out = d < 1 || d > days;

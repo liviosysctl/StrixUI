@@ -20,20 +20,19 @@ Surface {
     signal action(int index)
     signal dismissed()
 
-    implicitWidth: 300
-    implicitHeight: col.implicitHeight + 2 * Theme.space2
+    implicitWidth: 320
+    implicitHeight: col.implicitHeight + 2 * Theme.space3
     elevation: "panel"
-    borderColor: urgency === "critical" ? Theme.accent : Theme.border
+    borderColor: urgency === "critical" ? Theme.accent : Theme.glassEdge
     clip: true
 
     // The symbol plays its motion once when the message has slid in (the bell rings), and again under the pointer.
     Icon {
         id: symbol
         x: Theme.space3
-        y: Theme.space2 + 3
+        y: Theme.space3 + (Theme.styles.label.lineHeight - Theme.icon) / 2
         name: root.iconName
         hovered: here.hovered
-        size: 12
         color: root.urgency === "critical" ? Theme.accentText : Theme.textMuted
     }
 
@@ -48,8 +47,8 @@ Surface {
 
     Column {
         id: col
-        x: Theme.space3 + 12 + Theme.space2
-        y: Theme.space2
+        x: Theme.space3 + Theme.icon + Theme.space2
+        y: Theme.space3
         width: parent.width - x - Theme.space3 - stamp.implicitWidth - Theme.space2
         Label { width: parent.width; text: root.title; textStyle: "label"; elide: Text.ElideRight }
         Label { width: parent.width; text: root.body; textStyle: "caption"; color: Theme.textMuted; wrapMode: Text.WordWrap; maximumLineCount: 3; elide: Text.ElideRight }
@@ -57,11 +56,10 @@ Surface {
             id: buttons
             visible: root.actions.length > 0
             spacing: Theme.space2
-            topPadding: 6
-            bottomPadding: 2
+            topPadding: Theme.space2
             Repeater {
                 model: root.actions
-                Button { small: true; text: modelData; variant: index === 0 ? "default" : "quiet"; onClicked: root.action(index) }
+                Button { text: modelData; variant: index === 0 ? "default" : "quiet"; onClicked: root.action(index) }
             }
         }
     }
@@ -70,9 +68,9 @@ Surface {
         id: stamp
         anchors.right: parent.right
         anchors.rightMargin: Theme.space3
-        y: Theme.space2
+        y: Theme.space3
         text: root.time
-        font.pixelSize: 10
+        textStyle: "micro"
         color: Theme.textFaint
         opacity: here.hovered ? 0 : 1
         Behavior on opacity { NumberAnimation { duration: Theme.durFast } }
@@ -80,9 +78,8 @@ Surface {
     Icon {
         anchors.right: parent.right
         anchors.rightMargin: Theme.space3
-        y: Theme.space2 + 1
+        y: Theme.space3 + (Theme.styles.label.lineHeight - Theme.icon) / 2
         name: "x"
-        size: 12
         tinted: false
         color: Theme.text
         opacity: here.hovered ? 1 : 0

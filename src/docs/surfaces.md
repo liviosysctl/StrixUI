@@ -47,7 +47,7 @@ Quickshell has no general D-Bus client in QML, so a front end talks to its Rust 
 
 ## Sizes on a 2560 by 1440 screen at scale 1
 
-The Screens previews are drawn on a 1280 by 720 board, which is that screen at half size. Measurements of components do not double: a button is 28px high on the real screen, the bar 26px, the dock 28px once it is out. What grows with the screen is the room between things: the lock screen column sits 128px from the left edge, and the stacked clock is set at twice the `clock` style.
+The Screens previews are drawn on a 1280 by 720 board, which is that screen at half size. Measurements of components do not double: a button is 30px high on the real screen, the top bar takes 38px, the dock is 38px once it is out. What grows with the screen is the room between things: the lock screen column sits 128px from the left edge, and the stacked clock is set at twice the `clock` style.
 
 ## Console
 

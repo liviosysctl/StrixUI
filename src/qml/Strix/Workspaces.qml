@@ -1,4 +1,5 @@
-// The workspaces in the top bar: small dots, used ones lighter, the current one a short accent bar.
+// The workspaces in the top bar, on a plate of smoked glass as high as every control: small dots,
+// used ones lighter, the current one a short accent bar.
 // The bar moves elastically: its leading edge runs ahead and the trailing edge catches up.
 // With Quickshell bind count, current and used to Hyprland.workspaces (Quickshell.Hyprland).
 import QtQuick
@@ -13,15 +14,18 @@ Item {
     property var used: []
     signal activated(int index)
 
-    readonly property int dot: 5
-    readonly property int wide: 18
-    readonly property int gap: 5
+    readonly property int dot: 6
+    readonly property int wide: 3 * dot
+    readonly property int gap: dot
+    readonly property int pad: Theme.space3
     property int previous: current
 
-    function slotX(i) { return i * (dot + gap) }
+    function slotX(i) { return pad + i * (dot + gap) }
 
-    implicitWidth: count * dot + (count - 1) * gap + wide - dot
-    implicitHeight: 9
+    implicitWidth: 2 * pad + count * dot + (count - 1) * gap + wide - dot
+    implicitHeight: Theme.control
+
+    Surface { anchors.fill: parent; elevation: "pop" }
 
     onCurrentChanged: {
         const forward = current > previous
@@ -59,8 +63,8 @@ Item {
     Rectangle {
         id: pill
         // the two edges, moved by leftEdge and rightEdge
-        property real l: 0
-        property real r: root.wide
+        property real l: root.pad
+        property real r: root.pad + root.wide
         Component.onCompleted: { l = root.slotX(root.current); r = l + root.wide }
         x: l
         y: (root.height - height) / 2

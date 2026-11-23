@@ -10,7 +10,6 @@ T.Button {
     HoverHandler { cursorShape: Qt.PointingHandCursor }
 
     property string variant: "default"
-    property bool small: false
     /// A short piece runs along the bottom edge. Keep the label, change its wording ("Checking").
     property bool loading: false
     property string iconName: ""
@@ -20,9 +19,9 @@ T.Button {
     readonly property bool danger: variant === "danger"
     readonly property color ink: primary ? Theme.onAccent : danger ? Theme.error : quiet && !hovered ? Theme.textMuted : Theme.text
 
-    implicitHeight: small ? Theme.controlSm : Theme.controlMd
+    implicitHeight: Theme.control
     implicitWidth: Math.max(implicitHeight, implicitContentWidth + leftPadding + rightPadding)
-    leftPadding: small ? Theme.space2 : Theme.space3
+    leftPadding: Theme.space3
     rightPadding: leftPadding
     hoverEnabled: true
     focusPolicy: Qt.StrongFocus
@@ -30,7 +29,7 @@ T.Button {
     transform: Translate { y: control.down ? 1 : 0 }
 
     contentItem: Row {
-        spacing: 6
+        spacing: Theme.space2
         Icon {
             visible: control.iconName !== ""
             name: control.iconName
@@ -42,9 +41,7 @@ T.Button {
         Label {
             text: control.text
             color: control.ink
-            font.pixelSize: control.small ? 11 : 12
-            font.weight: Font.Medium
-            lineHeight: 16
+            textStyle: "label"
             elide: Text.ElideRight
             anchors.verticalCenter: parent.verticalCenter
             Behavior on color { ColorAnimation { duration: Theme.durFast; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
@@ -52,7 +49,7 @@ T.Button {
     }
 
     background: Rectangle {
-        radius: Theme.radiusSm
+        radius: Theme.radiusMd
         clip: true
         color: control.primary ? (control.down ? Theme.accentPressed : control.hovered ? Theme.accentHover : Theme.accent)
              : control.danger ? (control.hovered ? Theme.accentSoft : "transparent")

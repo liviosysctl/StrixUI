@@ -31,16 +31,16 @@ T.ItemDelegate {
     }
 
     implicitWidth: 552
-    implicitHeight: 40
-    leftPadding: 24
-    rightPadding: Theme.space3
+    implicitHeight: Theme.control + Theme.space3
+    leftPadding: Theme.space2
+    rightPadding: Theme.space2
     hoverEnabled: true
 
     contentItem: Row {
-        spacing: Theme.space3
-        Icon { name: control.iconName; size: 16; hovered: control.hovered || control.selected; color: control.selected || control.hovered ? Theme.text : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
+        spacing: Theme.space2
+        Icon { name: control.iconName; hovered: control.hovered || control.selected; color: control.selected || control.hovered ? Theme.text : Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
         Column {
-            width: parent.width - 16 - tailRow.width - 2 * parent.spacing
+            width: parent.width - Theme.icon - tailRow.width - 2 * parent.spacing
             anchors.verticalCenter: parent.verticalCenter
             Label {
                 width: parent.width
@@ -53,10 +53,7 @@ T.ItemDelegate {
                 visible: control.path.length > 0
                 width: parent.width
                 text: control.path.join("  ›  ")
-                font.family: Theme.serif
-                font.italic: true
-                font.pixelSize: 14
-                lineHeight: 18
+                textStyle: "note"
                 color: Theme.textMuted
                 elide: Text.ElideRight
             }
@@ -65,24 +62,24 @@ T.ItemDelegate {
             id: tailRow
             spacing: Theme.space2
             anchors.verticalCenter: parent.verticalCenter
-            Label { visible: control.enterText !== "" && control.selected; text: control.enterText; font.pixelSize: 10; color: Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
+            Label { visible: control.enterText !== "" && control.selected; text: control.enterText; textStyle: "micro"; color: Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
             KeyCaps { keys: control.keys; ink: Theme.textFaint; anchors.verticalCenter: parent.verticalCenter }
         }
     }
 
     background: Rectangle {
-        radius: Theme.radiusXs
+        radius: Theme.radiusMd
         color: control.hovered && !(control.glide && control.selected) || control.selected && !control.glide ? Theme.surfaceRaised : "transparent"
         Behavior on color { ColorAnimation { duration: Theme.durFast } }
-        Label {
-            x: control.selected ? 9 : 5
+        Rectangle {
             anchors.verticalCenter: parent.verticalCenter
-            text: ">"
-            font.weight: Font.DemiBold
-            color: Theme.accentText
+            width: Theme.lineBold
+            height: control.selected && !control.glide ? Theme.icon : 0
+            radius: width / 2
+            color: Theme.accent
             opacity: control.selected && !control.glide ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: Theme.durFast } }
-            Behavior on x { NumberAnimation { duration: Theme.durFast } }
+            Behavior on height { NumberAnimation { duration: Theme.durFast; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
         }
     }
 }

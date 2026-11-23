@@ -40,7 +40,7 @@ WindowFrame 1.0 WindowFrame.qml
 Wallpaper 1.0 Wallpaper.qml
 Workspaces 1.0 Workspaces.qml
 Meter 1.0 Meter.qml
-MeterGroup 1.0 MeterGroup.qml
+Chip 1.0 Chip.qml
 Ticker 1.0 Ticker.qml
 Glide 1.0 Glide.qml
 Entrance 1.0 Entrance.qml

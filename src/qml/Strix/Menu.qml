@@ -7,7 +7,7 @@ T.Menu {
 
     implicitWidth: Math.max(190, contentItem.implicitWidth + leftPadding + rightPadding)
     implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
-    padding: 3
+    padding: Theme.space1
     margins: 0
     transformOrigin: Item.TopLeft
 

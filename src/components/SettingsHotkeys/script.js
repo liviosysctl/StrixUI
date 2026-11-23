@@ -45,7 +45,7 @@ function Settings(root, onClose) {
     stop();
     if (clash) {
       var row = list.querySelector('[data-id="' + id + '"]');
-      row.insertAdjacentHTML('beforeend', '<div class="k-hk-note">' + '<i class=\"k-icon\">' + Kit.icon('triangle-alert') + '</i>' + c + ' already does ' + clash.t + '.<button class="k-btn k-btn-sm" data-replace=\'' + JSON.stringify([id, clash.id, c]) + '\'><span>Use it here</span></button><button class="k-btn k-btn-sm k-btn-quiet" data-cancel><span>Keep the old</span></button></div>');
+      row.insertAdjacentHTML('beforeend', '<div class="k-hk-note">' + '<i class=\"k-icon\">' + Kit.icon('triangle-alert') + '</i>' + c + ' already does ' + clash.t + '.<button class="k-btn" data-replace=\'' + JSON.stringify([id, clash.id, c]) + '\'><span>Use it here</span></button><button class="k-btn k-btn-quiet" data-cancel><span>Keep the old</span></button></div>');
       Kit.hydrate(row);
     } else { h.k = c; draw(id); }
   }, true);

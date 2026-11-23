@@ -7,18 +7,18 @@ Row {
     property string keys
     property color ink: Theme.textMuted
 
-    spacing: 3
+    spacing: Theme.space1
 
     Repeater {
         model: root.keys === "" ? [] : root.keys.split(" ")
         Rectangle {
-            implicitWidth: k.implicitWidth + 8
-            implicitHeight: 16
-            radius: Theme.radiusXs
+            implicitWidth: Math.max(Theme.mark, k.implicitWidth + 2 * Theme.space1)
+            implicitHeight: Theme.mark
+            radius: Theme.radiusSm
             color: "transparent"
             border.width: Theme.lineHair
             border.color: Theme.border
-            Label { id: k; anchors.centerIn: parent; text: modelData; font.pixelSize: 10; font.weight: Font.Normal; lineHeight: 14; color: root.ink }
+            Label { id: k; anchors.centerIn: parent; text: modelData; textStyle: "micro"; color: root.ink }
         }
     }
 }

@@ -26,15 +26,11 @@ pub const SPACE_7: Px = 48;
 /// Left inset of the lock screen column.
 pub const SPACE_8: Px = 64;
 
-/// Checkbox, list rows, segmented thumb, tooltip, calendar day.
-pub const RADIUS_XS: Px = 2;
-/// Buttons, fields, segmented track.
+/// Marks: key caps, badges, the checkbox, a calendar day.
 pub const RADIUS_SM: Px = 4;
-/// Windows, panels, cards, dialogs, notifications.
+/// Every plate and every control: windows, panels, cards, notifications, buttons, fields, list rows, the buttons of the top bar.
 pub const RADIUS_MD: Px = 6;
-/// Large media: theme previews in the store and settings.
-pub const RADIUS_LG: Px = 8;
-/// Switch, radio, count badges, the active workspace, the search field.
+/// Switch, radio, count badges, progress.
 pub const RADIUS_PILL: Px = 999;
 
 /// Every border and divider.
@@ -42,18 +38,16 @@ pub const LINE_HAIR: Px = 1;
 /// The filled part of a progress line and of a ring. Tracks stay at one pixel.
 pub const LINE_BOLD: Px = 2;
 
-/// Height of the top bar.
-pub const BAR_HEIGHT: Px = 30;
-/// Small buttons and icon buttons inside panels.
-pub const CONTROL_SM: Px = 26;
-/// Buttons, fields, list rows.
-pub const CONTROL_MD: Px = 32;
+/// Height of everything that is pressed or typed into: buttons, fields, list rows, the buttons of the top bar.
+pub const CONTROL: Px = 30;
+/// Height of the small marks: key caps, badges, the switch.
+pub const MARK: Px = 18;
+/// Edge of an icon, of the checkbox and of the radio button.
+pub const ICON: Px = 16;
+/// What the top bar takes from the screen: the margin to the edge and one control.
+pub const BAR_HEIGHT: Px = 38;
 /// Height of the dock at rest: a thin tab on the bottom edge.
 pub const DOCK_REST: Px = 5;
-/// Height of the dock once the pointer reaches the bottom edge.
-pub const DOCK_HEIGHT: Px = 32;
-/// Height of the OSD.
-pub const OSD_HEIGHT: Px = 32;
 
 /// Press feedback, menu hover.
 pub const DUR_INSTANT: Duration = Duration::from_millis(80);
@@ -93,6 +87,8 @@ pub const DIM_INACTIVE: f32 = 0.92;
 pub const DIM_WALLPAPER: f32 = 0.55;
 /// How much of a floating surface covers what is behind it: panels, dialogs, menus, the search. The compositor blurs the rest.
 pub const GLASS: f32 = 0.72;
+/// The hair line around smoked glass: the text colour at this opacity, so the edge reads on the dark and on the lit part of a plate.
+pub const GLASS_LINE: f32 = 0.14;
 
 /// A drop shadow: offset, blur radius and colour.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -157,6 +153,8 @@ pub mod text {
     pub const SUBTITLE: TextStyle = TextStyle { family: Family::Serif, size: 22.0, line_height: 25.0, weight: 500, italic: false, letter_spacing: 0.0 };
     /// Italic asides: calendar month, panel headings, track titles, empty states, plate captions.
     pub const ASIDE: TextStyle = TextStyle { family: Family::Serif, size: 19.0, line_height: 23.0, weight: 500, italic: true, letter_spacing: 0.0 };
+    /// The second line in serif: where a hit of Search lives, what a key opens, the caption of an engraving.
+    pub const NOTE: TextStyle = TextStyle { family: Family::Serif, size: 15.0, line_height: 18.0, weight: 500, italic: true, letter_spacing: 0.0 };
     /// The motto and greetings. Lowercase, spaced, italic. One line, never a label.
     pub const MOTTO: TextStyle = TextStyle { family: Family::Serif, size: 16.0, line_height: 21.0, weight: 500, italic: true, letter_spacing: 0.22 };
     /// Section headings inside apps.
