@@ -4,7 +4,7 @@ This system is the single source for that look on every surface: the desktop she
 
 ## Principles
 
-- Old and exact. The mood comes from engravings, blackletter, an old-style serif and small ornaments. The work is done in a fine monospace. Never mix the roles: nothing you operate is set in the serif, and nothing that sets the mood is set in mono.
+- Old and exact. The mood comes from engravings, an old-style serif and small ornaments. The work is done in a plain grotesque. Never mix the roles: nothing you operate is set in the serif, and nothing that sets the mood is set in the grotesque.
 - One accent. `accent` marks the single most important thing in a view: the main action, the selected segment, the active workspace, running progress, the cursor, and the disc on the wallpaper; the focused window shows it only quietened, as `border-active`. Its colour belongs to the god of the moment (Strix red under Saturnus, the default), but there is only ever one. If two things carry it, one of them is wrong.
 - Fine, not heavy. Text is 12px, controls are 28px high, lines are one pixel, corners are 2 to 4px. When in doubt, make it thinner and leave more room around it.
 - Flat and dark. Surfaces are one step lighter than the ground and carry a hair border. No glass, no blur behind panels.
@@ -21,7 +21,7 @@ This system is the single source for that look on every surface: the desktop she
 - Numbers carry their unit with a space, in binary units for storage: `7.4 GiB`, `162 GiB of 952 GiB`. Percent has no space: `17%`. Time is 24-hour by default: `21:04`.
 - Dates read "Tuesday, 10 November"; short form "Tue 10 Nov".
 - Greetings and the motto are lowercase: "good evening, livio", "nocte vigilat".
-- Plate captions name the god or the work, then the engraver, the place and the date: "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592". Where a likeness is a stand-in, the caption says so.
+- Plate captions name the god or the work, then the engraver, the place and the date: "Pluto with his two-pronged fork and Cerberus in his niche. Jacob Binck after Rosso Fiorentino, 1530". Where a likeness is a stand-in, the caption says so.
 - Never use emoji, anywhere, including sample text, notifications and terminal output.
 - Never set labels in capitals with letter-spacing, never separate items with a middle dot, never draw a coloured box around a statement, never stripe table rows, and never use green, yellow and red together as a status code.
 - The system's name appears only where a person reads it. Component and class names are neutral (`k-`, `Kit`), so the name can change in one place.
@@ -55,20 +55,20 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 
 ## Type
 
-- Three families, three jobs. `mono` (JetBrains Mono) is the interface: data, labels, controls, the terminal. `serif` (IM Fell English, cut from the Fell types of the 17th century) is the voice: titles, dates, italic asides, the motto, plate captions. `fraktur` (Grenze Gotisch, a light blackletter that stays readable) is for names only: the wordmark and theme names.
+- Three families, three jobs. `sans` (Hanken Grotesk) is the interface: data, labels, controls. `serif` (Cormorant Garamond, after the Garamond types of the 16th century) is the voice: titles, dates, italic asides, the motto, plate captions, the wordmark and theme names, the large clock. `mono` (IBM Plex Mono) is what is typed: commands, paths, key names, the terminal. Numbers are lining and tabular everywhere.
 - All three are licensed under the SIL Open Font License and are shipped with every surface, so every surface renders the same.
-- Use the styles by name. Blackletter: `display` (wordmark on lock screen and splash), `emblem` (theme names, the name in About). Serif: `title-lg`, `title`, `subtitle`, `aside`, `motto`. Mono: `clock`, `heading`, `body`, `label`, `value`, `caption`, `micro`.
-- Blackletter is for one or two words that are a name. Never a sentence, never a label, never below 36px.
+- Use the styles by name. Wordmark, serif italic: `display` (wordmark on lock screen and splash), `emblem` (theme names, the name in About). Serif: `clock`, `title-lg`, `title`, `subtitle`, `aside`, `motto`. Sans: `heading`, `body`, `label`, `value`, `caption`, `micro`. Mono: `code`.
+- The wordmark styles are for one or two words that are a name. Never a sentence, never a label, never below 36px.
 - The serif has one weight. Emphasis in the serif is italic; emphasis in mono is weight 600. Do not underline and do not colour text for emphasis.
 - Never set the serif below 12px, and never use it for controls, values or list rows.
 - The serif has old-style figures only. Set dates and anything with digits in its italic, where the figures read clearly, and keep bare numbers (the clock, values, versions) in mono.
-- The wordmark is the name in `display` or as `.k-wordmark`. The symbol is the owl: frontal, wings spread, in a double ring, white eyes with the pupils in the accent (`assets/Logo/strix-owl.svg` in Strix red; the system draws it in the accent of every theme). Use it as it is; do not draw another symbol or a monogram.
+- The wordmark is the name in `display` or as `.k-wordmark`. The symbol is the owl: a pen drawing of a horned owl standing a little sideways, cream lines on dark, no ring, its eyes the only colour, in the accent of the theme (`assets/Logo/strix-owl.svg` in Strix red, `strix-owl-<god>.svg` for every god). Use it as it is; do not draw another symbol or a monogram. Below about 64 pixels the drawing closes up: there `strix-owl-small.svg` takes its place, the same outline with the eyes, the brows, the beak and a few bars.
 - The motto "nocte vigilat" sits under the wordmark in `motto`: lowercase, italic, widely spaced. It appears on the lock screen, the greeter, the splash, About and system info, nowhere else.
 
 ## Ornament
 
 - `.k-rule` is a hair line with a small open lozenge in the middle, as between the parts of an old title page. Use it once in a view to part the mood from the matter: under the wordmark, between the date and the weather, above the update card.
-- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592". Every engraving shown full screen carries one.
+- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Pluto with his two-pronged fork and Cerberus in his niche. Jacob Binck after Rosso Fiorentino, 1530". Every engraving shown full screen carries one.
 - InfoBlock's double-line brackets are the only frame. Use them for system facts, once per view.
 - `.k-grain` lays a fine grain over a full-screen picture. Use it on wallpapers only, never on surfaces.
 - That is the whole stock of ornament. No flourishes, corner pieces, drop caps or borders made of pattern.
@@ -84,7 +84,8 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 
 ## Wallpaper and imagery
 
-- Wallpapers are engravings of Roman gods, printed in two inks of the god's theme: dim cream for the paper and the theme's `background` for the ink. Inside one flat disc behind the head the paper takes the god's `accent`, dulled a little as ink on old paper, so the head is drawn in dark lines on the colour. Around the disc sit a few hair lines: two circles, a graduated ring and a meridian. The picture is darkened hard toward the edges so it reads as texture, not as a poster.
+- Wallpapers are engravings of Roman gods in neutral ink and paper; the only colour is the god's. The sheet fills the screen and its edge never shows. Every god has two plates. Dark: almost black, with a neutral glow around one fine ring in the `accent` on the head. Light: lit from the middle and falling off to black at the edges, the paper inside the ring takes the `accent`. The ring is a lens over the one picture, never a second crop.
+- Titles carry the colour of the god: every serif title is `accent-text`. So do the lines: `border` and `border-strong` are the accent text laid over the surface, `border-active` (the active window) is the `accent` itself. Floating surfaces are smoked glass: the surface colour at the `glass` opacity, blurred by the compositor.
 - Eight plates are in the Wallpapers asset group, one per god: Saturnus (the default desktop), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. The desktop changes to another god theme every 10 minutes (`theme-cycle`) unless the theme is kept in the theme picker; the lock screen shows another god theme at every lock, never the same twice in a row. They come from the open-access collections of the Art Institute of Chicago (CC0) and the Rijksmuseum (public domain). The group's README gives title, engraver, date, source and licence for each.
 - Crop to the upper body: head, shoulders, arms. Keep the top 110px and the bottom 90px of a wallpaper dark so the bar and the dock stay readable.
 - Under the lock screen and the theme picker the wallpaper is dimmed to `dim-wallpaper` and softened slightly.

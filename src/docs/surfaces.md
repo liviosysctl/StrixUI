@@ -51,4 +51,4 @@ The Screens previews are drawn on a 1280 by 720 board, which is that screen at h
 
 ## Console
 
-The installer runs in the Linux console in Terminus (ter-v16n). Neither the serif nor the blackletter is available there: the wordmark is drawn as block characters with a one-cell shadow, and titles are bold mono.
+The installer runs in the Linux console in Terminus (ter-v16n). The serif is not available there: the wordmark is drawn as block characters with a one-cell shadow, and titles are bold mono.
