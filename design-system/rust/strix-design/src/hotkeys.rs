@@ -29,7 +29,7 @@ impl Hotkey {
     }
 }
 
-pub static HOTKEYS: [Hotkey; 31] = [
+pub static HOTKEYS: [Hotkey; 32] = [
     Hotkey { id: "all-hotkeys", group: "Learn", action: "All hotkeys", keys: "Super K", target: "This sheet", scope: Scope::Global },
     Hotkey { id: "search", group: "Learn", action: "Search", keys: "Super Space", target: "Apps, actions, settings and commands", scope: Scope::Global },
     Hotkey { id: "terminal", group: "Apps", action: "Terminal", keys: "Super Return", target: "Ghostty", scope: Scope::Global },
@@ -48,7 +48,8 @@ pub static HOTKEYS: [Hotkey; 31] = [
     Hotkey { id: "move-window-there", group: "Workspaces", action: "Move window there", keys: "Super Shift 1–9", target: "Workspace", scope: Scope::Global },
     Hotkey { id: "next-workspace", group: "Workspaces", action: "Next workspace", keys: "Super Tab", target: "Workspace", scope: Scope::Global },
     Hotkey { id: "scratchpad", group: "Workspaces", action: "Scratchpad", keys: "Super S", target: "Special workspace", scope: Scope::Global },
-    Hotkey { id: "theme-picker", group: "Style", action: "Theme picker", keys: "Super Ctrl Space", target: "Themes and wallpapers", scope: Scope::Global },
+    Hotkey { id: "theme-picker", group: "Style", action: "Theme picker", keys: "Super G", target: "Themes and wallpapers", scope: Scope::Global },
+    Hotkey { id: "light-or-dark", group: "Style", action: "Light or dark", keys: "Super L", target: "The other plate of the theme", scope: Scope::Global },
     Hotkey { id: "keep-this-theme", group: "Style", action: "Keep this theme", keys: "K", target: "In the theme picker", scope: Scope::ThemePicker },
     Hotkey { id: "toggle-the-top-bar", group: "Style", action: "Toggle the top bar", keys: "Super Shift Space", target: "Bar", scope: Scope::Global },
     Hotkey { id: "region-screenshot", group: "Capture", action: "Region screenshot", keys: "Print", target: "Capture", scope: Scope::Global },

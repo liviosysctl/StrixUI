@@ -1,6 +1,6 @@
 # ThemePicker
 
-The theme picker (Super Ctrl Space) over the dimmed desktop. Strix has one theme per Roman god, and Saturnus is the default. Each theme is a plate and its colours: the plate is the wallpaper, the colours tint the whole system to match it. Choosing a theme sets both at once.
+The theme picker (Super G) over the dimmed desktop. Strix has one theme per Roman god, and Saturnus is the default. Each theme is a plate and its colours: the plate is the wallpaper, the colours tint the whole system to match it. Choosing a theme sets both at once.
 
 - The themes, in order: Saturnus (Strix red, the default), Janus (patina), Apollo (antique gold), Mars (rust), Vulcanus (olive), Neptunus (slate blue), Pluto (heather), Bacchus (claret). All gods but Saturnus are muted, as in dark academia: deep, warm, never bright.
 - The middle card names the theme in blackletter, with a dot in its accent and its variant under it; the plate caption stands below the carousel. Light is greyed out until the light variant exists.

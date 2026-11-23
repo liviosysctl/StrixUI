@@ -22,7 +22,7 @@
     {k: 'app', t: 'Calculator', p: ['Apps'], i: 'plus', w: 'math', g: 'apps'},
     {k: 'app', t: 'Settings', p: ['Apps'], i: 'settings', w: 'preferences control panel', g: 'apps'},
 
-    {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours wallpaper god', key: 'Super Ctrl Space', g: 'style', page: 1, id: 'theme'},
+    {k: 'action', t: 'Theme', p: ['Style'], i: 'palette', w: 'theme picker look colours wallpaper god', key: 'Super G', g: 'style', page: 1, id: 'theme'},
     {k: 'action', t: 'Keep this theme', p: ['Style', 'Theme'], i: 'lock', w: 'pin stop change cycle rotate god', key: 'K', g: 'theme'},
     {k: 'setting', t: 'Change theme', p: ['Settings', 'Appearance'], i: 'history', v: 'Every 10 minutes', w: 'cycle rotate interval god wallpaper'},
     {k: 'action', t: 'Saturnus', p: ['Style', 'Theme'], i: 'swatch-book', w: 'theme god wallpaper red default strix saturn time sickle', g: 'theme'},

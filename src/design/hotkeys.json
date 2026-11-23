@@ -110,8 +110,14 @@
  {
   "group": "Style",
   "action": "Theme picker",
-  "keys": "Super Ctrl Space",
+  "keys": "Super G",
   "target": "Themes and wallpapers"
+ },
+ {
+  "group": "Style",
+  "action": "Light or dark",
+  "keys": "Super L",
+  "target": "The other plate of the theme"
  },
  {
   "group": "Style",
