@@ -4,8 +4,6 @@ The design system of Strix: tokens, components, screens and motion for every sur
 
 ![The eight god themes](docs/renders/Themes-plates.jpg)
 
-This is version 2 of the design. What changed: seven of the eight plates are one series of engravings, printed from the scan at its full resolution in neutral ink and paper, each as a dark and a light plate; the lines and the titles carry the colour of the god; floating surfaces are smoked glass on black; corners are a little rounded; the interface is set in a grotesque, one step larger, with an old-style serif for titles.
-
 Strix has one theme per Roman god: Saturnus (Strix red, the default), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. Each theme is a wallpaper and a set of colour tokens that recolours the accent and tints the grounds to match the plate. The theme picker sets both, and the desktop moves on to another god every 10 minutes unless the theme is kept.
 
 ![Lock screen](docs/renders/LockScreen.png)
