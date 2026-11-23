@@ -1,7 +1,9 @@
 // A Lucide symbol as a vector path, drawn in a 1.25px line at any size: Icon { name: "power"; color: Theme.accentText }
 // Bind hovered to the control that holds it and the symbol plays its own small motion when the pointer arrives
 // (the gear turns, the bell swings, an arrow nudges the way it points). A new name pops in.
-// Bind active to what the symbol stands for: the cup is cold while that is off and steams without end while it is on.
+// Bind active to what the symbol stands for: the cup is cold while that is off and steams while it is on. The steam
+// rises a few times when it is switched on or the pointer arrives and then stands: a symbol that moved without end
+// would have its whole surface drawn again sixty times a second for as long as it is on.
 import QtQuick
 import QtQuick.Shapes
 
@@ -132,7 +134,13 @@ Item {
                 opacity: root.active ? 1 : 0
                 visible: opacity > 0
                 Behavior on opacity { NumberAnimation { duration: Theme.durSlow; easing.type: Easing.BezierSpline; easing.bezierCurve: Theme.easeOut } }
-                NumberAnimation on rise { from: 0; to: 1; duration: Theme.durLoop * 2; loops: Animation.Infinite; running: steam.visible }
+                // Three rises, ending where every wisp is in sight
+                NumberAnimation { id: rising; target: steam; property: "rise"; from: 0; to: 2.6; duration: Theme.durLoop * 5 }
+                onVisibleChanged: if (visible) rising.restart()
+                Connections {
+                    target: root
+                    function onHoveredChanged() { if (root.hovered && steam.visible) rising.restart() }
+                }
 
                 Repeater {
                     // Where each wisp is in its rise when the first one starts: not one after the other, like a wave
