@@ -4,43 +4,83 @@
  "created": "2026-11-10T20:24:30Z",
  "wallpapers": {
   "saturnus.jpg": {
-   "blob": "0d757135df30d2bf6652f3c0a18483d5",
-   "size": 767831,
+   "blob": "dd31ff4bd01d9e334660de6d58d0c01c",
+   "size": 330175,
    "type": "image/jpeg"
   },
   "janus.jpg": {
-   "blob": "e6dec074eb9b7a654bf95f13d282f2c2",
-   "size": 944650,
+   "blob": "a08ee358aaecaaa1e83a558e06db7211",
+   "size": 332368,
    "type": "image/jpeg"
   },
   "apollo.jpg": {
-   "blob": "b41733760ffae9de3f6f5d88682af092",
-   "size": 768866,
+   "blob": "f6cacf473b2ec5d72f3c0008eb60a714",
+   "size": 281990,
    "type": "image/jpeg"
   },
   "mars.jpg": {
-   "blob": "3ce42143088aadf856d6c3ff5e29859e",
-   "size": 631553,
+   "blob": "0abd3eb77e2c691217e2e590b4598e0c",
+   "size": 316891,
    "type": "image/jpeg"
   },
   "vulcanus.jpg": {
-   "blob": "3b21996e74bfecb14fcb2f68061b8c3d",
-   "size": 753428,
+   "blob": "424580acf3223749eeb338f1c0cd9bb5",
+   "size": 313829,
    "type": "image/jpeg"
   },
   "neptunus.jpg": {
-   "blob": "479cdcb0b9c5173af68ab78ad369c814",
-   "size": 773557,
+   "blob": "e63d2612418ddb9840b784745400a2ec",
+   "size": 317663,
    "type": "image/jpeg"
   },
   "pluto.jpg": {
-   "blob": "29b44e5ca900dac5a146387c59ae71a1",
-   "size": 740885,
+   "blob": "8746cfca181d7aec5ae49ac7013cfa8a",
+   "size": 334358,
    "type": "image/jpeg"
   },
   "bacchus.jpg": {
-   "blob": "0b1aff047346223424503ef8f1b62a91",
-   "size": 739263,
+   "blob": "24580846abcfbb98495a3ee4d02d1b3f",
+   "size": 334315,
+   "type": "image/jpeg"
+  },
+  "saturnus-light.jpg": {
+   "blob": "9f242275b6a774b531ca36c5232bcf7c",
+   "size": 698834,
+   "type": "image/jpeg"
+  },
+  "janus-light.jpg": {
+   "blob": "b67d3c9ccee7e564cf1605284c7bc5e7",
+   "size": 917147,
+   "type": "image/jpeg"
+  },
+  "apollo-light.jpg": {
+   "blob": "4a929cc3bd2e333bc938bb27939d6ed8",
+   "size": 590132,
+   "type": "image/jpeg"
+  },
+  "mars-light.jpg": {
+   "blob": "5dfc75bec99e5e815df9e724df2a261a",
+   "size": 652517,
+   "type": "image/jpeg"
+  },
+  "vulcanus-light.jpg": {
+   "blob": "3877fb409ca0910fbfde9dd107accd32",
+   "size": 639219,
+   "type": "image/jpeg"
+  },
+  "neptunus-light.jpg": {
+   "blob": "403d0323f8a3a82c054a8e812fe63202",
+   "size": 653657,
+   "type": "image/jpeg"
+  },
+  "pluto-light.jpg": {
+   "blob": "e9d520e2ef0f3870288f1b961115336e",
+   "size": 669675,
+   "type": "image/jpeg"
+  },
+  "bacchus-light.jpg": {
+   "blob": "2bf97e550c50c41fe373efdeb7618df7",
+   "size": 658193,
    "type": "image/jpeg"
   },
   "star-chart.svg": {

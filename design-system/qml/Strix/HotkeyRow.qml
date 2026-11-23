@@ -32,7 +32,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width - rec.width - 28 - 2 * Theme.space3
         Label { width: parent.width; text: root.action; elide: Text.ElideRight }
-        Label { width: parent.width; text: root.target; font.family: Theme.serif; font.italic: true; font.pixelSize: 12; lineHeight: 16; color: Theme.textMuted; elide: Text.ElideRight }
+        Label { width: parent.width; text: root.target; font.family: Theme.serif; font.italic: true; font.pixelSize: 14; lineHeight: 18; color: Theme.textMuted; elide: Text.ElideRight }
     }
 
     T.AbstractButton {

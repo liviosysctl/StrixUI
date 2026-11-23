@@ -36,7 +36,7 @@ Item {
                 x: Theme.space3
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.space2
-                Label { text: root.title; font.family: Theme.serif; font.pixelSize: 15; lineHeight: 18; anchors.verticalCenter: parent.verticalCenter }
+                Label { text: root.title; font.family: Theme.serif; font.pixelSize: 18; font.weight: Font.Medium; lineHeight: 21; color: Theme.accentText; anchors.verticalCenter: parent.verticalCenter }
                 Label { text: root.subtitle; textStyle: "caption"; color: Theme.textMuted; anchors.verticalCenter: parent.verticalCenter }
             }
             Row {

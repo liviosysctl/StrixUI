@@ -27,11 +27,11 @@ pub const SPACE_7: Px = 48;
 pub const SPACE_8: Px = 64;
 
 /// Checkbox, list rows, segmented thumb, tooltip, calendar day.
-pub const RADIUS_XS: Px = 1;
+pub const RADIUS_XS: Px = 2;
 /// Buttons, fields, segmented track.
-pub const RADIUS_SM: Px = 2;
+pub const RADIUS_SM: Px = 4;
 /// Windows, panels, cards, dialogs, notifications.
-pub const RADIUS_MD: Px = 4;
+pub const RADIUS_MD: Px = 6;
 /// Large media: theme previews in the store and settings.
 pub const RADIUS_LG: Px = 8;
 /// Switch, radio, count badges, the active workspace, the search field.
@@ -43,17 +43,17 @@ pub const LINE_HAIR: Px = 1;
 pub const LINE_BOLD: Px = 2;
 
 /// Height of the top bar.
-pub const BAR_HEIGHT: Px = 26;
+pub const BAR_HEIGHT: Px = 30;
 /// Small buttons and icon buttons inside panels.
-pub const CONTROL_SM: Px = 22;
+pub const CONTROL_SM: Px = 26;
 /// Buttons, fields, list rows.
-pub const CONTROL_MD: Px = 28;
+pub const CONTROL_MD: Px = 32;
 /// Height of the dock at rest: a thin tab on the bottom edge.
 pub const DOCK_REST: Px = 5;
 /// Height of the dock once the pointer reaches the bottom edge.
-pub const DOCK_HEIGHT: Px = 28;
+pub const DOCK_HEIGHT: Px = 32;
 /// Height of the OSD.
-pub const OSD_HEIGHT: Px = 28;
+pub const OSD_HEIGHT: Px = 32;
 
 /// Press feedback, menu hover.
 pub const DUR_INSTANT: Duration = Duration::from_millis(80);
@@ -91,6 +91,8 @@ pub const DIM_DISABLED: f32 = 0.4;
 pub const DIM_INACTIVE: f32 = 0.92;
 /// Wallpaper brightness under the lock screen and the theme picker.
 pub const DIM_WALLPAPER: f32 = 0.55;
+/// How much of a floating surface covers what is behind it: panels, dialogs, menus, the search. The compositor blurs the rest.
+pub const GLASS: f32 = 0.72;
 
 /// A drop shadow: offset, blur radius and colour.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -111,18 +113,18 @@ pub const SHADOW_PANEL: Shadow = Shadow { x: 0, y: 14, blur: 36, color: Color::r
 /// The three families. The font files are in `fonts/` of the design system.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum Family {
-    Mono,
+    Sans,
     Serif,
-    Fraktur,
+    Mono,
 }
 
 impl Family {
     /// The family name as fontconfig, Qt and the browser know it.
     pub const fn name(self) -> &'static str {
         match self {
-            Family::Mono => "JetBrains Mono",
-            Family::Serif => "IM Fell English",
-            Family::Fraktur => "Grenze Gotisch",
+            Family::Sans => "Hanken Grotesk",
+            Family::Serif => "Cormorant Garamond",
+            Family::Mono => "IBM Plex Mono",
         }
     }
 }
@@ -142,31 +144,33 @@ pub mod text {
     use super::{Family, TextStyle};
 
     /// The wordmark on the lock screen, greeter and splash.
-    pub const DISPLAY: TextStyle = TextStyle { family: Family::Fraktur, size: 96.0, line_height: 96.0, weight: 300, italic: false, letter_spacing: 0.0 };
+    pub const DISPLAY: TextStyle = TextStyle { family: Family::Serif, size: 96.0, line_height: 96.0, weight: 500, italic: true, letter_spacing: 0.0 };
     /// Theme names on the picker card, the system name in About, the wordmark in system info. Names only, one or two words.
-    pub const EMBLEM: TextStyle = TextStyle { family: Family::Fraktur, size: 44.0, line_height: 44.0, weight: 300, italic: false, letter_spacing: 0.0 };
-    /// The one large line of a panel: the date.
-    pub const TITLE_LG: TextStyle = TextStyle { family: Family::Serif, size: 26.0, line_height: 30.0, weight: 400, italic: true, letter_spacing: 0.0 };
-    /// Dialog titles, page titles in settings.
-    pub const TITLE: TextStyle = TextStyle { family: Family::Serif, size: 22.0, line_height: 26.0, weight: 400, italic: false, letter_spacing: 0.0 };
-    /// Card titles.
-    pub const SUBTITLE: TextStyle = TextStyle { family: Family::Serif, size: 18.0, line_height: 22.0, weight: 400, italic: false, letter_spacing: 0.0 };
-    /// Italic asides: calendar month, panel headings, track titles, empty states, plate captions.
-    pub const ASIDE: TextStyle = TextStyle { family: Family::Serif, size: 16.0, line_height: 20.0, weight: 400, italic: true, letter_spacing: 0.0 };
-    /// The motto and greetings. Lowercase, spaced, italic. One line, never a label.
-    pub const MOTTO: TextStyle = TextStyle { family: Family::Serif, size: 13.0, line_height: 18.0, weight: 400, italic: true, letter_spacing: 0.22 };
+    pub const EMBLEM: TextStyle = TextStyle { family: Family::Serif, size: 44.0, line_height: 44.0, weight: 500, italic: true, letter_spacing: 0.0 };
     /// The stacked clock of the lock screen: hours over minutes, very light.
-    pub const CLOCK: TextStyle = TextStyle { family: Family::Mono, size: 112.0, line_height: 103.04, weight: 200, italic: false, letter_spacing: -0.04 };
+    pub const CLOCK: TextStyle = TextStyle { family: Family::Serif, size: 112.0, line_height: 103.04, weight: 400, italic: false, letter_spacing: -0.04 };
+    /// The one large line of a panel: the date.
+    pub const TITLE_LG: TextStyle = TextStyle { family: Family::Serif, size: 31.0, line_height: 34.0, weight: 500, italic: true, letter_spacing: 0.0 };
+    /// Dialog titles, page titles in settings.
+    pub const TITLE: TextStyle = TextStyle { family: Family::Serif, size: 26.0, line_height: 30.0, weight: 500, italic: false, letter_spacing: 0.0 };
+    /// Card titles.
+    pub const SUBTITLE: TextStyle = TextStyle { family: Family::Serif, size: 22.0, line_height: 25.0, weight: 500, italic: false, letter_spacing: 0.0 };
+    /// Italic asides: calendar month, panel headings, track titles, empty states, plate captions.
+    pub const ASIDE: TextStyle = TextStyle { family: Family::Serif, size: 19.0, line_height: 23.0, weight: 500, italic: true, letter_spacing: 0.0 };
+    /// The motto and greetings. Lowercase, spaced, italic. One line, never a label.
+    pub const MOTTO: TextStyle = TextStyle { family: Family::Serif, size: 16.0, line_height: 21.0, weight: 500, italic: true, letter_spacing: 0.22 };
     /// Section headings inside apps.
-    pub const HEADING: TextStyle = TextStyle { family: Family::Mono, size: 13.0, line_height: 20.0, weight: 600, italic: false, letter_spacing: 0.0 };
+    pub const HEADING: TextStyle = TextStyle { family: Family::Sans, size: 14.0, line_height: 20.0, weight: 600, italic: false, letter_spacing: 0.0 };
     /// Running text, list rows, field text, code and the terminal.
-    pub const BODY: TextStyle = TextStyle { family: Family::Mono, size: 12.0, line_height: 18.0, weight: 400, italic: false, letter_spacing: 0.0 };
+    pub const BODY: TextStyle = TextStyle { family: Family::Sans, size: 13.0, line_height: 18.0, weight: 400, italic: false, letter_spacing: 0.0 };
     /// Labels and the left side of a label :: value pair. Semibold, sentence case.
-    pub const LABEL: TextStyle = TextStyle { family: Family::Mono, size: 12.0, line_height: 18.0, weight: 600, italic: false, letter_spacing: 0.0 };
+    pub const LABEL: TextStyle = TextStyle { family: Family::Sans, size: 13.0, line_height: 18.0, weight: 600, italic: false, letter_spacing: 0.0 };
     /// Values. Regular weight.
-    pub const VALUE: TextStyle = TextStyle { family: Family::Mono, size: 12.0, line_height: 18.0, weight: 400, italic: false, letter_spacing: 0.0 };
+    pub const VALUE: TextStyle = TextStyle { family: Family::Sans, size: 13.0, line_height: 18.0, weight: 400, italic: false, letter_spacing: 0.0 };
     /// Descriptions, the top bar, the dock, help text, segmented labels.
-    pub const CAPTION: TextStyle = TextStyle { family: Family::Mono, size: 11.0, line_height: 16.0, weight: 400, italic: false, letter_spacing: 0.0 };
+    pub const CAPTION: TextStyle = TextStyle { family: Family::Sans, size: 12.0, line_height: 16.0, weight: 400, italic: false, letter_spacing: 0.0 };
     /// Badges, key hints, timestamps. Nothing smaller exists.
-    pub const MICRO: TextStyle = TextStyle { family: Family::Mono, size: 10.0, line_height: 14.0, weight: 500, italic: false, letter_spacing: 0.0 };
+    pub const MICRO: TextStyle = TextStyle { family: Family::Sans, size: 11.0, line_height: 14.0, weight: 500, italic: false, letter_spacing: 0.0 };
+    /// What is typed: commands, paths, key names.
+    pub const CODE: TextStyle = TextStyle { family: Family::Mono, size: 12.0, line_height: 18.0, weight: 400, italic: false, letter_spacing: 0.0 };
 }

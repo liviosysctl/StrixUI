@@ -37,7 +37,7 @@ T.Dialog {
 
     contentItem: Column {
         spacing: Theme.space1
-        Label { width: parent.width; text: control.title; textStyle: "title"; wrapMode: Text.WordWrap }
+        Label { width: parent.width; text: control.title; textStyle: "title"; color: Theme.accentText; wrapMode: Text.WordWrap }
         Label { width: parent.width; text: control.text; color: Theme.textMuted; wrapMode: Text.WordWrap; lineHeightMode: Text.ProportionalHeight; lineHeight: 1.5; bottomPadding: Theme.space4 }
         Row {
             anchors.right: parent.right

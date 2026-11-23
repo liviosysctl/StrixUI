@@ -24,7 +24,7 @@ Column {
     Item {
         width: parent.width
         height: 24
-        Label { text: root.names[root.month.getMonth()] + " " + root.month.getFullYear(); textStyle: "aside"; anchors.verticalCenter: parent.verticalCenter }
+        Label { text: root.names[root.month.getMonth()] + " " + root.month.getFullYear(); textStyle: "aside"; color: Theme.accentText; anchors.verticalCenter: parent.verticalCenter }
         Row {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter

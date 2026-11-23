@@ -12,7 +12,7 @@ Text {
     font.weight: s.weight
     font.italic: s.italic
     font.letterSpacing: s.letterSpacing * s.pixelSize
-    font.features: ({ "liga": 0, "calt": 0 })
+    font.features: ({ "liga": 0, "calt": 0, "lnum": 1, "tnum": 1 })
     lineHeightMode: Text.FixedHeight
     lineHeight: s.lineHeight
     verticalAlignment: Text.AlignVCenter
