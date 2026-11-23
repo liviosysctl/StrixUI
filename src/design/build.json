@@ -12,6 +12,10 @@
   "IBMPlexMono-Italic.woff2"
  ],
  "icons": [
+  "pin",
+  "star",
+  "globe",
+  "shield",
   "search",
   "cpu",
   "memory-stick",
