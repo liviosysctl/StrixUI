@@ -80,6 +80,5 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 - A test that compares the QML and HTML renderings pixel by pixel; today they are compared by eye.
 - Screens: clipboard history, screenshot tool, greeter, session menu, the other settings pages (Hotkeys is done), text installer, store.
 - The search service behind Search (the component and its behaviour are done; the plan is in StrixOS-Plan, `10-search.md`).
-- The workspaces as numbers and the blur behind the glass: both belong to the shell and the compositor rules in StrixOS.
 - The grain over the wallpaper in QML (HTML has it).
 - The Hyprland block in `motion.md` is not yet tested on a real Hyprland.
