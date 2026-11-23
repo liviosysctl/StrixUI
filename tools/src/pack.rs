@@ -26,7 +26,7 @@
 use crate::colour::{contrast, oklch, to_oklch};
 use crate::gods::{Gods, get, lighten_to, max_luminance};
 use crate::targets::{self, REQUIRED, TERMINAL, Table};
-use crate::wallpapers::{self, Disc, Print};
+use crate::wallpapers::{self, Disc, Mode, Print};
 use crate::{Src, py, read, read_json, write};
 use regex::Regex;
 use serde_json::Value;
@@ -270,10 +270,7 @@ pub fn build(src: &Src, gods: &Gods, repo: &Path, only_check: bool) -> bool {
             .unwrap_or_else(|| vec![0.0, 0.0, 1.0]);
         let disc = nums(&plate["disc"]);
         let print = Print {
-            background: tab.c("background"),
             accent: tab.c("accent"),
-            paper: plate.get("paper").map(num).unwrap_or(0.46),
-            vignette: plate.get("vig").map(num).unwrap_or(0.92),
             more,
         };
         wallpapers::make(
@@ -285,6 +282,7 @@ pub fn build(src: &Src, gods: &Gods, repo: &Path, only_check: bool) -> bool {
                 r: disc[2],
             },
             &print,
+            Mode::Dark,
             &d.join("wallpaper.jpg"),
         );
         println!(

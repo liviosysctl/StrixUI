@@ -1,18 +1,18 @@
 {
  "saturnus": {
-  "short": "Goltzius, 1592",
-  "caption": "Saturnus with his sickle, lord of time, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
-  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Saturnus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.968, CC0",
-  "source": "aic:2e6b4b94-95de-045f-2826-7f76c23b6a17",
+  "short": "Binck, 1530",
+  "caption": "Saturnus devours one of his children, his scythe beside him in the niche. Jacob Binck after Rosso Fiorentino, 1530",
+  "credit": "Jacob Binck after Giovanni Jacopo Caraglio after Rosso Fiorentino, Saturnus, from the Gods in Niches, 1530. Rijksmuseum RP-P-1951-178A, public domain",
+  "source": "rijks:SMCqw:3464",
   "crop": [
-   0.15,
-   0.15,
-   0.85
+   0.0,
+   0.0924,
+   0.9275
   ],
   "disc": [
-   1320,
-   610,
-   250
+   1242,
+   660,
+   330
   ]
  },
  "janus": {
@@ -32,99 +32,99 @@
   ]
  },
  "apollo": {
-  "short": "Goltzius, 1592",
-  "caption": "Apollo as Sol, the sun, with lyre and quiver in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
-  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Sol, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.972, CC0",
-  "source": "aic:f9b4ca78-b118-0595-7e4d-ea082b618d9d",
+  "short": "Binck, 16th century",
+  "caption": "Apollo with his laurel wreath on the chariot of the sun, in his niche. Jacob Binck after Rosso Fiorentino",
+  "credit": "Jacob Binck after Giovanni Jacopo Caraglio after Rosso Fiorentino, Apollo, from the Gods in Niches, 1510 to 1569. Rijksmuseum RP-P-H-H-91, public domain",
+  "source": "rijks:AGgCs:2584",
   "crop": [
-   0.1,
-   0.12,
-   0.9
+   0.0725,
+   0.0401,
+   1.0
   ],
   "disc": [
-   1297,
-   585,
-   250
+   1649,
+   660,
+   330
   ]
  },
  "mars": {
-  "short": "Quellinus, 1655",
-  "caption": "Mars in armour, a dragon on his helmet. Hubert Quellinus after the statue by Artus Quellinus, Amsterdam, 1655",
-  "credit": "Hubert Quellinus after Artus Quellinus, Mars in the west gallery of the Amsterdam town hall, 1655. Rijksmuseum RP-P-AO-22-1Q-1, public domain",
-  "source": "rijks:yzhwS:3064",
+  "short": "Binck, 1530",
+  "caption": "Mars with helmet, shield and sword, seen from behind in his niche. Jacob Binck after Rosso Fiorentino, 1530",
+  "credit": "Jacob Binck after Giovanni Jacopo Caraglio after Rosso Fiorentino, Mars, from the Gods in Niches, 1530. Rijksmuseum RP-P-1951-178I, public domain",
+  "source": "rijks:iwtki:3754",
   "crop": [
-   0.22,
-   0.17,
-   0.84
+   0.0162,
+   0.0753,
+   0.9438
   ],
   "disc": [
-   1060,
-   560,
-   260
+   1280,
+   660,
+   330
   ]
  },
  "vulcanus": {
-  "short": "Goltzius, 1592",
-  "caption": "Vulcanus, the smith of the gods, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
-  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Vulcanus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.971, CC0",
-  "source": "aic:2e3e8684-cef2-9f95-cbd1-707884e5261d",
+  "short": "Binck, 1530",
+  "caption": "Vulcanus swings his hammers over the anvil in his niche. Jacob Binck after Rosso Fiorentino, 1530",
+  "credit": "Jacob Binck after Giovanni Jacopo Caraglio after Rosso Fiorentino, Vulcanus, from the Gods in Niches, 1530. Rijksmuseum RP-P-1951-178S, public domain",
+  "source": "rijks:rTEfO:3304",
   "crop": [
-   0.15,
-   0.15,
-   0.85
+   0.0,
+   0.0605,
+   0.9275
   ],
   "disc": [
-   1320,
-   560,
-   250
+   1159,
+   660,
+   330
   ]
  },
  "neptunus": {
-  "short": "Goltzius, 1592",
-  "caption": "Neptunus with his crown and trident, in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
-  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Neptunus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.969, CC0",
-  "source": "aic:03acd0e7-0cf5-7fc7-60c7-6fb1097a143f",
+  "short": "Binck, 1530",
+  "caption": "Neptunus with trident and hippocamp in his niche. Jacob Binck after Rosso Fiorentino, 1530",
+  "credit": "Jacob Binck after Giovanni Jacopo Caraglio after Rosso Fiorentino, Neptunus, from the Gods in Niches, 1530. Rijksmuseum RP-P-1951-178E, public domain",
+  "source": "rijks:NLjhg:3290",
   "crop": [
-   0.15,
-   0.15,
-   0.85
+   0.0,
+   0.0787,
+   0.9275
   ],
   "disc": [
-   1420,
+   1159,
    660,
-   250
+   330
   ]
  },
  "pluto": {
-  "short": "Goltzius, 1592",
-  "caption": "Pluto in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
-  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Pluto, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.970, CC0",
-  "source": "aic:875c8e28-faf6-4991-b34a-e9e991476d81",
+  "short": "Binck, 1530",
+  "caption": "Pluto with his two-pronged fork and Cerberus in his niche. Jacob Binck after Rosso Fiorentino, 1530",
+  "credit": "Jacob Binck after Giovanni Jacopo Caraglio after Rosso Fiorentino, Pluto, from the Gods in Niches, 1530. Rijksmuseum RP-P-1951-178G, public domain",
+  "source": "rijks:bcsfV:3398",
   "crop": [
-   0.15,
-   0.15,
-   0.85
+   0.0262,
+   0.0521,
+   0.9538
   ],
   "disc": [
-   1335,
-   475,
-   260
+   1280,
+   660,
+   330
   ]
  },
  "bacchus": {
-  "short": "Goltzius, 1592",
-  "caption": "Bacchus in his niche. Engraved by Hendrick Goltzius after Polidoro da Caravaggio, 1592",
-  "credit": "Hendrick Goltzius after Polidoro da Caravaggio, Bacchus, from Eight Pagan Gods, 1592. Art Institute of Chicago 2023.974, CC0",
-  "source": "aic:b87ec199-aa10-e7a7-2301-74c18b845d5d",
+  "short": "Binck, 1530",
+  "caption": "Bacchus with drinking bowl and vines, a small satyr at his feet, in his niche. Jacob Binck after Rosso Fiorentino, 1530",
+  "credit": "Jacob Binck after Giovanni Jacopo Caraglio after Rosso Fiorentino, Bacchus, from the Gods in Niches, 1530. Rijksmuseum RP-P-1951-178Q, public domain",
+  "source": "rijks:Nycta:3544",
   "crop": [
-   0.15,
-   0.15,
-   0.85
+   0.0562,
+   0.0571,
+   0.9838
   ],
   "disc": [
-   1330,
-   490,
-   260
+   1280,
+   660,
+   330
   ]
  }
 }

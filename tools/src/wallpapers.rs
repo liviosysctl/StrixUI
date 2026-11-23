@@ -1,14 +1,13 @@
-//! The engraving wallpapers: one plate per theme, printed in two inks of its colours.
+//! The engraving wallpapers: two plates per theme, a dark and a light one.
 //!
-//! The scan comes from an open-access collection (Art Institute of Chicago, CC0, or Rijksmuseum,
-//! public domain), is cropped to the upper body at 16:9 and printed in two inks: paper becomes the
-//! cream `line` colour, ink becomes the theme's `background`, and ink inside one disc becomes its
-//! `accent`. The picture is darkened toward the edges, hardest along the top (bar) and the bottom
-//! (dock), gets a little grain and fine lines around the disc.
+//! The scan comes from an open-access collection (Rijksmuseum, public domain, or Art Institute of
+//! Chicago, CC0) at its full resolution and is cropped at 16:9 so it fills the screen. Ink and
+//! paper are neutral; the only colour is the theme's. The dark plate is almost black with a glow
+//! around a fine ring in the accent on the head of the god. The light plate is lit from the
+//! middle, and the paper inside the ring takes the accent.
 
 use image::imageops::{self, FilterType};
 use image::{GrayImage, Luma, Rgb, RgbImage};
-use std::f64::consts::PI;
 use std::fs;
 use std::io::BufWriter;
 use std::path::{Path, PathBuf};
@@ -16,7 +15,10 @@ use std::process::Command;
 
 pub const W: u32 = 2560;
 pub const H: u32 = 1440;
-const CREAM: [f64; 3] = [216.0, 208.0, 192.0];
+/// Ink, paper and hair line of every plate
+const INK: [f64; 3] = [8.0, 7.0, 7.0];
+const PAPER: [f64; 3] = [186.0, 184.0, 178.0];
+const LINE: [f64; 3] = [214.0, 208.0, 196.0];
 
 /// A plate source: aic:<IIIF id>, rijks:<Micrio id>:<width> or file:<path>
 pub fn fetch(cache: &Path, base: &Path, source: &str) -> PathBuf {
@@ -68,12 +70,15 @@ pub struct Disc {
     pub r: f64,
 }
 
+/// The dark plate or the light one
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum Mode {
+    Dark,
+    Light,
+}
+
 pub struct Print<'a> {
-    pub background: &'a str,
     pub accent: &'a str,
-    /// Brightness of the paper, lower for a print with much bare paper
-    pub paper: f64,
-    pub vignette: f64,
     /// Discs in the second colour of a dual-colour theme
     pub more: Vec<(Disc, String)>,
 }
@@ -117,120 +122,70 @@ fn percentile(sorted: &[u8], p: f64) -> f64 {
 }
 
 /// Grain: a small deterministic generator with Box-Muller, the same picture every build
-struct Grain(u64);
-
-impl Grain {
-    fn next(&mut self) -> f64 {
-        // splitmix64
-        self.0 = self.0.wrapping_add(0x9e37_79b9_7f4a_7c15);
-        let mut z = self.0;
-        z = (z ^ (z >> 30)).wrapping_mul(0xbf58_476d_1ce4_e5b9);
-        z = (z ^ (z >> 27)).wrapping_mul(0x94d0_49bb_1331_11eb);
-        ((z ^ (z >> 31)) >> 11) as f64 / (1u64 << 53) as f64
-    }
-    fn normal(&mut self, sigma: f64) -> f64 {
-        let u = self.next().max(f64::MIN_POSITIVE);
-        (-2.0 * u.ln()).sqrt() * (2.0 * PI * self.next()).cos() * sigma
-    }
-}
-
 fn disc_mask(x: f64, y: f64, d: &Disc) -> f64 {
     let dist = ((x - d.x).powi(2) + (y - d.y).powi(2)).sqrt();
     ((d.r - dist) / 1.5 + 0.5).clamp(0.0, 1.0)
 }
 
-/// Coverage of a one-pixel line at distance `dist` from its centre
-fn hair(dist: f64) -> f64 {
-    (1.0 - dist.abs()).clamp(0.0, 1.0)
+/// Coverage of a circle line of `width` pixels with radius `r`, at `dist` from the centre
+fn ring(dist: f64, r: f64, width: f64) -> f64 {
+    (width / 2.0 + 0.5 - (dist - r).abs()).clamp(0.0, 1.0)
 }
 
-/// The fine lines around one disc: two circles, a graduated ring and, around the first disc, a wide circle
-fn rings(x: f64, y: f64, d: &Disc, first: bool) -> f64 {
-    let dist = ((x - d.x).powi(2) + (y - d.y).powi(2)).sqrt();
-    let mut a: f64 = 0.0;
-    let mut circles = vec![(d.r + 56.0, 120.0), (d.r + 64.0, 70.0)];
-    if first {
-        circles.push((d.r + 260.0, 60.0));
-    }
-    for (rr, alpha) in circles {
-        a = a.max(hair(dist - rr + 0.5) * alpha / 255.0);
-    }
-    let r1 = d.r + 64.0;
-    if dist >= r1 - 1.0 && dist <= r1 + 19.0 {
-        // the nearest tick, one every 3 degrees, a long one every 15
-        let angle = (y - d.y).atan2(x - d.x).to_degrees().rem_euclid(360.0);
-        let i = ((angle / 3.0).round() as i64 * 3).rem_euclid(360);
-        let len = if i % 15 == 0 { 18.0 } else { 9.0 };
-        let t = (i as f64).to_radians();
-        let (ux, uy) = (t.cos(), t.sin());
-        let (px, py) = (x - d.x, y - d.y);
-        let along = px * ux + py * uy;
-        let across = -px * uy + py * ux;
-        if along >= r1 - 0.5 && along <= r1 + len + 0.5 {
-            a = a.max(hair(across) * 70.0 / 255.0);
-        }
-    }
-    a
-}
-
-/// Prints `scan` as a wallpaper of 2560 by 1440 in the colours of one theme
-pub fn make(scan: &Path, box_: [f64; 3], disc: Disc, print: &Print, out: &Path) {
+/// Prints `scan` as a wallpaper of 2560 by 1440 in the colour of one theme
+pub fn make(scan: &Path, box_: [f64; 3], disc: Disc, print: &Print, mode: Mode, out: &Path) {
     let gray = image::open(scan)
         .unwrap_or_else(|e| panic!("cannot read {}: {e}", scan.display()))
         .to_luma8();
     let g = crop(&gray, box_);
     let mut sorted: Vec<u8> = g.as_raw().clone();
     sorted.sort_unstable();
-    let (lo, hi) = (percentile(&sorted, 3.0), percentile(&sorted, 97.0));
-    let (bg, acc) = (rgb(print.background), rgb(print.accent));
-    let more: Vec<(&Disc, [f64; 3])> = print.more.iter().map(|(d, c)| (d, rgb(c))).collect();
-    let mut grain = Grain(3);
-    let (w, h) = (f64::from(W), f64::from(H));
+    let (lo, hi) = (percentile(&sorted, 1.5), percentile(&sorted, 93.0));
+    let mut discs: Vec<(&Disc, [f64; 3])> = vec![(&disc, rgb(print.accent))];
+    discs.extend(print.more.iter().map(|(d, c)| (d, rgb(c))));
+    // The light plate is lit from between the discs
+    let n = discs.len() as f64;
+    let cx = discs.iter().map(|(d, _)| d.x).sum::<f64>() / n;
+    let cy = discs.iter().map(|(d, _)| d.y).sum::<f64>() / n;
     let mut img = RgbImage::new(W, H);
     for (px, py, p) in img.enumerate_pixels_mut() {
         let (x, y) = (f64::from(px), f64::from(py));
         let l = ((f64::from(g.get_pixel(px, py)[0]) - lo) / (hi - lo))
             .clamp(0.0, 1.0)
-            .powf(1.7); // 0 ink, 1 paper
-        let m = disc_mask(x, y, &disc);
-        // Outside the disc: dark ink on dim cream paper. Inside, the paper takes the accent, a little dulled
-        // by the cream under it, and the ink stays dark, so light accents keep the engraving readable
-        let mut pap = [0.0; 3];
-        for k in 0..3 {
-            pap[k] = CREAM[k] * print.paper * (1.0 - m)
-                + (acc[k] * 0.90 + CREAM[k] * print.paper * 0.12) * m;
-        }
-        let mut f_disc = m * 0.9;
-        for (d, col) in &more {
-            let mk = disc_mask(x, y, d);
-            for k in 0..3 {
-                pap[k] = pap[k] * (1.0 - mk) + (col[k] * 0.90 + CREAM[k] * print.paper * 0.12) * mk;
+            .powf(1.25); // 0 ink, 1 paper
+        let light = match mode {
+            Mode::Light => 0.07 + 0.74 * (-((x - cx).hypot(y - cy) / 760.0).powf(2.2)).exp(),
+            Mode::Dark => {
+                let glow = |d: &Disc| {
+                    0.62 * (-((x - d.x).hypot(y - d.y) / (d.r * 1.3).max(300.0)).powi(2)).exp()
+                };
+                (0.035 + discs.iter().map(|(d, _)| glow(d)).sum::<f64>()).min(0.7)
             }
-            f_disc = f_disc.max(mk * 0.9);
+        };
+        let mut paper = PAPER.map(|c| c * light);
+        if mode == Mode::Light {
+            for (d, col) in &discs {
+                let m = disc_mask(x, y, d);
+                for k in 0..3 {
+                    paper[k] = paper[k] * (1.0 - m) + col[k] * (0.34 + 0.62 * light) * m;
+                }
+            }
         }
-        let dv = (((x - disc.x) / (w * 0.62)).powi(2) + ((y - disc.y) / (h * 0.78)).powi(2)).sqrt();
-        let v = 1.0 - print.vignette * ((dv - 0.25) / 0.75).clamp(0.0, 1.0).powf(1.4);
-        let top = (y / 110.0).clamp(0.35, 1.0);
-        let bottom = ((h - y) / 90.0).clamp(0.45, 1.0);
-        let f = (v * top * bottom).max(f_disc);
-        let noise = grain.normal(3.2);
-        // hair lines in cream: the rings around every disc and the meridian through the first
-        let mut a = rings(x, y, &disc, true);
-        for (d, _) in &more {
-            a = a.max(rings(x, y, d, false));
+        let mut c = [0, 1, 2].map(|k| INK[k] + (paper[k] - INK[k]) * l);
+        // Two hair lines around every disc: its edge, in the accent on the dark plate, and one outside it
+        for (d, col) in &discs {
+            let dist = (x - d.x).hypot(y - d.y);
+            let (edge, outer) = match mode {
+                Mode::Dark => ((ring(dist, d.r, 1.6) * 0.92, *col), 0.27),
+                Mode::Light => ((ring(dist, d.r, 2.2) * 0.92, LINE), 0.47),
+            };
+            let outer = ring(dist, d.r + 14.0, 1.0) * outer;
+            for k in 0..3 {
+                c[k] = c[k] * (1.0 - edge.0) + edge.1[k] * edge.0;
+                c[k] = c[k] * (1.0 - outer) + LINE[k] * outer;
+            }
         }
-        a = a.max(hair(x - disc.x + 0.5) * 40.0 / 255.0);
-        let mut c = [0u8; 3];
-        for k in 0..3 {
-            let ink = bg[k] * (1.0 - l) + pap[k] * l;
-            let printed = (bg[k] + (ink - bg[k]) * f + noise)
-                .clamp(0.0, 255.0)
-                .floor();
-            c[k] = (printed * (1.0 - a) + CREAM[k] * a)
-                .round()
-                .clamp(0.0, 255.0) as u8;
-        }
-        *p = Rgb(c);
+        *p = Rgb(c.map(|v| v.round().clamp(0.0, 255.0) as u8));
     }
     if let Some(dir) = out.parent() {
         fs::create_dir_all(dir).expect("the wallpaper folder");
@@ -291,7 +246,7 @@ pub fn three(v: &serde_json::Value) -> [f64; 3] {
     [f(&a[0]), f(&a[1]), f(&a[2])]
 }
 
-/// strixui wallpapers [god ...]: remakes the plates of the eight gods in src/wallpapers/
+/// strixui wallpapers [god ...]: remakes the dark and the light plate of the gods in src/wallpapers/
 pub fn gods(src: &crate::Src, gods: &crate::gods::Gods, names: &[String]) {
     let plates = crate::read_json(&src.root.join("design/plates.json"));
     let cache = src.repo.join("build/engravings");
@@ -305,24 +260,28 @@ pub fn gods(src: &crate::Src, gods: &crate::gods::Gods, names: &[String]) {
         let t = gods.colours(n);
         let [x, y, r] = three(&p["disc"]);
         let print = Print {
-            background: crate::gods::get(&t, "background"),
             accent: crate::gods::get(&t, "accent"),
-            paper: p.get("paper").map(f).unwrap_or(0.46),
-            vignette: p.get("vig").map(f).unwrap_or(0.92),
             more: Vec::new(),
         };
-        let out = src.root.join("wallpapers").join(format!("{n}.jpg"));
-        make(
-            &fetch(&cache, &src.repo, p["source"].as_str().expect("source")),
-            three(&p["crop"]),
-            Disc { x, y, r },
-            &print,
-            &out,
-        );
-        println!(
-            "{n}.jpg  {} bytes  ({})",
-            fs::metadata(&out).map(|m| m.len()).unwrap_or(0),
-            p["credit"].as_str().unwrap_or("")
-        );
+        let scan = fetch(&cache, &src.repo, p["source"].as_str().expect("source"));
+        for (mode, file) in [
+            (Mode::Dark, format!("{n}.jpg")),
+            (Mode::Light, format!("{n}-light.jpg")),
+        ] {
+            let out = src.root.join("wallpapers").join(&file);
+            make(
+                &scan,
+                three(&p["crop"]),
+                Disc { x, y, r },
+                &print,
+                mode,
+                &out,
+            );
+            println!(
+                "{file}  {} bytes  ({})",
+                fs::metadata(&out).map(|m| m.len()).unwrap_or(0),
+                p["credit"].as_str().unwrap_or("")
+            );
+        }
     }
 }
