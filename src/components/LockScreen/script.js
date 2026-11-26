@@ -26,16 +26,16 @@
     }
   });
   // a different god at every lock, never the same twice in a row
-  var GODS = {{LOCK_GODS}}, scr = document.getElementById('scr'), plate = document.getElementById('lplate'), last = -1;
+  var GODS = {{LOCK_GODS}}, scr = document.getElementById('scr'), last = -1;
   function pick() {
     var i; do { i = Math.floor(Math.random() * GODS.length); } while (i === last && GODS.length > 1);
     last = i; var g = GODS[i];
-    scr.setAttribute('data-theme', g[0]); wall.style.backgroundImage = 'url(' + g[1] + ')'; plate.textContent = g[2];
+    scr.setAttribute('data-theme', g[0]); wall.style.backgroundImage = 'url(' + g[1] + ')';
   }
   // the first lock shows the theme the page shows; the page switching theme starts over from there
   Kit.onTheme(function (id) {
     scr.removeAttribute('data-theme');
-    for (var i = 0; i < GODS.length; i++) if (GODS[i][0] === id) { last = i; plate.textContent = GODS[i][2]; }
+    for (var i = 0; i < GODS.length; i++) if (GODS[i][0] === id) { last = i; }
   });
   document.getElementById('relock').addEventListener('click', function () { this.style.display = 'none'; pick(); lock.removeAttribute('data-out'); wall.removeAttribute('data-clear'); pw.value = ''; });
 })();

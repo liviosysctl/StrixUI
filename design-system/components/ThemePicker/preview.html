@@ -6,7 +6,6 @@
 #picker[data-out] { opacity: 0; pointer-events: none; }
 #picker .tools { position: absolute; top: 122px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
 #picker .k-carousel { position: absolute; top: 170px; left: 0; right: 0; height: 300px; }
-#plate { position: absolute; top: 482px; left: 160px; right: 160px; text-align: center; font-size: 14px; line-height: 20px; }
 #picker .cycle { position: absolute; top: 536px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: var(--space-4); }
 #picker .cycle .caption { min-width: 260px; font-variant-numeric: tabular-nums; }
 #picker .demo { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
@@ -22,7 +21,6 @@
     <div class="k-scrim" style="animation:none"></div>
     <div class="tools"><div class="k-toolbar"><div class="k-seg" id="variant" aria-label="Variant"><button aria-selected="true" value="dark">Dark</button><button value="light" disabled title="Comes later">Light</button></div></div></div>
     <div class="k-carousel" id="car" tabindex="-1" aria-label="Themes"><div class="k-carousel-track" id="track"></div></div>
-    <div class="k-plate" id="plate"></div>
     <div class="cycle"><label class="k-switch"><input type="checkbox" id="keep"><span></span>Keep this theme</label><span class="k-kbd">K</span><span class="caption k-muted" id="next"></span></div>
     <label class="k-switch micro demo"><input type="checkbox" id="fast"><span></span>Preview only: one minute in one second</label>
   </div>
@@ -34,19 +32,17 @@ var P = [["saturnus", "../../assets/Wallpapers/saturnus.jpg", "Saturnus", "dark"
 
 (function () {
   var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
-  var picker = document.getElementById('picker'), reopen = document.getElementById('reopen'), plate = document.getElementById('plate');
+  var picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
   track.innerHTML = P.map(function (p, i) {
     return '<button class="k-slant" aria-selected="' + (p[0] === Kit.theme()) + '" aria-label="' + p[2] + '"><span class="k-slant-art"><img alt="" src="' + p[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + p[2] + '<small><i class="dot" style="background:' + p[5] + '"></i>' + p[3] + '</small></span></button>';
   }).join('');
   Kit.hydrate(document);
-  function caption() { plate.textContent = P[car._k.index][4]; }
-  car.addEventListener('change', caption); caption();
   // the theme on the desktop: set by hand, or by the cycle every 10 minutes
   var cur = 0, PERIOD = 10 * 60 * 1000, speed = 1, last = Date.now(), virt = 0, prev = Date.now();
   // the picker opens on the theme the page shows, and follows the page when it switches
   Kit.onTheme(function (id) {
     for (var i = 0; i < P.length; i++) if (P[i][0] === id) { cur = i; car._k.select(i, true); }
-    scr.removeAttribute('data-theme'); rev.removeAttribute('data-on'); virt = 0; caption();
+    scr.removeAttribute('data-theme'); rev.removeAttribute('data-on'); virt = 0;
   });
   var keep = document.getElementById('keep'), fast = document.getElementById('fast'), next = document.getElementById('next');
   function show(i, x, y, close) {

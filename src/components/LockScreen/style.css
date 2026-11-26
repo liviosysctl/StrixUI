@@ -7,6 +7,5 @@
 #lock .foot b { color: var(--text); font-weight: 500; }
 #lock .foot i { font-style: normal; color: var(--text-faint); }
 #lock .mark { position: absolute; right: var(--space-8); bottom: var(--space-6); text-align: center; }
-#lock .plate { position: absolute; left: 0; right: 0; bottom: var(--space-6); text-align: center; opacity: 0.8; }
 #lock .hint { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
 .k-wall[data-clear] { filter: none; transform: none; }

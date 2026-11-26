@@ -2,19 +2,17 @@ var P = {{THEMES}};
 
 (function () {
   var scr = document.getElementById('scr'), track = document.getElementById('track'), car = document.getElementById('car'), rev = document.getElementById('rev'), base = document.getElementById('base');
-  var picker = document.getElementById('picker'), reopen = document.getElementById('reopen'), plate = document.getElementById('plate');
+  var picker = document.getElementById('picker'), reopen = document.getElementById('reopen');
   track.innerHTML = P.map(function (p, i) {
     return '<button class="k-slant" aria-selected="' + (p[0] === Kit.theme()) + '" aria-label="' + p[2] + '"><span class="k-slant-art"><img alt="" src="' + p[1] + '"></span><span class="k-slant-edge"></span><span class="k-slant-name">' + p[2] + '<small><i class="dot" style="background:' + p[5] + '"></i>' + p[3] + '</small></span></button>';
   }).join('');
   Kit.hydrate(document);
-  function caption() { plate.textContent = P[car._k.index][4]; }
-  car.addEventListener('change', caption); caption();
   // the theme on the desktop: set by hand, or by the cycle every 10 minutes
   var cur = 0, PERIOD = 10 * 60 * 1000, speed = 1, last = Date.now(), virt = 0, prev = Date.now();
   // the picker opens on the theme the page shows, and follows the page when it switches
   Kit.onTheme(function (id) {
     for (var i = 0; i < P.length; i++) if (P[i][0] === id) { cur = i; car._k.select(i, true); }
-    scr.removeAttribute('data-theme'); rev.removeAttribute('data-on'); virt = 0; caption();
+    scr.removeAttribute('data-theme'); rev.removeAttribute('data-on'); virt = 0;
   });
   var keep = document.getElementById('keep'), fast = document.getElementById('fast'), next = document.getElementById('next');
   function show(i, x, y, close) {

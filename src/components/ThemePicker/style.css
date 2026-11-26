@@ -3,7 +3,6 @@
 #picker[data-out] { opacity: 0; pointer-events: none; }
 #picker .tools { position: absolute; top: 122px; left: 0; right: 0; display: flex; justify-content: center; z-index: 3; }
 #picker .k-carousel { position: absolute; top: 170px; left: 0; right: 0; height: 300px; }
-#plate { position: absolute; top: 482px; left: 160px; right: 160px; text-align: center; font-size: 14px; line-height: 20px; }
 #picker .cycle { position: absolute; top: 536px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: var(--space-4); }
 #picker .cycle .caption { min-width: 260px; font-variant-numeric: tabular-nums; }
 #picker .demo { position: absolute; right: var(--space-5); top: var(--space-4); color: var(--text-faint); }
