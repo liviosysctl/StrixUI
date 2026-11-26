@@ -1,10 +1,10 @@
 # StrixUI
 
-The design system of Strix: tokens, components, screens and motion for every surface of the system, built for Quickshell (QML) with Rust behind it: the shell and every app of Strix. An HTML bundle of the same components draws the previews. Its default theme is a dark study: near-black surfaces, old engravings of Roman gods as the ground, one accent colour that belongs to the god on the wallpaper, an old-style serif beside a plain grotesque.
+The design system of Strix: tokens, components, screens and motion for every surface of the system, built for Quickshell (QML) with Rust behind it: the shell and every app of Strix. An HTML bundle of the same components draws the previews.
 
-![The eight god themes](docs/renders/Themes-plates.jpg)
+![The eight gods](docs/renders/Themes-plates.jpg)
 
-Strix has one theme per Roman god: Saturnus (Strix red, the default), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. Each theme is a wallpaper and a set of colour tokens that recolours the accent and tints the grounds to match the plate. The theme picker sets both, and the desktop moves on to another god every 10 minutes unless the theme is kept.
+Strix has one theme per Roman god: Saturnus (Strix red, the default), Janus, Apollo, Mars, Vulcanus, Neptunus, Pluto and Bacchus. Each theme is a wallpaper, dark and light, and a set of colour tokens. The theme picker sets both, and the desktop moves on to another god every 10 minutes unless the theme is kept.
 
 ![Lock screen](docs/renders/LockScreen.png)
 
@@ -19,7 +19,7 @@ The same system is published as a Claude Design System artifact, where every com
 | `design-system/motion.md` | Motion tokens, rules, the catalogue of every moving element, and the Hyprland animation block |
 | `design-system/surfaces.md` | Which surface uses which stack and takes what; how Quickshell front ends talk to Rust back ends; the HTML of the previews |
 | `design-system/tokens.json`, `tokens.css` | Every token: colours (with the terminal colours) in eight themes, one per god, type, spacing, radius, shadow, line, size, duration, easing, opacity |
-| `design-system/qml/` | QML module `Strix` for Quickshell (Theme, Icons and 43 components) and `Strix.Shell` (ThemeFile, Backend), the fonts, `gallery.qml` |
+| `design-system/qml/` | QML module `Strix` for Quickshell (Theme, Icons and 48 components) and `Strix.Shell` (ThemeFile, Backend), the fonts, `gallery.qml` |
 | `design-system/rust/strix-design/` | Rust crate for every back end: tokens, the eight themes, the theme cycle and lock rotation, the default hotkeys. No dependencies |
 | `design-system/themes/` | One `theme.toml` per god in format 1 of the StrixOS theme engine |
 | `design-system/components/` | For the previews and the artifact: `bundle.css` and `bundle.js` (plain HTML with `k-` classes and a small script, `window.Kit`), and for each component and screen a `README.md` (with its QML and HTML use) and a live `preview.html` |
@@ -28,7 +28,7 @@ The same system is published as a Claude Design System artifact, where every com
 | `src/` | Sources: `bundle.css`, `bundle.js`, the QML components (`src/qml/`), the hand-written Rust (`src/rust/`), fonts, the Lucide symbols in use (ISC), the wallpapers |
 | `src/design/`, `src/components/`, `src/docs/`, `src/templates/` | The data the build reads: gods and their accents, the palette, every other token, the plates, the hotkeys; each component's preview, style and script; the texts; the templates of the generated Rust and QML |
 | `tools/` | `strixui`, the tools of the design system in Rust (`cargo strixui` from the repository): build, contrast check, wallpapers, theme repositories, renders; and `artifact.json` |
-| `docs/renders/` | Renderings of the screens and of the QML gallery |
+| `docs/renders/` | Renderings of the shell of StrixOS and of the previews |
 
 ## Build
 
@@ -69,16 +69,11 @@ Then publish `build/artifact/project/` to the artifact listed in `tools/artifact
 | | |
 |---|---|
 | ![Desktop](docs/renders/Desktop.png) | ![Theme picker](docs/renders/ThemePicker.png) |
-| ![Lock screen, another theme at every lock](docs/renders/LockScreen.png) | ![Search](docs/renders/Search.png) |
-| ![Dock](docs/renders/EdgeDock.png) | ![Terminal](docs/renders/Terminal.png) |
-| ![Cheat sheet](docs/renders/Cheatsheet.png) | ![Settings, hotkeys](docs/renders/SettingsHotkeys.png) |
-| ![Boot splash](docs/renders/BootSplash.png) | |
+| ![Lock screen](docs/renders/LockScreen.png) | ![Search](docs/renders/Search.png) |
+| ![Dock](docs/renders/Dock.png) | ![Cheat sheet](docs/renders/Cheatsheet.png) |
+| ![Settings](docs/renders/Settings.png) | ![Boot splash](docs/renders/BootSplash.png) |
 
 ## Not done yet
 
-- The screens in QML: the shell assembles them from the components (each screen's README says with which Quickshell types); the gallery shows the components only.
 - A test that compares the QML and HTML renderings pixel by pixel; today they are compared by eye.
-- Screens: clipboard history, screenshot tool, greeter, session menu, the other settings pages (Hotkeys is done), text installer, store.
-- The search service behind Search (the component and its behaviour are done; the plan is in StrixOS-Plan, `10-search.md`).
 - The grain over the wallpaper in QML (HTML has it).
-- The Hyprland block in `motion.md` is not yet tested on a real Hyprland.
