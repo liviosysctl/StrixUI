@@ -41,6 +41,7 @@ Wallpaper 1.0 Wallpaper.qml
 Workspaces 1.0 Workspaces.qml
 Meter 1.0 Meter.qml
 Chip 1.0 Chip.qml
+ChipGroup 1.0 ChipGroup.qml
 Ticker 1.0 Ticker.qml
 Glide 1.0 Glide.qml
 Entrance 1.0 Entrance.qml

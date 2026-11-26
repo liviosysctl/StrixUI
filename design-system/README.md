@@ -117,7 +117,7 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 
 ## Layout of the shell
 
-- The top bar is for reading. It has no surface; small grey text and symbols sit on the engraving. Left: search and the clock, then CPU, memory, temperature. Middle: workspaces and the playing track in serif italic. Right: recording, the bell with its count, power.
+- The top bar has no band of its own: its chips sit on the engraving, and chips that belong together share one plate of smoked glass (`ChipGroup`), parted by hair lines. Left: search, the clock (only its symbol while the clock of the desktop shows the time), CPU and memory. Middle: the workspaces. Right: the state of the machine (network, Bluetooth, sound, battery, a recording, the microphone), then the tray, staying awake, the bell with its count and power. What is playing is in the dock.
 - The dock is for doing, and it is part of the bottom edge of the screen. At rest it is a tab `dock-rest` (5px) high with a short line in the accent. When the pointer reaches the bottom edge it rises to one row of controls and its margin (38px) and widens to show settings, the date with the weather, media, Wi-Fi, Bluetooth, sound and about. Each symbol lets its panel grow out of it. It never floats above the edge.
 - Search (Super Space) is the one way in to everything else: a single field over the dimmed desktop that finds apps, the actions of the system menu, settings down to a single row, and commands. With an empty field it is the system menu itself. There is no separate app launcher or system menu.
 - The clock, the bell and power exist only in the bar. Network, sound and updates exist only in the dock.

@@ -157,15 +157,18 @@ Rectangle {
             Caption { text: "Top bar parts" }
             Row {
                 spacing: Theme.space1
-                Workspaces { count: 5; current: 1; used: [0, 3]; anchors.verticalCenter: parent.verticalCenter }
-                Chip { iconName: "search" }
-                Chip { text: "Wed 11 Nov  09:41" }
-                Chip {
-                    Icon { name: "cpu"; anchors.verticalCenter: parent.verticalCenter }
-                    Label { text: "8%"; textStyle: "value"; anchors.verticalCenter: parent.verticalCenter }
-                    Icon { name: "memory-stick"; anchors.verticalCenter: parent.verticalCenter }
-                    Label { text: "24%"; textStyle: "value"; anchors.verticalCenter: parent.verticalCenter }
+                ChipGroup {
+                    Chip { plate: false; iconName: "search" }
+                    Chip { plate: false; text: "Wed 11 Nov  09:41" }
+                    Chip {
+                        plate: false
+                        Icon { name: "cpu"; anchors.verticalCenter: parent.verticalCenter }
+                        Label { text: "8%"; textStyle: "value"; anchors.verticalCenter: parent.verticalCenter }
+                        Icon { name: "memory-stick"; anchors.verticalCenter: parent.verticalCenter }
+                        Label { text: "24%"; textStyle: "value"; anchors.verticalCenter: parent.verticalCenter }
+                    }
                 }
+                Workspaces { count: 5; current: 1; used: [0, 3]; anchors.verticalCenter: parent.verticalCenter }
             }
             Caption { text: "Dock" }
             Item {
