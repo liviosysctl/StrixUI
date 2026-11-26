@@ -3,4 +3,3 @@
 #tiles[data-hidden] { opacity: 0; transform: translateX(20%); pointer-events: none; }
 #tiles > .k-win:first-child { grid-row: 1 / 3; }
 #tiles .k-win:not([data-active]) { opacity: var(--dim-inactive); }
-#plate { position: absolute; left: var(--space-5); bottom: var(--space-4); transition: opacity var(--dur-base) var(--ease-out); }

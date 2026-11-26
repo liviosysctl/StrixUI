@@ -1,8 +1,7 @@
+The buttons at the top of the screen. The bar has no band of its own: its buttons stand on the wallpaper, and those that belong together share one plate of smoked glass, parted by hair lines (`ChipGroup` in QML, `.k-group` in HTML).
 
-The status line at the top of the screen. It has no surface of its own: small text and symbols sit straight on the wallpaper, in grey, with the accent for the one active thing.
-
-- Left: search with the clock, then CPU, memory and temperature, each as symbol, a 3px vertical meter and a value.
-- Middle: workspaces as dots, the active one a pill in the accent; next to them the playing track.
-- Right: recording (with a dot in the accent while it runs), the bell with its count, power in `accent-text`.
-- The bar is for reading. Search opens Search, the track opens the media player in the dock, the bell opens notifications, power opens the session menu. Everything adjustable lives in the dock.
+- Left: search, the clock (a click shows the month under it; while the clock of the desktop is in view only the symbol of the calendar), CPU and memory as one button that opens the system monitor.
+- Middle: the workspaces as dots, the active one a pill in the accent.
+- Right: the state of the machine (network, Bluetooth, sound, battery, a recording, the microphone, the keyboard layout when there is more than one), each opening its quick panel under it; then the tray, staying awake, the bell with its count and power.
+- What is playing is in the dock. Nothing in the bar needs a hint: every button says what it is.
 - Height `bar-height`. Values roll when they change; the workspace pill slides.

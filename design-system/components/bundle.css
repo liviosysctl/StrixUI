@@ -23,7 +23,7 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 
 /* surface */
 /* The one plate: smoked glass, a little light on its upper edge, a hair line that reads on dark and on lit ground */
-.k-surface, .k-bar > div > button, .k-meters, .k-ws { --tint: var(--surface); background: linear-gradient(180deg, color-mix(in srgb, color-mix(in srgb, var(--tint) 93%, var(--text)) calc(var(--glass) * 100%), transparent), color-mix(in srgb, var(--tint) calc(var(--glass) * 100%), transparent)); -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1); border: var(--line-hair) solid color-mix(in srgb, var(--text) calc(var(--glass-line) * 100%), transparent); border-radius: var(--radius-md); }
+.k-surface, .k-bar > div > button, .k-bar .k-group, .k-ws { --tint: var(--surface); background: linear-gradient(180deg, color-mix(in srgb, color-mix(in srgb, var(--tint) 93%, var(--text)) calc(var(--glass) * 100%), transparent), color-mix(in srgb, var(--tint) calc(var(--glass) * 100%), transparent)); -webkit-backdrop-filter: blur(14px) saturate(1.1); backdrop-filter: blur(14px) saturate(1.1); border: var(--line-hair) solid color-mix(in srgb, var(--text) calc(var(--glass-line) * 100%), transparent); border-radius: var(--radius-md); }
 .k-surface { box-shadow: var(--shadow-panel); }
 
 /* ornament: a hair rule with a small lozenge, as between sections of an old title page */
@@ -268,17 +268,13 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 .k-bar > div > button:active { transform: scale(0.94); }
 .k-bar b { color: var(--text); font-weight: 500; }
 .k-bar .k-icon { width: var(--icon); height: var(--icon); }
-.k-meter { display: inline-flex; align-items: center; gap: 5px; }
+.k-bar .k-group { display: inline-flex; align-items: center; height: var(--control); box-shadow: var(--shadow-pop); }
+.k-bar .k-group > button { position: relative; box-sizing: border-box; min-width: var(--control); height: var(--control); display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-md); background: transparent; color: inherit; font: inherit; cursor: pointer; transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out), transform var(--dur-instant) var(--ease-out); }
+.k-bar .k-group > button:hover { color: var(--text); background: var(--surface-raised); }
+.k-bar .k-group > button:active { transform: scale(0.97); }
+.k-bar .k-group > button + button::before { content: ""; position: absolute; left: 0; top: 50%; width: var(--line-hair); height: var(--icon); margin-top: calc(var(--icon) / -2); background: color-mix(in srgb, var(--text) calc(var(--glass-line) * 100%), transparent); }
+.k-dock-track span { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--accent-text); }
 /* Load figures as one button (MeterGroup): one hover, one press; the bars fill again and take the accent */
-.k-meters { display: inline-flex; align-items: center; gap: var(--space-2); box-sizing: border-box; height: var(--control); padding: 0 var(--space-2); box-shadow: var(--shadow-pop); color: inherit; font: inherit; cursor: pointer; transition: background-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
-.k-meters:hover, .k-meters:focus-visible { --tint: var(--surface-raised); }
-.k-meters:active { transform: scale(0.97); transition-duration: var(--dur-instant); }
-.k-meters:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-.k-meters .k-meter > span:first-of-type { color: var(--text-muted); transition: color var(--dur-fast) var(--ease-out); }
-.k-meters:hover .k-meter > span:first-of-type { color: var(--text); }
-.k-meters:hover .k-meter > u::after { background: var(--accent); animation: k-refill var(--dur-slow) var(--ease-out) both; }
-.k-meters:hover .k-meter + .k-meter > u::after { animation-delay: var(--stagger); }
-@keyframes k-refill { from { height: 0; } }
 /* Text that rolls when it changes (Ticker): Kit.tick(el, text) */
 .k-tick { display: inline-grid; overflow: hidden; vertical-align: bottom; }
 .k-tick > span { grid-area: 1 / 1; white-space: pre; }
@@ -299,8 +295,6 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 [data-glide] > :not(.k-glide) { position: relative; z-index: 1; }
 [data-glide] .k-hit[aria-selected="true"], [data-glide] button[aria-current="page"] { background: transparent; }
 [data-glide] .k-hit[aria-selected="true"]::before, [data-glide] button[aria-current="page"]::before { opacity: 0; }
-.k-meter > u { width: 2px; height: 10px; background: var(--border-strong); position: relative; display: block; overflow: hidden; }
-.k-meter > u::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: var(--p, 30%); background: var(--text); transition: height var(--dur-slow) var(--ease-out); }
 .k-ws { display: inline-flex; align-items: center; box-sizing: border-box; height: var(--control); padding: 0 var(--space-3); gap: 6px; position: relative; box-shadow: var(--shadow-pop); }
 .k-ws button { width: 6px; height: 6px; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--border-strong); cursor: pointer; transition: width var(--dur-base) var(--ease-in-out), background-color var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-spring); }
 .k-ws button[data-used] { background: var(--text-muted); }
@@ -310,11 +304,6 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 /* With JS the accent bar is one element whose edges move apart: the leading edge first, the trailing one after */
 .k-ws[data-pill] button[aria-current="true"] { background: transparent; }
 .k-ws > .k-ws-pill { position: absolute; top: 50%; height: 5px; margin-top: -2.5px; border-radius: var(--radius-pill); background: var(--accent); pointer-events: none; }
-.k-bar .k-track { max-width: 260px; font: 400 12px/16px var(--font-sans); }
-.k-bar .k-track span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.k-bar .k-power { color: var(--accent-text); }
-.k-bar .k-rec { position: relative; }
-.k-bar .k-rec .k-dot { position: absolute; right: 1px; bottom: 2px; width: 4px; height: 4px; }
 
 /* Dock: a thin tab on the bottom edge of the screen. It rises and widens when the pointer reaches the edge */
 .k-dockbar { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; display: flex; justify-content: center; align-items: flex-end; z-index: 4; }
@@ -349,23 +338,6 @@ body { margin: 0; background: var(--background); color: var(--text); font-family
 .k-tabs > section { display: none; }
 .k-tabs > section[data-active] { display: block; animation: k-tab var(--dur-base) var(--ease-out) both; }
 @keyframes k-tab { from { opacity: 0; transform: translateX(calc(var(--dir, 1) * 12px)); } to { opacity: 1; transform: none; } }
-.k-today { display: grid; grid-template-columns: 1fr auto; gap: var(--space-5); }
-.k-today h3 { margin: 0; font: italic 500 31px/34px var(--font-serif); white-space: nowrap; }
-.k-today .k-rule { margin: var(--space-2) 0; }
-.k-today .k-wx { display: flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-size: 11px; line-height: 16px; }
-.k-today .k-wx b { font: 500 16px/20px var(--font-sans); color: var(--text); display: block; }
-.k-today .k-wx .k-icon { width: 20px; height: 20px; }
-.k-day { margin-top: var(--space-3); }
-.k-about { display: flex; flex-direction: column; gap: var(--space-3); }
-.k-about h3 { margin: 0; font: italic 500 44px/44px var(--font-serif); }
-.k-about h3 small { font: 400 13px/18px var(--font-sans); color: var(--text-muted); margin-left: var(--space-2); }
-.k-about .k-up { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-3); border: var(--line-hair) solid var(--border); border-radius: var(--radius-md); }
-.k-about .k-up > div { flex: 1; min-width: 0; }
-.k-about .k-up b { display: block; font: 600 13px/18px var(--font-sans); }
-.k-about .k-up small { font: 400 12px/16px var(--font-sans); color: var(--text-muted); }
-.k-sys { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); justify-items: center; }
-.k-sys + .k-progress-row { width: 100%; margin-top: var(--space-4); }
-.k-sys + .k-progress-row .k-progress { width: 100%; }
 
 /* Notification */
 .k-notif { width: 300px; max-width: 100%; padding: var(--space-2) var(--space-3); display: grid; grid-template-columns: auto 1fr auto; gap: 0 var(--space-2); align-items: start; position: relative; overflow: hidden; }
@@ -1148,4 +1120,4 @@ svg[data-icon] { transition: color var(--dur-fast) var(--ease-out); }
 .k-count-bump { animation: k-count-bump var(--dur-slow) var(--ease-spring); }
 
 /* The one title of a surface carries the colour of the god; headings inside it stay in the text colour */
-.k-dialog h3, .k-about h3, .k-wordmark, .k-slant > .k-slant-name, .k-cheat-head .title, .k-settings-main header h2 { color: var(--accent-text); }
+.k-dialog h3, .k-wordmark, .k-slant > .k-slant-name, .k-cheat-head .title, .k-settings-main header h2 { color: var(--accent-text); }
