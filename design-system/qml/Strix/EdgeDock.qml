@@ -39,7 +39,8 @@ Item {
             ShapePath {
                 id: path
                 readonly property real f: root.flare
-                readonly property real r: Math.min(Theme.radiusMd, tab.height)
+                // The chips stand one small step inside: the corners run parallel to theirs
+                readonly property real r: Math.min(Theme.radiusMd + Theme.space1, tab.height)
                 fillColor: Theme.smoke(Theme.surface)
                 strokeColor: Theme.glassEdge
                 strokeWidth: Theme.lineHair

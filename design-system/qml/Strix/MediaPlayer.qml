@@ -22,6 +22,8 @@ Surface {
     implicitWidth: 320
     implicitHeight: 2 * Theme.space3 + art.height + Theme.space2 + Theme.control
     elevation: "panel"
+    // The cover stands one step and a half inside the corner
+    inset: Theme.space3
 
     Rectangle {
         id: art

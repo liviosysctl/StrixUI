@@ -1,6 +1,9 @@
 // The one plate of the system: smoked glass with a hair line, the corners of every plate and a
 // shadow. Panels, cards that float, dialogs, menus and the buttons of the top bar stand on it.
+// A plate that holds controls near its edge names that distance as `inset`: its corners then round
+// by radius-md plus the inset and run parallel to the corners of the controls inside.
 //   Surface { elevation: "pop"; ... }
+//   Surface { inset: Theme.space2; ListRow { x: Theme.space2; y: Theme.space2 } }
 import QtQuick
 import QtQuick.Effects
 
@@ -9,7 +12,9 @@ Item {
 
     /// none, pop (the top bar, tooltips), window, panel (panels, dialogs)
     property string elevation: "panel"
-    property int radius: Theme.radiusMd
+    /// How far the controls inside stand from the edge, where they come close to it
+    property real inset: 0
+    property real radius: Theme.radiusMd + inset
     /// The colour of the smoke: a control on glass of its own raises it under the pointer
     property color tint: Theme.surface
     property color borderColor: Theme.glassEdge
