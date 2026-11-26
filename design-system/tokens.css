@@ -11,7 +11,7 @@
   --scrim: #000000b8;
   --text: #ece6da;
   --text-muted: #a09a8f;
-  --text-faint: #77726a;
+  --text-faint: #847f78;
   --accent: #c8102e;
   --accent-hover: #dc1f3d;
   --accent-pressed: #a50d26;
@@ -19,7 +19,7 @@
   --accent-text: #f2556a;
   --on-accent: #ffffff;
   --focus: #e8324a;
-  --error: #ff6b78;
+  --error: #f8875a;
   --warning: #d9a441;
   --success: #8fb894;
   --info: #8ea8c8;
@@ -75,6 +75,9 @@
   --accent-text: #81a999;
   --on-accent: #030504;
   --focus: #799f90;
+  --error: #ff6b78;
+  --syntax-keyword: #81a999;
+  --chart-1: #678d7e;
   --term-background: #040807;
   --term-cursor: #678d7e;
   --term-selection: #1d2a25;
@@ -93,6 +96,9 @@
   --accent-text: #bb9860;
   --on-accent: #050402;
   --focus: #c8a56c;
+  --error: #ff6b78;
+  --syntax-keyword: #bb9860;
+  --chart-1: #b5925a;
   --term-background: #090704;
   --term-cursor: #b5925a;
   --term-selection: #302413;
@@ -110,6 +116,9 @@
   --accent-soft: #29150c;
   --accent-text: #d58966;
   --focus: #b26947;
+  --error: #ff6b78;
+  --syntax-keyword: #d58966;
+  --chart-1: #9f5836;
   --term-background: #0b0605;
   --term-cursor: #9f5836;
   --term-selection: #372015;
@@ -128,6 +137,9 @@
   --accent-text: #9fa375;
   --on-accent: #040403;
   --focus: #979b6d;
+  --error: #ff6b78;
+  --syntax-keyword: #9fa375;
+  --chart-1: #85895b;
   --term-background: #070804;
   --term-cursor: #85895b;
   --term-selection: #272819;
@@ -145,6 +157,9 @@
   --accent-soft: #141b22;
   --accent-text: #87a2bc;
   --focus: #657e98;
+  --error: #ff6b78;
+  --syntax-keyword: #87a2bc;
+  --chart-1: #546d85;
   --term-background: #05080b;
   --term-cursor: #546d85;
   --term-selection: #1f2730;
@@ -162,6 +177,9 @@
   --accent-soft: #1d1822;
   --accent-text: #a795bd;
   --focus: #86759a;
+  --error: #ff6b78;
+  --syntax-keyword: #a795bd;
+  --chart-1: #746388;
   --term-background: #08060a;
   --term-cursor: #746388;
   --term-selection: #292430;
@@ -179,6 +197,8 @@
   --accent-soft: #271517;
   --accent-text: #cd8893;
   --focus: #a6646f;
+  --syntax-keyword: #cd8893;
+  --chart-1: #93535e;
   --term-background: #0b0607;
   --term-cursor: #93535e;
   --term-selection: #351f23;

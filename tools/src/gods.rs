@@ -1,9 +1,11 @@
 //! The themes of Strix: one per Roman god, each a plate and a set of colours (src/design/gods.json).
 //!
 //! The colours of a theme are a small set of tokens that follow the god: a tinted background and its
-//! surfaces, the accent and everything derived from it, and the terminal cursor and selection. Text,
-//! line, the status colours and syntax stay as they are in every theme. The accent of each god is
-//! picked by hand; the rest is derived in OKLCH so every theme has the lightness steps of Saturnus.
+//! surfaces, the accent and everything derived from it (the keywords of code and the first series of
+//! a chart too), and the terminal cursor and selection. Text, line, the other status colours and the
+//! rest of the syntax stay as they are in every theme; the error turns to vermilion where the accent
+//! itself is red. The accent of each god is picked by hand; the rest is derived in OKLCH so every
+//! theme has the lightness steps of Saturnus.
 
 use crate::colour::{contrast, luminance, oklch, to_oklch};
 use serde_json::{Map, Value};
@@ -11,15 +13,23 @@ use serde_json::{Map, Value};
 /// A theme's colour tokens in the order they are derived
 pub type Tokens = Vec<(String, String)>;
 
-/// The grounds of the light variant: smoked glass on dark grey instead of black
-const LIGHT_GROUNDS: [(&str, &str); 6] = [
+/// The grounds of the light variant: smoked glass on dark grey instead of black, and the faint text
+/// one step lighter so it keeps 4.5:1 on them
+const LIGHT_GROUNDS: [(&str, &str); 7] = [
     ("background", "#101011"),
     ("surface", "#1b1b1c"),
     ("surface-raised", "#242425"),
     ("surface-sunken", "#0c0c0d"),
     ("border", "#3a3a3c"),
     ("border-strong", "#7c7872"),
+    ("text-faint", "#8a857e"),
 ];
+
+/// The colour of an error, and the one it takes where the accent is red as well
+const ERROR: &str = "#ff6b78";
+const ERROR_BESIDE_RED: &str = "#f8875a";
+/// Closer than this in OKLCH hue, an error would read as the accent
+const ERROR_APART: f64 = 30.0;
 
 pub fn get<'a>(t: &'a Tokens, name: &str) -> &'a str {
     t.iter()
@@ -97,6 +107,7 @@ impl Gods {
         };
         let ba = border_active(&t);
         set(&mut t, "border-active", ba);
+        follow(&mut t);
         t
     }
 
@@ -108,6 +119,17 @@ impl Gods {
         for (k, v) in LIGHT_GROUNDS {
             set(&mut t, k, v.to_string());
         }
+        // On the grey grounds a dark accent loses its edge: raised just enough to keep 3:1 there
+        let surface = get(&t, "surface").to_string();
+        if contrast(get(&t, "accent"), &surface) < 3.0 {
+            let (mut la, ca, ha) = to_oklch(get(&t, "accent"));
+            while contrast(&oklch(la, ca, ha), &surface) < 3.0 {
+                la += 0.005;
+            }
+            set(&mut t, "accent", oklch(la, ca, ha));
+            set(&mut t, "accent-hover", oklch(la + 0.04, ca, ha));
+            set(&mut t, "accent-pressed", oklch(la - 0.05, ca, ha));
+        }
         let (la, ca, ha) = to_oklch(get(&t, "accent"));
         let raised = get(&t, "surface-raised").to_string();
         set(
@@ -118,6 +140,7 @@ impl Gods {
         set(&mut t, "focus", lighten_to(&raised, 4.0, ha, ca, la + 0.06));
         let ba = border_active(&t);
         set(&mut t, "border-active", ba);
+        follow(&mut t);
         t
     }
 
@@ -126,6 +149,7 @@ impl Gods {
         let mut t = self.derive(accent);
         let ba = border_active(&t);
         set(&mut t, "border-active", ba);
+        follow(&mut t);
         t
     }
 
@@ -204,8 +228,15 @@ impl Gods {
         };
         chk("text", self.fixed("text"), &s, 4.5);
         chk("text-muted", self.fixed("text-muted"), &s, 4.5);
-        chk("text-faint", self.fixed("text-faint"), &s, 3.0);
-        chk("border-strong", self.fixed("border-strong"), &s, 3.0);
+        // The light variant brings its own faint text and strong border
+        let own = |name: &str| {
+            t.iter()
+                .find(|(k, _)| k == name)
+                .map_or_else(|| self.fixed(name), |(_, v)| v.as_str())
+        };
+        chk("text-faint", own("text-faint"), &s[..2], 4.5);
+        chk("error", get(t, "error"), &s, 4.5);
+        chk("border-strong", own("border-strong"), &s, 3.0);
         chk(
             "accent-text",
             get(t, "accent-text"),
@@ -265,8 +296,31 @@ pub fn lighten_to(bg: &str, minimum: f64, h: f64, c: f64, mut l: f64) -> String 
     col
 }
 
-/// The border of the focused window: the accent, quietened toward the border
 /// The border of the focused window: the accent itself. Every other line stays quiet.
 fn border_active(t: &Tokens) -> String {
     get(t, "accent").to_string()
+}
+
+/// The tokens that follow the accent outside its family: the keywords of code take the accent
+/// text, the first series of a chart the accent, and the error moves off a red accent
+fn follow(t: &mut Tokens) {
+    let text = get(t, "accent-text").to_string();
+    let accent = get(t, "accent").to_string();
+    set(t, "syntax-keyword", text);
+    set(t, "chart-1", accent.clone());
+    set(t, "error", error_for(&accent).to_string());
+}
+
+/// Red, unless the accent is red too: then vermilion, as long as that lies further from it
+fn error_for(accent: &str) -> &'static str {
+    let h = to_oklch(accent).2;
+    let apart = |c: &str| {
+        let d = (h - to_oklch(c).2).abs() % 360.0;
+        d.min(360.0 - d)
+    };
+    if apart(ERROR) < ERROR_APART && apart(ERROR_BESIDE_RED) > apart(ERROR) {
+        ERROR_BESIDE_RED
+    } else {
+        ERROR
+    }
 }

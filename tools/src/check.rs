@@ -36,7 +36,7 @@ pub fn palette(p: &Palette) -> usize {
     chk("success", &s, 4.5);
     chk("info", &s, 4.5);
     chk("border-strong", &s, 3.0);
-    chk("text-faint", &s, 3.0);
+    chk("text-faint", &s, 4.5);
     chk("accent", &["background", "surface"], 3.0);
     let syntax: Vec<String> = p
         .colors
@@ -89,13 +89,21 @@ pub fn palette(p: &Palette) -> usize {
 
 pub fn themes(g: &Gods) -> usize {
     let mut fails = 0;
-    for god in &g.gods {
-        let t = g.colours(&god.id);
+    for (god, variant) in g
+        .gods
+        .iter()
+        .flat_map(|god| [(god, "dark"), (god, "light")])
+    {
+        let t = if variant == "dark" {
+            g.colours(&god.id)
+        } else {
+            g.light(&god.id)
+        };
         let parts: Vec<String> = t
             .iter()
             .map(|(k, v)| format!("{}={v}", k.replace("accent-", "a-").replace("surface", "s")))
             .collect();
-        println!("{:<10} {}", god.id, parts.join(" "));
+        println!("{:<10} {variant:<5} {}", god.id, parts.join(" "));
         let rows = g.checks(&t);
         for (fg, bg, r, m) in &rows {
             if r < m {
