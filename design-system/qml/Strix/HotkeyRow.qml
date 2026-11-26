@@ -32,7 +32,8 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width - rec.width - Theme.control - 2 * Theme.space2
         Label { width: parent.width; text: root.action; elide: Text.ElideRight }
-        Label { width: parent.width; text: root.target; textStyle: "note"; color: Theme.textMuted; elide: Text.ElideRight }
+        // What it acts on, only where that says more than the heading of its group
+        Label { visible: root.target !== ""; width: parent.width; text: root.target; textStyle: "caption"; color: Theme.textMuted; elide: Text.ElideRight }
     }
 
     T.AbstractButton {
