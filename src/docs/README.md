@@ -55,20 +55,20 @@ Strix has a theme for each of eight Roman gods; Saturnus is the default. A theme
 
 ## Type
 
-- Three families, three jobs. `sans` (Hanken Grotesk) is the interface: data, labels, controls. `serif` (Cormorant Garamond, after the Garamond types of the 16th century) is the voice: titles, dates, italic asides, the motto, plate captions, the wordmark and theme names, the large clock. `mono` (IBM Plex Mono) is what is typed: commands, paths, key names, the terminal. Numbers are lining and tabular everywhere.
+- Three families, three jobs. `sans` (Hanken Grotesk) is the interface: data, labels, controls. `serif` (Cormorant Garamond, after the Garamond types of the 16th century) is the voice: titles, dates, italic asides, the motto, the wordmark and theme names, the large clock. `mono` (IBM Plex Mono) is what is typed: commands, paths, key names, the terminal. Numbers are lining and tabular everywhere.
 - All three are licensed under the SIL Open Font License and are shipped with every surface, so every surface renders the same.
 - Use the styles by name. Wordmark, serif italic: `display` (wordmark on lock screen and splash), `emblem` (theme names, the name in About). Serif: `clock`, `title-lg`, `title`, `subtitle`, `aside`, `motto`. Sans: `heading`, `body`, `label`, `value`, `caption`, `micro`. Mono: `code`.
 - The wordmark styles are for one or two words that are a name. Never a sentence, never a label, never below 36px.
 - The serif has one weight. Emphasis in the serif is italic; emphasis in mono is weight 600. Do not underline and do not colour text for emphasis.
-- Never set the serif below 12px, and never use it for controls, values or list rows.
+- Never set the serif below 22px (the motto, a part of the logo, is the one exception), and never use it for controls, values, list rows or the second line of a row: that line is `caption`.
 - The serif has old-style figures only. Set dates and anything with digits in its italic, where the figures read clearly, and keep bare numbers (the clock, values, versions) in mono.
 - The wordmark is the name in `display` or as `.k-wordmark`. The symbol is the owl: a pen drawing of a horned owl standing a little sideways, cream lines on dark, no ring, its eyes the only colour, in the accent of the theme (`assets/Logo/strix-owl.svg` in Strix red, `strix-owl-<god>.svg` for every god). Use it as it is; do not draw another symbol or a monogram. Below about 64 pixels the drawing closes up: there `strix-owl-small.svg` takes its place, the same outline with the eyes, the brows, the beak and a few bars.
-- The motto "nocte vigilat" sits under the wordmark in `motto`: lowercase, italic, widely spaced. It appears on the lock screen, the greeter, the splash, About and system info, nowhere else.
+- The motto "nocte vigilat" sits under the wordmark in `motto`: lowercase and italic, never spaced out: lowercase is not letterspaced. It appears on the lock screen, the greeter, the splash, About and system info, nowhere else.
 
 ## Ornament
 
 - `.k-rule` is a hair line with a small open lozenge in the middle, as between the parts of an old title page. Use it once in a view to part the mood from the matter: under the wordmark, between the date and the weather, above the update card.
-- `.k-plate` is a plate caption: one line of serif italic naming a picture, in the form "Pluto with his two-pronged fork and Cerberus in his niche. Jacob Binck after Rosso Fiorentino, 1530". Every engraving shown full screen carries one.
+- `.k-plate` names a picture in one line of `caption`, in the form "Pluto with his two-pronged fork and Cerberus in his niche. Jacob Binck after Rosso Fiorentino, 1530". The screens of the desktop do not show it: where a picture comes from belongs in the repository, not on the screen.
 - InfoBlock's double-line brackets are the only frame. Use them for system facts, once per view.
 - `.k-grain` lays a fine grain over a full-screen picture. Use it on wallpapers only, never on surfaces.
 - That is the whole stock of ornament. No flourishes, corner pieces, drop caps or borders made of pattern.

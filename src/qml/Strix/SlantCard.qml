@@ -85,7 +85,7 @@ Item {
             spacing: Theme.space2
             Rectangle { width: Theme.space1; height: Theme.space1; radius: width / 2; color: root.accent; anchors.verticalCenter: parent.verticalCenter }
             // Inside the slanted edges: a long caption ends in an ellipsis instead of running out of the card
-            Label { text: root.caption; textStyle: "note"; color: Theme.textMuted
+            Label { text: root.caption; textStyle: "caption"; color: Theme.textMuted
                 width: Math.min(implicitWidth, root.width - 2 * root.skew - 2 * Theme.space4); elide: Text.ElideRight }
         }
     }

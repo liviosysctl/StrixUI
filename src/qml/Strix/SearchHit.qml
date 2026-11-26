@@ -1,5 +1,5 @@
-// One hit of Search: symbol, the name with the matched letters bold, where it lives as a serif
-// path ("Settings › Display"), and at the right what Enter does or its keys.
+// One hit of Search: symbol, the name with the matched letters bold, where it lives as a second
+// line ("Settings › Display"), and at the right what Enter does or its keys.
 // kind "command" writes the name as a shell line with "$ " in front.
 import QtQuick
 import QtQuick.Templates as T
@@ -53,7 +53,7 @@ T.ItemDelegate {
                 visible: control.path.length > 0
                 width: parent.width
                 text: control.path.join("  ›  ")
-                textStyle: "note"
+                textStyle: "caption"
                 color: Theme.textMuted
                 elide: Text.ElideRight
             }

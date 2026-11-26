@@ -17,7 +17,7 @@ Rectangle {
         if (id) Theme.preview(id.slice(8))
     }
 
-    component Caption: Label { textStyle: "micro"; color: Theme.textFaint; font.capitalization: Font.AllUppercase; font.letterSpacing: 1.2 }
+    component Caption: Label { textStyle: "caption"; color: Theme.textMuted }
 
     Wallpaper { x: 880; y: 0; width: 400; height: 300; dim: true }
     Column {

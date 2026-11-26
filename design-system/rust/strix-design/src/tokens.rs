@@ -151,12 +151,10 @@ pub mod text {
     pub const TITLE: TextStyle = TextStyle { family: Family::Serif, size: 26.0, line_height: 30.0, weight: 500, italic: false, letter_spacing: 0.0 };
     /// Card titles.
     pub const SUBTITLE: TextStyle = TextStyle { family: Family::Serif, size: 22.0, line_height: 25.0, weight: 500, italic: false, letter_spacing: 0.0 };
-    /// Italic asides: calendar month, panel headings, track titles, empty states, plate captions.
-    pub const ASIDE: TextStyle = TextStyle { family: Family::Serif, size: 19.0, line_height: 23.0, weight: 500, italic: true, letter_spacing: 0.0 };
-    /// The second line in serif: where a hit of Search lives, what a key opens, the caption of an engraving.
-    pub const NOTE: TextStyle = TextStyle { family: Family::Serif, size: 15.0, line_height: 18.0, weight: 500, italic: true, letter_spacing: 0.0 };
-    /// The motto and greetings. Lowercase, spaced, italic. One line, never a label.
-    pub const MOTTO: TextStyle = TextStyle { family: Family::Serif, size: 16.0, line_height: 21.0, weight: 500, italic: true, letter_spacing: 0.22 };
+    /// Italic asides: calendar month, group headings, track titles, empty states, the greeting. The smallest serif there is.
+    pub const ASIDE: TextStyle = TextStyle { family: Family::Serif, size: 22.0, line_height: 26.0, weight: 500, italic: true, letter_spacing: 0.0 };
+    /// The motto under the wordmark, a part of the logo. Lowercase and italic, never spaced out. One line, never a label.
+    pub const MOTTO: TextStyle = TextStyle { family: Family::Serif, size: 16.0, line_height: 21.0, weight: 500, italic: true, letter_spacing: 0.0 };
     /// Section headings inside apps.
     pub const HEADING: TextStyle = TextStyle { family: Family::Sans, size: 14.0, line_height: 20.0, weight: 600, italic: false, letter_spacing: 0.0 };
     /// Running text, list rows, field text, code and the terminal.

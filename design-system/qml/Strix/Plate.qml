@@ -1,8 +1,8 @@
-// The caption of an engraving: what it shows and who made it, in small serif italic.
+// The caption of an engraving: what it shows and who made it, in the caption style.
 //   Plate { text: Theme.about.plate }
 import QtQuick
 
 Label {
-    textStyle: "note"
+    textStyle: "caption"
     color: Theme.textMuted
 }

@@ -2,7 +2,7 @@
 import QtQuick
 
 Text {
-    /// body, label, value, heading, caption, micro, clock (mono); title-lg, title, subtitle, aside, note, motto, display, emblem (serif)
+    /// body, label, value, heading, caption, micro, clock (mono); title-lg, title, subtitle, aside, motto, display, emblem (serif)
     property string textStyle: "body"
     readonly property var s: Theme.styles[textStyle] || Theme.styles.body
 
